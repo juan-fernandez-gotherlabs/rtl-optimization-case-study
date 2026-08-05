@@ -1,0 +1,13 @@
+[gold]
+read_verilog /results/sha1_gold.v
+prep -top sha1
+sim -clock clk_i -reset rst_i -rstlen 1 -n 1 -w sha1
+
+[gate]
+read_verilog /candidate/sha.v
+prep -top sha1
+sim -clock clk_i -reset rst_i -rstlen 1 -n 1 -w sha1
+
+[strategy sat]
+use sat
+depth 10

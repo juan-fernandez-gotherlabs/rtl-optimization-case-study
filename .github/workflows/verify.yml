@@ -1,0 +1,40 @@
+name: Verify case study
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  evidence:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install report dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes librsvg2-bin libxml2-utils poppler-utils
+          python -m pip install --requirement requirements-report.txt
+      - name: Verify evidence and contracts
+        run: make verify test
+      - name: Regenerate figures
+        run: |
+          make figures
+          xmllint --noout figures/*.svg
+      - name: Verify committed artifact manifest
+        run: |
+          make checksums
+          git diff --exit-code -- evidence/MANIFEST.json evidence/SHA256SUMS
+      - name: Build and inspect reports
+        run: |
+          make report REPORT_PYTHON=python
+          test "$(pdfinfo report/executive-summary.pdf | awk '/^Pages:/ {print $2}')" = "2"
+          test "$(pdfinfo report/technical-report.pdf | awk '/^Pages:/ {print $2}')" -ge "15"

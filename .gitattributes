@@ -1,0 +1,2 @@
+*.pdf binary
+*.v whitespace=-trailing-space,-space-before-tab,-blank-at-eof

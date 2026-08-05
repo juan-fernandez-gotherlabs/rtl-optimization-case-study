@@ -1,0 +1,27 @@
+--- rtl/baseline/sha.v
++++ rtl/champion/sha.v
+@@ -126,9 +126,9 @@
+ 	wire [31:0] next_Wt,next_A,next_C;
+ 	wire [159:0] SHA1_result;
+ 	
+-	assign SHA1_f1_BCD = (B & C) ^ (~B & D);
++	assign SHA1_f1_BCD = (B | D) & ((~B) | C);
+ 	assign SHA1_f2_BCD = B ^ C ^ D;
+-	assign SHA1_f3_BCD = (B & C) ^ (C & D) ^ (B & D);
++	assign SHA1_f3_BCD = (B & D) | (C & (B ^ D));
+ 	
+ 	// The state machine value is one-based while executing SHA-1 rounds:
+ 	// round=1 computes algorithm round 0 and round=80 computes round 79.
+@@ -138,10 +138,10 @@
+ 	
+ 	// Odin II doesn't support binary operations inside concatenations presently. 
+ 	//assign SHA1_Wt_1 = {W13 ^ W8 ^ W2 ^ W0};
+-	assign SHA1_Wt_1 = W13 ^ W8 ^ W2 ^ W0;
++	assign SHA1_Wt_1 = (W13 ^ W8) ^ (W2 ^ W0);
+ 
+ 	assign next_Wt = {SHA1_Wt_1[30:0],SHA1_Wt_1[31]};	// NSA fix added
+-	assign next_A = {A[26:0],A[31:27]} + SHA1_ft_BCD + E + Kt + Wt;
++	assign next_A = ({A[26:0],A[31:27]} + SHA1_ft_BCD) + (E + Kt + Wt);
+ 	assign next_C = {B[1:0],B[31:2]};
+ 	
+ 	assign SHA1_result   = {A,B,C,D,E};

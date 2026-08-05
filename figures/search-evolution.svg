@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="700" viewBox="0 0 1280 700" role="img">
+<title>Search and certification progression</title>
+<desc>The five-seed search initially favors generation 16, but 64-seed certification rejects it for area regression and selects generation 15.</desc>
+<rect x="0.00" y="0.00" width="1280.00" height="700.00" rx="0.00" fill="#FFFFFF" stroke="none" opacity="1.0"/>
+<text x="100.00" y="48.00" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#102A43" text-anchor="start">Search progression and certification correction</text>
+<text x="100.00" y="82.00" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#64748B" text-anchor="start">Five-seed ranking guides search; only fixed 64-seed evidence selects the champion</text>
+<line x1="100.00" y1="541.40" x2="1200.00" y2="541.40" stroke="#E8EEF4" stroke-width="1"/>
+<text x="88.00" y="546.40" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="400" fill="#64748B" text-anchor="end">0.93</text>
+<line x1="100.00" y1="464.21" x2="1200.00" y2="464.21" stroke="#E8EEF4" stroke-width="1"/>
+<text x="88.00" y="469.21" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="400" fill="#64748B" text-anchor="end">0.94</text>
+<line x1="100.00" y1="387.02" x2="1200.00" y2="387.02" stroke="#E8EEF4" stroke-width="1"/>
+<text x="88.00" y="392.02" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="400" fill="#64748B" text-anchor="end">0.95</text>
+<line x1="100.00" y1="309.82" x2="1200.00" y2="309.82" stroke="#E8EEF4" stroke-width="1"/>
+<text x="88.00" y="314.82" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="400" fill="#64748B" text-anchor="end">0.96</text>
+<line x1="100.00" y1="232.63" x2="1200.00" y2="232.63" stroke="#E8EEF4" stroke-width="1"/>
+<text x="88.00" y="237.63" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="400" fill="#64748B" text-anchor="end">0.97</text>
+<line x1="100.00" y1="155.44" x2="1200.00" y2="155.44" stroke="#E8EEF4" stroke-width="1"/>
+<text x="88.00" y="160.44" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="400" fill="#64748B" text-anchor="end">0.98</text>
+<line x1="100.00" y1="140.00" x2="100.00" y2="580.00" stroke="#E8EEF4" stroke-width="1"/>
+<text x="100.00" y="610.00" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="400" fill="#64748B" text-anchor="middle">0</text>
+<line x1="375.00" y1="140.00" x2="375.00" y2="580.00" stroke="#E8EEF4" stroke-width="1"/>
+<text x="375.00" y="610.00" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="400" fill="#64748B" text-anchor="middle">5</text>
+<line x1="650.00" y1="140.00" x2="650.00" y2="580.00" stroke="#E8EEF4" stroke-width="1"/>
+<text x="650.00" y="610.00" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="400" fill="#64748B" text-anchor="middle">10</text>
+<line x1="925.00" y1="140.00" x2="925.00" y2="580.00" stroke="#E8EEF4" stroke-width="1"/>
+<text x="925.00" y="610.00" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="400" fill="#64748B" text-anchor="middle">15</text>
+<line x1="1200.00" y1="140.00" x2="1200.00" y2="580.00" stroke="#E8EEF4" stroke-width="1"/>
+<text x="1200.00" y="610.00" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="400" fill="#64748B" text-anchor="middle">20</text>
+<polyline points="100.0,200.0 155.0,370.0 210.0,370.0 265.0,370.0 320.0,370.0 375.0,370.0 430.0,370.0 485.0,370.0 540.0,370.0 595.0,438.1 650.0,438.1 705.0,438.1 760.0,438.1 815.0,438.1 870.0,438.1 925.0,452.6 980.0,522.3 1035.0,522.3 1090.0,522.3 1145.0,522.3 1200.0,522.3" fill="none" stroke="#2563EB" stroke-width="4"/>
+<circle cx="155.00" cy="369.99" r="7.00" fill="#2563EB" stroke="#FFFFFF" stroke-width="1.5" opacity="1.0"/>
+<text x="155.00" y="352.99" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#102A43" text-anchor="middle">g01-f1-or-arith-group</text>
+<circle cx="595.00" cy="438.13" r="7.00" fill="#2563EB" stroke="#FFFFFF" stroke-width="1.5" opacity="1.0"/>
+<text x="595.00" y="421.13" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#102A43" text-anchor="middle">g09-f3-alt-majority</text>
+<circle cx="925.00" cy="452.63" r="7.00" fill="#2563EB" stroke="#FFFFFF" stroke-width="1.5" opacity="1.0"/>
+<text x="925.00" y="435.63" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#102A43" text-anchor="middle">g15-wt-balanced-xor</text>
+<circle cx="980.00" cy="522.27" r="7.00" fill="#2563EB" stroke="#FFFFFF" stroke-width="1.5" opacity="1.0"/>
+<text x="980.00" y="505.27" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#102A43" text-anchor="middle">g16-wt-right-associated</text>
+<rect x="710.00" y="610.00" width="480.00" height="62.00" rx="8.00" fill="#F6F8FB" stroke="none" opacity="1.0"/>
+<text x="730.00" y="635.00" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#C83E4D" text-anchor="start">g16 provisional leader → evidence regression</text>
+<text x="730.00" y="660.00" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#16845B" text-anchor="start">g15 certified champion → score 0.9599 vs previous incumbent</text>
+<text x="100.00" y="678.00" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#102A43" text-anchor="start">Provisional score (lower is better)</text>
+</svg>

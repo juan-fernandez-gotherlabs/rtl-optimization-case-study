@@ -1,0 +1,52 @@
+--- a/sha.v
++++ b/sha.v
+@@ -1,3 +1,5 @@
++`timescale 1ns/1ps
++
+ /////////////////////////////////////////////////////////////////////
+ ////                                                             ////
+ ////  SHA-160                                                    ////
+@@ -128,7 +130,11 @@
+ 	assign SHA1_f2_BCD = B ^ C ^ D;
+ 	assign SHA1_f3_BCD = (B & C) ^ (C & D) ^ (B & D);
+ 	
+-	assign SHA1_ft_BCD = (round < 7'b0100101) ? SHA1_f1_BCD : (round < 7'b101001) ? SHA1_f2_BCD : (round < 7'b1111101) ? SHA1_f3_BCD : SHA1_f2_BCD;
++	// The state machine value is one-based while executing SHA-1 rounds:
++	// round=1 computes algorithm round 0 and round=80 computes round 79.
++	assign SHA1_ft_BCD = (round <= 7'd20) ? SHA1_f1_BCD :
++	                     (round <= 7'd40) ? SHA1_f2_BCD :
++	                     (round <= 7'd60) ? SHA1_f3_BCD : SHA1_f2_BCD;
+ 	
+ 	// Odin II doesn't support binary operations inside concatenations presently. 
+ 	//assign SHA1_Wt_1 = {W13 ^ W8 ^ W2 ^ W0};
+@@ -2115,13 +2121,14 @@
+ 		end
+ 		else
+ 		begin
+-			if (round < 7'b0100000)
++			// Kt is registered one cycle before it is consumed by next_A.
++			if (round < 7'd20)
+ 				Kt <= `SHA1_K0;
+ 			else
+-			if (round < 7'b1010000)
++			if (round < 7'd40)
+ 				Kt <= `SHA1_K1;
+ 			else
+-			if (round < 7'b1111100)
++			if (round < 7'd60)
+ 				Kt <= `SHA1_K2;
+ 			else
+ 				Kt <= `SHA1_K3;
+@@ -2154,10 +2161,10 @@
+ 					3'b010:	text_o <= SHA1_result[3*32-1:2*32];
+ 					3'b001:	text_o <= SHA1_result[2*32-1:1*32];
+ 					3'b000:	text_o <= SHA1_result[1*32-1:0*32];
+-					default:text_o <= 3'b000;
++					default:text_o <= 32'b0;
+ 				endcase
+ 				if (|read_counter)
+-					read_counter <= read_counter - 7'b0000001;
++					read_counter <= read_counter - 3'b001;
+ 			end
+ 			else
+ 			begin
