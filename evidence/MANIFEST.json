@@ -1,5 +1,5 @@
 {
-  "artifact_count": 89,
+  "artifact_count": 90,
   "artifacts": [
     {
       "bytes": 76,
@@ -42,9 +42,14 @@
       "sha256": "cf76670e6a1dab54f86a1e49a68ffe581b30483dee267ad093e310a046330578"
     },
     {
-      "bytes": 5929,
+      "bytes": 6112,
       "path": "README.md",
-      "sha256": "1b4aa20048f25e107d5ab5aa92f6e3f1a02edf23492ee9e75867f4d81bb914d5"
+      "sha256": "4093fc5152f2b82721d1d1cbee8fd63cce142e6f74e944e13b27c649dd5ef3a1"
+    },
+    {
+      "bytes": 1347,
+      "path": "RELEASE_NOTES.md",
+      "sha256": "b148c9269b45703f3a17f0cdb5dbf055f6a9d6ad9756ab0ca90beaa77346d512"
     },
     {
       "bytes": 4117,

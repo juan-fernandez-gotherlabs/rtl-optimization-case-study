@@ -75,6 +75,7 @@ Full routed measurement is intentionally separate from this quick audit. See [Re
 - [Technical report](report/technical-report.md)
 - [PDF report](report/technical-report.pdf)
 - [Two-page executive PDF](report/executive-summary.pdf)
+- [Full path-sanitized evidence archive](https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/download/v1.0.0/g15-wt-balanced-xor-public-evidence.tar.gz)
 - [Limitations and claims boundary](LIMITATIONS.md)
 - [Evidence index](evidence/README.md)
 - [Third-party provenance](THIRD_PARTY_NOTICES.md)
