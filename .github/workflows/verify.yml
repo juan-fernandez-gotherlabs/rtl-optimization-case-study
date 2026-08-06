@@ -30,6 +30,7 @@ jobs:
             poppler-utils \
             texlive-fonts-recommended \
             texlive-latex-extra \
+            texlive-science \
             texlive-xetex
           python -m pip install --requirement requirements-report.txt
       - name: Verify evidence and contracts

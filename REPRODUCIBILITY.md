@@ -31,7 +31,8 @@ score_ci95=[0.937274457714, 0.943109856865]
 Linux report requirements:
 
 - Python 3.11 or newer and `requirements-report.txt`;
-- `latexmk`, XeLaTeX, `texlive-latex-extra` and `texlive-fonts-recommended`;
+- `latexmk`, XeLaTeX, `texlive-latex-extra`, `texlive-fonts-recommended` and
+  `texlive-science` (for `siunitx`);
 - the open TeX Gyre fonts;
 - Poppler-compatible PDF inspection tools.
 
