@@ -1,5 +1,5 @@
 --- rtl/baseline/sha.v
-+++ rtl/champion/sha.v
++++ rtl/accepted/sha.v
 @@ -126,9 +126,9 @@
  	wire [31:0] next_Wt,next_A,next_C;
  	wire [159:0] SHA1_result;

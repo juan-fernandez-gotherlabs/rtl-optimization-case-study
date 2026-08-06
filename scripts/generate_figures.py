@@ -13,16 +13,21 @@ from typing import Iterable
 
 ROOT = Path(__file__).resolve().parents[1]
 FIGURES = ROOT / "figures"
-NAVY = "#102A43"
-BLUE = "#2563EB"
-TEAL = "#0F9D8A"
-ORANGE = "#E87924"
-GREEN = "#16845B"
-RED = "#C83E4D"
-GRAY = "#64748B"
-LIGHT = "#E8EEF4"
-PALE = "#F6F8FB"
+NAVY = "#0A0A0A"
+BLUE = "#0A84FF"
+TEAL = BLUE
+ORANGE = "#6A6A6A"
+GREEN = BLUE
+RED = "#0A0A0A"
+GRAY = "#6A6A6A"
+LIGHT = "#E5E5E5"
+PALE = "#F8FBFF"
 WHITE = "#FFFFFF"
+ARROW_DEFS = (
+    '<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" '
+    'markerWidth="7" markerHeight="7" orient="auto-start-reverse">'
+    f'<path d="M 0 0 L 10 5 L 0 10 z" fill="{GRAY}"/></marker></defs>'
+)
 
 
 def load(name: str) -> dict:
@@ -30,7 +35,7 @@ def load(name: str) -> dict:
 
 
 def text(x: float, y: float, value: object, *, size: int = 18, weight: int = 400,
-         fill: str = NAVY, anchor: str = "start", family: str = "Arial, Helvetica, sans-serif") -> str:
+         fill: str = NAVY, anchor: str = "start", family: str = "Inter, Arial, Helvetica, sans-serif") -> str:
     return (
         f'<text x="{x:.2f}" y="{y:.2f}" font-family="{family}" font-size="{size}" '
         f'font-weight="{weight}" fill="{fill}" text-anchor="{anchor}">'
@@ -63,6 +68,34 @@ def rect(x: float, y: float, width: float, height: float, *, fill: str,
     )
 
 
+def arrow(x1: float, y1: float, x2: float, y2: float, *, stroke: str = GRAY,
+          width: float = 2) -> str:
+    return (
+        f'<line x1="{x1:.2f}" y1="{y1:.2f}" x2="{x2:.2f}" y2="{y2:.2f}" '
+        f'stroke="{stroke}" stroke-width="{width}" marker-end="url(#arrow)"/>'
+    )
+
+
+def node(body: list[str], x: float, y: float, width: float, height: float,
+         label: str, *, accepted: bool = False, input_node: bool = False) -> None:
+    fill = WHITE if input_node else ("#EAF2FF" if accepted else PALE)
+    stroke = BLUE if accepted and not input_node else LIGHT
+    body.append(rect(x, y, width, height, fill=fill, stroke=stroke, radius=7))
+    body.append(text(x + width / 2, y + height / 2 + 6, label, size=17,
+                     weight=700 if not input_node else 400, anchor="middle"))
+
+
+def comparison_panels(body: list[str], title_value: str) -> None:
+    body.extend([
+        ARROW_DEFS,
+        text(55, 48, title_value, size=30, weight=700),
+        rect(40, 78, 640, 365, fill=WHITE, stroke=LIGHT, radius=10),
+        rect(720, 78, 640, 365, fill=WHITE, stroke=LIGHT, radius=10),
+        text(360, 116, "Corrected baseline", size=19, weight=700, fill=GRAY, anchor="middle"),
+        text(1040, 116, "Accepted RTL", size=19, weight=700, fill=BLUE, anchor="middle"),
+    ])
+
+
 def svg_document(width: int, height: int, title_value: str, description: str,
                  body: Iterable[str]) -> str:
     return "\n".join(
@@ -88,8 +121,8 @@ def improvement(ratio: float) -> float:
 
 
 def certified_profile() -> None:
-    champion = load("results/champion-certification.json")
-    confidence = champion["statistical_confidence"]
+    accepted = load("results/accepted-certification.json")
+    confidence = accepted["statistical_confidence"]
     rows = [
         ("Area", confidence["metrics"]["area_total_mwta"]),
         ("Timing", confidence["metrics"]["critical_path_delay_ns"]),
@@ -107,7 +140,7 @@ def certified_profile() -> None:
 
     body: list[str] = [
         text(left, 48, "Certified PPA improvement vs. baseline", size=30, weight=700),
-        text(left, 82, "64 paired, fixed and search-disjoint VPR seeds · lower metric values are better", size=17, fill=GRAY),
+        text(left, 82, "64 fixed, paired VPR seeds · lower metric values are better", size=17, fill=GRAY),
         rect(left, sy(0.35), plot_w, sy(-0.35) - sy(0.35), fill=LIGHT, opacity=0.55),
     ]
     for tick in [-1, 0, 3, 6, 9, 12]:
@@ -122,7 +155,7 @@ def certified_profile() -> None:
         values.append((estimate, low, high))
     path_points = " ".join(f"{x:.1f},{sy(est):.1f}" for x, (est, _, _) in zip(xs, values))
     body.append(f'<polyline points="{path_points}" fill="none" stroke="{BLUE}" stroke-width="4"/>')
-    for index, (x, (label, item), (estimate, low, high)) in enumerate(zip(xs, rows, values)):
+    for x, (label, _), (estimate, low, high) in zip(xs, rows, values):
         body.extend(
             [
                 line(x, sy(low), x, sy(high), stroke=BLUE, width=3),
@@ -132,10 +165,6 @@ def certified_profile() -> None:
                 text(x, height - 62, label, size=17, weight=700, anchor="middle"),
             ]
         )
-        status = "neutral" if low <= 0 <= high else "improved"
-        label_y = sy(1.25) if index == 0 else (sy(high) - 18 if estimate < 11 else sy(low) + 30)
-        body.append(text(x, label_y, f"{estimate:.2f}% · {status}", size=16, weight=700, fill=GREEN if status == "improved" else ORANGE, anchor="middle"))
-        body.append(text(x, label_y + 23, f"95% CI {low:.2f}% to {high:.2f}%", size=13, fill=GRAY, anchor="middle"))
     body.append(text(left, height - 18, "Paired log-ratio estimate. The gray band is a visual ±0.35% vicinity of no change, not an acceptance threshold.", size=13, fill=GRAY))
     write(
         "certified-ppa-profile.svg",
@@ -145,9 +174,9 @@ def certified_profile() -> None:
 
 def paired_seed_distributions() -> None:
     baseline = load("results/baseline-certification.json")
-    champion = load("results/champion-certification.json")
+    accepted = load("results/accepted-certification.json")
     base = {int(row["seed"]): row for row in baseline["per_seed"]}
-    cand = {int(row["seed"]): row for row in champion["per_seed"]}
+    cand = {int(row["seed"]): row for row in accepted["per_seed"]}
     metrics = [
         ("Area", "area_total_mwta", ORANGE),
         ("Timing", "critical_path_delay_ns", BLUE),
@@ -180,7 +209,7 @@ def paired_seed_distributions() -> None:
 
     body: list[str] = [
         text(left, 48, "Every paired certification seed", size=30, weight=700),
-        text(left, 82, "Candidate improvement relative to the same baseline seed · right is better", size=17, fill=GRAY),
+        text(left, 82, "Accepted RTL relative to the same baseline seed · right is better", size=17, fill=GRAY),
     ]
     for index, (label, metric, color) in enumerate(metrics):
         y0 = top + index * (panel_h + gap)
@@ -193,7 +222,7 @@ def paired_seed_distributions() -> None:
             jitter = ((seed * 37) % 83) / 83.0
             cy = y0 + 14 + jitter * (panel_h - 28)
             body.append(circle(sx(value), cy, 4.3, fill=color, stroke=WHITE, width=0.8, opacity=0.76))
-        ci = champion["statistical_confidence"]["composite" if metric == "composite" else "metrics"]
+        ci = accepted["statistical_confidence"]["composite" if metric == "composite" else "metrics"]
         if metric != "composite":
             ci = ci[metric]
         estimate = improvement(float(ci["estimate"]))
@@ -215,89 +244,26 @@ def paired_seed_distributions() -> None:
     )
 
 
-def search_evolution() -> None:
-    history = load("results/search-history.json")
-    campaign = load("results/campaign-decision.json")
-    by_generation: dict[int, list[dict]] = {}
-    for row in history["submissions"]:
-        if row["provisional_score"] is not None and row["formal_status"] == "pass":
-            by_generation.setdefault(int(row["generation"]), []).append(row)
-    current = 0.9742327093555855
-    incumbent: list[tuple[int, float]] = [(0, current)]
-    selected_ids: dict[int, str] = {}
-    for generation in range(1, 21):
-        candidates = by_generation.get(generation, [])
-        if candidates:
-            best = min(candidates, key=lambda item: float(item["provisional_score"]))
-            if float(best["provisional_score"]) < current:
-                current = float(best["provisional_score"])
-                selected_ids[generation] = str(best["candidate_id"])
-        incumbent.append((generation, current))
-
-    width, height = 1280, 700
-    left, right, top, bottom = 100, 80, 140, 120
-    plot_w, plot_h = width - left - right, height - top - bottom
-    y_min, y_max = 0.925, 0.982
-
-    def sx(generation: int) -> float:
-        return left + plot_w * generation / 20
-
-    def sy(score: float) -> float:
-        return top + (y_max - score) / (y_max - y_min) * plot_h
-
-    body: list[str] = [
-        text(left, 48, "Search progression and certification correction", size=30, weight=700),
-        text(left, 82, "Five-seed ranking guides search; only fixed 64-seed evidence selects the champion", size=17, fill=GRAY),
-    ]
-    for score in [0.93, 0.94, 0.95, 0.96, 0.97, 0.98]:
-        body.append(line(left, sy(score), width - right, sy(score), stroke=LIGHT))
-        body.append(text(left - 12, sy(score) + 5, f"{score:.2f}", size=14, fill=GRAY, anchor="end"))
-    for generation in [0, 5, 10, 15, 20]:
-        body.append(line(sx(generation), top, sx(generation), top + plot_h, stroke=LIGHT))
-        body.append(text(sx(generation), top + plot_h + 30, generation, size=14, fill=GRAY, anchor="middle"))
-    path = " ".join(f"{sx(g):.1f},{sy(score):.1f}" for g, score in incumbent)
-    body.append(f'<polyline points="{path}" fill="none" stroke="{BLUE}" stroke-width="4"/>')
-    for generation, candidate_id in selected_ids.items():
-        score = dict(incumbent)[generation]
-        body.append(circle(sx(generation), sy(score), 7, fill=BLUE))
-        if generation in {1, 9, 15, 16}:
-            body.append(text(sx(generation), sy(score) - 17, candidate_id, size=13, weight=700, anchor="middle"))
-
-    # The provisional leader g16 was not accepted; g15 is the certified champion.
-    g16 = campaign["comparisons_to_previous_incumbent"]["ed8a5913c1a5ddf29da8649b24f27dcdefcfa0b07ba2459a401675ef3cfb1bb6"]
-    g15 = campaign["comparisons_to_previous_incumbent"]["743e6c9ffcca6f00d35d5e73ba6f6478a9133a0c55a471c16d6e59d831aeeabc"]
-    box_y = top + plot_h + 62
-    body.append(rect(left + 610, box_y - 32, 480, 62, fill=PALE, radius=8))
-    body.append(text(left + 630, box_y - 7, f"g16 provisional leader → {g16['decision'].replace('_', ' ')}", size=15, weight=700, fill=RED))
-    body.append(text(left + 630, box_y + 18, f"g15 certified champion → score {g15['score']:.4f} vs previous incumbent", size=15, weight=700, fill=GREEN))
-    body.append(text(left, height - 22, "Provisional score (lower is better)", size=16, weight=700))
-    write(
-        "search-evolution.svg",
-        svg_document(width, height, "Search and certification progression", "The five-seed search initially favors generation 16, but 64-seed certification rejects it for area regression and selects generation 15.", body),
-    )
-
-
 def verification_pipeline() -> None:
     width, height = 1400, 410
     steps = [
-        ("Candidate", "sha.v frozen by SHA-256"),
+        ("Accepted RTL", "sha.v frozen by SHA-256"),
         ("Structural", "interface · lint · synthesis"),
         ("Functional", "cycle trace · NIST"),
         ("Formal", "unbounded EQY · fail closed"),
-        ("Search", "5 paired seeds · ranking only"),
-        ("Certify", "64 disjoint paired seeds"),
-        ("Decision", "confidence gates · champion"),
+        ("PPA", "64 fixed paired seeds"),
+        ("Decision", "metric and confidence gates"),
     ]
     margin, gap = 45, 22
     box_w = (width - 2 * margin - gap * (len(steps) - 1)) / len(steps)
     body: list[str] = [
         text(margin, 46, "Correctness precedes PPA", size=30, weight=700),
-        text(margin, 78, "The candidate generator is replaceable; the evaluator contract is fixed", size=17, fill=GRAY),
+        text(margin, 78, "The accepted RTL is checked under one fixed functional and physical contract", size=17, fill=GRAY),
     ]
     y, box_h = 130, 150
     for index, (heading, sub) in enumerate(steps):
         x = margin + index * (box_w + gap)
-        fill = "#EAF2FF" if heading in {"Search", "Certify"} else "#E9F7F4" if heading in {"Functional", "Formal"} else PALE
+        fill = "#EAF2FF" if heading in {"PPA", "Decision"} else PALE
         body.append(rect(x, y, box_w, box_h, fill=fill, stroke=LIGHT, radius=10))
         body.append(text(x + box_w / 2, y + 53, heading, size=18, weight=700, anchor="middle"))
         words = sub.split(" · ")
@@ -309,10 +275,156 @@ def verification_pipeline() -> None:
             x1, x2, cy = x + box_w + 4, x + box_w + gap - 4, y + box_h / 2
             body.append(line(x1, cy, x2, cy, stroke=NAVY, width=2))
             body.append(f'<path d="M {x2 - 8:.1f} {cy - 6:.1f} L {x2:.1f} {cy:.1f} L {x2 - 8:.1f} {cy + 6:.1f}" fill="none" stroke="{NAVY}" stroke-width="2"/>')
-    body.append(text(margin, 350, "Any failed or inconclusive correctness gate invalidates the candidate before routed PPA is spent.", size=17, weight=700, fill=RED))
+    body.append(text(margin, 350, "Any failed or inconclusive correctness gate invalidates the RTL before routed PPA is evaluated.", size=17, weight=700, fill=RED))
     write(
         "verification-pipeline.svg",
-        svg_document(width, height, "Verification-first optimization pipeline", "Seven stage flow from hash-frozen RTL through correctness and formal equivalence to search, certification, and evidence-based champion selection.", body),
+        svg_document(width, height, "Verification-first optimization pipeline", "Six-stage flow from hash-frozen RTL through correctness and formal equivalence to paired PPA and an evidence-based acceptance decision.", body),
+    )
+
+
+def choose_rewrite() -> None:
+    width, height = 1400, 485
+    body: list[str] = []
+    comparison_panels(body, "Rewrite 1 · SHA-1 choose function")
+
+    for x, y, label in [(75, 145, "B"), (75, 215, "C"), (75, 305, "NOT B"), (75, 375, "D")]:
+        node(body, x, y, 92, 46, label, input_node=True)
+    node(body, 285, 175, 125, 54, "AND B·C")
+    node(body, 285, 335, 125, 54, "AND ¬B·D")
+    node(body, 495, 255, 100, 54, "XOR")
+    node(body, 610, 255, 52, 54, "f1")
+    body.extend([
+        arrow(167, 168, 285, 190), arrow(167, 238, 285, 214),
+        arrow(167, 328, 285, 350), arrow(167, 398, 285, 374),
+        arrow(410, 202, 495, 270), arrow(410, 362, 495, 294),
+        arrow(595, 282, 610, 282),
+    ])
+
+    for x, y, label in [(755, 145, "B"), (755, 215, "D"), (755, 305, "NOT B"), (755, 375, "C")]:
+        node(body, x, y, 92, 46, label, input_node=True)
+    node(body, 965, 175, 125, 54, "OR B+D", accepted=True)
+    node(body, 965, 335, 125, 54, "OR ¬B+C", accepted=True)
+    node(body, 1175, 255, 100, 54, "AND", accepted=True)
+    node(body, 1290, 255, 52, 54, "f1", accepted=True)
+    body.extend([
+        arrow(847, 168, 965, 190), arrow(847, 238, 965, 214),
+        arrow(847, 328, 965, 350), arrow(847, 398, 965, 374),
+        arrow(1090, 202, 1175, 270), arrow(1090, 362, 1175, 294),
+        arrow(1275, 282, 1290, 282),
+    ])
+    write(
+        "rewrite-1-choose.svg",
+        svg_document(width, height, "SHA-1 choose rewrite", "Corrected baseline and accepted Boolean networks for the SHA-1 choose function in sha.v line 129.", body),
+    )
+
+
+def majority_rewrite() -> None:
+    width, height = 1400, 485
+    body: list[str] = []
+    comparison_panels(body, "Rewrite 2 · factored SHA-1 majority")
+
+    for x, y, label in [(70, 150, "B"), (70, 245, "C"), (70, 340, "D")]:
+        node(body, x, y, 82, 46, label, input_node=True)
+    node(body, 255, 145, 115, 50, "AND B·C")
+    node(body, 255, 240, 115, 50, "AND C·D")
+    node(body, 255, 335, 115, 50, "AND B·D")
+    node(body, 445, 190, 88, 50, "XOR")
+    node(body, 550, 285, 88, 50, "XOR")
+    node(body, 640, 285, 30, 50, "f3")
+    body.extend([
+        arrow(152, 173, 255, 162), arrow(152, 268, 255, 180),
+        arrow(152, 268, 255, 257), arrow(152, 363, 255, 275),
+        arrow(152, 173, 255, 352), arrow(152, 363, 255, 370),
+        arrow(370, 170, 445, 207), arrow(370, 265, 445, 223),
+        arrow(533, 215, 550, 302), arrow(370, 360, 550, 318),
+        arrow(638, 310, 640, 310),
+    ])
+
+    for x, y, label in [(755, 150, "B"), (755, 245, "C"), (755, 340, "D")]:
+        node(body, x, y, 82, 46, label, input_node=True)
+    node(body, 930, 150, 115, 50, "AND B·D", accepted=True)
+    node(body, 930, 315, 115, 50, "XOR B⊕D", accepted=True)
+    node(body, 1090, 285, 135, 50, "AND C·(B⊕D)", accepted=True)
+    node(body, 1245, 220, 78, 50, "OR", accepted=True)
+    node(body, 1330, 220, 30, 50, "f3", accepted=True)
+    body.extend([
+        arrow(837, 173, 930, 167), arrow(837, 363, 930, 183),
+        arrow(837, 173, 930, 332), arrow(837, 363, 930, 348),
+        arrow(837, 268, 1090, 302), arrow(1045, 340, 1090, 318),
+        arrow(1045, 175, 1245, 237), arrow(1225, 310, 1245, 253),
+        arrow(1323, 245, 1330, 245),
+    ])
+    write(
+        "rewrite-2-majority.svg",
+        svg_document(width, height, "SHA-1 majority rewrite", "Corrected baseline and accepted Boolean networks for the SHA-1 majority function in sha.v line 131.", body),
+    )
+
+
+def xor_rewrite() -> None:
+    width, height = 1400, 485
+    body: list[str] = []
+    comparison_panels(body, "Rewrite 3 · balanced message-schedule XOR")
+
+    for x, y, label in [(70, 145, "W13"), (70, 220, "W8"), (70, 295, "W2"), (70, 370, "W0")]:
+        node(body, x, y, 82, 46, label, input_node=True)
+    node(body, 245, 175, 88, 50, "XOR")
+    node(body, 405, 245, 88, 50, "XOR")
+    node(body, 560, 315, 88, 50, "XOR")
+    body.extend([
+        arrow(152, 168, 245, 190), arrow(152, 243, 245, 210),
+        arrow(333, 200, 405, 260), arrow(152, 318, 405, 280),
+        arrow(493, 270, 560, 330), arrow(152, 393, 560, 350),
+    ])
+
+    for x, y, label in [(750, 145, "W13"), (750, 220, "W8"), (750, 295, "W2"), (750, 370, "W0")]:
+        node(body, x, y, 82, 46, label, input_node=True)
+    node(body, 950, 175, 115, 50, "XOR pair", accepted=True)
+    node(body, 950, 335, 115, 50, "XOR pair", accepted=True)
+    node(body, 1180, 255, 115, 50, "Final XOR", accepted=True)
+    body.extend([
+        arrow(832, 168, 950, 190), arrow(832, 243, 950, 210),
+        arrow(832, 318, 950, 350), arrow(832, 393, 950, 370),
+        arrow(1065, 200, 1180, 270), arrow(1065, 360, 1180, 290),
+    ])
+    write(
+        "rewrite-3-xor.svg",
+        svg_document(width, height, "Balanced XOR rewrite", "Serial and explicitly balanced XOR groupings for the message schedule in sha.v line 141.", body),
+    )
+
+
+def accumulator_rewrite() -> None:
+    width, height = 1400, 485
+    body: list[str] = []
+    comparison_panels(body, "Rewrite 4 · reassociated 32-bit accumulator")
+
+    for x, y, label in [(65, 135, "R"), (65, 200, "f"), (65, 265, "E"), (65, 330, "Kt"), (65, 395, "Wt")]:
+        node(body, x, y, 72, 42, label, input_node=True)
+    node(body, 220, 165, 72, 48, "+")
+    node(body, 345, 230, 72, 48, "+")
+    node(body, 470, 295, 72, 48, "+")
+    node(body, 595, 360, 72, 48, "+")
+    body.extend([
+        arrow(137, 156, 220, 178), arrow(137, 221, 220, 198),
+        arrow(292, 189, 345, 243), arrow(137, 286, 345, 263),
+        arrow(417, 254, 470, 308), arrow(137, 351, 470, 328),
+        arrow(542, 319, 595, 373), arrow(137, 416, 595, 393),
+    ])
+
+    for x, y, label in [(745, 135, "R"), (745, 200, "f"), (745, 285, "E"), (745, 350, "Kt"), (745, 415, "Wt")]:
+        node(body, x, y, 72, 42, label, input_node=True)
+    node(body, 920, 165, 105, 48, "R + f", accepted=True)
+    node(body, 920, 315, 105, 48, "E + Kt", accepted=True)
+    node(body, 1080, 365, 105, 48, "+ Wt", accepted=True)
+    node(body, 1240, 255, 105, 48, "Final +", accepted=True)
+    body.extend([
+        arrow(817, 156, 920, 178), arrow(817, 221, 920, 198),
+        arrow(817, 306, 920, 328), arrow(817, 371, 920, 348),
+        arrow(1025, 339, 1080, 378), arrow(817, 436, 1080, 398),
+        arrow(1025, 189, 1240, 268), arrow(1185, 389, 1240, 290),
+    ])
+    write(
+        "rewrite-4-accumulator.svg",
+        svg_document(width, height, "32-bit accumulator rewrite", "Serial and grouped modulo-2^32 accumulator structures for sha.v line 144.", body),
     )
 
 
@@ -329,25 +441,25 @@ def netlist_evidence() -> None:
         ("CLB blocks", "clb_blocks", "CLB", True),
         ("ABC .names nodes", "abc_names_nodes", "nodes", None),
     ]
-    x_label, x_base, x_champ = 90, 540, 850
+    x_label, x_base, x_accepted = 90, 540, 850
     body.extend([
         text(x_base, 125, "Baseline", size=16, weight=700, fill=GRAY, anchor="middle"),
-        text(x_champ, 125, "Champion", size=16, weight=700, fill=GREEN, anchor="middle"),
+        text(x_accepted, 125, "Accepted RTL", size=16, weight=700, fill=BLUE, anchor="middle"),
     ])
     for index, (label, key, unit, lower_better) in enumerate(rows):
         y = 175 + index * 72
         base = float(data["baseline"][key])
-        champ = float(data["champion"][key])
-        delta = 100 * (champ / base - 1)
+        accepted = float(data["accepted"][key])
+        delta = 100 * (accepted / base - 1)
         color = GRAY if lower_better is None else (GREEN if (delta < 0) == lower_better else ORANGE)
         body.append(line(70, y + 30, 1030, y + 30, stroke=LIGHT))
         body.append(text(x_label, y, label, size=17, weight=700))
         base_fmt = f"{base:.4f}" if "delay" in key else f"{base:.0f}"
-        champ_fmt = f"{champ:.4f}" if "delay" in key else f"{champ:.0f}"
+        accepted_fmt = f"{accepted:.4f}" if "delay" in key else f"{accepted:.0f}"
         body.append(text(x_base, y, f"{base_fmt} {unit}", size=18, anchor="middle"))
-        body.append(text(x_champ, y, f"{champ_fmt} {unit}", size=18, weight=700, fill=color, anchor="middle"))
+        body.append(text(x_accepted, y, f"{accepted_fmt} {unit}", size=18, weight=700, fill=color, anchor="middle"))
         body.append(text(1030, y, f"{delta:+.2f}%", size=15, weight=700, fill=color, anchor="end"))
-    body.append(text(70, 474, "The champion uses slightly more mapped logic nodes but packs into one fewer CLB and reduces the routed timing depth.", size=14, fill=GRAY))
+    body.append(text(70, 474, "The accepted RTL uses slightly more mapped logic nodes but packs into one fewer CLB and reduces the routed timing depth.", size=14, fill=GRAY))
     write(
         "netlist-evidence.svg",
         svg_document(width, height, "Post-synthesis and post-route evidence", "Seed 20 shows fewer timing graph levels, a shorter critical path, one fewer CLB, and slightly more ABC names nodes.", body),
@@ -357,8 +469,11 @@ def netlist_evidence() -> None:
 def main() -> int:
     certified_profile()
     paired_seed_distributions()
-    search_evolution()
     verification_pipeline()
+    choose_rewrite()
+    majority_rewrite()
+    xor_rewrite()
+    accumulator_rewrite()
     netlist_evidence()
     for path in sorted(FIGURES.glob("*.svg")):
         print(path.relative_to(ROOT))

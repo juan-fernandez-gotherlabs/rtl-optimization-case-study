@@ -2,29 +2,29 @@
 <title>Post-synthesis and post-route evidence</title>
 <desc>Seed 20 shows fewer timing graph levels, a shorter critical path, one fewer CLB, and slightly more ABC names nodes.</desc>
 <rect x="0.00" y="0.00" width="1100.00" height="500.00" rx="0.00" fill="#FFFFFF" stroke="none" opacity="1.0"/>
-<text x="70.00" y="50.00" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#102A43" text-anchor="start">What changed after synthesis and routing?</text>
-<text x="70.00" y="82.00" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#64748B" text-anchor="start">Representative seed 20 · same architecture and channel width</text>
-<text x="540.00" y="125.00" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#64748B" text-anchor="middle">Baseline</text>
-<text x="850.00" y="125.00" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#16845B" text-anchor="middle">Champion</text>
-<line x1="70.00" y1="205.00" x2="1030.00" y2="205.00" stroke="#E8EEF4" stroke-width="1"/>
-<text x="90.00" y="175.00" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#102A43" text-anchor="start">Timing graph levels</text>
-<text x="540.00" y="175.00" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#102A43" text-anchor="middle">46 levels</text>
-<text x="850.00" y="175.00" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#16845B" text-anchor="middle">42 levels</text>
-<text x="1030.00" y="175.00" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#16845B" text-anchor="end">-8.70%</text>
-<line x1="70.00" y1="277.00" x2="1030.00" y2="277.00" stroke="#E8EEF4" stroke-width="1"/>
-<text x="90.00" y="247.00" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#102A43" text-anchor="start">Critical path</text>
-<text x="540.00" y="247.00" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#102A43" text-anchor="middle">14.9802 ns</text>
-<text x="850.00" y="247.00" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#16845B" text-anchor="middle">13.4066 ns</text>
-<text x="1030.00" y="247.00" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#16845B" text-anchor="end">-10.50%</text>
-<line x1="70.00" y1="349.00" x2="1030.00" y2="349.00" stroke="#E8EEF4" stroke-width="1"/>
-<text x="90.00" y="319.00" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#102A43" text-anchor="start">CLB blocks</text>
-<text x="540.00" y="319.00" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#102A43" text-anchor="middle">188 CLB</text>
-<text x="850.00" y="319.00" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#16845B" text-anchor="middle">187 CLB</text>
-<text x="1030.00" y="319.00" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#16845B" text-anchor="end">-0.53%</text>
-<line x1="70.00" y1="421.00" x2="1030.00" y2="421.00" stroke="#E8EEF4" stroke-width="1"/>
-<text x="90.00" y="391.00" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#102A43" text-anchor="start">ABC .names nodes</text>
-<text x="540.00" y="391.00" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#102A43" text-anchor="middle">1643 nodes</text>
-<text x="850.00" y="391.00" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#64748B" text-anchor="middle">1652 nodes</text>
-<text x="1030.00" y="391.00" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#64748B" text-anchor="end">+0.55%</text>
-<text x="70.00" y="474.00" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="400" fill="#64748B" text-anchor="start">The champion uses slightly more mapped logic nodes but packs into one fewer CLB and reduces the routed timing depth.</text>
+<text x="70.00" y="50.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#0A0A0A" text-anchor="start">What changed after synthesis and routing?</text>
+<text x="70.00" y="82.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#6A6A6A" text-anchor="start">Representative seed 20 · same architecture and channel width</text>
+<text x="540.00" y="125.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#6A6A6A" text-anchor="middle">Baseline</text>
+<text x="850.00" y="125.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#0A84FF" text-anchor="middle">Accepted RTL</text>
+<line x1="70.00" y1="205.00" x2="1030.00" y2="205.00" stroke="#E5E5E5" stroke-width="1"/>
+<text x="90.00" y="175.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#0A0A0A" text-anchor="start">Timing graph levels</text>
+<text x="540.00" y="175.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#0A0A0A" text-anchor="middle">46 levels</text>
+<text x="850.00" y="175.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#0A84FF" text-anchor="middle">42 levels</text>
+<text x="1030.00" y="175.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#0A84FF" text-anchor="end">-8.70%</text>
+<line x1="70.00" y1="277.00" x2="1030.00" y2="277.00" stroke="#E5E5E5" stroke-width="1"/>
+<text x="90.00" y="247.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#0A0A0A" text-anchor="start">Critical path</text>
+<text x="540.00" y="247.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#0A0A0A" text-anchor="middle">14.9802 ns</text>
+<text x="850.00" y="247.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#0A84FF" text-anchor="middle">13.4066 ns</text>
+<text x="1030.00" y="247.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#0A84FF" text-anchor="end">-10.50%</text>
+<line x1="70.00" y1="349.00" x2="1030.00" y2="349.00" stroke="#E5E5E5" stroke-width="1"/>
+<text x="90.00" y="319.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#0A0A0A" text-anchor="start">CLB blocks</text>
+<text x="540.00" y="319.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#0A0A0A" text-anchor="middle">188 CLB</text>
+<text x="850.00" y="319.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#0A84FF" text-anchor="middle">187 CLB</text>
+<text x="1030.00" y="319.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#0A84FF" text-anchor="end">-0.53%</text>
+<line x1="70.00" y1="421.00" x2="1030.00" y2="421.00" stroke="#E5E5E5" stroke-width="1"/>
+<text x="90.00" y="391.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#0A0A0A" text-anchor="start">ABC .names nodes</text>
+<text x="540.00" y="391.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="18" font-weight="400" fill="#0A0A0A" text-anchor="middle">1643 nodes</text>
+<text x="850.00" y="391.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#6A6A6A" text-anchor="middle">1652 nodes</text>
+<text x="1030.00" y="391.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#6A6A6A" text-anchor="end">+0.55%</text>
+<text x="70.00" y="474.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="14" font-weight="400" fill="#6A6A6A" text-anchor="start">The accepted RTL uses slightly more mapped logic nodes but packs into one fewer CLB and reduces the routed timing depth.</text>
 </svg>

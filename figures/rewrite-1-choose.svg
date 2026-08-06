@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="485" viewBox="0 0 1400 485" role="img">
+<title>SHA-1 choose rewrite</title>
+<desc>Corrected baseline and accepted Boolean networks for the SHA-1 choose function in sha.v line 129.</desc>
+<rect x="0.00" y="0.00" width="1400.00" height="485.00" rx="0.00" fill="#FFFFFF" stroke="none" opacity="1.0"/>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6A6A6A"/></marker></defs>
+<text x="55.00" y="48.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#0A0A0A" text-anchor="start">Rewrite 1 · SHA-1 choose function</text>
+<rect x="40.00" y="78.00" width="640.00" height="365.00" rx="10.00" fill="#FFFFFF" stroke="#E5E5E5" opacity="1.0"/>
+<rect x="720.00" y="78.00" width="640.00" height="365.00" rx="10.00" fill="#FFFFFF" stroke="#E5E5E5" opacity="1.0"/>
+<text x="360.00" y="116.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#6A6A6A" text-anchor="middle">Corrected baseline</text>
+<text x="1040.00" y="116.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#0A84FF" text-anchor="middle">Accepted RTL</text>
+<rect x="75.00" y="145.00" width="92.00" height="46.00" rx="7.00" fill="#FFFFFF" stroke="#E5E5E5" opacity="1.0"/>
+<text x="121.00" y="174.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#0A0A0A" text-anchor="middle">B</text>
+<rect x="75.00" y="215.00" width="92.00" height="46.00" rx="7.00" fill="#FFFFFF" stroke="#E5E5E5" opacity="1.0"/>
+<text x="121.00" y="244.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#0A0A0A" text-anchor="middle">C</text>
+<rect x="75.00" y="305.00" width="92.00" height="46.00" rx="7.00" fill="#FFFFFF" stroke="#E5E5E5" opacity="1.0"/>
+<text x="121.00" y="334.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#0A0A0A" text-anchor="middle">NOT B</text>
+<rect x="75.00" y="375.00" width="92.00" height="46.00" rx="7.00" fill="#FFFFFF" stroke="#E5E5E5" opacity="1.0"/>
+<text x="121.00" y="404.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#0A0A0A" text-anchor="middle">D</text>
+<rect x="285.00" y="175.00" width="125.00" height="54.00" rx="7.00" fill="#F8FBFF" stroke="#E5E5E5" opacity="1.0"/>
+<text x="347.50" y="208.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#0A0A0A" text-anchor="middle">AND B·C</text>
+<rect x="285.00" y="335.00" width="125.00" height="54.00" rx="7.00" fill="#F8FBFF" stroke="#E5E5E5" opacity="1.0"/>
+<text x="347.50" y="368.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#0A0A0A" text-anchor="middle">AND ¬B·D</text>
+<rect x="495.00" y="255.00" width="100.00" height="54.00" rx="7.00" fill="#F8FBFF" stroke="#E5E5E5" opacity="1.0"/>
+<text x="545.00" y="288.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#0A0A0A" text-anchor="middle">XOR</text>
+<rect x="610.00" y="255.00" width="52.00" height="54.00" rx="7.00" fill="#F8FBFF" stroke="#E5E5E5" opacity="1.0"/>
+<text x="636.00" y="288.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#0A0A0A" text-anchor="middle">f1</text>
+<line x1="167.00" y1="168.00" x2="285.00" y2="190.00" stroke="#6A6A6A" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="167.00" y1="238.00" x2="285.00" y2="214.00" stroke="#6A6A6A" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="167.00" y1="328.00" x2="285.00" y2="350.00" stroke="#6A6A6A" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="167.00" y1="398.00" x2="285.00" y2="374.00" stroke="#6A6A6A" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="410.00" y1="202.00" x2="495.00" y2="270.00" stroke="#6A6A6A" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="410.00" y1="362.00" x2="495.00" y2="294.00" stroke="#6A6A6A" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="595.00" y1="282.00" x2="610.00" y2="282.00" stroke="#6A6A6A" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="755.00" y="145.00" width="92.00" height="46.00" rx="7.00" fill="#FFFFFF" stroke="#E5E5E5" opacity="1.0"/>
+<text x="801.00" y="174.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#0A0A0A" text-anchor="middle">B</text>
+<rect x="755.00" y="215.00" width="92.00" height="46.00" rx="7.00" fill="#FFFFFF" stroke="#E5E5E5" opacity="1.0"/>
+<text x="801.00" y="244.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#0A0A0A" text-anchor="middle">D</text>
+<rect x="755.00" y="305.00" width="92.00" height="46.00" rx="7.00" fill="#FFFFFF" stroke="#E5E5E5" opacity="1.0"/>
+<text x="801.00" y="334.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#0A0A0A" text-anchor="middle">NOT B</text>
+<rect x="755.00" y="375.00" width="92.00" height="46.00" rx="7.00" fill="#FFFFFF" stroke="#E5E5E5" opacity="1.0"/>
+<text x="801.00" y="404.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#0A0A0A" text-anchor="middle">C</text>
+<rect x="965.00" y="175.00" width="125.00" height="54.00" rx="7.00" fill="#EAF2FF" stroke="#0A84FF" opacity="1.0"/>
+<text x="1027.50" y="208.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#0A0A0A" text-anchor="middle">OR B+D</text>
+<rect x="965.00" y="335.00" width="125.00" height="54.00" rx="7.00" fill="#EAF2FF" stroke="#0A84FF" opacity="1.0"/>
+<text x="1027.50" y="368.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#0A0A0A" text-anchor="middle">OR ¬B+C</text>
+<rect x="1175.00" y="255.00" width="100.00" height="54.00" rx="7.00" fill="#EAF2FF" stroke="#0A84FF" opacity="1.0"/>
+<text x="1225.00" y="288.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#0A0A0A" text-anchor="middle">AND</text>
+<rect x="1290.00" y="255.00" width="52.00" height="54.00" rx="7.00" fill="#EAF2FF" stroke="#0A84FF" opacity="1.0"/>
+<text x="1316.00" y="288.00" font-family="Inter, Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#0A0A0A" text-anchor="middle">f1</text>
+<line x1="847.00" y1="168.00" x2="965.00" y2="190.00" stroke="#6A6A6A" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="847.00" y1="238.00" x2="965.00" y2="214.00" stroke="#6A6A6A" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="847.00" y1="328.00" x2="965.00" y2="350.00" stroke="#6A6A6A" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="847.00" y1="398.00" x2="965.00" y2="374.00" stroke="#6A6A6A" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="1090.00" y1="202.00" x2="1175.00" y2="270.00" stroke="#6A6A6A" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="1090.00" y1="362.00" x2="1175.00" y2="294.00" stroke="#6A6A6A" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="1275.00" y1="282.00" x2="1290.00" y2="282.00" stroke="#6A6A6A" stroke-width="2" marker-end="url(#arrow)"/>
+</svg>

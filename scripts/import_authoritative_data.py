@@ -28,16 +28,16 @@ def write_json(path: Path, payload: object) -> None:
     )
 
 
-def write_patch(baseline: Path, champion: Path, output: Path) -> None:
+def write_patch(baseline: Path, accepted: Path, output: Path) -> None:
     before = baseline.read_text(encoding="utf-8").splitlines(keepends=True)
-    after = champion.read_text(encoding="utf-8").splitlines(keepends=True)
+    after = accepted.read_text(encoding="utf-8").splitlines(keepends=True)
     output.write_text(
         "".join(
             difflib.unified_diff(
                 before,
                 after,
                 fromfile="rtl/baseline/sha.v",
-                tofile="rtl/champion/sha.v",
+                tofile="rtl/accepted/sha.v",
             )
         ),
         encoding="utf-8",
@@ -69,7 +69,7 @@ def compact_baseline(path: Path) -> dict[str, Any]:
     }
 
 
-def compact_champion(path: Path, archive_manifest: Path) -> dict[str, Any]:
+def compact_accepted(path: Path, archive_manifest: Path) -> dict[str, Any]:
     source = read_json(path)
     archive = read_json(archive_manifest)
     evidence = source["evidence"]
@@ -78,7 +78,7 @@ def compact_champion(path: Path, archive_manifest: Path) -> dict[str, Any]:
         "schema_version": 1,
         "authority": "fixed_64_seed_certification",
         "source_sha256": sha256(path),
-        "candidate_id": source["candidate_id"],
+        "candidate_id": "accepted-rtl",
         "candidate_sha256": source["trace"]["candidate_sha256"],
         "valid": source["valid"],
         "certified": source["certified"],
@@ -105,86 +105,13 @@ def compact_champion(path: Path, archive_manifest: Path) -> dict[str, Any]:
         "activity": evidence["activity"],
         "certification_seeds": evidence["seeds"],
         "raw_evidence_archive": {
-            "filename": Path(archive["archive"]).name,
+            "filename": "accepted-rtl-certification-evidence.tar.gz",
             "sha256": archive["sha256"],
             "elapsed_seconds": archive["elapsed_seconds"],
             "formal_status": archive["formal_status"],
         },
         "notes": source["notes"],
     }
-
-
-def compact_campaign(campaign_dir: Path, decision_path: Path) -> tuple[dict[str, Any], dict[str, Any]]:
-    state = read_json(campaign_dir / "campaign-state.json")
-    decision = read_json(decision_path)
-    selected_by_generation = {
-        int(row["generation"]): row.get("selected", {}).get("candidate_sha256")
-        for row in state["generations"]
-    }
-    submissions: list[dict[str, Any]] = []
-    for path in sorted(campaign_dir.glob("generation-*/submissions/*.json")):
-        payload = read_json(path)
-        report = payload.get("report", {})
-        triage = payload.get("triage_result", {})
-        generation_match = re.search(r"generation-(\d+)", str(path))
-        if generation_match is None:
-            raise ValueError(f"cannot parse generation from {path}")
-        generation = int(generation_match.group(1))
-        candidate_sha = report.get("candidate_sha256") or triage.get("candidate_sha256")
-        submissions.append(
-            {
-                "generation": generation,
-                "candidate_id": report.get("candidate_id") or triage.get("candidate_id"),
-                "candidate_sha256": candidate_sha,
-                "status": report.get("status", triage.get("status")),
-                "formal_status": report.get("formal_status", triage.get("formal_status", "not_run")),
-                "triage_pass": bool(report.get("triage_pass", triage.get("triage_pass", False))),
-                "provisional_score": report.get("provisional_score", triage.get("provisional_score")),
-                "selected": candidate_sha == selected_by_generation.get(generation),
-            }
-        )
-    formal_counts: dict[str, int] = {}
-    for row in submissions:
-        status = str(row["formal_status"])
-        formal_counts[status] = formal_counts.get(status, 0) + 1
-    unique_formal_pass = len(
-        {
-            row["candidate_sha256"]
-            for row in submissions
-            if row["formal_status"] == "pass" and row["candidate_sha256"]
-        }
-    )
-    history = {
-        "schema_version": 1,
-        "authority": "five_seed_search_history_non_certifying",
-        "generations": state["completed_generations"],
-        "submissions_total": len(submissions),
-        "formal_status_counts": formal_counts,
-        "unique_formal_pass_candidates": unique_formal_pass,
-        "submissions": submissions,
-    }
-    comparisons = {}
-    for candidate_sha, comparison in decision["comparisons_to_incumbent"].items():
-        comparisons[candidate_sha] = {
-            "candidate_id": comparison["candidate_id"],
-            "decision": comparison["decision"],
-            "score": comparison["score"],
-            "ratio_estimates": comparison["ratio_estimates"],
-            "confidence": comparison["confidence"],
-        }
-    campaign = {
-        "schema_version": 1,
-        "authority": decision["authority"],
-        "source_sha256": sha256(decision_path),
-        "contract_revision": decision["contract_revision"],
-        "decision": decision["decision"],
-        "baseline_sha256": decision["baseline_sha256"],
-        "certification_seeds": decision["certification_seeds"],
-        "champion": decision["champion"],
-        "comparisons_to_previous_incumbent": comparisons,
-        "notes": decision["notes"],
-    }
-    return history, campaign
 
 
 def extract_member(tf: tarfile.TarFile, suffix: str) -> bytes:
@@ -222,14 +149,14 @@ def parse_vpr_summary(vpr_text: str, crit_text: str, blif_text: str) -> dict[str
     }
 
 
-def netlist_summary(baseline_seed_dir: Path, champion_archive: Path) -> dict[str, Any]:
+def netlist_summary(baseline_seed_dir: Path, accepted_archive: Path) -> dict[str, Any]:
     baseline_files = {
         "vpr": (baseline_seed_dir / "vpr_stdout.log").read_bytes(),
         "crit": (baseline_seed_dir / "vpr.crit_path.out").read_bytes(),
         "blif": (baseline_seed_dir / "sha.abc.blif").read_bytes(),
     }
-    with tarfile.open(champion_archive, "r:gz") as tf:
-        champion_files = {
+    with tarfile.open(accepted_archive, "r:gz") as tf:
+        accepted_files = {
             "vpr": extract_member(tf, "/seed_20/vpr_stdout.log"),
             "crit": extract_member(tf, "/seed_20/vpr.crit_path.out"),
             "blif": extract_member(tf, "/seed_20/sha.abc.blif"),
@@ -251,7 +178,7 @@ def netlist_summary(baseline_seed_dir: Path, champion_archive: Path) -> dict[str
         "authority": "derived_from_seed_20_post_synthesis_and_post_route_artifacts",
         "seed": 20,
         "baseline": record(baseline_files),
-        "champion": record(champion_files),
+        "accepted": record(accepted_files),
     }
 
 
@@ -259,10 +186,8 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo", type=Path, required=True)
     parser.add_argument("--baseline", type=Path, required=True)
-    parser.add_argument("--champion-result", type=Path, required=True)
-    parser.add_argument("--champion-rtl", type=Path, required=True)
-    parser.add_argument("--campaign-dir", type=Path, required=True)
-    parser.add_argument("--campaign-decision", type=Path, required=True)
+    parser.add_argument("--accepted-result", type=Path, required=True)
+    parser.add_argument("--accepted-rtl", type=Path, required=True)
     parser.add_argument("--archive", type=Path, required=True)
     parser.add_argument("--archive-manifest", type=Path, required=True)
     parser.add_argument("--baseline-seed20", type=Path, required=True)
@@ -270,28 +195,31 @@ def main() -> int:
     root = args.repo.resolve()
 
     baseline = compact_baseline(args.baseline)
-    champion = compact_champion(args.champion_result, args.archive_manifest)
-    history, campaign = compact_campaign(args.campaign_dir, args.campaign_decision)
+    accepted = compact_accepted(args.accepted_result, args.archive_manifest)
+    accepted_rtl_sha256 = sha256(args.accepted_rtl)
+    if accepted_rtl_sha256 != accepted["candidate_sha256"]:
+        raise ValueError(
+            "accepted RTL SHA-256 does not match the accepted certification: "
+            f"{accepted_rtl_sha256} != {accepted['candidate_sha256']}"
+        )
     netlist = netlist_summary(args.baseline_seed20, args.archive)
 
     write_json(root / "results/baseline-certification.json", baseline)
-    write_json(root / "results/champion-certification.json", champion)
-    write_json(root / "results/search-history.json", history)
-    write_json(root / "results/campaign-decision.json", campaign)
+    write_json(root / "results/accepted-certification.json", accepted)
     write_json(root / "results/netlist-seed20-summary.json", netlist)
     write_json(
         root / "evidence/formal-proof.json",
         {
             "schema_version": 1,
-            "candidate_id": champion["candidate_id"],
-            "candidate_sha256": champion["candidate_sha256"],
+            "candidate_id": accepted["candidate_id"],
+            "candidate_sha256": accepted["candidate_sha256"],
             "formal_status": "pass",
-            "eqy_pass_marker_sha256": champion["correctness"]["eqy_pass_marker_sha256"],
-            "formal_driver_log_sha256": champion["correctness"]["formal_driver_log_sha256"],
-            "raw_evidence_archive": champion["raw_evidence_archive"],
+            "eqy_pass_marker_sha256": accepted["correctness"]["eqy_pass_marker_sha256"],
+            "formal_driver_log_sha256": accepted["correctness"]["formal_driver_log_sha256"],
+            "raw_evidence_archive": accepted["raw_evidence_archive"],
         },
     )
-    write_patch(root / "rtl/baseline/sha.v", root / "rtl/champion/sha.v", root / "rtl/baseline-to-champion.patch")
+    write_patch(root / "rtl/baseline/sha.v", root / "rtl/accepted/sha.v", root / "rtl/baseline-to-accepted.patch")
     return 0
 
 

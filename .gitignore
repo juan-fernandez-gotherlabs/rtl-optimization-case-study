@@ -5,3 +5,5 @@ __pycache__/
 tmp/
 output/
 reproduction-results/
+report/technical-report-latex.pdf
+report/technical-report-reportlab.pdf

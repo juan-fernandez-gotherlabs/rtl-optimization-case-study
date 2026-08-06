@@ -11,7 +11,7 @@ permissions:
 jobs:
   evidence:
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -22,7 +22,16 @@ jobs:
       - name: Install report dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install --yes librsvg2-bin libxml2-utils poppler-utils
+          sudo apt-get install --yes \
+            fonts-texgyre \
+            latexmk \
+            librsvg2-bin \
+            libxml2-utils \
+            poppler-utils \
+            texlive-fonts-recommended \
+            texlive-latex-extra \
+            texlive-science \
+            texlive-xetex
           python -m pip install --requirement requirements-report.txt
       - name: Verify evidence and contracts
         run: make verify test
@@ -38,4 +47,10 @@ jobs:
         run: |
           make report REPORT_PYTHON=python
           test "$(pdfinfo report/executive-summary.pdf | awk '/^Pages:/ {print $2}')" = "2"
-          test "$(pdfinfo report/technical-report.pdf | awk '/^Pages:/ {print $2}')" -ge "15"
+          test "$(pdfinfo report/technical-report.pdf | awk '/^Pages:/ {print $2}')" = "15"
+          pdftotext report/technical-report.pdf - | grep --quiet "Göther Labs"
+          git diff --exit-code -- \
+            report/latex/generated/executive-ci.csv \
+            report/latex/generated/metrics.tex \
+            report/latex/generated/paired-improvements.csv \
+            report/latex/generated/seed-clouds.csv

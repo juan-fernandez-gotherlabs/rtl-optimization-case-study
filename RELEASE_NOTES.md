@@ -1,6 +1,6 @@
-# v1.0.0 - Certified case-study release
+# v1.1.0 release candidate · client-facing evaluated result
 
-This release freezes the independent SHA-1/VTR RTL optimization case study presented in this repository.
+This release presents the corrected SHA-1 baseline and the accepted RTL revision under one frozen VTR 45 nm evaluation contract.
 
 ## Result
 
@@ -9,22 +9,18 @@ This release freezes the independent SHA-1/VTR RTL optimization case study prese
 - Energy per block: **6.14% improvement** (paired 95% CI: 5.77% to 6.52%).
 - Total area: statistically neutral.
 - Functional, NIST and pinned EQY gates: pass.
-- Certification: 64 fixed, paired and search-disjoint VPR seeds.
+- Certification: 64 fixed, paired VPR seeds.
 
-## Release assets
+## Prepared release assets
 
-- `executive-summary.pdf`: two-page decision brief.
+- `executive-summary.pdf`: decision brief in the Göther Labs visual system.
 - `technical-report.pdf`: full method, four-line diff, statistics, trade-offs and limitations.
-- `g15-wt-balanced-xor-public-evidence.tar.gz`: complete path-sanitized certification evidence.
+- `accepted-rtl-certification-evidence.tar.gz`: path-sanitized certification evidence.
 - `SHA256SUMS`: release checksum list.
 
-The public evidence archive SHA-256 is:
+The path-sanitized evidence archive is byte-identical to the certified public derivative and is published under the client-facing filename. Its SHA-256 is `413aefb29bbe9bc1d22e847cd0901c24a0bfaa675af111fbd879598a76b2874f`.
 
-```text
-413aefb29bbe9bc1d22e847cd0901c24a0bfaa675af111fbd879598a76b2874f
-```
-
-Its embedded `PUBLIC_SANITIZATION.json` identifies the certified original archive and maps all 67 modified command records from original to public hashes. No measurement value or EDA output was edited.
+This release candidate is not published until the canonical PDFs, manifest and clean-checkout build all pass on the same commit.
 
 ## Claims boundary
 

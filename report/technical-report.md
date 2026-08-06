@@ -1,367 +1,300 @@
-# Formally verified RTL optimization of a SHA-1 core
+# SHA-1 RTL optimization on VTR
 
-## Independent VTR 45 nm case study
-
-**Prepared by Juan Jose Fernandez**
+## Evaluated technical improvement by Göther Labs
 
 **Evidence snapshot:** 5 August 2026
+**Accepted RTL SHA-256:** `743e6c9ffcca6f00d35d5e73ba6f6478a9133a0c55a471c16d6e59d831aeeabc`
 
-**Champion:** `g15-wt-balanced-xor`
-**Champion RTL SHA-256:** `743e6c9ffcca6f00d35d5e73ba6f6478a9133a0c55a471c16d6e59d831aeeabc`
+> Four cycle-equivalent RTL rewrites reduce the estimated post-route composite PPA score by **5.98%** across 64 fixed, paired VPR seeds. Critical-path delay improves by **11.43%**, workload energy by **6.14%**, and total estimated area remains statistically neutral.
 
-> Four cycle-equivalent RTL rewrites improve the estimated post-route composite PPA score by **5.98%** across 64 paired, fixed and search-disjoint VPR seeds. Timing improves by **11.43%**, workload energy by **6.14%**, and total area remains statistically neutral. The result is formally proved and reproducible inside the declared open FPGA contract.
+This result is bounded to the declared open VTR 45 nm FPGA proxy. It is not an ASIC, commercial-FPGA, silicon or signoff claim.
 
-This is an independent engineering case study. It is not affiliated with or endorsed by a semiconductor company. It reports comparative estimates from an academic FPGA flow, not commercial-device measurements, ASIC signoff or manufactured silicon.
+## 1. Executive result
 
-![Certified PPA profile](../figures/certified-ppa-profile.svg)
+The accepted revision changes four continuous assignments in a sequential SHA-1 datapath. It does not alter the module interface, reset, command protocol, state progression, latency, throughput or register count.
 
-## 1. Executive finding
+| Metric | Baseline median | Accepted RTL median | Paired improvement (95% CI) |
+|---|---:|---:|---:|
+| Total area | 16,614,693 MWTA | 16,614,693 MWTA | +0.03% (-0.04%, +0.09%) · neutral |
+| Critical path | 15.0054 ns | 13.28085 ns | **+11.43%** (+10.87%, +11.98%) |
+| Energy / block | 12.3896 nJ | 11.6399 nJ | **+6.14%** (+5.77%, +6.52%) |
+| Composite PPA | 1.000000 | 0.940188 | **+5.98%** (+5.69%, +6.27%) |
 
-The experiment asks a narrow engineering question: **can a search process find a small, reviewable RTL rewrite that preserves every observable cycle while producing a better implementation under a frozen physical-design proxy?**
+![Certified baseline-versus-accepted result](../figures/certified-ppa-profile.svg)
 
-For this benchmark, the answer is yes. The certified champion changes four continuous assignments in a SHA-1 round datapath. It does not alter the module interface, reset, command protocol, state progression, latency, throughput or register count. Under the pinned VTR/VPR 45 nm FPGA model, the champion:
-
-| Metric | Corrected baseline median | Champion median | Paired estimate | Paired 95% CI |
-|---|---:|---:|---:|---:|
-| Total area | 16,614,693 MWTA | 16,614,693 MWTA | 0.03% better | -0.04% to +0.09% |
-| Critical path | 15.0054 ns | 13.28085 ns | **11.43% better** | **10.87% to 11.98%** |
-| Energy per block | 12.3896 nJ | 11.6399 nJ | **6.14% better** | **5.77% to 6.52%** |
-| Composite PPA | 1.000000 | 0.940188 | **5.98% better** | **5.69% to 6.27%** |
-
-All 64 paired seeds favor the champion for timing, energy and composite score. Area produces 14 wins, 41 exact ties and 9 losses, so it is correctly reported as neutral rather than improved.
-
-The result is attractive as a pilot because the edit is small enough for a hardware engineer to review, the functional obligation is explicit, the physical result survives implementation randomness, and every public headline can be recomputed from raw per-seed records.
+Timing, energy and composite score improve in all 64 paired implementations. Area produces 14 wins, 41 exact ties and 9 losses and is therefore reported as neutral. The result belongs to the combined four-line revision; no exact per-line PPA attribution is claimed.
 
 ## 2. What the module does
 
-The evaluated RTL is a sequential hardware implementation of SHA-1 compression. SHA-1 consumes 512-bit message blocks and updates a 160-bit internal chaining state through 80 rounds of Boolean mixing, word rotations, modular additions and a message schedule. The module exposes a narrow command/data interface rather than accepting an entire block at once:
+The evaluated module is a sequential implementation of SHA-1 compression. It accepts a 512-bit message block through a 32-bit command/data interface and updates a 160-bit chaining state through 80 rounds of Boolean mixing, rotations, a message schedule and modulo-2^32 addition. A legal block occupies 80 busy cycles.
 
 ```verilog
-module sha1(
-  input          clk_i,
-  input          rst_i,
-  input  [31:0]  text_i,
-  output [31:0]  text_o,
-  input  [3:0]   cmd_i,
-  input          cmd_w_i,
-  output [3:0]   cmd_o
-);
+module sha1(clk_i, rst_i, text_i, text_o, cmd_i, cmd_w_i, cmd_o);
+  input clk_i, rst_i, cmd_w_i;
+  input [31:0] text_i;
+  output [31:0] text_o;
+  input [3:0] cmd_i;
+  output [3:0] cmd_o;
+endmodule
 ```
 
-The frozen protocol loads message words, starts the compression operation, waits for the fixed busy interval, and reads the digest words in a defined order. A legal block occupies 80 busy cycles. Optimizations may only edit `sha.v`; the interface and all externally visible cycle behavior are immutable.
+Only `sha.v` may change. Reset behavior, command protocol, digest read order, latency, throughput and every observable cycle remain fixed.
 
-SHA-1 is no longer appropriate for new cryptographic security designs. It is used here as a legacy hardware benchmark because it combines control state, a long iterative datapath, Boolean functions and 32-bit arithmetic with authoritative known-answer vectors.
+SHA-1 is used as a legacy compute benchmark, not as a recommended security primitive. Its combination of sequential control, word-level arithmetic and nonlinear Boolean logic provides a comprehensible public vehicle for evaluating the method.
 
-## 3. Baseline provenance and correction boundary
+## 3. Baseline provenance
 
-The starting artifact comes from the VTR benchmark suite at commit `95f5c6de9e158371ba7185bf97c07a84153735d6`. The original upstream RTL does not produce the standard SHA-1 digest for the message `abc`. That defect is preserved as provenance evidence but is not used as the optimization baseline.
-
-A separate, documented conformance correction establishes the golden reference. The corrected reference produces:
+The starting artifact is the public [VTR SHA benchmark](https://github.com/verilog-to-routing/vtr-verilog-to-routing/blob/95f5c6de9e158371ba7185bf97c07a84153735d6/vtr_flow/benchmarks/verilog/sha.v) at pinned [commit `95f5c6de9e158371ba7185bf97c07a84153735d6`](https://github.com/verilog-to-routing/vtr-verilog-to-routing/commit/95f5c6de9e158371ba7185bf97c07a84153735d6). The complete [VTR repository](https://github.com/verilog-to-routing/vtr-verilog-to-routing) is linked for independent inspection. The upstream RTL does not produce the standard digest for `abc`. A separate conformance correction creates the frozen golden source:
 
 ```text
 SHA1("abc") = a9993e364706816aba3e25717850c26c9cd0d89d
 ```
 
-Its SHA-256 is:
+That correction is historical preparation and is excluded from the optimization result. Every ratio in this report compares the accepted RTL with the corrected, frozen baseline.
 
-```text
-191a4f2148a4efda7aadd24480eb13d78a1d2c0c7e8a3fcc37c44f6a8e8011e5
-```
+| Artifact | SHA-256 |
+|---|---|
+| Corrected baseline `sha.v` | `191a4f2148a4efda7aadd24480eb13d78a1d2c0c7e8a3fcc37c44f6a8e8011e5` |
+| Accepted `sha.v` | `743e6c9ffcca6f00d35d5e73ba6f6478a9133a0c55a471c16d6e59d831aeeabc` |
 
-The conformance correction is explicitly excluded from the optimization result. Every ratio in this report compares the champion with this corrected and frozen reference.
+## 4. Evaluation contract
 
-## 4. Frozen evaluation contract
+A PPA comparison is meaningful only when baseline and accepted RTL share the same functional, physical and statistical contract.
 
-An optimization result is meaningful only relative to a fixed contract. This case study freezes:
+| Contract dimension | Frozen choice |
+|---|---|
+| Editable artifact | `sha.v` only; source frozen by SHA-256 |
+| Functional behavior | Exact interface, reset, protocol, latency, output order and cycle behavior |
+| Conformance | NIST SHA-1 Short and Long Message corpus; 129 cases |
+| Formal | EQY commit `6734d8c2...`; fail closed; 2 CPU, 7 GB, 10 min |
+| Physical flow | VTR/VPR commit `95f5c6de...` under pinned Linux/amd64 image |
+| Architecture | `k6_N10_I40_Fi6_L4_frac0_ff1_45nm.xml` |
+| Power | VTR PTM45, 0.9 V, 85 °C; fixed active and idle traces |
+| PPA sample | 64 fixed, paired VPR seeds |
+| Primary metrics | Total MWTA, critical-path delay and energy per completed block |
 
-- the `sha1` interface and `sha.v` as the only editable artifact;
-- reset behavior, command protocol, latency, output order and cycle-visible behavior;
-- NIST SHAVS Short and Long Message vectors and their hashes;
-- VTR/VPR commit `95f5c6de9e158371ba7185bf97c07a84153735d6`;
-- architecture `k6_N10_I40_Fi6_L4_frac0_ff1_45nm.xml` and its SHA-256;
-- VTR PTM45 properties at 0.9 V and 85 C;
-- two 5,000-cycle ACE activity profiles and their hashes;
-- search and certification seed pools;
-- EQY and MCY versions, resource limits and fail-closed behavior;
-- primary metrics, score equation and acceptance thresholds.
+The RTL cannot alter testbenches, activity, architecture, tool flags, seeds or parsers. Acceptance is owned by the evaluator and not by the mechanism that proposed the source change.
 
-The complete machine-readable definition is in [`contract/sha_vtr_manifest.json`](../contract/sha_vtr_manifest.json). Candidates are frozen by SHA-256 before evaluation so that correctness, PPA and the published artifact cannot refer to different source files.
+## 5. Verification before PPA
 
-## 5. Verification-first evaluation
+![Verification-first evaluation contract](../figures/verification-pipeline.svg)
 
-![Verification-first pipeline](../figures/verification-pipeline.svg)
+The accepted revision passes:
 
-PPA is not measured until lower-cost correctness gates pass:
+1. Interface, source-policy, lint and synthesis checks.
+2. Reset, protocol, latency and cycle-trace regression.
+3. NIST SHAVS Short and Long Message conformance.
+4. Conservative sequential EQY equivalence after reset.
+5. Route, timing, power and evidence-integrity checks for all 64 seeds.
 
-1. **Source and interface gate.** Reject multiple modules, forbidden simulation constructs, interface drift and non-synthesizable submissions.
-2. **Compile and functional gate.** Run the fixed cycle-level protocol, the `abc` known-answer test and a representative regression.
-3. **NIST gate.** Run 129 SHA-1 Short and Long Message conformance cases.
-4. **Formal gate.** EQY proves the candidate equivalent to the corrected reference. Timeout, inconclusive or failure invalidates the candidate.
-5. **PPA search gate.** Five exposed paired VPR seeds provide provisional ranking, never certification.
-6. **Certification gate.** A fixed disjoint pool of 64 paired seeds decides whether a finalist is accepted.
+EQY compares public outputs and stable internal cut points. Failure, timeout or inconclusive status invalidates the RTL. The proof strategy is intentionally conservative: it can reject a legal but structurally distant redesign, but a reported pass remains a proof under the declared model.
 
-This order prevents compute from being spent on known-incorrect designs and prevents a statistically attractive but functionally different design from becoming a shortlist leader.
+The verification stack was qualified with 500 deterministic MCY mutations of the corrected baseline. This is neither a comparison across proposed candidates nor an accepted-RTL-versus-baseline PPA measurement:
 
-### 5.1 Formal scope
-
-The EQY proof is unbounded and cycle-exact after reset, comparing public outputs in every cycle. The configuration also uses stable internal cut points to make the proof tractable on the declared 2-CPU, 7-GB, ten-minute envelope. It therefore proves the local structure-preserving transformations in this case study, but it may conservatively reject a functionally equivalent design that recodes state, retimes registers or replaces the microarchitecture.
-
-That conservatism creates possible false negatives in the search space. It does not weaken a successful proof.
-
-### 5.2 Verification qualification
-
-The functional and formal stack was challenged with 500 deterministic MCY mutations:
-
-| Outcome | Count |
+| MCY result | Count |
 |---|---:|
 | Detected by simulation | 454 |
 | Rejected only by formal | 28 |
 | Proved equivalent | 18 |
 | Inconclusive | 0 |
 
-All 482 functionally distinguishable mutations were rejected. The 18 surviving mutations were formally equivalent and therefore are not test escapes. This is test-suite qualification, not a claim that mutation coverage proves absence of all defects.
+Of the 500 mutations, 18 were formally proved equivalent. All 482 functionally distinguishable mutations were rejected: 454 by simulation and 28 only by formal. Mutation qualification measures the sensitivity of the combined test and formal stack; it is not a claim that mutation testing proves absence of every possible defect.
 
 ## 6. The four RTL rewrites
 
-The complete baseline-to-champion patch is:
+The complete baseline-to-accepted patch comes from `sha.v`. The line numbers are identical in the corrected baseline and accepted RTL:
 
 ```diff
--assign SHA1_f1_BCD = (B & C) ^ (~B & D);
-+assign SHA1_f1_BCD = (B | D) & ((~B) | C);
+sha.v:129  - assign SHA1_f1_BCD = (B & C) ^ (~B & D);
+sha.v:129  + assign SHA1_f1_BCD = (B | D) & ((~B) | C);
 
--assign SHA1_f3_BCD = (B & C) ^ (C & D) ^ (B & D);
-+assign SHA1_f3_BCD = (B & D) | (C & (B ^ D));
+sha.v:131  - assign SHA1_f3_BCD = (B & C) ^ (C & D) ^ (B & D);
+sha.v:131  + assign SHA1_f3_BCD = (B & D) | (C & (B ^ D));
 
--assign SHA1_Wt_1 = W13 ^ W8 ^ W2 ^ W0;
-+assign SHA1_Wt_1 = (W13 ^ W8) ^ (W2 ^ W0);
+sha.v:141  - assign SHA1_Wt_1 = W13 ^ W8 ^ W2 ^ W0;
+sha.v:141  + assign SHA1_Wt_1 = (W13 ^ W8) ^ (W2 ^ W0);
 
--assign next_A = {A[26:0],A[31:27]} + SHA1_ft_BCD + E + Kt + Wt;
-+assign next_A = ({A[26:0],A[31:27]} + SHA1_ft_BCD) + (E + Kt + Wt);
+sha.v:144  - assign next_A = {A[26:0],A[31:27]} + SHA1_ft_BCD + E + Kt + Wt;
+sha.v:144  + assign next_A = ({A[26:0],A[31:27]} + SHA1_ft_BCD) + (E + Kt + Wt);
 ```
 
-No register, state transition, port or protocol statement changed.
+### 6.1 Choose function
 
-### 6.1 Round function f1: choose in product-of-sums form
+Source: `sha.v:129` in both frozen revisions.
 
-The baseline implements the SHA-1 choose function as:
+![Conceptual logic comparison for the choose rewrite](../figures/rewrite-1-choose.svg)
 
-\[
-f_1(B,C,D)=(B\land C)\oplus(\lnot B\land D)
-\]
-
-The two terms are mutually exclusive: `B` and `not B` cannot both be one. XOR is therefore equivalent to OR, and Boolean algebra yields:
+Why they are equivalent:
 
 \[
-(B\land C)\lor(\lnot B\land D)=(B\lor D)\land(\lnot B\lor C)
+\begin{aligned}
+F &= BC \oplus (\neg B)D \\
+  &= BC \lor (\neg B)D \\
+  &= (B \lor D)((\neg B) \lor C)
+\end{aligned}
 \]
 
-The new expression exposes a product-of-sums topology to synthesis. Which form maps better is target-dependent; the circuit-level EQY proof, rather than the algebra alone, is the acceptance authority.
+The products `BC` and `not-B·D` are mutually exclusive because `B` and `not-B` cannot both be one, so their XOR equals OR. Expanding the accepted product-of-sums gives `BC OR not-B·D OR CD`. The `CD` consensus term is redundant: when `C=D=1`, either `B=1` makes `BC` true or `B=0` makes `not-B·D` true. Both forms therefore select `C` when `B` is one and `D` otherwise. EQY proved the complete sequential circuit cycle-equivalent.
 
-### 6.2 Round function f3: factored majority
+### 6.2 Majority function
 
-The baseline majority expression is:
+Source: `sha.v:131` in both frozen revisions.
+
+![Conceptual logic comparison for the majority rewrite](../figures/rewrite-2-majority.svg)
+
+Why they are equivalent:
 
 \[
-f_3(B,C,D)=BC\oplus CD\oplus BD
+\begin{aligned}
+M &= BC \oplus CD \oplus BD \\
+  &= BD \oplus C(B \oplus D) \\
+  &= BD \lor C(B \oplus D)
+\end{aligned}
 \]
 
-The champion uses:
+The first two lines are the same XOR polynomial after factoring `C` from `BC XOR CD`. The terms `BD` and `B XOR D` cannot both be one: if `BD=1`, then `B=D=1` and `B XOR D=0`. Their XOR can therefore be replaced by OR. If `B` equals `D`, their shared value decides the majority; if they differ, `C` decides it. EQY proved the identity over the complete circuit.
+
+### 6.3 Balanced message-schedule XOR
+
+Source: `sha.v:141` in both frozen revisions.
+
+![Conceptual logic comparison for the balanced XOR rewrite](../figures/rewrite-3-xor.svg)
+
+Why they are equivalent:
 
 \[
-f_3(B,C,D)=BD\lor C(B\oplus D)
+\begin{aligned}
+X &= W_{13} \oplus W_8 \oplus W_2 \oplus W_0 \\
+  &= (W_{13} \oplus W_8) \oplus (W_2 \oplus W_0)
+\end{aligned}
 \]
 
-If `B` equals `D`, `BD` provides the majority value and `B xor D` is zero. If they differ, the majority is exactly `C`. This form therefore implements the same three-input majority truth table with a different factorization.
+Bitwise XOR is associative at every bit position, so regrouping changes no result bit and introduces no carry. The parentheses expose two parallel first-level operations before the final XOR. A synthesizer may rebalance the baseline itself, but explicit RTL grouping can influence intermediate optimization, LUT packing and routing topology. EQY proved the same observable state sequence.
 
-### 6.3 Message schedule: explicitly balanced XOR
+### 6.4 Reassociated round accumulator
 
-Bitwise XOR is associative, so:
+Source: `sha.v:144` in both frozen revisions. Here `R` denotes rotate-left-by-5 of `A`, and `f` denotes `SHA1_ft_BCD`.
+
+![Conceptual logic comparison for the accumulator rewrite](../figures/rewrite-4-accumulator.svg)
+
+Why they are equivalent:
 
 \[
-W_{13}\oplus W_8\oplus W_2\oplus W_0
-=
-(W_{13}\oplus W_8)\oplus(W_2\oplus W_0)
+\begin{aligned}
+S &= (R + f + E + K_t + W_t) \bmod 2^{32} \\
+  &= ((R + f) + (E + K_t + W_t)) \bmod 2^{32}
+\end{aligned}
 \]
 
-The parentheses make two parallel first-level operations explicit. Synthesis is free to rebalance the baseline, but source topology can influence intermediate optimization and LUT mapping.
+Every operand and the assigned result is a 32-bit unsigned vector. Addition is associative modulo `2^32`: discarding an overflow carry at an intermediate grouping cannot change the final low 32 bits. The accepted form changes the exposed dependency structure, not the numerical result. This identity depends on the declared widths and unsigned vector semantics, so EQY also confirmed the actual Verilog interpretation over the complete sequential design.
 
-### 6.4 Round accumulator: reassociated modulo addition
+## 7. PPA environment and statistics
 
-Each signal is 32 bits and assignment truncates the result modulo \(2^{32}\). Modular addition is associative:
+The target is VTR's homogeneous `k6_N10_I40_Fi6_L4_frac0_ff1_45nm` architecture: six-input LUTs clustered ten per logic block, with the architecture's routing and timing model. Power uses VTR PTM45 properties at 0.9 V and 85 °C. MWTA is a minimum-width-transistor-area abstraction, not physical square-micrometer area.
+
+Two 5,000-cycle ACE traces are frozen and hashed. The active trace continuously executes diverse legal blocks and completes 60 blocks; the idle trace keeps the clock active after reset with an inactive interface. Both power analyses reuse the same placement and route.
+
+```text
+Energy per block = active total power × routed workload time / 60 blocks
+```
+
+Baseline and accepted RTL use the same 64 VPR seeds. Ratios are analyzed in log space because PPA comparisons are multiplicative. The per-seed composite is:
 
 \[
-((((R+A_f)+E)+K)+W)\bmod 2^{32}
-=
-((R+A_f)+(E+K+W))\bmod 2^{32}
+r_s = \sqrt[3]{r_{A,s}\,r_{D,s}\,r_{E,s}}
 \]
 
-The champion exposes two partial sums before the final combination. This can shorten an inferred dependency chain even though the mathematical sum and word width are unchanged.
+The published estimate is `exp(mean(log(r_s)))`. Two-sided 95% Student-t intervals use 63 degrees of freedom. The baseline is exactly 1.0 in paired-ratio space by construction; its absolute seed-to-seed variability remains available in the raw records.
 
-### 6.5 What can and cannot be attributed
+Acceptance requires every correctness and integrity gate to pass, at least one primary metric to improve materially, no primary metric to show statistical evidence of regression and the composite one-sided 95% upper bound to remain below 1.0.
 
-The certified result belongs to the **combined four-line candidate**. No four-way ablation experiment was certified across 64 seeds, so this report does not assign an exact timing or energy contribution to any individual line. The Boolean identities explain correctness; post-synthesis and post-route evidence explains the cumulative implementation effect.
+## 8. Certified result
 
-EQY proves that the combined source is cycle-equivalent to the corrected baseline over the full sequential circuit.
+![Every paired implementation](../figures/paired-seed-distributions.svg)
 
-## 7. Search campaign and selection
+| Metric | Wins / ties / losses |
+|---|---:|
+| Area | 14 / 41 / 9 |
+| Timing | 64 / 0 / 0 |
+| Energy | 64 / 0 / 0 |
+| Composite | 64 / 0 / 0 |
 
-The 20-generation search evaluated 46 submissions. Forty-one reached formal pass, one failed formal, and four were rejected before formal because an earlier correctness gate failed. After deduplication, 29 unique formal-pass candidates entered PPA consideration.
+The paired estimate is the inferential headline. A ratio of medians is similar but not identical because the median of ratios is not generally the ratio of medians.
 
-![Search evolution](../figures/search-evolution.svg)
+### 8.1 Power and energy are different quantities
 
-Five exposed seeds kept iterative evaluation affordable. They were deliberately non-certifying. The strongest provisional generation-16 candidate achieved a lower five-seed search score than generation 15, but the 64-seed pool exposed an area regression and vetoed it. Generation 15 was the only finalist that satisfied the complete acceptance rule.
+| Informative metric | Baseline median | Accepted RTL median | Raw median change |
+|---|---:|---:|---:|
+| Fmax | 66.6426 MHz | 75.2964 MHz | +12.99% |
+| Active total power | 9.9125 mW | 10.4900 mW | +5.83% |
+| Active dynamic power | 5.0713 mW | 5.7018 mW | +12.43% |
+| Active static power | 4.8394 mW | 4.7916 mW | -0.99% |
+| Idle total power | 4.4670 mW | 4.6550 mW | +4.21% |
+| Energy / block | 12.3896 nJ | 11.6399 nJ | -6.05% |
 
-This is a useful negative result: a small search sample was sufficient for ranking hypotheses but not for making the final engineering claim.
+The accepted RTL consumes more active power per unit time but less modeled energy per completed block because it finishes the workload sooner. A product constrained by peak power, thermal density or idle power could use a different acceptance policy.
 
-## 8. PPA environment
-
-### 8.1 Technology and architecture
-
-The measurement target is VTR's open homogeneous FPGA architecture `k6_N10_I40_Fi6_L4_frac0_ff1_45nm.xml`: six-input LUTs grouped in clusters of ten, with the architecture's routing and timing model. Power uses VTR's PTM45 technology properties at 0.9 V and 85 C.
-
-This makes the experiment open and reproducible, but not directly portable to an ASIC or commercial FPGA. MWTA is VTR's minimum-width-transistor-area abstraction, not square micrometers.
-
-### 8.2 Activity and energy
-
-ACE consumes frozen 5,000-cycle activity traces aligned to the synthesized BLIF ports. The active trace continuously processes legal blocks and completes 60 blocks. The idle trace releases reset, keeps the clock active and leaves the interface inactive.
-
-Workload energy is computed as:
-
-\[
-E_{block}=\frac{P_{active,total}\;T_{workload}}{N_{blocks}}
-\]
-
-where workload time uses the routed critical-path period for that seed and design. The same placement and route are reused for active and idle power analysis.
-
-## 9. Metrics, statistics and acceptance
-
-The three minimizable primary metrics are total area \(A\), critical-path delay \(D\), and energy per block \(E\). For each paired seed, the composite ratio is:
-
-\[
-r_s=(r_{A,s}r_{D,s}r_{E,s})^{1/3}
-\]
-
-The public estimate is calculated in log space:
-
-\[
-\hat r=\exp\left(\frac{1}{n}\sum_{s=1}^{n}\log r_s\right)
-\]
-
-Student-t bounds with 63 degrees of freedom form the two-sided 95% confidence intervals. Pairing candidate and baseline by identical VPR seed removes much of the between-seed placement/routing variation.
-
-The declared acceptance rule requires:
-
-- functional, NIST, synthesis, formal, route and power success;
-- at least one material primary-metric improvement;
-- no statistically supported regression in any primary metric;
-- an upper one-sided 95% bound below 1.0 for the composite score;
-- no forbidden worst-case regression under the fixed policy.
-
-The 64-seed sample size and stopping point were fixed before finalist inspection. It was not extended after seeing a borderline outcome.
-
-## 10. Certified result
-
-![Paired seed distributions](../figures/paired-seed-distributions.svg)
-
-| Quantity | Baseline | Champion | Interpretation |
-|---|---:|---:|---|
-| CLB blocks | 188 | 187 | One fewer in the representative seed; medians are implementation summaries |
-| Registers | 892 | 892 | No architectural state reduction |
-| Channel width | 46 | 46 | Same routed channel width |
-| Critical-path median | 15.0054 ns | 13.28085 ns | 11.49% raw median reduction |
-| Fmax median | 66.6426 MHz | 75.2964 MHz | 12.99% raw median increase |
-| Active total power median | 9.9125 mW | 10.4900 mW | 5.83% increase |
-| Active static power median | 4.8394 mW | 4.7916 mW | 0.99% decrease |
-| Active dynamic power median | 5.0713 mW | 5.7018 mW | 12.43% increase |
-| Energy median | 12.3896 nJ/block | 11.6399 nJ/block | 6.05% raw median reduction |
-
-The paired estimates, not the ratio of medians, are the inferential result. Those estimates are 11.43% timing improvement, 6.14% energy improvement and 5.98% composite improvement.
-
-### 10.1 Power is not energy
-
-The champion is faster but switches more power per unit time in the active profile. Its active total-power median increases by 5.83%. Because each workload finishes in less modeled time, energy per completed block decreases by 6.14% in the paired estimate.
-
-This is beneficial for an energy-per-operation objective. It could be unacceptable for a strict instantaneous power cap. A customer pilot must declare whether power, energy, thermal density or throughput is the controlling objective rather than treating them as interchangeable.
-
-## 11. Representative implementation evidence
+## 9. Representative implementation evidence
 
 ![Representative post-route evidence](../figures/netlist-evidence.svg)
 
-For paired seed 20, with the same architecture and channel width:
+For seed 20, the accepted RTL has nine more ABC `.names` nodes, packs into one fewer CLB and reduces the timing graph by four levels. This rules out the simplistic explanation that fewer generic mapped nodes caused the result. The supported interpretation is that the changed topology gives VTR a more favorable packing and routing solution.
 
-- the VPR timing graph falls from 46 to 42 levels;
-- critical-path delay falls from 14.9802 ns to 13.4066 ns;
-- packing uses 187 instead of 188 CLBs;
-- ABC `.names` nodes rise from 1,643 to 1,652.
+Seed 20 is illustrative, not the statistical proof. Repeatability comes from the 64 paired implementations.
 
-The increase in mapped nodes is important: the champion is not merely a smaller Boolean network according to every count. It is a topology that VTR packs and routes more effectively. The seed-20 evidence is illustrative; the 64-seed paired statistics establish repeatability.
+## 10. Reproducibility
 
-## 12. Reproducibility and audit trail
-
-The repository supports two levels of reproduction.
-
-### 12.1 Fast offline audit
+The fast offline audit needs Python 3 only:
 
 ```bash
 make verify
 ```
 
-This command recomputes RTL hashes, checks the 64 paired records, rebuilds the log-ratio estimates and confidence intervals, and re-applies the acceptance decision without Docker or EDA tools.
+It checks RTL identities, formal and NIST references, exact 64-seed pairing, metric log-ratio estimates, confidence intervals and the acceptance conditions.
 
-### 12.2 Full pinned rerun
+The full pinned rerun starts with:
 
-The `reproduce/` snapshot contains the exact evaluator, test assets, Dockerfile and lock file. A clean Linux/amd64 image checks out pinned tool revisions. Runtime evaluation is limited to two CPUs, 7 GB RAM, 512 processes and no network.
+```bash
+./reproduce/build-image.sh
+./reproduce/run-candidate.sh \
+  rtl/accepted/sha.v \
+  certification \
+  /absolute/new/results/certification \
+  accepted-rtl-reproduction
+```
 
-The champion certification completed in 1,091.82 seconds on the qualified Apple Silicon laptop. Wall time is host-dependent; parsed implementation results are tied to the frozen tool image and seed contract.
+The Linux/amd64 container is capped at two CPUs, 7 GB RAM and 512 processes with runtime networking disabled. The certified run completed in 1,091.82 seconds on the qualified Apple Silicon laptop. Host contention affects wall time, not source hashes, seeds or parsed implementation results.
 
-The 70 MB complete evidence is distributed as a path-sanitized release asset rather than committed to Git. Its embedded `PUBLIC_SANITIZATION.json` maps every redacted command record from its original hash to its public hash. The certified original archive identity remains recorded in [`REPRODUCIBILITY.md`](../REPRODUCIBILITY.md) and the evidence manifest.
+The complete generated archive is identified by SHA-256 `9983b1fef4509b9a9a592af8134be39eaa7545e5269ac7332206e86db7cce3e8` and is distributed separately from normal Git history.
 
-## 13. Limitations
+## 11. Limits and customer transfer
 
-This case study does not provide:
+This report does not provide:
 
 - ASIC synthesis, place-and-route or signoff;
-- a commercial FPGA implementation;
-- extracted parasitics, multi-corner analysis, IR drop, electromigration, DRC/LVS or silicon measurement;
-- proof that the same source edits help another technology, architecture or workload;
-- a production-ready SHA-1 recommendation;
-- exact attribution of benefit to each of the four lines.
+- commercial-FPGA implementation data;
+- extracted parasitics, PVT corners, clock-tree signoff, IR drop, EM, DRC/LVS, package, yield or production-test analysis;
+- proof that the same source edits improve another architecture, technology or workload;
+- exact PPA attribution to an individual rewrite;
+- a recommendation to use SHA-1 in a new security design.
 
-The formal strategy is intentionally structure-aware, and the statistics model implementation-seed variation only. See [`LIMITATIONS.md`](../LIMITATIONS.md) for the complete claims boundary.
+The 64-seed confidence interval models implementation-seed variability. It does not model process, voltage, temperature, workload or tool-version uncertainty.
 
-## 14. What transfers to a customer pilot
-
-The reusable outcome is not the SHA-1 rewrite itself. It is the controlled optimization method:
-
-1. freeze the customer's functional and implementation contract;
-2. retain a clean golden source and hash every submission;
-3. run correctness and formal equivalence before expensive PPA;
-4. use a small paired seed pool for search;
-5. certify only a fixed shortlist with a larger disjoint pool;
-6. publish raw metrics, uncertainty, trade-offs and negative finalists;
-7. reproduce the winner from a clean environment before delivery.
-
-For proprietary RTL, the same structure can wrap customer-owned simulators, formal tools, libraries, constraints, power activity and signoff reports. The customer, not this academic proxy, must define the acceptance boundary.
-
-## 15. Conclusion
-
-A four-line, cycle-equivalent RTL change produced a repeatable 5.98% improvement in equal-weight composite area-delay-energy score under the declared VTR 45 nm contract. The area estimate remained neutral; timing and energy improved in every paired seed. Formal equivalence, NIST vectors, mutation qualification and clean evidence recomputation make the claim reviewable rather than anecdotal.
-
-The result demonstrates a disciplined service pattern: optimization proposals remain unconstrained, but acceptance is controlled by a frozen, fail-closed, statistically explicit evaluator.
+A customer pilot would replace the academic proxy with customer-owned RTL, formal strategy, libraries, constraints, activity, tools and signoff policy. The transferable deliverable is the combination of a small inspectable change and an evaluator that can justify acceptance to the engineers responsible for the system.
 
 ## Appendix A. Evidence identities
 
 | Artifact | SHA-256 |
 |---|---|
 | Corrected baseline `sha.v` | `191a4f2148a4efda7aadd24480eb13d78a1d2c0c7e8a3fcc37c44f6a8e8011e5` |
-| Champion `sha.v` | `743e6c9ffcca6f00d35d5e73ba6f6478a9133a0c55a471c16d6e59d831aeeabc` |
+| Accepted `sha.v` | `743e6c9ffcca6f00d35d5e73ba6f6478a9133a0c55a471c16d6e59d831aeeabc` |
 | EQY PASS marker | `ba3b47c5fbb189844a827ae395e816024c967b83444a06eccb71f9e34498ab07` |
 | EQY driver log | `203f2ab1a1db8aadcbdbf5be88e5478b1abcb51e213e941557889e1474b9cbce` |
-| Full champion archive | `9983b1fef4509b9a9a592af8134be39eaa7545e5269ac7332206e86db7cce3e8` |
+| Complete certification archive | `9983b1fef4509b9a9a592af8134be39eaa7545e5269ac7332206e86db7cce3e8` |
 
 ## Appendix B. Primary references
 
-- VTR/VPR documentation: <https://docs.verilogtorouting.org/en/latest/vpr/>
+- VTR/VPR: <https://docs.verilogtorouting.org/en/latest/vpr/>
 - VTR power estimation: <https://docs.verilogtorouting.org/en/latest/vtr/power_estimation/>
-- EQY sequential equivalence checking: <https://github.com/YosysHQ/eqy>
-- NIST Secure Hashing validation: <https://csrc.nist.gov/projects/cryptographic-algorithm-validation-program/secure-hashing>
+- EQY: <https://github.com/YosysHQ/eqy>
+- NIST secure hashing validation: <https://csrc.nist.gov/projects/cryptographic-algorithm-validation-program/secure-hashing>
