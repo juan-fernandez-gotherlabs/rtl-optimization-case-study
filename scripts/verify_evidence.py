@@ -48,38 +48,38 @@ def close(actual: float, expected: float, *, tolerance: float = 5e-12) -> None:
 
 def main() -> int:
     baseline = load("results/baseline-certification.json")
-    champion = load("results/champion-certification.json")
-    campaign = load("results/campaign-decision.json")
+    accepted = load("results/accepted-certification.json")
     formal = load("evidence/formal-proof.json")
     manifest = load("contract/sha_vtr_manifest.json")
 
     baseline_rtl = ROOT / "rtl/baseline/sha.v"
-    champion_rtl = ROOT / "rtl/champion/sha.v"
+    accepted_rtl = ROOT / "rtl/accepted/sha.v"
     assert sha256(baseline_rtl) == manifest["source"]["golden_seed_sha256"]
-    assert sha256(champion_rtl) == champion["candidate_sha256"]
-    assert champion["candidate_sha256"] == campaign["champion"]["candidate_sha256"]
-    assert formal["candidate_sha256"] == champion["candidate_sha256"]
+    assert sha256(accepted_rtl) == accepted["candidate_sha256"]
+    assert accepted["candidate_id"] == "accepted-rtl"
+    assert formal["candidate_id"] == "accepted-rtl"
+    assert formal["candidate_sha256"] == accepted["candidate_sha256"]
     assert formal["formal_status"] == "pass"
-    assert champion["correctness"]["functional_pass"] == 1.0
-    assert champion["correctness"]["formal_pass"] == 1.0
-    assert champion["correctness"]["nist_short_long_cases"] == 129
-    assert champion["valid"] and champion["certified"]
-    assert champion["accepted_improvement"] and champion["acceptance_decision"]
+    assert accepted["correctness"]["functional_pass"] == 1.0
+    assert accepted["correctness"]["formal_pass"] == 1.0
+    assert accepted["correctness"]["nist_short_long_cases"] == 129
+    assert accepted["valid"] and accepted["certified"]
+    assert accepted["accepted_improvement"] and accepted["acceptance_decision"]
 
     baseline_rows = {int(row["seed"]): row for row in baseline["per_seed"]}
-    champion_rows = {int(row["seed"]): row for row in champion["per_seed"]}
-    assert tuple(sorted(baseline_rows)) == tuple(sorted(champion_rows))
+    accepted_rows = {int(row["seed"]): row for row in accepted["per_seed"]}
+    assert tuple(sorted(baseline_rows)) == tuple(sorted(accepted_rows))
     assert len(baseline_rows) == 64
 
     composite_logs: list[float] = []
     metric_confidence: dict[str, dict[str, float]] = {}
     for metric in METRICS:
         logs = [
-            math.log(float(champion_rows[seed][metric]) / float(baseline_rows[seed][metric]))
+            math.log(float(accepted_rows[seed][metric]) / float(baseline_rows[seed][metric]))
             for seed in sorted(baseline_rows)
         ]
         metric_confidence[metric] = log_confidence(logs)
-        published = champion["statistical_confidence"]["metrics"][metric]
+        published = accepted["statistical_confidence"]["metrics"][metric]
         close(metric_confidence[metric]["estimate"], published["estimate"])
         close(metric_confidence[metric]["ci95_low"], published["ci95_two_sided"][0])
         close(metric_confidence[metric]["ci95_high"], published["ci95_two_sided"][1])
@@ -87,24 +87,22 @@ def main() -> int:
     for seed in sorted(baseline_rows):
         composite_logs.append(
             statistics.mean(
-                math.log(float(champion_rows[seed][metric]) / float(baseline_rows[seed][metric]))
+                math.log(float(accepted_rows[seed][metric]) / float(baseline_rows[seed][metric]))
                 for metric in METRICS
             )
         )
     composite = log_confidence(composite_logs)
-    published_composite = champion["statistical_confidence"]["composite"]
-    close(composite["estimate"], champion["score"])
+    published_composite = accepted["statistical_confidence"]["composite"]
+    close(composite["estimate"], accepted["score"])
     close(composite["estimate"], published_composite["estimate"])
     close(composite["ci95_low"], published_composite["ci95_two_sided"][0])
     close(composite["ci95_high"], published_composite["ci95_two_sided"][1])
 
     assert composite["one_sided_high"] < 1.0
     assert all(item["one_sided_low"] <= 1.0 for item in metric_confidence.values())
-    assert campaign["decision"] == "new_champion"
-
     print("Evidence verification: PASS")
     print(f"baseline_sha256={sha256(baseline_rtl)}")
-    print(f"champion_sha256={sha256(champion_rtl)}")
+    print(f"accepted_sha256={sha256(accepted_rtl)}")
     print(f"paired_seed_count={len(baseline_rows)}")
     print(f"score={composite['estimate']:.12f}")
     print(

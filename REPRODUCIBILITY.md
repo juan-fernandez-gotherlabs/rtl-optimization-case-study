@@ -1,6 +1,6 @@
 # Reproducibility
 
-The repository separates a fast audit of published evidence from a complete physical rerun. This prevents a cached report from being mistaken for a new measurement and makes the expected cost explicit.
+The repository separates a fast audit of the published baseline-versus-accepted evidence from a complete physical rerun. A cached report is never presented as a new measurement.
 
 ## 1. Offline evidence audit
 
@@ -12,12 +12,12 @@ make verify
 
 The verifier:
 
-1. Checks the SHA-256 identities of the corrected baseline and champion RTL.
-2. Confirms the 64 baseline and champion seed sets are identical.
+1. Checks the SHA-256 identities of the corrected baseline and accepted RTL.
+2. Confirms that both records contain the same 64 implementation seeds.
 3. Recomputes metric and composite paired log ratios.
 4. Recomputes two-sided and one-sided Student-t confidence bounds.
-5. Reapplies the fixed acceptance rule.
-6. Checks the published formal, functional and NIST status references.
+5. Reapplies the published acceptance conditions.
+6. Checks the formal, functional and NIST evidence references.
 
 Expected composite output:
 
@@ -26,20 +26,25 @@ score=0.940187630028
 score_ci95=[0.937274457714, 0.943109856865]
 ```
 
-## 2. Figure regeneration
+## 2. Figure and report regeneration
+
+Linux report requirements:
+
+- Python 3.11 or newer and `requirements-report.txt`;
+- `latexmk`, XeLaTeX, `texlive-latex-extra` and `texlive-fonts-recommended`;
+- the open TeX Gyre fonts;
+- Poppler-compatible PDF inspection tools.
 
 ```bash
 make figures
-```
-
-The SVG figures are generated directly from the compact certified JSON, not from screenshots or hand-entered chart values.
-
-The presentation PDFs require the pinned Python dependency and `rsvg-convert`:
-
-```bash
+make equations  # only after editing report/equations/*.tex
 python3 -m pip install -r requirements-report.txt
 make report
 ```
+
+Figures are generated directly from the compact 64-seed records. Equations are generated as vector SVG paths from checked-in standalone LaTeX sources and require `pdflatex` plus `pdftocairo` only when regenerated. The canonical technical PDF is compiled from `report/latex/technical-report.tex`; its tables and plots are generated from the certified JSON records. The executive PDF is generated with ReportLab. Neither artifact uses screenshots or manually entered chart values.
+
+The Makefile fixes `SOURCE_DATE_EPOCH` to the evidence date and uses TeX Gyre Heros/Cursor by file name so compilation does not depend on host-installed proprietary fonts.
 
 ## 3. Pinned measurement image
 
@@ -54,66 +59,57 @@ Requirements:
 ./reproduce/build-image.sh
 ```
 
-The script checks out VTR recursively at commit `95f5c6de9e158371ba7185bf97c07a84153735d6` and builds the exact Dockerfile embedded in the frozen evaluator snapshot. Runtime candidate evaluation disables networking and caps the container at 2 CPUs, 7 GB RAM and 512 processes.
+The script checks out VTR recursively at commit `95f5c6de9e158371ba7185bf97c07a84153735d6` and builds the embedded Linux/amd64 evaluator image. Runtime evaluation disables networking and caps the container at 2 CPUs, 7 GB RAM and 512 processes.
 
-## 4. Candidate search measurement
+## 4. Accepted RTL certification
 
-Five exposed paired seeds provide provisional ranking only:
-
-```bash
-./reproduce/run-candidate.sh \
-  rtl/champion/sha.v \
-  search \
-  /absolute/new/results/search \
-  champion-search-reproduction
-```
-
-The result must report `certified=false` and no acceptance decision.
-
-## 5. Candidate certification
-
-Certification reruns correctness, NIST Short/Long and 64 fixed, disjoint PPA seeds:
+Certification repeats structural, functional, NIST, formal, route and power stages and evaluates the fixed 64-seed pool:
 
 ```bash
 ./reproduce/run-candidate.sh \
-  rtl/champion/sha.v \
+  rtl/accepted/sha.v \
   certification \
   /absolute/new/results/certification \
-  champion-certification-reproduction
+  accepted-rtl-reproduction
 ```
 
-The certified champion archive completed in 1,091.82 seconds on the qualified Apple Silicon MacBook using two workers. Host contention can change wall time but must not change the parsed deterministic inputs, seed set or decision contract.
+The certified run completed in 1,091.82 seconds on the qualified Apple Silicon laptop using two workers. Host contention can change wall time but must not change source hashes, seeds, parsed measurements or the decision contract.
 
-## 6. Full evidence archive
+## 5. Complete evidence identity
 
-The repository intentionally avoids committing the 70 MB compressed champion evidence archive and thousands of generated intermediate files. The certified original archive is retained under this identity:
-
-```text
-rank-2-g15-wt-balanced-xor-743e6c9ffcca-evidence.tar.gz
-```
-
-Expected SHA-256:
+The full certification archive is not committed because it contains approximately 70 MB of compressed EDA outputs and thousands of intermediate files. The measurement authority is retained by SHA-256:
 
 ```text
 9983b1fef4509b9a9a592af8134be39eaa7545e5269ac7332206e86db7cce3e8
 ```
 
-The original command records include an absolute host worktree path. The public release therefore distributes a deterministic derivative named `g15-wt-balanced-xor-public-evidence.tar.gz`. It changes only that path prefix to `<SOURCE_WORKTREE>` and adds `PUBLIC_SANITIZATION.json`, which maps original member hashes to public member hashes. The certified original hash above remains the authority for the measurement; the release manifest records the public derivative's separate hash.
+The client-facing, path-sanitized derivative is named:
 
-Public release SHA-256:
+```text
+accepted-rtl-certification-evidence.tar.gz
+```
+
+It preserves every measurement and EDA output, replaces only the local source-worktree prefix and includes `PUBLIC_SANITIZATION.json` mapping modified command records to their original hashes. The byte-identical public derivative is 73,705,071 bytes and has SHA-256:
 
 ```text
 413aefb29bbe9bc1d22e847cd0901c24a0bfaa675af111fbd879598a76b2874f
 ```
 
-Verify either artifact with:
+Changing the release filename does not change this content hash.
+
+After obtaining that archive, assemble (but do not publish) the complete
+release directory with:
 
 ```bash
-shasum -a 256 <archive>
+make release-package EVIDENCE_ARCHIVE=/absolute/path/to/accepted-rtl-certification-evidence.tar.gz
 ```
 
-## 7. Clean-room expectation
+The command rejects any archive whose byte count or SHA-256 differs from the
+frozen public derivative, then writes the two canonical PDFs, the archive and
+their `SHA256SUMS` under `output/release-v1.1.0/`.
 
-A new measurement must use a clean checkout, the pinned image and a new evidence directory. Failed or interrupted runs remain failures; do not edit their JSON into success. Certification is fixed at 64 seeds and must not be extended after inspecting a result.
+## 6. Clean-room expectation
+
+A new measurement starts from a clean checkout, builds or retrieves the pinned image, writes to a new evidence directory and uses the fixed 64-seed certification pool. Failed or interrupted runs remain failures; generated JSON is never edited into success.
 
 See [`LIMITATIONS.md`](LIMITATIONS.md) before interpreting any reproduced value outside this exact VTR contract.

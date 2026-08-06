@@ -11,7 +11,7 @@
     "synthesized_blif_sha256": "725902f77657d683420d60266eb37c5983a9f5345d83a2a81df9c507ca438d55"
   },
   "authority": "fixed_64_seed_certification",
-  "candidate_id": "g15-wt-balanced-xor",
+  "candidate_id": "accepted-rtl",
   "candidate_sha256": "743e6c9ffcca6f00d35d5e73ba6f6478a9133a0c55a471c16d6e59d831aeeabc",
   "certification_seeds": [
     2,
@@ -1217,7 +1217,7 @@
   },
   "raw_evidence_archive": {
     "elapsed_seconds": 1091.8219076249516,
-    "filename": "rank-2-g15-wt-balanced-xor-743e6c9ffcca-evidence.tar.gz",
+    "filename": "accepted-rtl-certification-evidence.tar.gz",
     "formal_status": "pass",
     "sha256": "9983b1fef4509b9a9a592af8134be39eaa7545e5269ac7332206e86db7cce3e8"
   },

@@ -1,14 +1,14 @@
 # Evidence index
 
-This directory contains compact identities for the evidence that supports the case study.
+This directory binds the baseline-versus-accepted result to compact, content-addressed evidence.
 
-- [`formal-proof.json`](formal-proof.json) records the champion RTL hash, EQY pass-marker hash, formal-driver log hash and full archive identity.
-- `MANIFEST.json` binds the public artifacts to their SHA-256 values.
+- [`formal-proof.json`](formal-proof.json) records the accepted RTL hash, EQY pass-marker hash, formal-driver log hash and complete archive identity.
+- `MANIFEST.json` binds every public artifact to its SHA-256 value.
 - `SHA256SUMS` provides a conventional checksum list for release auditing.
 
-Raw seed measurements are in [`../results/baseline-certification.json`](../results/baseline-certification.json) and [`../results/champion-certification.json`](../results/champion-certification.json). The 70 MB complete champion evidence is distributed as a path-sanitized release asset rather than committed to Git. `formal-proof.json` retains the certified original archive identity; [`../REPRODUCIBILITY.md`](../REPRODUCIBILITY.md) explains the public derivative and its embedded hash mapping.
+Raw paired measurements are in [`../results/baseline-certification.json`](../results/baseline-certification.json) and [`../results/accepted-certification.json`](../results/accepted-certification.json). The complete EDA archive is distributed separately because its generated intermediates are unsuitable for normal Git history.
 
-The compact verifier does not trust precomputed percentages. It recomputes the 64 paired comparisons from those raw rows:
+The verifier does not trust precomputed percentages. It recomputes every metric and the composite result from the 64 paired rows:
 
 ```bash
 make verify

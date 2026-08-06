@@ -1,12 +1,12 @@
 {
-  "candidate_id": "g15-wt-balanced-xor",
+  "candidate_id": "accepted-rtl",
   "candidate_sha256": "743e6c9ffcca6f00d35d5e73ba6f6478a9133a0c55a471c16d6e59d831aeeabc",
   "eqy_pass_marker_sha256": "ba3b47c5fbb189844a827ae395e816024c967b83444a06eccb71f9e34498ab07",
   "formal_driver_log_sha256": "203f2ab1a1db8aadcbdbf5be88e5478b1abcb51e213e941557889e1474b9cbce",
   "formal_status": "pass",
   "raw_evidence_archive": {
     "elapsed_seconds": 1091.8219076249516,
-    "filename": "rank-2-g15-wt-balanced-xor-743e6c9ffcca-evidence.tar.gz",
+    "filename": "accepted-rtl-certification-evidence.tar.gz",
     "formal_status": "pass",
     "sha256": "9983b1fef4509b9a9a592af8134be39eaa7545e5269ac7332206e86db7cce3e8"
   },

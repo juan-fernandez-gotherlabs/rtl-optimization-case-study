@@ -27,6 +27,10 @@ The functional corpus is derived from NIST CAVP SHA byte-oriented response files
 
 The measurement image starts from a digest-pinned Ubuntu 24.04 image and a dated Ubuntu package snapshot. Each full evidence run exports `dpkg-manifest.tsv`, a Python package manifest, a CycloneDX SBOM and Debian copyright records.
 
+## Report typesetting
+
+The canonical technical report is compiled with XeLaTeX, AMS math, TikZ/PGFPlots and the open TeX Gyre Heros/Cursor fonts distributed with TeX Live. Standalone equation sources use LaTeX and AMS math packages; their checked-in SVG derivatives contain vector outlines from TeX Live fonts. ReportLab generates the separate executive PDF, and Poppler-compatible tooling performs PDF inspection. The applicable TeX Live, font and library licenses remain authoritative.
+
 ## Original material
 
 The report, figures, compact evidence tooling and standalone packaging written for this repository are Copyright (c) 2026 Juan José Fernández and licensed under the MIT License. This notice is an engineering provenance index, not legal advice; downstream users remain responsible for reviewing the actual third-party licenses.

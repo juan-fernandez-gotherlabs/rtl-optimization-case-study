@@ -1,40 +1,50 @@
 # Resumen ejecutivo
 
-## Pregunta
+## Resultado evaluado
 
-¿Puede un proceso automatizado mejorar un bloque RTL secuencial real sin cambiar su interfaz, protocolo, latencia ni comportamiento observable ciclo a ciclo?
+Cuatro reescrituras locales y ciclo-equivalentes de RTL reducen un **5,98% el score PPA compuesto estimado** sobre un núcleo SHA-1 corregido y derivado del benchmark abierto de Verilog-to-Routing.
 
-## Resultado
-
-Sobre un núcleo SHA-1 corregido y derivado del benchmark abierto de Verilog-to-Routing, cuatro reescrituras locales de RTL consiguieron una **mejora del 5,98% en el PPA compuesto estimado**. El resultado se certificó sobre 64 seeds pareados de VPR que no fueron visibles durante la búsqueda.
-
-- Retardo crítico: **11,43% mejor**, IC95% pareado de 10,87% a 11,98%.
-- Energía por bloque: **6,14% mejor**, IC95% pareado de 5,77% a 6,52%.
+- Retardo crítico: **11,43% mejor**, con IC95% pareado de 10,87% a 11,98%.
+- Energía por bloque: **6,14% mejor**, con IC95% pareado de 5,77% a 6,52%.
 - Área total: **estadísticamente neutral**; la estimación central mejora un 0,03%, pero el intervalo cruza cero.
-- Score PPA compuesto: **5,98% mejor**, IC95% de 5,69% a 6,27%.
-- Timing, energía y score mejoran en los 64 seeds pareados.
+- Score PPA compuesto: **5,98% mejor**, con IC95% de 5,69% a 6,27%.
+- Timing, energía y score mejoran en las 64 implementaciones pareadas.
 - La equivalencia formal EQY pasa y se conserva la ejecución de 80 ciclos por bloque.
 
-La potencia activa mediana aumenta un 5,83%. Se muestra expresamente: el circuito consume más potencia instantánea, pero termina antes el mismo trabajo y reduce la energía total por bloque.
+La potencia activa mediana aumenta un 5,83%. El informe mantiene visible este intercambio: el circuito utiliza más potencia instantánea, pero completa antes el mismo trabajo y reduce la energía modelada por bloque.
 
-## Método
+## Qué cambia
 
-El generador de candidatos no define si su propio resultado es correcto. Un evaluador independiente congela el RTL de referencia, interfaz, testbench, comportamiento temporal, herramientas, arquitectura, actividad, seeds y política de aceptación.
+El RTL aceptado modifica cuatro asignaciones continuas:
 
-Cada propuesta queda identificada por SHA-256 y debe pasar contrato estructural, regresión temporal y equivalencia formal EQY antes de ejecutar PPA. Cinco seeds pareados sirven únicamente para orientar la búsqueda. Al cerrar la búsqueda se certifican como máximo tres finalistas distintos y formalmente válidos sobre un conjunto fijo y disjunto de 64 seeds.
+1. La función `choose` de SHA-1 se expresa como producto de sumas.
+2. La función `majority` se factoriza con otra topología booleana.
+3. El XOR de cuatro entradas del message schedule se balancea explícitamente.
+4. El acumulador de ronda de 32 bits se reasocia en sumas parciales.
 
-El líder provisional de cinco seeds fue rechazado durante la certificación porque apareció evidencia estadística de regresión de área. Otro finalista fue declarado campeón. Este rechazo demuestra que el sistema distingue entre una señal provisional y una mejora certificada.
+No cambia ningún registro, puerto, transición de estado, comando, salida, latencia ni throughput. El patch exacto contiene cuatro asignaciones eliminadas y cuatro añadidas.
 
-## Interpretación
+## Verificación y medición
 
-Las cuatro modificaciones cambian la topología de expresiones booleanas y aritméticas, no el algoritmo SHA-1 ni su microarquitectura. En el seed representativo 20, el grafo temporal baja de 46 a 42 niveles y el diseño pasa de 188 a 187 CLB, aunque el número de nodos `.names` de ABC aumenta ligeramente. La mejora procede de una topología que se empaqueta y enruta mejor, no simplemente de eliminar puertas.
+El evaluador congela el RTL de referencia, la interfaz, vectores, comportamiento temporal, herramientas, arquitectura FPGA, actividad, 64 seeds de implementación y política de aceptación.
 
-## Alcance
+El `sha.v` aceptado queda identificado por SHA-256 y supera comprobaciones estructurales, regresión temporal, validación NIST SHA-1 y equivalencia secuencial EQY antes de medir PPA. Baseline y RTL aceptado utilizan después los mismos 64 seeds de VPR, lo que permite comparar de forma pareada área, retardo crítico y energía por bloque.
 
-Las cifras son estimaciones comparativas sobre una arquitectura FPGA académica de VTR y un modelo PTM45. No son resultados ASIC, de una FPGA comercial, de silicio fabricado ni de signoff. Un piloto empresarial sustituiría el evaluador académico por las librerías, constraints, workloads, herramientas y criterios de aceptación del cliente.
+En el seed representativo 20:
 
-SHA-1 se utiliza únicamente como benchmark computacional legado, no como recomendación criptográfica.
+| Propiedad post-síntesis / route | Baseline | RTL aceptado |
+|---|---:|---:|
+| Niveles del timing graph | 46 | 42 |
+| Camino crítico | 14,9802 ns | 13,4066 ns |
+| Bloques CLB | 188 | 187 |
+| Nodos `.names` de ABC | 1.643 | 1.652 |
 
-## Siguiente paso propuesto
+La mejora no procede de una reducción universal del número de nodos. La nueva topología se empaqueta y enruta mejor sobre el objetivo congelado.
 
-Realizar bajo confidencialidad un piloto acotado sobre un bloque computacional no crítico elegido por el cliente: congelar su contrato temporal y flujo PPA, aceptar únicamente parches revisables y formalmente equivalentes, y permitir que el propio equipo del cliente reproduzca cada mejora antes de ampliar el alcance.
+## Frontera de la afirmación
+
+Las cifras proceden de una arquitectura FPGA académica de VTR y de su modelo de potencia PTM45. No son PPA ASIC, resultados de una FPGA comercial, datos de silicio ni signoff, y no pueden trasladarse numéricamente a otro diseño o proceso. SHA-1 se utiliza como benchmark computacional legado, no como recomendación criptográfica.
+
+## Aplicación a un piloto de cliente
+
+Un piloto confidencial sustituiría el proxy académico por el RTL, estrategia formal, librerías, constraints, workloads, herramientas y política de aceptación del cliente. La entrega conservaría la misma forma: un patch pequeño y revisable, prueba formal, mediciones reproducibles, trade-offs explícitos y una afirmación técnica delimitada.

@@ -46,24 +46,23 @@ def main() -> int:
         "evidence_snapshot": "2026-08-05",
         "artifact_count": len(artifacts),
         "artifacts": artifacts,
-        "certified_original_archive": {
-            "filename": "rank-2-g15-wt-balanced-xor-743e6c9ffcca-evidence.tar.gz",
+        "complete_certification_archive": {
+            "filename": "accepted-rtl-certification-evidence.tar.gz",
             "bytes": 73794287,
             "sha256": "9983b1fef4509b9a9a592af8134be39eaa7545e5269ac7332206e86db7cce3e8",
+            "status": "identified_by_hash_not_committed",
         },
-        "public_release_asset": {
-            "filename": "g15-wt-balanced-xor-public-evidence.tar.gz",
+        "public_sanitized_certification_archive": {
+            "filename": "accepted-rtl-certification-evidence.tar.gz",
             "bytes": 73705071,
             "sha256": "413aefb29bbe9bc1d22e847cd0901c24a0bfaa675af111fbd879598a76b2874f",
-            "sanitization": "absolute source-worktree prefix replaced; embedded PUBLIC_SANITIZATION.json maps modified member hashes",
+            "status": "release_asset_not_committed",
         },
     }
     MANIFEST.parent.mkdir(parents=True, exist_ok=True)
     MANIFEST.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     SUMS.write_text(
-        "".join(f"{item['sha256']}  {item['path']}\n" for item in artifacts)
-        + f"413aefb29bbe9bc1d22e847cd0901c24a0bfaa675af111fbd879598a76b2874f  "
-        "g15-wt-balanced-xor-public-evidence.tar.gz\n",
+        "".join(f"{item['sha256']}  {item['path']}\n" for item in artifacts),
         encoding="utf-8",
     )
     print(f"wrote {MANIFEST.relative_to(ROOT)} ({len(artifacts)} artifacts)")

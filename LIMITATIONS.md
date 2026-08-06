@@ -25,11 +25,11 @@ The pinned EQY proof is unbounded but deliberately conservative and structure-aw
 
 The 64-seed pool is a fixed sample of VPR placement/routing randomness. The reported confidence intervals quantify variation across that declared pool under the pinned flow. They do not model process variation, voltage, temperature, workload variation, tool-version changes or different architecture choices.
 
-The sample size was fixed before inspecting finalist outcomes and was not extended. The area result is explicitly neutral because its interval crosses no change. The score combines equal-weight area, delay and workload energy ratios for search and reporting; engineering decisions must still inspect the individual metrics.
+The sample size is fixed at 64 paired implementations and is not extended after inspecting the result. The area result is explicitly neutral because its interval crosses no change. The score combines equal-weight area, delay and workload energy ratios for reporting; engineering decisions must still inspect the individual metrics.
 
 ## Power and energy
 
-VTR power is a model-based estimate. The active trace represents 60 complete legal blocks in 5,000 cycles; energy per block is total active power multiplied by workload time and divided by 60. The champion's active-power median rises while workload energy falls because delay decreases. This trade-off may be undesirable under a power-cap objective even though it is beneficial under the declared energy objective.
+VTR power is a model-based estimate. The active trace represents 60 complete legal blocks in 5,000 cycles; energy per block is total active power multiplied by workload time and divided by 60. The accepted RTL's active-power median rises while workload energy falls because delay decreases. This trade-off may be undesirable under a power-cap objective even though it is beneficial under the declared energy objective.
 
 ## Benchmark scope
 
