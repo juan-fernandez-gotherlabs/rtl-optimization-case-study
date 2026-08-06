@@ -1,0 +1,1017 @@
+{
+  "authority": "published_baseline_vs_accepted_certification",
+  "contract": {
+    "architecture": "vtr_flow/arch/power/k6_N10_I40_Fi6_L4_frac0_ff1_45nm.xml",
+    "architecture_sha256": "262792caef81931ae09b77d252158bde03c78954175d4b761e6d437317575307",
+    "busy_cycles_per_block": 80.0,
+    "editable_artifact": "sha.v",
+    "eqy_commit": "6734d8c2df366be50ea9e734c6cb10609b5f32c2",
+    "eqy_pass_marker_sha256": "ba3b47c5fbb189844a827ae395e816024c967b83444a06eccb71f9e34498ab07",
+    "formal_status": "pass",
+    "image_id": "sha256:c0badc2d2bb57364ff37477b3d2c482ef01f7d3df6211e9802e2c54367c33baf",
+    "interface": "sha1(clk_i, rst_i, text_i[31:0], text_o[31:0], cmd_i[2:0], cmd_w_i, cmd_o[3:0])",
+    "nist_corpus_sha256": "80bdcf3dabd50da28367f8c6e5d818c13d40d67cc8da897ce7efac553ed13df0",
+    "nist_short_long_cases": 129,
+    "nominal_voltage_v": 0.9,
+    "platform": "linux/amd64",
+    "seed_count": 64,
+    "seeds": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68
+    ],
+    "technology": "vtr_flow/tech/PTM_45nm/45nm.xml",
+    "technology_sha256": "3080dea13bf7134109f8a83c79426ec0965e07639a61866fe9ae4bd05b5227cb",
+    "temperature_c": 85,
+    "vtr_commit": "95f5c6de9e158371ba7185bf97c07a84153735d6"
+  },
+  "correctness": {
+    "accepted_improvement": true,
+    "certified": true,
+    "formal_pass": true,
+    "functional_pass": true
+  },
+  "full_evidence": {
+    "archive": "accepted-rtl-certification-evidence.tar.gz",
+    "bytes": 73705071,
+    "release": "https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/tag/v1.2.0",
+    "sha256": "413aefb29bbe9bc1d22e847cd0901c24a0bfaa675af111fbd879598a76b2874f"
+  },
+  "per_seed": [
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.034,
+        "energy_per_block_nj": 11.578536666666668
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 14.8945,
+        "energy_per_block_nj": 12.323957541666667
+      },
+      "seed": 2
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.4444,
+        "energy_per_block_nj": 11.663017
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 14.9038,
+        "energy_per_block_nj": 12.289425083333333
+      },
+      "seed": 3
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.4439,
+        "energy_per_block_nj": 11.66258325
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 14.8381,
+        "energy_per_block_nj": 12.377448416666665
+      },
+      "seed": 4
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.3601,
+        "energy_per_block_nj": 11.667820666666666
+      },
+      "baseline": {
+        "area_total_mwta": 16679392.0,
+        "critical_path_delay_ns": 14.8426,
+        "energy_per_block_nj": 12.455415166666665
+      },
+      "seed": 5
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.0396,
+        "energy_per_block_nj": 11.507447
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 15.2834,
+        "energy_per_block_nj": 12.518378216666665
+      },
+      "seed": 6
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.2119,
+        "energy_per_block_nj": 11.615462083333334
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 15.3871,
+        "energy_per_block_nj": 12.51740585
+      },
+      "seed": 8
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.5485,
+        "energy_per_block_nj": 11.742033333333334
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 15.0584,
+        "energy_per_block_nj": 12.311496866666667
+      },
+      "seed": 9
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.2911,
+        "energy_per_block_nj": 11.563256999999998
+      },
+      "baseline": {
+        "area_total_mwta": 16679392.0,
+        "critical_path_delay_ns": 14.6267,
+        "energy_per_block_nj": 12.518017416666668
+      },
+      "seed": 10
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.2093,
+        "energy_per_block_nj": 11.602168500000001
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 15.1906,
+        "energy_per_block_nj": 12.511990866666668
+      },
+      "seed": 11
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.2059,
+        "energy_per_block_nj": 11.544157583333332
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 14.503,
+        "energy_per_block_nj": 12.194605833333334
+      },
+      "seed": 12
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.386,
+        "energy_per_block_nj": 11.645819999999997
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 14.7103,
+        "energy_per_block_nj": 12.241421316666667
+      },
+      "seed": 13
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.4569,
+        "energy_per_block_nj": 11.67386075
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 14.3873,
+        "energy_per_block_nj": 12.109310833333332
+      },
+      "seed": 14
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.0509,
+        "energy_per_block_nj": 11.53917075
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 14.9756,
+        "energy_per_block_nj": 12.318678966666665
+      },
+      "seed": 15
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.4259,
+        "energy_per_block_nj": 11.66934475
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 15.3615,
+        "energy_per_block_nj": 12.376248499999999
+      },
+      "seed": 16
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16679392.0,
+        "critical_path_delay_ns": 13.0742,
+        "energy_per_block_nj": 11.7340945
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 15.2215,
+        "energy_per_block_nj": 12.522220666666668
+      },
+      "seed": 17
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.1793,
+        "energy_per_block_nj": 11.487956500000001
+      },
+      "baseline": {
+        "area_total_mwta": 16679392.0,
+        "critical_path_delay_ns": 14.9897,
+        "energy_per_block_nj": 12.528890916666667
+      },
+      "seed": 18
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.4066,
+        "energy_per_block_nj": 11.663741999999997
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 14.9802,
+        "energy_per_block_nj": 12.426075899999999
+      },
+      "seed": 20
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.1929,
+        "energy_per_block_nj": 11.587763833333334
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 14.7297,
+        "energy_per_block_nj": 12.169187149999997
+      },
+      "seed": 21
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.1122,
+        "energy_per_block_nj": 11.5715165
+      },
+      "baseline": {
+        "area_total_mwta": 16679392.0,
+        "critical_path_delay_ns": 15.0981,
+        "energy_per_block_nj": 12.6572405
+      },
+      "seed": 22
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.4405,
+        "energy_per_block_nj": 11.693234999999998
+      },
+      "baseline": {
+        "area_total_mwta": 16574391.0,
+        "critical_path_delay_ns": 15.1895,
+        "energy_per_block_nj": 12.330076625
+      },
+      "seed": 23
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.5664,
+        "energy_per_block_nj": 11.723630666666667
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 14.9657,
+        "energy_per_block_nj": 12.341713933333335
+      },
+      "seed": 24
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.2788,
+        "energy_per_block_nj": 11.630015666666669
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 15.0017,
+        "energy_per_block_nj": 12.266390033333332
+      },
+      "seed": 25
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.1369,
+        "energy_per_block_nj": 11.615209083333333
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 15.0091,
+        "energy_per_block_nj": 12.396265841666667
+      },
+      "seed": 26
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 12.9365,
+        "energy_per_block_nj": 11.4488025
+      },
+      "baseline": {
+        "area_total_mwta": 16679392.0,
+        "critical_path_delay_ns": 14.7637,
+        "energy_per_block_nj": 12.586054249999998
+      },
+      "seed": 27
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 14.084,
+        "energy_per_block_nj": 11.983136666666667
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 15.3011,
+        "energy_per_block_nj": 12.502273791666665
+      },
+      "seed": 28
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 12.9777,
+        "energy_per_block_nj": 11.47444975
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 15.0354,
+        "energy_per_block_nj": 12.38791665
+      },
+      "seed": 29
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.5502,
+        "energy_per_block_nj": 11.754798500000001
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 15.1497,
+        "energy_per_block_nj": 12.391192125
+      },
+      "seed": 30
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.227,
+        "energy_per_block_nj": 11.595670000000002
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 15.4793,
+        "energy_per_block_nj": 12.548552533333332
+      },
+      "seed": 31
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.2727,
+        "energy_per_block_nj": 11.580430750000001
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 15.1752,
+        "energy_per_block_nj": 12.470220600000001
+      },
+      "seed": 32
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.2011,
+        "energy_per_block_nj": 11.6829735
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 15.0684,
+        "energy_per_block_nj": 12.440219899999999
+      },
+      "seed": 33
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.3137,
+        "energy_per_block_nj": 11.693866500000002
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 14.7641,
+        "energy_per_block_nj": 12.275118808333332
+      },
+      "seed": 34
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16574391.0,
+        "critical_path_delay_ns": 13.2726,
+        "energy_per_block_nj": 11.381254500000002
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 15.0784,
+        "energy_per_block_nj": 12.486171733333332
+      },
+      "seed": 35
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.3162,
+        "energy_per_block_nj": 11.6183845
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 15.2061,
+        "energy_per_block_nj": 12.330879925
+      },
+      "seed": 36
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.0039,
+        "energy_per_block_nj": 11.54096125
+      },
+      "baseline": {
+        "area_total_mwta": 16574391.0,
+        "critical_path_delay_ns": 15.2184,
+        "energy_per_block_nj": 12.282517
+      },
+      "seed": 37
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16574391.0,
+        "critical_path_delay_ns": 13.2096,
+        "energy_per_block_nj": 11.503359999999997
+      },
+      "baseline": {
+        "area_total_mwta": 16679392.0,
+        "critical_path_delay_ns": 15.0517,
+        "energy_per_block_nj": 12.555626416666666
+      },
+      "seed": 38
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16574391.0,
+        "critical_path_delay_ns": 13.3853,
+        "energy_per_block_nj": 11.611747750000003
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 14.8414,
+        "energy_per_block_nj": 12.313414866666667
+      },
+      "seed": 39
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.5581,
+        "energy_per_block_nj": 11.76165175
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 14.7758,
+        "energy_per_block_nj": 12.257757416666667
+      },
+      "seed": 40
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16679392.0,
+        "critical_path_delay_ns": 13.1978,
+        "energy_per_block_nj": 11.7130475
+      },
+      "baseline": {
+        "area_total_mwta": 16679392.0,
+        "critical_path_delay_ns": 14.9801,
+        "energy_per_block_nj": 12.508383499999999
+      },
+      "seed": 41
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.2497,
+        "energy_per_block_nj": 11.56036325
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 14.8592,
+        "energy_per_block_nj": 12.361616133333335
+      },
+      "seed": 42
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.0853,
+        "energy_per_block_nj": 11.569586083333332
+      },
+      "baseline": {
+        "area_total_mwta": 16679392.0,
+        "critical_path_delay_ns": 15.0166,
+        "energy_per_block_nj": 12.601430166666667
+      },
+      "seed": 44
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.0385,
+        "energy_per_block_nj": 11.495610833333336
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 14.6722,
+        "energy_per_block_nj": 12.336874833333333
+      },
+      "seed": 45
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.3087,
+        "energy_per_block_nj": 11.634021916666665
+      },
+      "baseline": {
+        "area_total_mwta": 16679392.0,
+        "critical_path_delay_ns": 14.6826,
+        "energy_per_block_nj": 12.382326
+      },
+      "seed": 46
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16712190.0,
+        "critical_path_delay_ns": 12.8854,
+        "energy_per_block_nj": 11.747189666666667
+      },
+      "baseline": {
+        "area_total_mwta": 16574391.0,
+        "critical_path_delay_ns": 15.0551,
+        "energy_per_block_nj": 12.135665191666666
+      },
+      "seed": 47
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.3144,
+        "energy_per_block_nj": 11.661195333333334
+      },
+      "baseline": {
+        "area_total_mwta": 16679392.0,
+        "critical_path_delay_ns": 15.1883,
+        "energy_per_block_nj": 12.6822305
+      },
+      "seed": 48
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 12.836,
+        "energy_per_block_nj": 11.445433333333334
+      },
+      "baseline": {
+        "area_total_mwta": 16679392.0,
+        "critical_path_delay_ns": 15.1773,
+        "energy_per_block_nj": 12.66039775
+      },
+      "seed": 49
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.306,
+        "energy_per_block_nj": 11.620573333333333
+      },
+      "baseline": {
+        "area_total_mwta": 16712190.0,
+        "critical_path_delay_ns": 14.8697,
+        "energy_per_block_nj": 12.651636416666667
+      },
+      "seed": 50
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16679392.0,
+        "critical_path_delay_ns": 13.6894,
+        "energy_per_block_nj": 11.898370166666666
+      },
+      "baseline": {
+        "area_total_mwta": 16679392.0,
+        "critical_path_delay_ns": 14.9928,
+        "energy_per_block_nj": 12.593952
+      },
+      "seed": 51
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 12.9673,
+        "energy_per_block_nj": 11.540897
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 14.6629,
+        "energy_per_block_nj": 12.292397833333332
+      },
+      "seed": 52
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.8582,
+        "energy_per_block_nj": 11.8372125
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 14.5316,
+        "energy_per_block_nj": 12.254982666666667
+      },
+      "seed": 53
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.4093,
+        "energy_per_block_nj": 11.654916583333334
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 15.162,
+        "energy_per_block_nj": 12.463164
+      },
+      "seed": 54
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.7986,
+        "energy_per_block_nj": 11.809301833333334
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 15.259,
+        "energy_per_block_nj": 12.544169583333336
+      },
+      "seed": 55
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.7005,
+        "energy_per_block_nj": 11.759595833333332
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 15.0014,
+        "energy_per_block_nj": 12.306148466666667
+      },
+      "seed": 56
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.2829,
+        "energy_per_block_nj": 11.600399333333334
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 15.2005,
+        "energy_per_block_nj": 12.401074583333333
+      },
+      "seed": 57
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.4753,
+        "energy_per_block_nj": 11.779658083333334
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 14.7131,
+        "energy_per_block_nj": 12.260916666666668
+      },
+      "seed": 58
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.7461,
+        "energy_per_block_nj": 11.901831583333335
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 15.153,
+        "energy_per_block_nj": 12.3724245
+      },
+      "seed": 59
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.0388,
+        "energy_per_block_nj": 11.561069333333334
+      },
+      "baseline": {
+        "area_total_mwta": 16574391.0,
+        "critical_path_delay_ns": 15.3366,
+        "energy_per_block_nj": 12.335738600000003
+      },
+      "seed": 60
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.3577,
+        "energy_per_block_nj": 11.777038833333334
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 15.8992,
+        "energy_per_block_nj": 12.727309600000002
+      },
+      "seed": 61
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16679392.0,
+        "critical_path_delay_ns": 13.0791,
+        "energy_per_block_nj": 11.683996
+      },
+      "baseline": {
+        "area_total_mwta": 16574391.0,
+        "critical_path_delay_ns": 14.9966,
+        "energy_per_block_nj": 12.109754500000001
+      },
+      "seed": 62
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16679392.0,
+        "critical_path_delay_ns": 13.2358,
+        "energy_per_block_nj": 11.768832166666666
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 14.806,
+        "energy_per_block_nj": 12.363009999999997
+      },
+      "seed": 63
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16679392.0,
+        "critical_path_delay_ns": 13.3708,
+        "energy_per_block_nj": 11.766303999999998
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 15.2624,
+        "energy_per_block_nj": 12.480827600000001
+      },
+      "seed": 64
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.5002,
+        "energy_per_block_nj": 11.767674333333334
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 15.1928,
+        "energy_per_block_nj": 12.513802933333332
+      },
+      "seed": 65
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.1157,
+        "energy_per_block_nj": 11.596464749999999
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 14.7666,
+        "energy_per_block_nj": 12.24766415
+      },
+      "seed": 66
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16679392.0,
+        "critical_path_delay_ns": 12.9366,
+        "energy_per_block_nj": 11.621379
+      },
+      "baseline": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 15.1998,
+        "energy_per_block_nj": 12.50563545
+      },
+      "seed": 67
+    },
+    {
+      "accepted": {
+        "area_total_mwta": 16614693.0,
+        "critical_path_delay_ns": 13.3468,
+        "energy_per_block_nj": 11.689572333333334
+      },
+      "baseline": {
+        "area_total_mwta": 16679392.0,
+        "critical_path_delay_ns": 14.991,
+        "energy_per_block_nj": 12.667394999999999
+      },
+      "seed": 68
+    }
+  ],
+  "result": "accepted",
+  "schema_version": 1,
+  "score_definition": {
+    "baseline": 1.0,
+    "direction": "lower_is_better",
+    "formula": "geometric_mean(area_ratio, timing_ratio, energy_ratio)"
+  },
+  "source": {
+    "accepted_rtl_sha256": "743e6c9ffcca6f00d35d5e73ba6f6478a9133a0c55a471c16d6e59d831aeeabc",
+    "corrected_baseline_sha256": "191a4f2148a4efda7aadd24480eb13d78a1d2c0c7e8a3fcc37c44f6a8e8011e5",
+    "upstream_commit": "95f5c6de9e158371ba7185bf97c07a84153735d6",
+    "upstream_path": "vtr_flow/benchmarks/verilog/sha.v",
+    "upstream_repository": "https://github.com/verilog-to-routing/vtr-verilog-to-routing"
+  },
+  "summary": {
+    "accepted": {
+      "area_total_mwta": 16614693.0,
+      "critical_path_delay_ns": 13.280850000000001,
+      "energy_per_block_nj": 11.639920958333331,
+      "score": 0.9401876300284054
+    },
+    "baseline": {
+      "area_total_mwta": 16614693.0,
+      "critical_path_delay_ns": 15.0054,
+      "energy_per_block_nj": 12.389554387499999,
+      "score": 1.0
+    },
+    "paired_ratio": {
+      "area_total_mwta": {
+        "ci95_two_sided": [
+          0.9990684016723661,
+          1.0003551623295646
+        ],
+        "estimate": 0.9997115749721509,
+        "log_stdev": 0.0025764013330349966,
+        "losses": 9,
+        "lower_one_sided_95": 0.9991742432309053,
+        "ties": 41,
+        "upper_one_sided_95": 1.0002491956774107,
+        "wins": 14
+      },
+      "composite": {
+        "ci95_two_sided": [
+          0.9372744577144392,
+          0.9431098568651541
+        ],
+        "estimate": 0.9401876300284054,
+        "log_stdev": 0.012423553361422444,
+        "losses": 0,
+        "lower_one_sided_95": 0.937753361228979,
+        "ties": 0,
+        "upper_one_sided_95": 0.942628217829003,
+        "wins": 64
+      },
+      "critical_path_delay_ns": {
+        "ci95_two_sided": [
+          0.8801816565852041,
+          0.891333648605668
+        ],
+        "estimate": 0.8857401014969747,
+        "log_stdev": 0.02520192795536819,
+        "losses": 0,
+        "lower_one_sided_95": 0.8810942043343271,
+        "ties": 0,
+        "upper_one_sided_95": 0.8904104958817579,
+        "wins": 64
+      },
+      "energy_per_block_nj": {
+        "ci95_two_sided": [
+          0.9348036184734467,
+          0.9423337729345956
+        ],
+        "estimate": 0.9385611438521175,
+        "log_stdev": 0.016059449022447245,
+        "losses": 0,
+        "lower_one_sided_95": 0.9354210927995482,
+        "ties": 0,
+        "upper_one_sided_95": 0.9417117355271816,
+        "wins": 64
+      }
+    }
+  }
+}
