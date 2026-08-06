@@ -1,4 +1,4 @@
-name: Verify case study
+name: Verify published comparison
 
 on:
   push:
@@ -9,48 +9,18 @@ permissions:
   contents: read
 
 jobs:
-  evidence:
+  comparison:
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 2
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
-          cache: pip
-          cache-dependency-path: requirements-report.txt
-      - name: Install report dependencies
+      - name: Verify hashes, RTL diff and 64-seed statistics
+        run: python3 verify.py
+      - name: Verify repository hygiene
         run: |
-          sudo apt-get update
-          sudo apt-get install --yes \
-            fonts-texgyre \
-            latexmk \
-            librsvg2-bin \
-            libxml2-utils \
-            poppler-utils \
-            texlive-fonts-recommended \
-            texlive-latex-extra \
-            texlive-science \
-            texlive-xetex
-          python -m pip install --requirement requirements-report.txt
-      - name: Verify evidence and contracts
-        run: make verify test
-      - name: Regenerate figures
-        run: |
-          make figures
-          xmllint --noout figures/*.svg
-      - name: Verify committed artifact manifest
-        run: |
-          make checksums
-          git diff --exit-code -- evidence/MANIFEST.json evidence/SHA256SUMS
-      - name: Build and inspect reports
-        run: |
-          make report REPORT_PYTHON=python
-          test "$(pdfinfo report/executive-summary.pdf | awk '/^Pages:/ {print $2}')" = "2"
-          test "$(pdfinfo report/technical-report.pdf | awk '/^Pages:/ {print $2}')" = "15"
-          pdftotext report/technical-report.pdf - | grep --quiet "Göther Labs"
-          git diff --exit-code -- \
-            report/latex/generated/executive-ci.csv \
-            report/latex/generated/metrics.tex \
-            report/latex/generated/paired-improvements.csv \
-            report/latex/generated/seed-clouds.csv
+          python3 -m json.tool results/certification.json >/dev/null
+          git diff --check
+          git diff --exit-code

@@ -1,9 +1,5 @@
 .DS_Store
-.cache/
 __pycache__/
 *.pyc
-tmp/
 output/
-reproduction-results/
-report/technical-report-latex.pdf
-report/technical-report-reportlab.pdf
+tmp/
