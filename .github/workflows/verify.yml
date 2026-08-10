@@ -11,14 +11,20 @@ permissions:
 jobs:
   comparison:
     runs-on: ubuntu-24.04
-    timeout-minutes: 2
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
-      - name: Verify hashes, RTL diff and 64-seed statistics
+      - name: Verify compact package
         run: python3 verify.py
+      - name: Run adversarial verifier tests
+        run: python3 -m unittest discover -s tests -v
+      - name: Confirm generated report data is current
+        run: |
+          python3 scripts/generate_latex_data.py
+          git diff --exit-code -- report/latex/generated
       - name: Verify repository hygiene
         run: |
           python3 -m json.tool results/certification.json >/dev/null
