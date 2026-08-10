@@ -14,7 +14,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 RESULT = ROOT / "results" / "certification.json"
-METRICS = ("area_total_mwta", "critical_path_delay_ns", "energy_per_block_nj")
+PRIMARY_METRICS = ("area_total_mwta", "critical_path_delay_ns", "active_total_power_w")
+SECONDARY_METRICS = ("energy_per_block_nj",)
 TWO_SIDED_T_95_DF63 = 1.9983405425207417
 ONE_SIDED_T_95_DF63 = 1.6694022215079607
 
@@ -93,7 +94,7 @@ def main() -> int:
     assert len(seeds) == len(set(seeds)) == data["contract"]["seed_count"] == 64
 
     metric_logs: dict[str, list[float]] = {}
-    for metric in METRICS:
+    for metric in (*PRIMARY_METRICS, *SECONDARY_METRICS):
         baseline_values = [float(row["baseline"][metric]) for row in rows]
         accepted_values = [float(row["accepted"][metric]) for row in rows]
         close(statistics.median(baseline_values), data["summary"]["baseline"][metric])
@@ -114,7 +115,7 @@ def main() -> int:
         assert len(rows) - sum(comparisons) - sum(ties) == published["losses"]
 
     composite_logs = [
-        statistics.mean(metric_logs[metric][index] for metric in METRICS)
+        statistics.mean(metric_logs[metric][index] for metric in PRIMARY_METRICS)
         for index in range(len(rows))
     ]
     composite = confidence(composite_logs)
@@ -123,6 +124,11 @@ def main() -> int:
     close(composite["estimate"], published_composite["estimate"])
     close(composite["low"], published_composite["ci95_two_sided"][0])
     close(composite["high"], published_composite["ci95_two_sided"][1])
+    assert tuple(data["score_definition"]["primary_metrics"]) == PRIMARY_METRICS
+    assert data["score_definition"]["formula"] == (
+        "geometric_mean(area_ratio, critical_path_delay_ratio, active_total_power_ratio)"
+    )
+    assert all(data["summary"]["paired_ratio"][metric]["ci95_two_sided"][1] < 1.0 for metric in PRIMARY_METRICS)
     assert composite["one_sided_high"] < 1.0
 
     improvement = 100.0 * (1.0 - composite["estimate"])

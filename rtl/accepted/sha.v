@@ -121,30 +121,31 @@ module sha1 (clk_i, rst_i, text_i, text_o, cmd_i, cmd_w_i, cmd_o);
     	end
     	
     	// Hash functions
-	wire [31:0] SHA1_f1_BCD,SHA1_f2_BCD,SHA1_f3_BCD,SHA1_Wt_1;
-	wire [31:0] SHA1_ft_BCD;
+	wire [31:0] SHA1_B_xor_D,SHA1_C_xor_D;
+	wire [31:0] SHA1_f1_BCD,SHA1_core_f2,SHA1_core_f3,SHA1_core_ft;
+	wire [31:0] SHA1_Wt_1,SHA1_ft_BCD;
 	wire [31:0] next_Wt,next_A,next_C;
-	wire [159:0] SHA1_result;
 	
-	assign SHA1_f1_BCD = (B | D) & ((~B) | C);
-	assign SHA1_f2_BCD = B ^ C ^ D;
-	assign SHA1_f3_BCD = (B & D) | (C & (B ^ D));
+	assign SHA1_B_xor_D = B ^ D;
+	assign SHA1_C_xor_D = C ^ D;
+	assign SHA1_f1_BCD = (B & C) | (~B & D);
+	assign SHA1_core_f2 = SHA1_B_xor_D ^ SHA1_C_xor_D;
+	assign SHA1_core_f3 = SHA1_B_xor_D & SHA1_C_xor_D;
 	
 	// The state machine value is one-based while executing SHA-1 rounds:
 	// round=1 computes algorithm round 0 and round=80 computes round 79.
+	assign SHA1_core_ft = (round <= 7'd40) ? SHA1_core_f2 :
+	                       (round <= 7'd60) ? SHA1_core_f3 : SHA1_core_f2;
 	assign SHA1_ft_BCD = (round <= 7'd20) ? SHA1_f1_BCD :
-	                     (round <= 7'd40) ? SHA1_f2_BCD :
-	                     (round <= 7'd60) ? SHA1_f3_BCD : SHA1_f2_BCD;
+	                       (D ^ SHA1_core_ft);
 	
 	// Odin II doesn't support binary operations inside concatenations presently. 
 	//assign SHA1_Wt_1 = {W13 ^ W8 ^ W2 ^ W0};
-	assign SHA1_Wt_1 = (W13 ^ W8) ^ (W2 ^ W0);
+	assign SHA1_Wt_1 = W13 ^ W8 ^ W2 ^ W0;
 
 	assign next_Wt = {SHA1_Wt_1[30:0],SHA1_Wt_1[31]};	// NSA fix added
-	assign next_A = ({A[26:0],A[31:27]} + SHA1_ft_BCD) + (E + Kt + Wt);
+	assign next_A = {A[26:0],A[31:27]} + SHA1_ft_BCD + E + Kt + Wt;
 	assign next_C = {B[1:0],B[31:2]};
-	
-	assign SHA1_result   = {A,B,C,D,E};
 	
 	assign round_plus_1 = round + 1;
 	
@@ -2156,11 +2157,11 @@ module sha1 (clk_i, rst_i, text_i, text_o, cmd_i, cmd_w_i, cmd_o);
 			if (~busy)
 			begin
 				case (read_counter)
-					3'b100:	text_o <= SHA1_result[5*32-1:4*32];
-					3'b011:	text_o <= SHA1_result[4*32-1:3*32];
-					3'b010:	text_o <= SHA1_result[3*32-1:2*32];
-					3'b001:	text_o <= SHA1_result[2*32-1:1*32];
-					3'b000:	text_o <= SHA1_result[1*32-1:0*32];
+					3'b100:	text_o <= A;
+					3'b011:	text_o <= B;
+					3'b010:	text_o <= C;
+					3'b001:	text_o <= D;
+					3'b000:	text_o <= E;
 					default:text_o <= 32'b0;
 				endcase
 				if (|read_counter)
