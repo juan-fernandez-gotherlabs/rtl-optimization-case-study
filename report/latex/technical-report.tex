@@ -315,15 +315,17 @@ The two products are mutually exclusive. If $BC=1$, then $B=1$ and $(\neg B)D=0$
 \draw[signal] (ob)--(maj); \draw[signal] (oc)--(maj); \draw[signal] (od)--(maj);
 
 \node[font=\small\bfseries,text=GotherBlue,below=29mm of par,xshift=35mm] (newtitle) {Accepted RTL · shared XOR terms and round-selected core};
-\node[input,below=7mm of newtitle,xshift=-55mm] (xb) {$B\oplus D$};
-\node[input,right=15mm of xb] (yc) {$C\oplus D$};
-\node[accepted,right=16mm of yc] (core2) {XOR};
-\node[accepted,below=10mm of core2] (core3) {AND};
-\node[accepted,right=16mm of core2,yshift=-5mm,minimum width=23mm] (mux) {round mux};
-\node[accepted,right=of mux] (dx) {$D\oplus$};
-\draw[signal] (xb)--(core2); \draw[signal] (yc)--(core2);
-\draw[signal] (xb)--(core3); \draw[signal] (yc)--(core3);
-\draw[signal] (core2)--(mux); \draw[signal] (core3)--(mux); \draw[signal] (mux)--(dx);
+\node[input,below=7mm of newtitle,xshift=-55mm] (xb) {$X=B\oplus D$};
+\node[input,below=9mm of xb] (yc) {$Y=C\oplus D$};
+\node[accepted,right=20mm of xb,yshift=-4.5mm,minimum width=31mm,minimum height=19mm] (core) {shared core\\[1mm]$X\oplus Y$\\$XY$};
+\node[accepted,right=17mm of core,minimum width=25mm] (mux) {round selector};
+\node[accepted,right=15mm of mux] (dx) {XOR};
+\node[input,below=9mm of dx] (din) {$D$};
+\node[input,right=of dx] (ft) {$f_t$};
+\draw[signal] (xb.east)--(core.north west);
+\draw[signal] (yc.east)--(core.south west);
+\draw[signal] (core)--node[above,font=\scriptsize] {$X\oplus Y$ or $XY$}(mux);
+\draw[signal] (mux)--(dx); \draw[signal] (din)--(dx); \draw[signal] (dx)--(ft);
 \end{tikzpicture}
 \end{center}
 
