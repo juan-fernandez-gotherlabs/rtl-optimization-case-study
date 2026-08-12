@@ -27,7 +27,7 @@ never extended after observing a candidate.
 - [Exact baseline-to-accepted patch](rtl/baseline-to-accepted.patch).
 - [Corrected baseline](rtl/baseline/sha.v) and [accepted RTL](rtl/accepted/sha.v).
 - [Compact certification](results/certification.json) with all 64 paired rows.
-- [Full raw evidence release](https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/tag/v1.3.0-rc2)
+- [Full raw evidence release](https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/tag/v1.3.0-rc3)
   with baseline and accepted VTR/ACE outputs, formal/NIST evidence and an
   11,362-file internal manifest.
 
@@ -54,7 +54,7 @@ Full raw evidence: NOT CHECKED (pass --evidence-archive)
 To audit every raw file, download the release asset and supply it explicitly:
 
 ```bash
-curl -LO https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/download/v1.3.0-rc2/primary-ppa-full-evidence.tar.gz
+curl -LO https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/download/v1.3.0-rc3/primary-ppa-full-evidence.tar.gz
 python3 verify.py --evidence-archive primary-ppa-full-evidence.tar.gz
 ```
 

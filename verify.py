@@ -79,6 +79,7 @@ REQUIRED_MANIFEST = {
     "rtl/baseline/sha.v",
     "scripts/build_evidence_bundle.py",
     "scripts/generate_latex_data.py",
+    "scripts/normalize_pdf_id.py",
     "scripts/write_manifest.py",
     "technical-report.pdf",
     "tests/test_verify.py",
