@@ -27,7 +27,7 @@ never extended after observing a candidate.
 - [Exact baseline-to-accepted patch](rtl/baseline-to-accepted.patch).
 - [Corrected baseline](rtl/baseline/sha.v) and [accepted RTL](rtl/accepted/sha.v).
 - [Compact certification](results/certification.json) with all 64 paired rows.
-- [Full raw evidence release](https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/tag/v1.3.0-rc3)
+- [Full raw evidence release](https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/tag/v1.3.0-rc4)
   with baseline and accepted VTR/ACE outputs, formal/NIST evidence and an
   11,362-file internal manifest.
 
@@ -54,13 +54,20 @@ Full raw evidence: NOT CHECKED (pass --evidence-archive)
 To audit every raw file, download the release asset and supply it explicitly:
 
 ```bash
-curl -LO https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/download/v1.3.0-rc3/primary-ppa-full-evidence.tar.gz
+curl -LO https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/download/v1.3.0-rc4/primary-ppa-full-evidence.tar.gz
 python3 verify.py --evidence-archive primary-ppa-full-evidence.tar.gz
 ```
 
-The second command verifies the external archive digest, all internal member
-hashes, exact formal and NIST markers, both RTL identities and the accepted
-record-to-RTL binding before reporting `Full raw evidence: PASS`.
+The second command verifies the external archive digest, every internal member
+hash, the declared sanitization/correction provenance, exact formal and NIST
+markers and both RTL identities. It then derives every certification metric
+from all 128 raw VTR/ACE run trees and compares the results with both archived
+records and all compact rows before reporting `Full raw evidence: PASS`.
+
+The public bundle records one non-measurement correction explicitly: stale
+`cmd_i[2:0]` prose in the source flow manifest is published as the frozen
+`cmd_i[3:0]` RTL interface. Both source and public hashes are retained; RTL and
+all measurement outputs are unchanged.
 
 Adversarial verifier tests run with:
 

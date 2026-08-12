@@ -8,6 +8,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import verify as public_verify
+
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -51,6 +53,38 @@ class VerifyAdversarialTests(unittest.TestCase):
         callback(data)
         path.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         write_manifest(root)
+
+    def synthetic_raw_evidence(self):
+        data = json.loads((ROOT / "results/certification.json").read_text(encoding="utf-8"))
+        raw_runs = {}
+        baseline_rows = []
+        accepted_rows = []
+        rtl = {
+            "baseline": (ROOT / "rtl/baseline/sha.v").read_bytes(),
+            "accepted": (ROOT / "rtl/accepted/sha.v").read_bytes(),
+        }
+        for row in data["per_seed"]:
+            seed = row["seed"]
+            for side, record_rows in (("baseline", baseline_rows), ("accepted", accepted_rows)):
+                metrics = row[side]
+                dynamic_fraction = metrics["active_dynamic_power_w"] / metrics["active_total_power_w"]
+                vpr = f"""
+Total logic block area (Warning: this is an estimate only): {metrics['logic_block_area_mwta']}
+Total routing area: {metrics['routing_area_mwta']}, per logic tile
+Final critical path delay (least slack): {metrics['critical_path_delay_ns']} ns, Fmax: {metrics['fmax_mhz']} MHz
+Circuit successfully routed with a channel width factor of {metrics['timing_channel_width']}.
+    .latch : {metrics['registers']}
+    clb {metrics['clb_blocks']} 0
+    memory {metrics['memories']} 0
+""".encode()
+                raw_runs[(side, seed)] = {
+                    "vpr_stdout.log": vpr,
+                    "active.power": f"Total {metrics['active_total_power_w']!r} 1 {dynamic_fraction!r}\n".encode(),
+                    "idle.power": f"Total {metrics['idle_total_power_w']!r} 1 0.5\n".encode(),
+                    "sha.v": rtl[side],
+                }
+                record_rows.append({"seed": seed, **metrics})
+        return data, raw_runs, {"certification_per_seed": baseline_rows}, {"per_seed": accepted_rows}
 
     def test_clean_compact_package_passes(self) -> None:
         result = self.run_verify(ROOT)
@@ -109,6 +143,16 @@ class VerifyAdversarialTests(unittest.TestCase):
         path.write_text(text, encoding="utf-8")
         write_manifest(root)
         self.assertNotEqual(self.run_verify(root).returncode, 0)
+
+    def test_rehashed_raw_metric_substitution_fails_semantically(self) -> None:
+        data, raw_runs, baseline_record, accepted_record = self.synthetic_raw_evidence()
+        public_verify.verify_raw_measurement_bindings(data, raw_runs, baseline_record, accepted_record)
+        files = raw_runs[("accepted", 2)]
+        original = str(data["per_seed"][0]["accepted"]["critical_path_delay_ns"]).encode()
+        self.assertEqual(files["vpr_stdout.log"].count(original), 1)
+        files["vpr_stdout.log"] = files["vpr_stdout.log"].replace(original, b"99.2839")
+        with self.assertRaises(public_verify.VerificationError):
+            public_verify.verify_raw_measurement_bindings(data, raw_runs, baseline_record, accepted_record)
 
 
 if __name__ == "__main__":

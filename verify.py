@@ -372,6 +372,168 @@ def verify_statistics(data: dict[str, Any]) -> dict[str, float]:
     return calculated
 
 
+def unique_text_match(pattern: str, text: str, where: str, flags: int = 0) -> re.Match[str]:
+    matches = list(re.finditer(pattern, text, flags))
+    require(len(matches) == 1, f"expected exactly one {where} record, found {len(matches)}")
+    return matches[0]
+
+
+def decode_evidence_text(payload: bytes, where: str) -> str:
+    try:
+        return payload.decode("utf-8", errors="strict")
+    except UnicodeDecodeError as exc:
+        raise VerificationError(f"invalid UTF-8 in {where}: {exc}") from exc
+
+
+def parse_vpr_metrics(payload: bytes, where: str) -> dict[str, float]:
+    text = decode_evidence_text(payload, where)
+    logic = float(
+        unique_text_match(
+            r"Total logic block area .*?:\s*([0-9.eE+-]+)$",
+            text,
+            f"{where} logic-area",
+            re.MULTILINE,
+        ).group(1)
+    )
+    routing = float(
+        unique_text_match(
+            r"Total routing area:\s*([0-9.eE+-]+),",
+            text,
+            f"{where} routing-area",
+        ).group(1)
+    )
+    delay = unique_text_match(
+        r"Final critical path delay \(least slack\):\s*([0-9.eE+-]+) ns, Fmax:\s*([0-9.eE+-]+) MHz",
+        text,
+        f"{where} routed timing",
+    )
+    channel = int(
+        unique_text_match(
+            r"Circuit successfully routed with a channel width factor of\s+(\d+)\.",
+            text,
+            f"{where} channel width",
+        ).group(1)
+    )
+    registers = int(
+        unique_text_match(
+            r"^\s+\.latch\s*:\s*(\d+)\s*$",
+            text,
+            f"{where} register count",
+            re.MULTILINE,
+        ).group(1)
+    )
+    clb_blocks = int(
+        unique_text_match(
+            r"^\s+clb\s+(\d+)\s+",
+            text,
+            f"{where} CLB count",
+            re.MULTILINE,
+        ).group(1)
+    )
+    memories = int(
+        unique_text_match(
+            r"^\s+memory\s+(\d+)\s+",
+            text,
+            f"{where} memory count",
+            re.MULTILINE,
+        ).group(1)
+    )
+    return {
+        "logic_block_area_mwta": logic,
+        "routing_area_mwta": routing,
+        "area_total_mwta": logic + routing,
+        "critical_path_delay_ns": float(delay.group(1)),
+        "fmax_mhz": float(delay.group(2)),
+        "clb_blocks": float(clb_blocks),
+        "registers": float(registers),
+        "memories": float(memories),
+        "timing_channel_width": float(channel),
+    }
+
+
+def parse_power_metrics(payload: bytes, where: str) -> tuple[float, float]:
+    text = decode_evidence_text(payload, where)
+    match = unique_text_match(
+        r"^Total\s+([0-9.eE+-]+)\s+1\s+([0-9.eE+-]+)\s*$",
+        text,
+        f"{where} total-power",
+        re.MULTILINE,
+    )
+    total = float(match.group(1))
+    dynamic_fraction = float(match.group(2))
+    require(math.isfinite(total) and total > 0.0, f"invalid total power in {where}")
+    require(math.isfinite(dynamic_fraction) and 0.0 <= dynamic_fraction <= 1.0, f"invalid dynamic fraction in {where}")
+    return total, dynamic_fraction
+
+
+def derive_raw_metrics(files: dict[str, bytes], where: str) -> dict[str, float]:
+    require(set(files) == {"vpr_stdout.log", "active.power", "idle.power", "sha.v"}, f"incomplete raw run tree: {where}")
+    values = parse_vpr_metrics(files["vpr_stdout.log"], f"{where}/vpr_stdout.log")
+    active_total, active_dynamic_fraction = parse_power_metrics(files["active.power"], f"{where}/active.power")
+    idle_total, _ = parse_power_metrics(files["idle.power"], f"{where}/idle.power")
+    values.update(
+        {
+            "active_total_power_w": active_total,
+            "active_dynamic_power_w": active_total * active_dynamic_fraction,
+            "active_static_power_w": active_total * (1.0 - active_dynamic_fraction),
+            "idle_total_power_w": idle_total,
+            "energy_per_block_nj": active_total
+            * values["critical_path_delay_ns"]
+            * 5000.0
+            / 60.0,
+        }
+    )
+    return values
+
+
+def raw_close(actual: float, expected: Any, where: str) -> None:
+    target = finite_number(expected, where, positive=False)
+    require(
+        math.isclose(actual, target, rel_tol=1e-9, abs_tol=1e-8),
+        f"{where} is not derived from raw evidence: calculated {actual!r}, published {target!r}",
+    )
+
+
+def rows_by_seed(rows: Any, where: str) -> dict[int, dict[str, Any]]:
+    require(type(rows) is list, f"{where} must be a list")
+    result: dict[int, dict[str, Any]] = {}
+    for index, row in enumerate(rows):
+        require(type(row) is dict, f"{where}[{index}] must be an object")
+        seed = strict_int(row.get("seed"), f"{where}[{index}].seed")
+        require(seed not in result, f"duplicate seed {seed} in {where}")
+        result[seed] = row
+    require(sorted(result) == CERTIFICATION_SEEDS, f"{where} does not contain the fixed certification seed set")
+    return result
+
+
+def verify_raw_measurement_bindings(
+    data: dict[str, Any],
+    raw_runs: dict[tuple[str, int], dict[str, bytes]],
+    baseline_record: dict[str, Any],
+    accepted_record: dict[str, Any],
+) -> None:
+    compact = rows_by_seed(data["per_seed"], "compact per_seed")
+    baseline_rows = rows_by_seed(baseline_record.get("certification_per_seed"), "baseline certification_per_seed")
+    accepted_rows = rows_by_seed(accepted_record.get("per_seed"), "accepted per_seed")
+    expected_runs = {(side, seed) for side in ("baseline", "accepted") for seed in CERTIFICATION_SEEDS}
+    require(set(raw_runs) == expected_runs, "raw archive does not contain exactly 128 certification run trees")
+
+    for side, record_rows, rtl_key in (
+        ("baseline", baseline_rows, "corrected_baseline_sha256"),
+        ("accepted", accepted_rows, "accepted_rtl_sha256"),
+    ):
+        for seed in CERTIFICATION_SEEDS:
+            where = f"runs/{side}/seed_{seed}"
+            files = raw_runs[(side, seed)]
+            require(sha256_bytes(files["sha.v"]) == data["source"][rtl_key], f"{where}/sha.v has the wrong RTL identity")
+            raw = derive_raw_metrics(files, where)
+            compact_metrics = compact[seed][side]
+            record_metrics = record_rows[seed]
+            for metric in ROW_METRICS:
+                raw_close(raw[metric], compact_metrics[metric], f"compact {side} seed {seed} {metric}")
+                raw_close(raw[metric], record_metrics[metric], f"archived record {side} seed {seed} {metric}")
+
+
 def verify_full_evidence(data: dict[str, Any], archive_path: Path) -> None:
     evidence = data["full_evidence"]
     require(type(evidence) is dict, "full_evidence must be an object")
@@ -396,12 +558,15 @@ def verify_full_evidence(data: dict[str, Any], archive_path: Path) -> None:
         stream = archive.extractfile(file_members[manifest_name])
         require(stream is not None, "cannot read internal evidence manifest")
         manifest = load_json_bytes(stream.read(), "evidence MANIFEST.json")
-        exact_keys(manifest, {"schema_version", "bundle", "purpose", "member_count", "members", "sanitization"}, "evidence manifest")
-        require(manifest["schema_version"] == 1 and manifest["bundle"] == BUNDLE_ROOT, "wrong evidence manifest identity")
+        exact_keys(manifest, {"schema_version", "bundle", "purpose", "member_count", "members", "sanitization", "corrections"}, "evidence manifest")
+        require(manifest["schema_version"] == 2 and manifest["bundle"] == BUNDLE_ROOT, "wrong evidence manifest identity")
         entries = manifest["members"]
         require(type(entries) is list and len(entries) == strict_int(manifest["member_count"], "member_count"), "invalid evidence member count")
         expected_names = {manifest_name}
         payloads: dict[str, bytes] = {}
+        source_hashes: dict[str, str] = {}
+        public_hashes: dict[str, str] = {}
+        raw_runs: dict[tuple[str, int], dict[str, bytes]] = {}
         for index, entry in enumerate(entries):
             require(type(entry) is dict, f"manifest member {index} must be an object")
             exact_keys(entry, {"path", "bytes", "sha256", "source_sha256"} if entry.get("path") != "README.txt" else {"path", "bytes", "sha256"}, f"manifest member {index}")
@@ -417,10 +582,53 @@ def verify_full_evidence(data: dict[str, Any], archive_path: Path) -> None:
             require(len(payload) == strict_int(entry["bytes"], f"manifest[{relative}].bytes"), f"byte count mismatch: {relative}")
             require(sha256_bytes(payload) == entry["sha256"], f"hash mismatch: {relative}")
             require(b"/Users/juanjosefernandezmorales/" not in payload, f"unsanitized host path: {relative}")
-            if relative in {"records/accepted-certification.json", "records/baseline.json", "rtl/baseline/sha.v", "rtl/accepted/sha.v", "runs/accepted/formal_driver.log", "runs/accepted/sha1_cycle/PASS", "runs/accepted/nist_run.log"}:
+            public_hashes[relative] = entry["sha256"]
+            if "source_sha256" in entry:
+                require(type(entry["source_sha256"]) is str and HEX64.fullmatch(entry["source_sha256"]) is not None, f"invalid source hash: {relative}")
+                source_hashes[relative] = entry["source_sha256"]
+            if relative in {"records/accepted-certification.json", "records/baseline.json", "rtl/baseline/sha.v", "rtl/accepted/sha.v", "runs/accepted/formal_driver.log", "runs/accepted/sha1_cycle/PASS", "runs/accepted/nist_run.log", "flow/benchmarks/sha_vtr_manifest.json"}:
                 payloads[relative] = payload
+            raw_match = re.fullmatch(r"runs/(baseline|accepted)/seed_(\d+)/(vpr_stdout\.log|active\.power|idle\.power|sha\.v)", relative)
+            if raw_match is not None:
+                side, seed_text, filename = raw_match.groups()
+                raw_runs.setdefault((side, int(seed_text)), {})[filename] = payload
         require(set(file_members) == expected_names, "archive contains unmanifested members")
         require(sum(name.startswith(f"{BUNDLE_ROOT}/runs/accepted/") for name in file_members) == strict_int(evidence["evidence_file_count"], "evidence_file_count"), "accepted evidence file count mismatch")
+
+        sanitization = manifest["sanitization"]
+        exact_keys(sanitization, {"replacement", "modified_member_count", "modified_members"}, "evidence sanitization")
+        require(sanitization["replacement"] == "<SOURCE_WORKTREE>", "wrong sanitization replacement token")
+        sanitized = sanitization["modified_members"]
+        require(type(sanitized) is list and len(sanitized) == strict_int(sanitization["modified_member_count"], "modified_member_count"), "invalid sanitization records")
+        sanitized_paths: set[str] = set()
+        for index, item in enumerate(sanitized):
+            require(type(item) is dict, f"sanitization record {index} must be an object")
+            exact_keys(item, {"path", "replacements", "source_sha256", "public_sha256"}, f"sanitization record {index}")
+            path = item["path"]
+            require(type(path) is str and path not in sanitized_paths, f"duplicate sanitization path: {path}")
+            sanitized_paths.add(path)
+            require(strict_int(item["replacements"], f"sanitization[{path}].replacements") > 0, f"invalid replacement count: {path}")
+            require(item["source_sha256"] == source_hashes.get(path), f"sanitization source hash mismatch: {path}")
+            require(item["public_sha256"] == public_hashes.get(path), f"sanitization public hash mismatch: {path}")
+
+        corrections = manifest["corrections"]
+        exact_keys(corrections, {"modified_member_count", "modified_members"}, "evidence corrections")
+        corrected = corrections["modified_members"]
+        require(type(corrected) is list and len(corrected) == strict_int(corrections["modified_member_count"], "correction count"), "invalid correction records")
+        corrected_paths: set[str] = set()
+        for index, item in enumerate(corrected):
+            require(type(item) is dict, f"correction record {index} must be an object")
+            exact_keys(item, {"path", "description", "source_sha256", "public_sha256"}, f"correction record {index}")
+            path = item["path"]
+            require(type(path) is str and path not in corrected_paths, f"duplicate correction path: {path}")
+            corrected_paths.add(path)
+            require(type(item["description"]) is str and item["description"], f"missing correction description: {path}")
+            require(item["source_sha256"] == source_hashes.get(path), f"correction source hash mismatch: {path}")
+            require(item["public_sha256"] == public_hashes.get(path), f"correction public hash mismatch: {path}")
+
+        transformed_paths = {path for path, source_hash in source_hashes.items() if source_hash != public_hashes[path]}
+        require(not sanitized_paths & corrected_paths, "a member cannot be both sanitized and corrected")
+        require(transformed_paths == sanitized_paths | corrected_paths, "source/public hash differences are not completely explained")
 
     require(sha256_bytes(payloads["records/accepted-certification.json"]) == evidence["certification_result_sha256"], "accepted certification record hash mismatch")
     require(sha256_bytes(payloads["runs/accepted/formal_driver.log"]) == evidence["formal_driver_log_sha256"], "formal driver hash mismatch")
@@ -428,11 +636,15 @@ def verify_full_evidence(data: dict[str, Any], archive_path: Path) -> None:
     require(sha256_bytes(payloads["rtl/baseline/sha.v"]) == data["source"]["corrected_baseline_sha256"], "bundle baseline RTL mismatch")
     require(sha256_bytes(payloads["rtl/accepted/sha.v"]) == data["source"]["accepted_rtl_sha256"], "bundle accepted RTL mismatch")
     accepted_record = load_json_bytes(payloads["records/accepted-certification.json"], "accepted certification record")
+    baseline_record = load_json_bytes(payloads["records/baseline.json"], "baseline certification record")
     require(strict_bool(accepted_record.get("valid"), "accepted_record.valid"), "accepted record invalid")
     require(strict_bool(accepted_record.get("certified"), "accepted_record.certified"), "accepted record not certified")
     require(strict_bool(accepted_record.get("accepted_improvement"), "accepted_record.accepted_improvement"), "accepted record not accepted")
     require(accepted_record.get("trace", {}).get("candidate_sha256") == data["source"]["accepted_rtl_sha256"], "accepted record is bound to a different RTL")
     require(b"SHA1_NIST_SHAVS_PASS cases=129" in payloads["runs/accepted/nist_run.log"], "NIST pass log missing expected result")
+    archived_contract = load_json_bytes(payloads["flow/benchmarks/sha_vtr_manifest.json"], "archived flow contract")
+    require(archived_contract.get("functional_contract", {}).get("interface") == data["contract"]["interface"], "archived flow interface differs from the compact contract")
+    verify_raw_measurement_bindings(data, raw_runs, baseline_record, accepted_record)
 
 
 def main(argv: list[str] | None = None) -> int:

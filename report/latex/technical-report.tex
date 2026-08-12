@@ -246,7 +246,9 @@ Physical integrity & Every VTR/ACE output for both designs and all 64 seeds & \y
 
 The formal proof is scoped to two-state, defined-input hardware semantics after the declared reset. It compares the complete sequential design and all selected cut points. A timeout or inconclusive result is a failure. This is deliberately narrower than claiming identical Verilog X/Z propagation; that distinction matters for the majority rewrite and is stated rather than hidden.
 
-The public release asset contains both raw evidence trees, the exact accepted and baseline records, the formal and functional inputs, tool-flow sources and an internal manifest for every archived member. The compact repository checks arithmetic and identity; the full-evidence mode additionally verifies all 11,362 archived files and binds the accepted record to \AcceptedHash.
+The public release asset contains both raw evidence trees, the exact accepted and baseline records, the formal and functional inputs, tool-flow sources and an internal manifest for every archived member. The compact repository checks arithmetic and identity. The full-evidence mode additionally verifies all 11,362 archived files, validates declared public transformations, derives every certification metric from all 128 raw VTR/ACE run trees, compares them with both archived records and compact rows, and binds every measured run to the corresponding RTL hash.
+
+The bundle records one documentation-only correction with source and public hashes: stale \texttt{cmd\_i[2:0]} prose in the source flow manifest is published as the frozen \texttt{cmd\_i[3:0]} RTL interface. The measurement RTL and every raw output remain unchanged.
 
 \begin{lstlisting}
 python3 verify.py
@@ -484,7 +486,7 @@ Archive size & \EvidenceArchiveBytes\ bytes \\
 }
 
 The release asset is available from
-\href{https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/tag/v1.3.0-rc3}{the public \texttt{v1.3.0-rc3} release}. Its internal manifest covers every member; the Git release and this report provide the external content anchor.
+\href{https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/tag/v1.3.0-rc4}{the public \texttt{v1.3.0-rc4} release}. Its internal manifest covers every member; the Git release and this report provide the external content anchor.
 
 % Reproducibility
 \newpageheading{12. Reproduction and verifier trust model}{What each command establishes}
@@ -493,19 +495,19 @@ The repository intentionally separates three levels of evidence:
 \begin{enumerate}
   \item \textbf{Git identity}: checksums cover the exact compact package and the commit records its history.
   \item \textbf{Compact consistency}: \texttt{python3 verify.py} validates strict schemas, RTL hashes, the exact patch, all 64 rows, auxiliary fields, formulas, confidence intervals and acceptance rules.
-  \item \textbf{Raw-evidence audit}: supplying the release archive verifies its external digest, internal manifest, all 11,362 files, formal/NIST markers, accepted-hash binding and complete baseline/candidate output trees.
+  \item \textbf{Raw-evidence audit}: supplying the release archive verifies its external digest, internal manifest, all 11,362 files, declared transformations, formal/NIST markers and RTL identities, then independently parses every raw VTR/ACE certification run and binds every published metric to those logs.
 \end{enumerate}
 
 \begin{lstlisting}
 curl -LO https://github.com/juan-fernandez-gotherlabs/\
-rtl-optimization-case-study/releases/download/v1.3.0-rc3/\
+rtl-optimization-case-study/releases/download/v1.3.0-rc4/\
 primary-ppa-full-evidence.tar.gz
 
 python3 verify.py --evidence-archive \
   primary-ppa-full-evidence.tar.gz
 \end{lstlisting}
 
-The verifier uses explicit checks rather than Python \texttt{assert}, rejects duplicate JSON keys, non-finite values, fractional seeds, unit-scale violations, incomplete manifests and altered auxiliary fields, and behaves identically under \texttt{python -O}. Its adversarial unit suite exercises these cases in CI.
+The verifier uses explicit checks rather than Python \texttt{assert}, rejects duplicate JSON keys, non-finite values, fractional seeds, unit-scale violations, incomplete manifests, altered auxiliary fields and rehashed raw-log substitutions, and behaves identically under \texttt{python -O}. Its adversarial unit suite exercises these cases in CI.
 
 The included flow snapshot pins the Dockerfile, Python lock, VTR and EQY commits, architecture, PTM, activity vectors, harnesses and evaluator sources. A clean physical rerun still requires Docker with Linux/amd64 support, two CPUs, 7 GB RAM and the pinned source checkouts. Runtime networking is disabled.
 
