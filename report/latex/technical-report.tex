@@ -1,0 +1,553 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[a4paper,top=20mm,bottom=22mm,left=19mm,right=19mm,headheight=14pt]{geometry}
+\usepackage{fontspec}
+\setsansfont{texgyreheros-regular.otf}[BoldFont=texgyreheros-bold.otf,ItalicFont=texgyreheros-italic.otf,BoldItalicFont=texgyreheros-bolditalic.otf]
+\setmainfont{texgyreheros-regular.otf}[BoldFont=texgyreheros-bold.otf,ItalicFont=texgyreheros-italic.otf,BoldItalicFont=texgyreheros-bolditalic.otf]
+\setmonofont{texgyrecursor-regular.otf}[BoldFont=texgyrecursor-bold.otf,ItalicFont=texgyrecursor-italic.otf,BoldItalicFont=texgyrecursor-bolditalic.otf,Scale=0.88]
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{microtype}
+\usepackage[table]{xcolor}
+\definecolor{GotherBlue}{HTML}{0A84FF}
+\definecolor{Ink}{HTML}{111111}
+\definecolor{Mid}{HTML}{666666}
+\definecolor{Rule}{HTML}{D9DDE3}
+\definecolor{Pale}{HTML}{F4F8FC}
+\usepackage{titlesec}
+\titleformat{\section}{\fontsize{20}{23}\bfseries\color{Ink}}{}{0pt}{}
+\titleformat{\subsection}{\fontsize{13.5}{16}\bfseries\color{Ink}}{}{0pt}{}
+\titlespacing*{\section}{0pt}{0pt}{12pt}
+\titlespacing*{\subsection}{0pt}{16pt}{7pt}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize\color{Mid}Göther Labs / Evaluated technical improvement}
+\fancyhead[R]{\footnotesize\color{Mid}SHA-1 RTL / VTR 45 nm}
+\fancyfoot[L]{\footnotesize\color{Mid}Primary PPA evidence snapshot · \EvidenceDate}
+\fancyfoot[R]{\footnotesize\color{Mid}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\usepackage{booktabs,tabularx,array}
+\usepackage{siunitx}
+\sisetup{detect-all,group-separator={,},group-minimum-digits=4}
+\newcolumntype{Y}{>{\rightskip=0pt plus 1fil\relax\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+\newcolumntype{P}[1]{>{\rightskip=0pt plus 1fil\relax\arraybackslash}p{#1}}
+\newcolumntype{B}[1]{>{\bfseries\rightskip=0pt plus 1fil\relax\arraybackslash}p{#1}}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=5mm}
+\usepackage{listings}
+\lstdefinelanguage{VerilogDiff}{morekeywords={assign,module,input,output,wire,case,endcase},sensitive=true,morecomment=[l]{//}}
+\lstset{basicstyle=\ttfamily\footnotesize,keywordstyle=\color{GotherBlue}\bfseries,commentstyle=\color{Mid},columns=fullflexible,keepspaces=true,frame=none,backgroundcolor=\color{white},xleftmargin=0pt,aboveskip=7pt,belowskip=7pt,showspaces=false,showtabs=false,showstringspaces=false,breaklines=true,breakatwhitespace=false}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,fit,backgrounds}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=Ink,urlcolor=GotherBlue,citecolor=GotherBlue,pdfauthor={Göther Labs},pdftitle={SHA-1 RTL optimization on VTR - primary PPA evidence},pdflang={en-GB}}
+\usepackage{seqsplit}
+
+\input{generated/metrics.tex}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5.5pt}
+\setlength{\emergencystretch}{2em}
+\newcommand{\hash}[1]{{\scriptsize\ttfamily\seqsplit{#1}}}
+\newcommand{\better}{\textcolor{GotherBlue}{\textbf{better}}}
+\newcommand{\neutral}{\textcolor{Mid}{\textbf{neutral}}}
+\newcommand{\smallcaps}[1]{\textcolor{Mid}{\fontsize{8.5}{10}\selectfont\bfseries\MakeUppercase{#1}}}
+\newcommand{\newpageheading}[2]{\clearpage\section{#1}\smallcaps{#2}\vspace{6pt}}
+\newcommand{\yes}{\textcolor{GotherBlue}{\textbf{PASS}}}
+\newcommand{\thead}[1]{\textcolor{white}{\textbf{#1}}}
+
+\newtcolorbox{claimbox}[1][]{enhanced,breakable,boxrule=0.6pt,leftrule=2.8pt,colback=white,colframe=GotherBlue,arc=0pt,left=4.5mm,right=4.5mm,top=4mm,bottom=4mm,#1}
+\newtcolorbox{scopebox}[1][]{enhanced,breakable,boxrule=0.5pt,colback=Pale,colframe=Rule,arc=2mm,left=4mm,right=4mm,top=3mm,bottom=3mm,#1}
+
+\tikzset{
+  signal/.style={-Latex,draw=Mid,line width=.75pt},
+  gate/.style={draw=Rule,fill=white,rounded corners=1.5pt,minimum width=17mm,minimum height=8mm,font=\scriptsize\bfseries,align=center},
+  accepted/.style={gate,draw=GotherBlue},
+  input/.style={draw=Rule,fill=white,rounded corners=1.5pt,minimum width=10mm,minimum height=7mm,font=\scriptsize,align=center},
+}
+
+\begin{document}
+
+% Cover
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture,overlay]
+  \fill[GotherBlue] (current page.north west) rectangle ([xshift=7mm]current page.south west);
+\end{tikzpicture}
+\vspace*{47mm}
+{\color{Mid}\fontsize{11}{14}\selectfont Göther Labs / Evaluated technical improvement}\par
+\vspace{5mm}
+{\color{Ink}\fontsize{29}{33}\selectfont\bfseries SHA-1 RTL optimization on VTR}\par
+\vspace{5mm}
+{\color{Mid}\fontsize{13}{16}\selectfont Auditable primary PPA estimate · open 45 nm FPGA proxy}\par
+\vspace{19mm}
+\begin{claimbox}
+{\fontsize{15}{19}\selectfont\bfseries Three cycle-equivalent RTL transformations improve the paired area-delay-power estimate by \CompositeEstimate\%}
+\end{claimbox}
+\vspace{35mm}
+{\color{Mid}\fontsize{12}{15}\selectfont Prepared by Göther Labs}\par
+\vspace{4mm}
+{\color{Mid}\fontsize{12}{15}\selectfont Measurement completed: \EvidenceDate}\par
+\vfill
+{\color{Mid}\footnotesize Academic open-FPGA estimate. Not ASIC signoff, a commercial FPGA result, or manufactured silicon.}\par
+
+% Executive result
+\newpageheading{1. Executive result}{Corrected baseline versus accepted RTL}
+
+\begin{claimbox}
+\textbf{The accepted RTL improves the equal-weight area-delay-active-power estimator by \CompositeEstimate\% (95\% CI: \CompositeLow\% to \CompositeHigh\%) without changing the interface, defined-input cycle behaviour, latency or synthesized register count.}
+\end{claimbox}
+
+\renewcommand{\arraystretch}{1.42}
+\vspace{3mm}
+{\small
+\rowcolors{2}{Pale}{white}
+\begin{tabularx}{\textwidth}{@{}P{28mm}P{29mm}P{29mm}P{24mm}Y@{}}
+\rowcolor{Ink}
+\thead{Primary metric} & \thead{Baseline median} & \thead{Accepted median} & \thead{Paired improvement} & \thead{95\% CI / state} \\
+Total area & \BaselineArea\ MWTA & \AcceptedArea\ MWTA & \textbf{\AreaEstimate\%} & \AreaLow\% to \AreaHigh\% · \better \\
+Critical path & \BaselineDelay\ ns & \AcceptedDelay\ ns & \textbf{\TimingEstimate\%} & \TimingLow\% to \TimingHigh\% · \better \\
+Active total power & \BaselinePower\ mW & \AcceptedPower\ mW & \textbf{\PowerEstimate\%} & \PowerLow\% to \PowerHigh\% · \better \\
+Composite estimator & 1.000000 & \AcceptedScore & \textbf{\CompositeEstimate\%} & \CompositeLow\% to \CompositeHigh\% · \better \\
+\end{tabularx}
+\rowcolors{2}{}{}
+}
+
+\vspace{7mm}
+{\large\bfseries Paired primary PPA improvement}\par
+{\small\color{Mid}64 fixed certification seeds · lower is better · bars are two-sided 95\% confidence intervals}\par
+\vspace{2mm}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  width=.96\textwidth,height=68mm,ymin=-.5,ymax=6.4,xmin=.6,xmax=4.4,
+  xtick={1,2,3,4},xticklabels={Area,Timing,Active power,Composite},
+  ytick={0,1,2,3,4,5,6},yticklabel={\pgfmathprintnumber{\tick}\%},
+  grid=major,grid style={draw=Rule},axis line style={draw=Mid},
+  tick label style={font=\footnotesize},ylabel={Improvement versus baseline},
+  legend style={at={(0.5,1.04)},anchor=south,draw=none,font=\footnotesize,legend columns=-1},
+]
+\addplot[draw=none,fill=Rule,opacity=.55] coordinates {(.6,-.10) (4.4,-.10) (4.4,.10) (.6,.10)} \closedcycle;
+\addlegendentry{No-change reference}
+\addplot[GotherBlue,line width=1.25pt,mark=*,error bars/.cd,y dir=both,y explicit] table[x=x,y=estimate,y error plus=plus,y error minus=minus,col sep=comma]{generated/executive-ci.csv};
+\addlegendentry{Paired estimate and 95\% CI}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+The reported composite value \AcceptedScore{} is the paired geometric-mean estimator, not a median. The median of the 64 per-seed composite ratios is \AcceptedCompositeMedian. Both summarize the same fixed sample but answer different questions; the estimator and its paired interval define acceptance.
+
+% Module
+\newpageheading{2. Module and benchmark}{What is being optimized}
+
+The evaluated module is a sequential SHA-1 compression implementation from the public
+\href{https://github.com/verilog-to-routing/vtr-verilog-to-routing}{Verilog-to-Routing repository}. The exact upstream source is the
+\href{https://github.com/verilog-to-routing/vtr-verilog-to-routing/blob/95f5c6de9e158371ba7185bf97c07a84153735d6/vtr_flow/benchmarks/verilog/sha.v}{pinned \texttt{sha.v} at commit \texttt{95f5c6de…}}.
+
+It receives a 512-bit block through a 32-bit command/data interface and updates a 160-bit chaining state over 80 SHA-1 rounds. Only \texttt{sha.v} is editable; reset, command protocol, read order, latency, throughput and observable defined-input cycle behaviour remain fixed.
+
+\begin{lstlisting}[language=VerilogDiff]
+module sha1(clk_i, rst_i, text_i, text_o, cmd_i, cmd_w_i, cmd_o);
+  input clk_i, rst_i, cmd_w_i;
+  input  [31:0] text_i;
+  output [31:0] text_o;
+  input  [3:0]  cmd_i;
+  output [3:0]  cmd_o;
+endmodule
+\end{lstlisting}
+
+\begin{center}
+\begin{tikzpicture}[node distance=10mm]
+\node[input] (in) {512-bit block\\32-bit I/O};
+\node[accepted,right=of in,minimum width=31mm,minimum height=14mm] (ctrl) {command protocol\\and state machine};
+\node[accepted,right=of ctrl,minimum width=34mm,minimum height=14mm] (round) {80 SHA-1 rounds\\Boolean · rotate · add};
+\node[input,right=of round] (out) {160-bit\\chaining state};
+\draw[signal] (in)--(ctrl); \draw[signal] (ctrl)--(round); \draw[signal] (round)--(out);
+\end{tikzpicture}
+\end{center}
+
+The original VTR artifact does not produce the standard digest for \texttt{abc}. A separate historical conformance correction created the frozen reference:
+\[
+\operatorname{SHA1}(\texttt{abc})=
+\texttt{a9993e364706816aba3e25717850c26c9cd0d89d}.
+\]
+The correction is excluded from the optimization claim. Every ratio compares the accepted RTL with this corrected baseline.
+
+{\small
+\rowcolors{2}{Pale}{white}
+\begin{tabularx}{\textwidth}{@{}P{52mm}Y@{}}
+\rowcolor{Ink}\thead{Artifact} & \thead{SHA-256} \\
+Corrected baseline \texttt{sha.v} & \hash{\BaselineHash} \\
+Accepted \texttt{sha.v} & \hash{\AcceptedHash} \\
+\end{tabularx}
+\rowcolors{2}{}{}
+}
+
+% Contract
+\newpageheading{3. Evaluation contract}{Frozen before the accepted measurement}
+
+{\small
+\rowcolors{2}{Pale}{white}
+\begin{tabularx}{\textwidth}{@{}B{39mm}Y@{}}
+\rowcolor{Ink}\thead{Dimension} & \thead{Frozen choice} \\
+Editable artifact & \texttt{sha.v} only; submissions frozen by SHA-256. \\
+Functional behaviour & Exact interface, reset, protocol, latency, output order and defined-input cycle behaviour. \\
+Formal semantics & Two-state equivalence after the declared reset; inputs are defined, not X/Z. \\
+Conformance & NIST SHA-1 Short and Long Message corpus; 129 cases. \\
+Formal tool & EQY commit \texttt{6734d8c2…}; fail closed; 2 CPU, 7 GB, 10 min. \\
+Physical flow & VTR/VPR commit \texttt{95f5c6de…}; pinned Linux/amd64 image. \\
+Architecture & \texttt{k6\_N10\_I40\_Fi6\_L4\_frac0\_ff1\_45nm.xml}. \\
+Power & VTR PTM45, 0.9 V, 85 °C; fixed active and idle traces. \\
+Search sample & Seeds 1, 7, 19, 43, 97; provisional ranking only. \\
+Certification sample & Remaining 64 seeds in 1--68; disjoint, fixed $n=64$, no extension. \\
+Primary score & Equal-weight paired area, delay and active-total-power geometric mean. \\
+Secondary metric & Energy per completed block; excluded from the primary score. \\
+\end{tabularx}
+\rowcolors{2}{}{}
+}
+
+\vspace{8mm}
+\begin{center}
+\begin{tikzpicture}[node distance=7mm,scale=.88,transform shape]
+\node[accepted,minimum width=23mm,minimum height=13mm] (rtl) {accepted RTL\\hash frozen};
+\node[gate,right=of rtl,minimum width=24mm,minimum height=13mm] (struct) {interface\\lint · synthesis};
+\node[gate,right=of struct,minimum width=24mm,minimum height=13mm] (func) {cycle trace\\NIST SHAVS};
+\node[gate,right=of func,minimum width=24mm,minimum height=13mm] (formal) {two-state EQY\\fail closed};
+\node[gate,right=of formal,minimum width=24mm,minimum height=13mm] (ppa) {64 paired\\PPA seeds};
+\node[accepted,right=of ppa,minimum width=22mm,minimum height=13mm] (decision) {accept /\\reject};
+\foreach \a/\b in {rtl/struct,struct/func,func/formal,formal/ppa,ppa/decision}{\draw[signal] (\a)--(\b);}
+\end{tikzpicture}
+\end{center}
+
+\begin{scopebox}
+\textbf{Exact decision rule.} All correctness and evidence-integrity gates must pass. The composite one-sided 95\% upper confidence bound must be below 1.0, and no primary metric may have a one-sided 95\% lower bound above 1.0. Otherwise the result is inconclusive or regressed. No undefined ``materiality'' threshold is used.
+\end{scopebox}
+
+% Verification
+\newpageheading{4. Verification before PPA}{Replayable evidence for the accepted hash}
+
+{\small
+\rowcolors{2}{Pale}{white}
+\begin{tabularx}{\textwidth}{@{}P{40mm}Y P{19mm}@{}}
+\rowcolor{Ink}\thead{Gate} & \thead{Public replay evidence} & \thead{Result} \\
+Structural policy & Interface record, lint logs and synthesis outputs & \yes \\
+Cycle regression & Compiled cycle harness and complete run logs & \yes \\
+NIST SHAVS & Frozen 129-case corpus, harness and run log & \yes \\
+Sequential EQY & Configuration, strategies, solver logs and PASS marker & \yes \\
+Physical integrity & Every VTR/ACE output for both designs and all 64 seeds & \yes \\
+\end{tabularx}
+\rowcolors{2}{}{}
+}
+
+The formal proof is scoped to two-state, defined-input hardware semantics after the declared reset. It compares the complete sequential design and all selected cut points. A timeout or inconclusive result is a failure. This is deliberately narrower than claiming identical Verilog X/Z propagation; that distinction matters for the majority rewrite and is stated rather than hidden.
+
+The public release asset contains both raw evidence trees, the exact accepted and baseline records, the formal and functional inputs, tool-flow sources and an internal manifest for every archived member. The compact repository checks arithmetic and identity. The full-evidence mode additionally verifies all 11,362 archived files, validates declared public transformations, derives every certification metric from all 128 raw VTR/ACE run trees, compares them with both archived records and compact rows, and binds every measured run to the corresponding RTL hash.
+
+The bundle records one documentation-only correction with source and public hashes: stale \texttt{cmd\_i[2:0]} prose in the source flow manifest is published as the frozen \texttt{cmd\_i[3:0]} RTL interface. The measurement RTL and every raw output remain unchanged.
+
+\begin{lstlisting}
+python3 verify.py
+python3 verify.py --evidence-archive \
+  primary-ppa-full-evidence.tar.gz
+\end{lstlisting}
+
+\begin{claimbox}
+\textbf{Evidence boundary.} ``Compact package consistency: PASS'' does not certify raw EDA provenance. Only the second command may report ``Full raw evidence: PASS''.
+\end{claimbox}
+
+The 500 deterministic MCY mutations qualify the verification stack: 454 are detected by simulation, 28 additional distinguishable mutations are rejected only by formal, and 18 are proved equivalent. These qualification results are included with the baseline evidence and are not counted as candidate improvements.
+
+% Diff
+\newpageheading{5. Exact baseline-to-accepted diff}{All changed lines from sha.v}
+
+The patch below is generated directly from the two checked-in RTL files. No testbench, constraint, architecture, activity, parser or tool flag is editable by the candidate.
+
+\lstinputlisting[language=VerilogDiff,basicstyle=\ttfamily\scriptsize]{../../rtl/baseline-to-accepted.patch}
+
+\begin{scopebox}
+\textbf{Attribution boundary.} The measured PPA result belongs to the complete patch. The following pages explain the three conceptual transformations, but no exact fraction of the gain is assigned to an individual statement.
+\end{scopebox}
+
+% Rewrite 1
+\newpageheading{6. Rewrite 1: SHA-1 choose function}{Source: sha.v:130}
+
+\begin{center}
+\begin{tikzpicture}[node distance=9mm]
+\node[font=\small\bfseries,text=Mid] (bt) {Corrected baseline};
+\node[input,below=5mm of bt,xshift=-38mm] (bc) {$BC$};
+\node[input,below=5mm of bc] (nbd) {$(\neg B)D$};
+\node[gate,right=25mm of bc,yshift=-5mm] (xor) {XOR};
+\node[input,right=of xor] (f1) {$f_1$};
+\draw[signal] (bc)--(xor); \draw[signal] (nbd)--(xor); \draw[signal] (xor)--(f1);
+\node[font=\small\bfseries,text=GotherBlue,below=29mm of bt] (at) {Accepted RTL};
+\node[input,below=5mm of at,xshift=-38mm] (bc2) {$BC$};
+\node[input,below=5mm of bc2] (nbd2) {$(\neg B)D$};
+\node[accepted,right=25mm of bc2,yshift=-5mm] (or) {OR};
+\node[input,right=of or] (f2) {$f_1$};
+\draw[signal] (bc2)--(or); \draw[signal] (nbd2)--(or); \draw[signal] (or)--(f2);
+\end{tikzpicture}
+\end{center}
+
+\subsection{Why the expressions are equivalent}
+\begin{align*}
+F &= BC \oplus (\neg B)D \\
+  &= BC \lor (\neg B)D.
+\end{align*}
+The two products are mutually exclusive. If $BC=1$, then $B=1$ and $(\neg B)D=0$; if $(\neg B)D=1$, then $B=0$ and $BC=0$. XOR and OR therefore agree for every binary input. This preserves the SHA-1 choose function: select $C$ when $B=1$, otherwise select $D$.
+
+\begin{claimbox}\textbf{Formal result.} EQY proves the replacement in the complete two-state sequential circuit under the declared reset and defined-input model.\end{claimbox}
+
+% Rewrite 2
+\newpageheading{7. Rewrite 2: shared SHA-1 Boolean core}{Source: sha.v:126--141}
+
+\begin{center}
+\begin{tikzpicture}[node distance=6mm]
+\node[font=\small\bfseries,text=Mid] (oldtitle) {Corrected baseline · separate parity and majority cones};
+\node[input,below=7mm of oldtitle,xshift=-44mm] (ob) {$B$};
+\node[input,right=of ob] (oc) {$C$};
+\node[input,right=of oc] (od) {$D$};
+\node[gate,below=8mm of ob,xshift=12mm,minimum width=31mm] (par) {$B\oplus C\oplus D$};
+\node[gate,right=12mm of par,minimum width=38mm] (maj) {$BC\oplus CD\oplus BD$};
+\draw[signal] (ob)--(par); \draw[signal] (oc)--(par); \draw[signal] (od)--(par);
+\draw[signal] (ob)--(maj); \draw[signal] (oc)--(maj); \draw[signal] (od)--(maj);
+
+\node[font=\small\bfseries,text=GotherBlue,below=29mm of par,xshift=35mm] (newtitle) {Accepted RTL · shared XOR terms and round-selected core};
+\node[input,below=7mm of newtitle,xshift=-55mm] (xb) {$X=B\oplus D$};
+\node[input,below=9mm of xb] (yc) {$Y=C\oplus D$};
+\node[accepted,right=20mm of xb,yshift=-4.5mm,minimum width=31mm,minimum height=19mm] (core) {shared core\\[1mm]$X\oplus Y$\\$XY$};
+\node[accepted,right=17mm of core,minimum width=25mm] (mux) {round selector};
+\node[accepted,right=15mm of mux] (dx) {XOR};
+\node[input,below=9mm of dx] (din) {$D$};
+\node[input,right=of dx] (ft) {$f_t$};
+\draw[signal] (xb.east)--(core.north west);
+\draw[signal] (yc.east)--(core.south west);
+\draw[signal] (core)--node[above,font=\scriptsize] {$X\oplus Y$ or $XY$}(mux);
+\draw[signal] (mux)--(dx); \draw[signal] (din)--(dx); \draw[signal] (dx)--(ft);
+\end{tikzpicture}
+\end{center}
+
+Let $X=B\oplus D$ and $Y=C\oplus D$. For parity rounds,
+\[
+D\oplus(X\oplus Y)=D\oplus B\oplus D\oplus C\oplus D=B\oplus C\oplus D.
+\]
+For majority rounds, use the value of $D$:
+\[
+D\oplus(XY)=
+\begin{cases}
+BC, & D=0,\\
+B\lor C, & D=1.
+\end{cases}
+\]
+Those are exactly the two cofactors of $\operatorname{Maj}(B,C,D)$. The new form shares $B\oplus D$ and $C\oplus D$ across the parity and majority paths and moves the final $D$ XOR after the round selector.
+
+\begin{scopebox}\textbf{Four-state caveat.} The identity is exact for binary hardware values. It intentionally does not claim identical X/Z propagation in an event-driven Verilog simulation. The formal and functional contract supplies defined binary inputs after reset.\end{scopebox}
+
+% Rewrite 3
+\newpageheading{8. Rewrite 3: direct chaining-state readout}{Source: sha.v:127 and sha.v:2160--2164}
+
+The baseline first creates a 160-bit concatenation and then uses a five-way \texttt{case} mux to read constant 32-bit slices. The accepted RTL retains the same case conditions and assignments but connects the five state registers directly.
+
+\begin{center}
+\begin{tikzpicture}[node distance=6mm]
+\node[font=\small\bfseries,text=Mid] (bt) {Corrected baseline};
+\node[input,below=7mm of bt,xshift=-53mm] (states) {$A,B,C,D,E$};
+\node[gate,right=12mm of states,minimum width=33mm] (concat) {160-bit concat\\\texttt{SHA1\_result}};
+\node[gate,right=12mm of concat,minimum width=27mm] (case1) {5-way case mux};
+\node[input,right=of case1] (out1) {\texttt{text\_o}};
+\draw[signal] (states)--(concat); \draw[signal] (concat)--(case1); \draw[signal] (case1)--(out1);
+
+\node[font=\small\bfseries,text=GotherBlue,below=24mm of bt] (at) {Accepted RTL};
+\node[input,below=7mm of at,xshift=-53mm] (states2) {$A,B,C,D,E$};
+\node[accepted,right=57mm of states2,minimum width=27mm] (case2) {5-way case mux};
+\node[input,right=of case2] (out2) {\texttt{text\_o}};
+\draw[signal] (states2)--(case2); \draw[signal] (case2)--(out2);
+\end{tikzpicture}
+\end{center}
+
+For each \texttt{read\_counter} value, concatenation slicing is an alias:
+\[
+\{A,B,C,D,E\}[159{:}128]=A,\quad
+\{A,B,C,D,E\}[127{:}96]=B,\quad\ldots\quad
+\{A,B,C,D,E\}[31{:}0]=E.
+\]
+The output mux, register values, read order and cycle timing are unchanged. This diagram shows the actual five-way case topology; it does not depict a variable part-select.
+
+\begin{claimbox}\textbf{Formal result.} EQY proves that every output word is identical on every compared cycle under the declared model.\end{claimbox}
+
+% PPA environment
+\newpageheading{9. PPA environment and statistics}{Open 45 nm FPGA proxy}
+
+The target is VTR's homogeneous \texttt{k6\_N10\_I40\_Fi6\_L4\_frac0\_ff1\_45nm} architecture: six-input LUTs clustered ten per logic block, with the architecture's routing and timing model. Power uses PTM45 properties at 0.9 V and 85 °C. MWTA is minimum-width-transistor area, not square-micrometre physical area.
+
+Two 5,000-cycle ACE traces are frozen and hashed. The active trace continuously executes legal blocks and completes 60 blocks; the idle trace keeps the clock active after reset with an inactive interface. Active and idle power analyses reuse the same placement and route for a given design and seed.
+
+The primary per-seed score is
+\[
+r_s=\sqrt[3]{r_{A,s}\,r_{D,s}\,r_{P,s}},
+\qquad
+\widehat r=\exp\!\left(\frac{1}{64}\sum_{s\in S}\log r_s\right),
+\]
+where $A$ is total MWTA, $D$ is post-route critical-path delay and $P$ is active total power. Energy is secondary:
+\[
+E_{\text{block}}=
+\frac{P_{\text{active,total}}\,D\,(5{,}000\ \text{cycles})}{60\ \text{completed blocks}}.
+\]
+
+Two-sided 95\% Student-$t$ intervals use 63 degrees of freedom on paired log ratios. The one-sided bounds in the decision rule use the same predeclared fixed sample. These intervals quantify variation across the selected implementation seeds; they do not cover process, voltage, temperature, workload or tool-version uncertainty.
+
+\begin{scopebox}
+\textbf{Seed policy.} Search uses only 1, 7, 19, 43 and 97. Certification uses the 64 values in 1--68 that are disjoint from that search set. The pool, $n=64$ stopping rule and confidence level are part of the domain contract and are not selected after seeing this candidate.
+\end{scopebox}
+
+% Distribution
+\newpageheading{10. Every paired certification seed}{Primary PPA distributions}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  width=.96\textwidth,height=105mm,xmin=-6.5,xmax=12.5,ymin=.65,ymax=4.65,
+  ytick={1,2,3,4},yticklabels={Area,Timing,Active power,Composite},
+  xtick={-5,0,5,10},xticklabel={\pgfmathprintnumber{\tick}\%},
+  xlabel={Improvement relative to the same baseline median (right is better)},
+  grid=major,grid style={draw=Rule},axis line style={draw=Mid},
+  tick label style={font=\small},label style={font=\small\bfseries},
+  legend style={at={(0.5,1.03)},anchor=south,draw=none,font=\footnotesize,legend columns=-1},
+]
+\addplot[only marks,mark=*,mark size=1.35pt,Mid,opacity=.28] table[x=baseline_area,y expr=1+0.46*\thisrow{jitter},col sep=comma]{generated/seed-clouds.csv};
+\addlegendentry{Baseline seeds}
+\addplot[only marks,mark=*,mark size=1.35pt,GotherBlue,opacity=.38] table[x=accepted_area,y expr=1+0.46*\thisrow{jitter},col sep=comma]{generated/seed-clouds.csv};
+\addlegendentry{Accepted RTL seeds}
+\addplot[only marks,mark=*,mark size=1.35pt,Mid,opacity=.28,forget plot] table[x=baseline_timing,y expr=2+0.46*\thisrow{jitter},col sep=comma]{generated/seed-clouds.csv};
+\addplot[only marks,mark=*,mark size=1.35pt,GotherBlue,opacity=.38,forget plot] table[x=accepted_timing,y expr=2+0.46*\thisrow{jitter},col sep=comma]{generated/seed-clouds.csv};
+\addplot[only marks,mark=*,mark size=1.35pt,Mid,opacity=.28,forget plot] table[x=baseline_power,y expr=3+0.46*\thisrow{jitter},col sep=comma]{generated/seed-clouds.csv};
+\addplot[only marks,mark=*,mark size=1.35pt,GotherBlue,opacity=.38,forget plot] table[x=accepted_power,y expr=3+0.46*\thisrow{jitter},col sep=comma]{generated/seed-clouds.csv};
+\addplot[only marks,mark=*,mark size=1.35pt,Mid,opacity=.28,forget plot] table[x=baseline_composite,y expr=4+0.46*\thisrow{jitter},col sep=comma]{generated/seed-clouds.csv};
+\addplot[only marks,mark=*,mark size=1.35pt,GotherBlue,opacity=.38,forget plot] table[x=accepted_composite,y expr=4+0.46*\thisrow{jitter},col sep=comma]{generated/seed-clouds.csv};
+\addlegendimage{line legend,Ink,line width=1pt,mark=*,mark options={fill=Ink},mark size=1.4pt}
+\addlegendentry{Paired estimate and 95\% CI}
+\draw[Ink,line width=1pt] (axis cs:\AreaLow,1.23)--(axis cs:\AreaHigh,1.23); \fill[Ink] (axis cs:\AreaEstimate,1.23) circle[radius=1.8pt];
+\draw[Ink,line width=1pt] (axis cs:\TimingLow,2.23)--(axis cs:\TimingHigh,2.23); \fill[Ink] (axis cs:\TimingEstimate,2.23) circle[radius=1.8pt];
+\draw[Ink,line width=1pt] (axis cs:\PowerLow,3.23)--(axis cs:\PowerHigh,3.23); \fill[Ink] (axis cs:\PowerEstimate,3.23) circle[radius=1.8pt];
+\draw[Ink,line width=1pt] (axis cs:\CompositeLow,4.23)--(axis cs:\CompositeHigh,4.23); \fill[Ink] (axis cs:\CompositeEstimate,4.23) circle[radius=1.8pt];
+\draw[Ink,line width=1.1pt] (axis cs:0,.65)--(axis cs:0,4.65);
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\smallcaps{Figure 2 · overlaid baseline and accepted seed clouds}\par
+Gray and blue points are absolute results normalized to the same baseline median. The same seed receives the same vertical jitter. Black points and segments show the paired estimator and interval that determine confidence.
+
+{\small
+\rowcolors{2}{Pale}{white}
+\begin{tabularx}{\textwidth}{@{}Y R R R@{}}
+\rowcolor{Ink}\thead{Metric} & \thead{Wins} & \thead{Ties} & \thead{Losses} \\
+Area & \AreaWins & \AreaTies & \AreaLosses \\
+Timing & \TimingWins & \TimingTies & \TimingLosses \\
+Active power & \PowerWins & \PowerTies & \PowerLosses \\
+Composite & \CompositeWins & \CompositeTies & \CompositeLosses \\
+\end{tabularx}
+\rowcolors{2}{}{}
+}
+
+% Secondary evidence and reproducibility
+\newpageheading{11. Secondary metrics and evidence identity}{Measured consequences and public audit trail}
+
+{\small
+\rowcolors{2}{Pale}{white}
+\begin{tabularx}{\textwidth}{@{}Y R R Y@{}}
+\rowcolor{Ink}\thead{Metric} & \thead{Baseline median} & \thead{Accepted median} & \thead{Interpretation} \\
+Energy / block & \BaselineEnergy\ nJ & \AcceptedEnergy\ nJ & \EnergyEstimate\% paired improvement (95\% CI \EnergyLow\% to \EnergyHigh\%) \\
+Fmax & \BaselineFmax\ MHz & \AcceptedFmax\ MHz & Reciprocal of routed critical path \\
+Packed CLBs & \BaselineClb & \AcceptedClb & Six fewer logic blocks in every synthesized candidate netlist \\
+Registers & \BaselineRegisters & \AcceptedRegisters & Unchanged \\
+Idle total power & \BaselineIdle\ mW & \AcceptedIdle\ mW & Informative; excluded from score \\
+\end{tabularx}
+\rowcolors{2}{}{}
+}
+
+The energy result is larger than the active-power result because the accepted implementation is both faster and slightly lower-power. CLB, register, Fmax and idle-power fields are published per seed and recomputed by the verifier; they are not unsupported summary annotations.
+
+{\small
+\rowcolors{2}{Pale}{white}
+\begin{tabularx}{\textwidth}{@{}P{46mm}Y@{}}
+\rowcolor{Ink}\thead{Public evidence object} & \thead{SHA-256 / identity} \\
+Accepted certification record & \hash{\CertificationRecordHash} \\
+EQY PASS marker & \hash{\EqyPassHash} \\
+EQY driver log & \hash{\FormalDriverHash} \\
+Full evidence release asset & \hash{\EvidenceArchiveHash} \\
+Archive size & \EvidenceArchiveBytes\ bytes \\
+\end{tabularx}
+\rowcolors{2}{}{}
+}
+
+The release asset is available from
+\href{https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/tag/v1.3.0-rc4}{the public \texttt{v1.3.0-rc4} release}. Its internal manifest covers every member; the Git release and this report provide the external content anchor.
+
+% Reproducibility
+\newpageheading{12. Reproduction and verifier trust model}{What each command establishes}
+
+The repository intentionally separates three levels of evidence:
+\begin{enumerate}
+  \item \textbf{Git identity}: checksums cover the exact compact package and the commit records its history.
+  \item \textbf{Compact consistency}: \texttt{python3 verify.py} validates strict schemas, RTL hashes, the exact patch, all 64 rows, auxiliary fields, formulas, confidence intervals and acceptance rules.
+  \item \textbf{Raw-evidence audit}: supplying the release archive verifies its external digest, internal manifest, all 11,362 files, declared transformations, formal/NIST markers and RTL identities, then independently parses every raw VTR/ACE certification run and binds every published metric to those logs.
+\end{enumerate}
+
+\begin{lstlisting}
+curl -LO https://github.com/juan-fernandez-gotherlabs/\
+rtl-optimization-case-study/releases/download/v1.3.0-rc4/\
+primary-ppa-full-evidence.tar.gz
+
+python3 verify.py --evidence-archive \
+  primary-ppa-full-evidence.tar.gz
+\end{lstlisting}
+
+The verifier uses explicit checks rather than Python \texttt{assert}, rejects duplicate JSON keys, non-finite values, fractional seeds, unit-scale violations, incomplete manifests, altered auxiliary fields and rehashed raw-log substitutions, and behaves identically under \texttt{python -O}. Its adversarial unit suite exercises these cases in CI.
+
+The included flow snapshot pins the Dockerfile, Python lock, VTR and EQY commits, architecture, PTM, activity vectors, harnesses and evaluator sources. A clean physical rerun still requires Docker with Linux/amd64 support, two CPUs, 7 GB RAM and the pinned source checkouts. Runtime networking is disabled.
+
+\begin{scopebox}
+\textbf{Trust boundary.} A checksum proves content identity, not authorship. The Git commit/tag and public release are the publication anchors. A customer deployment should add organisation-controlled signing or an attestation service to that release process.
+\end{scopebox}
+
+% Limits
+\newpageheading{13. Limits and customer transfer}{What the result does and does not establish}
+
+This report does not provide:
+\begin{itemize}
+  \item ASIC synthesis, place-and-route or signoff;
+  \item commercial-FPGA implementation data;
+  \item extracted parasitics, PVT corners, clock-tree signoff, IR drop, EM, DRC/LVS, package, yield or production-test analysis;
+  \item proof that the same edits improve another architecture, technology or workload;
+  \item exact PPA attribution to one transformation;
+  \item identical four-state X/Z propagation for the majority-core rewrite;
+  \item a recommendation to use SHA-1 in a new security design.
+\end{itemize}
+
+The 64-seed interval models implementation-seed variability for the fixed VTR contract. It does not model silicon process variation or generalise automatically to a customer technology.
+
+\begin{claimbox}
+\textbf{Transfer to a customer pilot.} Replace the academic proxy with customer-owned RTL, formal assumptions, libraries, constraints, activity, tools and signoff policy. The transferable capability is a small inspectable source change evaluated by a contract that can justify acceptance to the engineers responsible for the design.
+\end{claimbox}
+
+\subsection{Primary references}
+\begin{itemize}
+  \item \href{https://docs.verilogtorouting.org/en/latest/vpr/}{VTR/VPR documentation}
+  \item \href{https://docs.verilogtorouting.org/en/latest/vtr/power_estimation/}{VTR power estimation}
+  \item \href{https://github.com/YosysHQ/eqy}{EQY sequential equivalence checking}
+  \item \href{https://csrc.nist.gov/projects/cryptographic-algorithm-validation-program/secure-hashing}{NIST secure hashing validation}
+  \item \href{https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study}{Public case-study repository}
+  \item \href{https://www.gotherlabs.com/}{Göther Labs}
+\end{itemize}
+
+\vspace{6mm}
+\begin{claimbox}
+\textbf{Conclusion.} Within the declared VTR 45 nm FPGA proxy and two-state contract, the accepted three-transformation patch passes the published functional and formal gates and improves the paired primary PPA estimator by \CompositeEstimate\% (95\% CI \CompositeLow\% to \CompositeHigh\%). The compact calculations and complete raw evidence are both publicly auditable.
+\end{claimbox}
+
+\end{document}

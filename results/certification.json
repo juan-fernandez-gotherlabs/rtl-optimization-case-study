@@ -1,19 +1,39 @@
 {
-  "authority": "published_baseline_vs_accepted_certification",
+  "acceptance_policy": {
+    "improvement": "composite one-sided 95% upper confidence bound < 1.0",
+    "non_regression": "every primary metric one-sided 95% lower confidence bound <= 1.0",
+    "sample": "fixed disjoint 64-seed pool; never extended after observing the result",
+    "validity": "all structural, functional, NIST, formal, route, power and evidence-integrity gates pass"
+  },
+  "authority": "published_corrected_baseline_vs_accepted_primary_ppa_certification",
   "contract": {
     "architecture": "vtr_flow/arch/power/k6_N10_I40_Fi6_L4_frac0_ff1_45nm.xml",
     "architecture_sha256": "262792caef81931ae09b77d252158bde03c78954175d4b761e6d437317575307",
     "busy_cycles_per_block": 80.0,
+    "certification_seed_policy": {
+      "authority": "fixed_sample_statistical_acceptance",
+      "confidence_level": 0.95,
+      "disjoint_from_search": true,
+      "stopping_rule": "fixed_n_64_no_extension"
+    },
     "editable_artifact": "sha.v",
     "eqy_commit": "6734d8c2df366be50ea9e734c6cb10609b5f32c2",
-    "eqy_pass_marker_sha256": "ba3b47c5fbb189844a827ae395e816024c967b83444a06eccb71f9e34498ab07",
+    "eqy_pass_marker_sha256": "9aeb6fa6171b28a9ae33345754b973b407317736d6ac333dd1e4a45d07c575be",
+    "formal_semantics": "two_state_defined_inputs_after_declared_reset",
     "formal_status": "pass",
     "image_id": "sha256:c0badc2d2bb57364ff37477b3d2c482ef01f7d3df6211e9802e2c54367c33baf",
-    "interface": "sha1(clk_i, rst_i, text_i[31:0], text_o[31:0], cmd_i[2:0], cmd_w_i, cmd_o[3:0])",
+    "interface": "sha1(clk_i, rst_i, text_i[31:0], text_o[31:0], cmd_i[3:0], cmd_w_i, cmd_o[3:0])",
     "nist_corpus_sha256": "80bdcf3dabd50da28367f8c6e5d818c13d40d67cc8da897ce7efac553ed13df0",
     "nist_short_long_cases": 129,
     "nominal_voltage_v": 0.9,
     "platform": "linux/amd64",
+    "search_seeds": [
+      1,
+      7,
+      19,
+      43,
+      97
+    ],
     "seed_count": 64,
     "seeds": [
       2,
@@ -93,854 +113,2276 @@
     "functional_pass": true
   },
   "full_evidence": {
-    "archive": "accepted-rtl-certification-evidence.tar.gz",
-    "bytes": 73705071,
-    "release": "https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/tag/v1.2.0",
-    "sha256": "413aefb29bbe9bc1d22e847cd0901c24a0bfaa675af111fbd879598a76b2874f"
+    "accepted_record_path": "records/accepted-certification.json",
+    "archive_bytes": 145901014,
+    "archive_sha256": "fd345d155d5f2225d3a3a6e9f0431b9db4b0f0dcc1d1951083c53a7997821704",
+    "asset_name": "primary-ppa-full-evidence.tar.gz",
+    "baseline_record_path": "records/baseline.json",
+    "bundle_manifest_path": "MANIFEST.json",
+    "certification_result_sha256": "12a3b40974d760898d583cf85768602f8e1d5a0ba3d771d60ff88940002f30dd",
+    "distribution": "GitHub release asset; complete baseline and accepted raw evidence",
+    "download_url": "https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/download/v1.3.0-rc4/primary-ppa-full-evidence.tar.gz",
+    "evidence_file_count": 5018,
+    "formal_driver_log_sha256": "2836ffc302152cb420ca6b2855205460ce6e6b5b1d8312c1ec6fa02e9f4f810a",
+    "release_url": "https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/tag/v1.3.0-rc4"
   },
   "per_seed": [
     {
       "accepted": {
-        "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.034,
-        "energy_per_block_nj": 11.578536666666668
+        "active_dynamic_power_w": 0.005116964200000001,
+        "active_static_power_w": 0.0046650358,
+        "active_total_power_w": 0.009782,
+        "area_total_mwta": 16574391.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.2839,
+        "energy_per_block_nj": 11.64375915,
+        "fmax_mhz": 70.0087,
+        "idle_total_power_w": 0.004309,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "baseline": {
+        "active_dynamic_power_w": 0.0050896054,
+        "active_static_power_w": 0.0048393946000000005,
+        "active_total_power_w": 0.009929,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.8945,
-        "energy_per_block_nj": 12.323957541666667
+        "energy_per_block_nj": 12.323957541666667,
+        "fmax_mhz": 67.1391,
+        "idle_total_power_w": 0.004469,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 2
     },
     {
       "accepted": {
-        "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.4444,
-        "energy_per_block_nj": 11.663017
+        "active_dynamic_power_w": 0.0051558195000000005,
+        "active_static_power_w": 0.0046591805,
+        "active_total_power_w": 0.009815,
+        "area_total_mwta": 16574391.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.0559,
+        "energy_per_block_nj": 11.496554875,
+        "fmax_mhz": 71.1443,
+        "idle_total_power_w": 0.004316,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "baseline": {
+        "active_dynamic_power_w": 0.005071187499999999,
+        "active_static_power_w": 0.0048238125,
+        "active_total_power_w": 0.009895,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.9038,
-        "energy_per_block_nj": 12.289425083333333
+        "energy_per_block_nj": 12.289425083333333,
+        "fmax_mhz": 67.0971,
+        "idle_total_power_w": 0.004458,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 3
     },
     {
       "accepted": {
-        "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.4439,
-        "energy_per_block_nj": 11.66258325
+        "active_dynamic_power_w": 0.005202205,
+        "active_static_power_w": 0.0046597949999999996,
+        "active_total_power_w": 0.009862,
+        "area_total_mwta": 16574391.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 13.9191,
+        "energy_per_block_nj": 11.439180349999999,
+        "fmax_mhz": 71.8438,
+        "idle_total_power_w": 0.004303,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "baseline": {
+        "active_dynamic_power_w": 0.005171166,
+        "active_static_power_w": 0.004838834,
+        "active_total_power_w": 0.01001,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.8381,
-        "energy_per_block_nj": 12.377448416666665
+        "energy_per_block_nj": 12.377448416666665,
+        "fmax_mhz": 67.394,
+        "idle_total_power_w": 0.004467,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 4
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.0051459340000000004,
+        "active_static_power_w": 0.004714066,
+        "active_total_power_w": 0.00986,
         "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.3601,
-        "energy_per_block_nj": 11.667820666666666
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.0402,
+        "energy_per_block_nj": 11.536364333333333,
+        "fmax_mhz": 71.2239,
+        "idle_total_power_w": 0.004365,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.0051286510000000006,
+        "active_static_power_w": 0.004941349,
+        "active_total_power_w": 0.01007,
         "area_total_mwta": 16679392.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.8426,
-        "energy_per_block_nj": 12.455415166666665
+        "energy_per_block_nj": 12.455415166666665,
+        "fmax_mhz": 67.3737,
+        "idle_total_power_w": 0.004562,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 971792.0,
+        "timing_channel_width": 50
       },
       "seed": 5
     },
     {
       "accepted": {
-        "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.0396,
-        "energy_per_block_nj": 11.507447
+        "active_dynamic_power_w": 0.0052546912,
+        "active_static_power_w": 0.0046673088000000005,
+        "active_total_power_w": 0.009922,
+        "area_total_mwta": 16574391.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 13.9158,
+        "energy_per_block_nj": 11.5060473,
+        "fmax_mhz": 71.861,
+        "idle_total_power_w": 0.004318,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "baseline": {
+        "active_dynamic_power_w": 0.005003943899999999,
+        "active_static_power_w": 0.0048250561,
+        "active_total_power_w": 0.009829,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.2834,
-        "energy_per_block_nj": 12.518378216666665
+        "energy_per_block_nj": 12.518378216666665,
+        "fmax_mhz": 65.4307,
+        "idle_total_power_w": 0.004433,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 6
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.004974670800000001,
+        "active_static_power_w": 0.004709329199999999,
+        "active_total_power_w": 0.009684,
         "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.2119,
-        "energy_per_block_nj": 11.615462083333334
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.567,
+        "energy_per_block_nj": 11.755569000000001,
+        "fmax_mhz": 68.6485,
+        "idle_total_power_w": 0.004315,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.0049259052000000005,
+        "active_static_power_w": 0.004836094799999999,
+        "active_total_power_w": 0.009762,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.3871,
-        "energy_per_block_nj": 12.51740585
+        "energy_per_block_nj": 12.51740585,
+        "fmax_mhz": 64.9894,
+        "idle_total_power_w": 0.004437,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 8
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.005221069300000001,
+        "active_static_power_w": 0.0047219307,
+        "active_total_power_w": 0.009943,
         "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.5485,
-        "energy_per_block_nj": 11.742033333333334
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 13.9375,
+        "energy_per_block_nj": 11.548380208333334,
+        "fmax_mhz": 71.7487,
+        "idle_total_power_w": 0.004391,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.004983006900000001,
+        "active_static_power_w": 0.0048279931,
+        "active_total_power_w": 0.009811,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.0584,
-        "energy_per_block_nj": 12.311496866666667
+        "energy_per_block_nj": 12.311496866666667,
+        "fmax_mhz": 66.4082,
+        "idle_total_power_w": 0.004456,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 9
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.0050637312,
+        "active_static_power_w": 0.0047042688000000004,
+        "active_total_power_w": 0.009768,
         "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.2911,
-        "energy_per_block_nj": 11.563256999999998
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.1441,
+        "energy_per_block_nj": 11.5132974,
+        "fmax_mhz": 70.7007,
+        "idle_total_power_w": 0.004357,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.005320887,
+        "active_static_power_w": 0.004949113,
+        "active_total_power_w": 0.01027,
         "area_total_mwta": 16679392.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.6267,
-        "energy_per_block_nj": 12.518017416666668
+        "energy_per_block_nj": 12.518017416666668,
+        "fmax_mhz": 68.368,
+        "idle_total_power_w": 0.004589,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 971792.0,
+        "timing_channel_width": 50
       },
       "seed": 10
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.0052442748,
+        "active_static_power_w": 0.0047277251999999995,
+        "active_total_power_w": 0.009972,
         "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.2093,
-        "energy_per_block_nj": 11.602168500000001
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 13.8367,
+        "energy_per_block_nj": 11.4982977,
+        "fmax_mhz": 72.2716,
+        "idle_total_power_w": 0.004402,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.0050438052,
+        "active_static_power_w": 0.0048401948,
+        "active_total_power_w": 0.009884,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.1906,
-        "energy_per_block_nj": 12.511990866666668
+        "energy_per_block_nj": 12.511990866666668,
+        "fmax_mhz": 65.8303,
+        "idle_total_power_w": 0.004453,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 11
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.0050065434,
+        "active_static_power_w": 0.0047224566,
+        "active_total_power_w": 0.009729,
         "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.2059,
-        "energy_per_block_nj": 11.544157583333332
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.4944,
+        "energy_per_block_nj": 11.751334799999999,
+        "fmax_mhz": 68.9921,
+        "idle_total_power_w": 0.004348,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.005251845,
+        "active_static_power_w": 0.004838155,
+        "active_total_power_w": 0.01009,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.503,
-        "energy_per_block_nj": 12.194605833333334
+        "energy_per_block_nj": 12.194605833333334,
+        "fmax_mhz": 68.9514,
+        "idle_total_power_w": 0.004482,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 12
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.005073178,
+        "active_static_power_w": 0.004716822,
+        "active_total_power_w": 0.00979,
         "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.386,
-        "energy_per_block_nj": 11.645819999999997
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.1279,
+        "energy_per_block_nj": 11.526011750000002,
+        "fmax_mhz": 70.7821,
+        "idle_total_power_w": 0.004374,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.0051577689999999995,
+        "active_static_power_w": 0.0048282310000000005,
+        "active_total_power_w": 0.009986,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.7103,
-        "energy_per_block_nj": 12.241421316666667
+        "energy_per_block_nj": 12.241421316666667,
+        "fmax_mhz": 67.9797,
+        "idle_total_power_w": 0.004468,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 13
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.0050513148,
+        "active_static_power_w": 0.0047266852000000005,
+        "active_total_power_w": 0.009778,
         "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.4569,
-        "energy_per_block_nj": 11.67386075
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.2753,
+        "energy_per_block_nj": 11.631990283333332,
+        "fmax_mhz": 70.051,
+        "idle_total_power_w": 0.004381,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.00526008,
+        "active_static_power_w": 0.004839919999999999,
+        "active_total_power_w": 0.0101,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.3873,
-        "energy_per_block_nj": 12.109310833333332
+        "energy_per_block_nj": 12.109310833333332,
+        "fmax_mhz": 69.506,
+        "idle_total_power_w": 0.004497,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 14
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.0051856774,
+        "active_static_power_w": 0.0047163225999999996,
+        "active_total_power_w": 0.009902,
         "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.0509,
-        "energy_per_block_nj": 11.53917075
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.1198,
+        "energy_per_block_nj": 11.6511883,
+        "fmax_mhz": 70.8225,
+        "idle_total_power_w": 0.004371,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.0050322358,
+        "active_static_power_w": 0.0048387642,
+        "active_total_power_w": 0.009871,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.9756,
-        "energy_per_block_nj": 12.318678966666665
+        "energy_per_block_nj": 12.318678966666665,
+        "fmax_mhz": 66.7753,
+        "idle_total_power_w": 0.004455,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 15
     },
     {
       "accepted": {
-        "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.4259,
-        "energy_per_block_nj": 11.66934475
+        "active_dynamic_power_w": 0.0050059121,
+        "active_static_power_w": 0.0046710879,
+        "active_total_power_w": 0.009677,
+        "area_total_mwta": 16574391.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.3217,
+        "energy_per_block_nj": 11.549257575,
+        "fmax_mhz": 69.8242,
+        "idle_total_power_w": 0.004315,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "baseline": {
+        "active_dynamic_power_w": 0.004848501999999999,
+        "active_static_power_w": 0.004819498,
+        "active_total_power_w": 0.009668,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.3615,
-        "energy_per_block_nj": 12.376248499999999
+        "energy_per_block_nj": 12.376248499999999,
+        "fmax_mhz": 65.0976,
+        "idle_total_power_w": 0.004443,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 16
     },
     {
       "accepted": {
-        "area_total_mwta": 16679392.0,
-        "critical_path_delay_ns": 13.0742,
-        "energy_per_block_nj": 11.7340945
+        "active_dynamic_power_w": 0.0052007,
+        "active_static_power_w": 0.0047243,
+        "active_total_power_w": 0.009925,
+        "area_total_mwta": 16614693.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 13.9191,
+        "energy_per_block_nj": 11.512255625,
+        "fmax_mhz": 71.8438,
+        "idle_total_power_w": 0.004376,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.0050287968,
+        "active_static_power_w": 0.004843203200000001,
+        "active_total_power_w": 0.009872,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.2215,
-        "energy_per_block_nj": 12.522220666666668
+        "energy_per_block_nj": 12.522220666666668,
+        "fmax_mhz": 65.6965,
+        "idle_total_power_w": 0.004446,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 17
     },
     {
       "accepted": {
-        "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.1793,
-        "energy_per_block_nj": 11.487956500000001
+        "active_dynamic_power_w": 0.0050866088000000005,
+        "active_static_power_w": 0.0046503912,
+        "active_total_power_w": 0.009737,
+        "area_total_mwta": 16574391.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.0768,
+        "energy_per_block_nj": 11.422150133333334,
+        "fmax_mhz": 71.0391,
+        "idle_total_power_w": 0.0043,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "baseline": {
+        "active_dynamic_power_w": 0.00509524,
+        "active_static_power_w": 0.004934760000000001,
+        "active_total_power_w": 0.01003,
         "area_total_mwta": 16679392.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.9897,
-        "energy_per_block_nj": 12.528890916666667
+        "energy_per_block_nj": 12.528890916666667,
+        "fmax_mhz": 66.7123,
+        "idle_total_power_w": 0.004559,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 971792.0,
+        "timing_channel_width": 50
       },
       "seed": 18
     },
     {
       "accepted": {
-        "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.4066,
-        "energy_per_block_nj": 11.663741999999997
+        "active_dynamic_power_w": 0.0051319872,
+        "active_static_power_w": 0.0046600128,
+        "active_total_power_w": 0.009792,
+        "area_total_mwta": 16574391.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.1198,
+        "energy_per_block_nj": 11.521756799999999,
+        "fmax_mhz": 70.8225,
+        "idle_total_power_w": 0.004308,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "baseline": {
+        "active_dynamic_power_w": 0.005101424999999999,
+        "active_static_power_w": 0.0048525750000000005,
+        "active_total_power_w": 0.009954,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.9802,
-        "energy_per_block_nj": 12.426075899999999
+        "energy_per_block_nj": 12.426075899999999,
+        "fmax_mhz": 66.7547,
+        "idle_total_power_w": 0.004473,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 20
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.005169147999999999,
+        "active_static_power_w": 0.004725852,
+        "active_total_power_w": 0.009895,
         "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.1929,
-        "energy_per_block_nj": 11.587763833333334
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.0182,
+        "energy_per_block_nj": 11.559174083333334,
+        "fmax_mhz": 71.3359,
+        "idle_total_power_w": 0.004376,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.0050868734,
+        "active_static_power_w": 0.0048271265999999995,
+        "active_total_power_w": 0.009914,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.7297,
-        "energy_per_block_nj": 12.169187149999997
+        "energy_per_block_nj": 12.169187149999997,
+        "fmax_mhz": 67.8902,
+        "idle_total_power_w": 0.004471,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 21
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.0047989187999999995,
+        "active_static_power_w": 0.004717081200000001,
+        "active_total_power_w": 0.009516,
         "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.1122,
-        "energy_per_block_nj": 11.5715165
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 15.0067,
+        "energy_per_block_nj": 11.9003131,
+        "fmax_mhz": 66.6367,
+        "idle_total_power_w": 0.004331,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.005118528,
+        "active_static_power_w": 0.004941472,
+        "active_total_power_w": 0.01006,
         "area_total_mwta": 16679392.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.0981,
-        "energy_per_block_nj": 12.6572405
+        "energy_per_block_nj": 12.6572405,
+        "fmax_mhz": 66.2335,
+        "idle_total_power_w": 0.004564,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 971792.0,
+        "timing_channel_width": 50
       },
       "seed": 22
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.0050110632000000006,
+        "active_static_power_w": 0.004722936799999999,
+        "active_total_power_w": 0.009734,
         "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.4405,
-        "energy_per_block_nj": 11.693234999999998
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.6091,
+        "energy_per_block_nj": 11.850414949999998,
+        "fmax_mhz": 68.4503,
+        "idle_total_power_w": 0.00436,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.00496791,
+        "active_static_power_w": 0.00477309,
+        "active_total_power_w": 0.009741,
         "area_total_mwta": 16574391.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.1895,
-        "energy_per_block_nj": 12.330076625
+        "energy_per_block_nj": 12.330076625,
+        "fmax_mhz": 65.8351,
+        "idle_total_power_w": 0.004372,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "seed": 23
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.005105013100000001,
+        "active_static_power_w": 0.004717986899999999,
+        "active_total_power_w": 0.009823,
         "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.5664,
-        "energy_per_block_nj": 11.723630666666667
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.0306,
+        "energy_per_block_nj": 11.485215316666666,
+        "fmax_mhz": 71.273,
+        "idle_total_power_w": 0.004392,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.0050449808,
+        "active_static_power_w": 0.0048510192,
+        "active_total_power_w": 0.009896,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.9657,
-        "energy_per_block_nj": 12.341713933333335
+        "energy_per_block_nj": 12.341713933333335,
+        "fmax_mhz": 66.8193,
+        "idle_total_power_w": 0.004475,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 24
     },
     {
       "accepted": {
-        "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.2788,
-        "energy_per_block_nj": 11.630015666666669
+        "active_dynamic_power_w": 0.0050288642,
+        "active_static_power_w": 0.004668135800000001,
+        "active_total_power_w": 0.009697,
+        "area_total_mwta": 16574391.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.3032,
+        "energy_per_block_nj": 11.558177533333334,
+        "fmax_mhz": 69.9142,
+        "idle_total_power_w": 0.004317,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "baseline": {
+        "active_dynamic_power_w": 0.0049805712000000005,
+        "active_static_power_w": 0.004831428799999999,
+        "active_total_power_w": 0.009812,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.0017,
-        "energy_per_block_nj": 12.266390033333332
+        "energy_per_block_nj": 12.266390033333332,
+        "fmax_mhz": 66.6589,
+        "idle_total_power_w": 0.004468,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 25
     },
     {
       "accepted": {
-        "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.1369,
-        "energy_per_block_nj": 11.615209083333333
+        "active_dynamic_power_w": 0.004916481300000001,
+        "active_static_power_w": 0.0046505187,
+        "active_total_power_w": 0.009567,
+        "area_total_mwta": 16574391.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.6355,
+        "energy_per_block_nj": 11.668152375,
+        "fmax_mhz": 68.3272,
+        "idle_total_power_w": 0.004272,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "baseline": {
+        "active_dynamic_power_w": 0.0050714587,
+        "active_static_power_w": 0.0048395413,
+        "active_total_power_w": 0.009911,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.0091,
-        "energy_per_block_nj": 12.396265841666667
+        "energy_per_block_nj": 12.396265841666667,
+        "fmax_mhz": 66.6263,
+        "idle_total_power_w": 0.004461,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 26
     },
     {
       "accepted": {
-        "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 12.9365,
-        "energy_per_block_nj": 11.4488025
+        "active_dynamic_power_w": 0.0051148718,
+        "active_static_power_w": 0.0046631282,
+        "active_total_power_w": 0.009778,
+        "area_total_mwta": 16574391.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.1762,
+        "energy_per_block_nj": 11.5512403,
+        "fmax_mhz": 70.5408,
+        "idle_total_power_w": 0.004317,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "baseline": {
+        "active_dynamic_power_w": 0.005274587999999999,
+        "active_static_power_w": 0.004955412,
+        "active_total_power_w": 0.01023,
         "area_total_mwta": 16679392.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.7637,
-        "energy_per_block_nj": 12.586054249999998
+        "energy_per_block_nj": 12.586054249999998,
+        "fmax_mhz": 67.7335,
+        "idle_total_power_w": 0.004584,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 971792.0,
+        "timing_channel_width": 50
       },
       "seed": 27
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.005283,
+        "active_static_power_w": 0.004717,
+        "active_total_power_w": 0.01,
         "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 14.084,
-        "energy_per_block_nj": 11.983136666666667
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 13.7769,
+        "energy_per_block_nj": 11.48075,
+        "fmax_mhz": 72.5852,
+        "idle_total_power_w": 0.004385,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.004973096,
+        "active_static_power_w": 0.004831904,
+        "active_total_power_w": 0.009805,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.3011,
-        "energy_per_block_nj": 12.502273791666665
+        "energy_per_block_nj": 12.502273791666665,
+        "fmax_mhz": 65.3547,
+        "idle_total_power_w": 0.004442,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 28
     },
     {
       "accepted": {
-        "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 12.9777,
-        "energy_per_block_nj": 11.47444975
+        "active_dynamic_power_w": 0.0049130691,
+        "active_static_power_w": 0.0046659309,
+        "active_total_power_w": 0.009579,
+        "area_total_mwta": 16574391.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.6127,
+        "energy_per_block_nj": 11.664587775000001,
+        "fmax_mhz": 68.4338,
+        "idle_total_power_w": 0.00427,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "baseline": {
+        "active_dynamic_power_w": 0.00504237,
+        "active_static_power_w": 0.00484463,
+        "active_total_power_w": 0.009887,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.0354,
-        "energy_per_block_nj": 12.38791665
+        "energy_per_block_nj": 12.38791665,
+        "fmax_mhz": 66.5096,
+        "idle_total_power_w": 0.004479,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 29
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.005049824,
+        "active_static_power_w": 0.004710176,
+        "active_total_power_w": 0.00976,
         "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.5502,
-        "energy_per_block_nj": 11.754798500000001
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.3403,
+        "energy_per_block_nj": 11.663443999999998,
+        "fmax_mhz": 69.7336,
+        "idle_total_power_w": 0.004347,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.004989946,
+        "active_static_power_w": 0.0048250540000000005,
+        "active_total_power_w": 0.009815,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.1497,
-        "energy_per_block_nj": 12.391192125
+        "energy_per_block_nj": 12.391192125,
+        "fmax_mhz": 66.008,
+        "idle_total_power_w": 0.004429,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 30
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.005017130000000001,
+        "active_static_power_w": 0.00472487,
+        "active_total_power_w": 0.009742,
         "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.227,
-        "energy_per_block_nj": 11.595670000000002
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.2554,
+        "energy_per_block_nj": 11.5730089,
+        "fmax_mhz": 70.149,
+        "idle_total_power_w": 0.004371,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.00488832,
+        "active_static_power_w": 0.004839680000000001,
+        "active_total_power_w": 0.009728,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.4793,
-        "energy_per_block_nj": 12.548552533333332
+        "energy_per_block_nj": 12.548552533333332,
+        "fmax_mhz": 64.6022,
+        "idle_total_power_w": 0.004442,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 31
     },
     {
       "accepted": {
-        "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.2727,
-        "energy_per_block_nj": 11.580430750000001
+        "active_dynamic_power_w": 0.00497166,
+        "active_static_power_w": 0.004663339999999999,
+        "active_total_power_w": 0.009635,
+        "area_total_mwta": 16574391.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.3777,
+        "energy_per_block_nj": 11.544094958333334,
+        "fmax_mhz": 69.5522,
+        "idle_total_power_w": 0.004307,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "baseline": {
+        "active_dynamic_power_w": 0.0050310822,
+        "active_static_power_w": 0.0048299178,
+        "active_total_power_w": 0.009861,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.1752,
-        "energy_per_block_nj": 12.470220600000001
+        "energy_per_block_nj": 12.470220600000001,
+        "fmax_mhz": 65.8969,
+        "idle_total_power_w": 0.004437,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 32
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.004962762,
+        "active_static_power_w": 0.004711238,
+        "active_total_power_w": 0.009674,
         "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.2011,
-        "energy_per_block_nj": 11.6829735
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.5562,
+        "energy_per_block_nj": 11.734723233333336,
+        "fmax_mhz": 68.6993,
+        "idle_total_power_w": 0.004342,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.005074365399999999,
+        "active_static_power_w": 0.0048326346,
+        "active_total_power_w": 0.009907,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.0684,
-        "energy_per_block_nj": 12.440219899999999
+        "energy_per_block_nj": 12.440219899999999,
+        "fmax_mhz": 66.3639,
+        "idle_total_power_w": 0.004442,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 33
     },
     {
       "accepted": {
-        "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.3137,
-        "energy_per_block_nj": 11.693866500000002
+        "active_dynamic_power_w": 0.0050649855,
+        "active_static_power_w": 0.0046660145,
+        "active_total_power_w": 0.009731,
+        "area_total_mwta": 16574391.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.2167,
+        "energy_per_block_nj": 11.528558975000001,
+        "fmax_mhz": 70.3398,
+        "idle_total_power_w": 0.004307,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "baseline": {
+        "active_dynamic_power_w": 0.0051461366,
+        "active_static_power_w": 0.0048308634,
+        "active_total_power_w": 0.009977,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.7641,
-        "energy_per_block_nj": 12.275118808333332
+        "energy_per_block_nj": 12.275118808333332,
+        "fmax_mhz": 67.732,
+        "idle_total_power_w": 0.004455,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 34
     },
     {
       "accepted": {
-        "area_total_mwta": 16574391.0,
-        "critical_path_delay_ns": 13.2726,
-        "energy_per_block_nj": 11.381254500000002
+        "active_dynamic_power_w": 0.005079508000000001,
+        "active_static_power_w": 0.004726492,
+        "active_total_power_w": 0.009806,
+        "area_total_mwta": 16614693.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.4789,
+        "energy_per_block_nj": 11.83167445,
+        "fmax_mhz": 69.066,
+        "idle_total_power_w": 0.004358,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.0050907250999999995,
+        "active_static_power_w": 0.0048462749,
+        "active_total_power_w": 0.009937,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.0784,
-        "energy_per_block_nj": 12.486171733333332
+        "energy_per_block_nj": 12.486171733333332,
+        "fmax_mhz": 66.32,
+        "idle_total_power_w": 0.004475,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 35
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.0050571248,
+        "active_static_power_w": 0.0047188752,
+        "active_total_power_w": 0.009776,
         "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.3162,
-        "energy_per_block_nj": 11.6183845
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.2743,
+        "energy_per_block_nj": 11.6287964,
+        "fmax_mhz": 70.0557,
+        "idle_total_power_w": 0.004363,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.004914155,
+        "active_static_power_w": 0.004816845,
+        "active_total_power_w": 0.009731,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.2061,
-        "energy_per_block_nj": 12.330879925
+        "energy_per_block_nj": 12.330879925,
+        "fmax_mhz": 65.7632,
+        "idle_total_power_w": 0.004436,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 36
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.0051043650000000005,
+        "active_static_power_w": 0.0047306349999999995,
+        "active_total_power_w": 0.009835,
         "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.0039,
-        "energy_per_block_nj": 11.54096125
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.3291,
+        "energy_per_block_nj": 11.743891541666667,
+        "fmax_mhz": 69.7883,
+        "idle_total_power_w": 0.004374,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.0049180429999999995,
+        "active_static_power_w": 0.004766957,
+        "active_total_power_w": 0.009685,
         "area_total_mwta": 16574391.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.2184,
-        "energy_per_block_nj": 12.282517
+        "energy_per_block_nj": 12.282517,
+        "fmax_mhz": 65.7101,
+        "idle_total_power_w": 0.004373,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "seed": 37
     },
     {
       "accepted": {
-        "area_total_mwta": 16574391.0,
-        "critical_path_delay_ns": 13.2096,
-        "energy_per_block_nj": 11.503359999999997
+        "active_dynamic_power_w": 0.0051553229,
+        "active_static_power_w": 0.004833677099999999,
+        "active_total_power_w": 0.009989,
+        "area_total_mwta": 16679392.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.2067,
+        "energy_per_block_nj": 11.825893858333332,
+        "fmax_mhz": 70.3891,
+        "idle_total_power_w": 0.004486,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 971792.0,
+        "timing_channel_width": 50
       },
       "baseline": {
+        "active_dynamic_power_w": 0.005072067,
+        "active_static_power_w": 0.004937932999999999,
+        "active_total_power_w": 0.01001,
         "area_total_mwta": 16679392.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.0517,
-        "energy_per_block_nj": 12.555626416666666
+        "energy_per_block_nj": 12.555626416666666,
+        "fmax_mhz": 66.4375,
+        "idle_total_power_w": 0.004561,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 971792.0,
+        "timing_channel_width": 50
       },
       "seed": 38
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.004916011099999999,
+        "active_static_power_w": 0.0046649889,
+        "active_total_power_w": 0.009581,
         "area_total_mwta": 16574391.0,
-        "critical_path_delay_ns": 13.3853,
-        "energy_per_block_nj": 11.611747750000003
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.6277,
+        "energy_per_block_nj": 11.678999475,
+        "fmax_mhz": 68.3633,
+        "idle_total_power_w": 0.00429,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "baseline": {
+        "active_dynamic_power_w": 0.0051153928,
+        "active_static_power_w": 0.0048406071999999994,
+        "active_total_power_w": 0.009956,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.8414,
-        "energy_per_block_nj": 12.313414866666667
+        "energy_per_block_nj": 12.313414866666667,
+        "fmax_mhz": 67.3789,
+        "idle_total_power_w": 0.004462,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 39
     },
     {
       "accepted": {
-        "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.5581,
-        "energy_per_block_nj": 11.76165175
+        "active_dynamic_power_w": 0.004971863700000001,
+        "active_static_power_w": 0.0046691363,
+        "active_total_power_w": 0.009641,
+        "area_total_mwta": 16574391.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.6005,
+        "energy_per_block_nj": 11.730285041666667,
+        "fmax_mhz": 68.4908,
+        "idle_total_power_w": 0.004295,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "baseline": {
+        "active_dynamic_power_w": 0.0051178655,
+        "active_static_power_w": 0.0048371345000000005,
+        "active_total_power_w": 0.009955,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.7758,
-        "energy_per_block_nj": 12.257757416666667
+        "energy_per_block_nj": 12.257757416666667,
+        "fmax_mhz": 67.6783,
+        "idle_total_power_w": 0.004494,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 40
     },
     {
       "accepted": {
-        "area_total_mwta": 16679392.0,
-        "critical_path_delay_ns": 13.1978,
-        "energy_per_block_nj": 11.7130475
+        "active_dynamic_power_w": 0.005262786399999999,
+        "active_static_power_w": 0.0047292136000000005,
+        "active_total_power_w": 0.009992,
+        "area_total_mwta": 16614693.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 13.9504,
+        "energy_per_block_nj": 11.616033066666665,
+        "fmax_mhz": 71.6826,
+        "idle_total_power_w": 0.004384,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.005073125999999999,
+        "active_static_power_w": 0.004946874,
+        "active_total_power_w": 0.01002,
         "area_total_mwta": 16679392.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.9801,
-        "energy_per_block_nj": 12.508383499999999
+        "energy_per_block_nj": 12.508383499999999,
+        "fmax_mhz": 66.7551,
+        "idle_total_power_w": 0.004584,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 971792.0,
+        "timing_channel_width": 50
       },
       "seed": 41
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.0051095012999999995,
+        "active_static_power_w": 0.0047334987,
+        "active_total_power_w": 0.009843,
         "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.2497,
-        "energy_per_block_nj": 11.56036325
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.0513,
+        "energy_per_block_nj": 11.525578824999998,
+        "fmax_mhz": 71.1678,
+        "idle_total_power_w": 0.004397,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.0051442399,
+        "active_static_power_w": 0.004838760100000001,
+        "active_total_power_w": 0.009983,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.8592,
-        "energy_per_block_nj": 12.361616133333335
+        "energy_per_block_nj": 12.361616133333335,
+        "fmax_mhz": 67.2984,
+        "idle_total_power_w": 0.004467,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 42
     },
     {
       "accepted": {
-        "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.0853,
-        "energy_per_block_nj": 11.569586083333332
+        "active_dynamic_power_w": 0.005288162700000001,
+        "active_static_power_w": 0.0046688373,
+        "active_total_power_w": 0.009957,
+        "area_total_mwta": 16574391.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 13.983,
+        "energy_per_block_nj": 11.602394250000001,
+        "fmax_mhz": 71.5155,
+        "idle_total_power_w": 0.004319,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "baseline": {
+        "active_dynamic_power_w": 0.005111532000000001,
+        "active_static_power_w": 0.004958468,
+        "active_total_power_w": 0.01007,
         "area_total_mwta": 16679392.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.0166,
-        "energy_per_block_nj": 12.601430166666667
+        "energy_per_block_nj": 12.601430166666667,
+        "fmax_mhz": 66.5929,
+        "idle_total_power_w": 0.004582,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 971792.0,
+        "timing_channel_width": 50
       },
       "seed": 44
     },
     {
       "accepted": {
-        "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.0385,
-        "energy_per_block_nj": 11.495610833333336
+        "active_dynamic_power_w": 0.0050468067,
+        "active_static_power_w": 0.004664193299999999,
+        "active_total_power_w": 0.009711,
+        "area_total_mwta": 16574391.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.1098,
+        "energy_per_block_nj": 11.418355649999999,
+        "fmax_mhz": 70.8729,
+        "idle_total_power_w": 0.004323,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "baseline": {
+        "active_dynamic_power_w": 0.005253863,
+        "active_static_power_w": 0.004836137,
+        "active_total_power_w": 0.01009,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.6722,
-        "energy_per_block_nj": 12.336874833333333
+        "energy_per_block_nj": 12.336874833333333,
+        "fmax_mhz": 68.1563,
+        "idle_total_power_w": 0.004467,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 45
     },
     {
       "accepted": {
-        "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.3087,
-        "energy_per_block_nj": 11.634021916666665
+        "active_dynamic_power_w": 0.004978749,
+        "active_static_power_w": 0.004666251000000001,
+        "active_total_power_w": 0.009645,
+        "area_total_mwta": 16574391.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.4421,
+        "energy_per_block_nj": 11.607837875,
+        "fmax_mhz": 69.242,
+        "idle_total_power_w": 0.00432,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "baseline": {
+        "active_dynamic_power_w": 0.005195608,
+        "active_static_power_w": 0.0049243920000000005,
+        "active_total_power_w": 0.01012,
         "area_total_mwta": 16679392.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.6826,
-        "energy_per_block_nj": 12.382326
+        "energy_per_block_nj": 12.382326,
+        "fmax_mhz": 68.108,
+        "idle_total_power_w": 0.004556,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 971792.0,
+        "timing_channel_width": 50
       },
       "seed": 46
     },
     {
       "accepted": {
-        "area_total_mwta": 16712190.0,
-        "critical_path_delay_ns": 12.8854,
-        "energy_per_block_nj": 11.747189666666667
+        "active_dynamic_power_w": 0.005165915700000001,
+        "active_static_power_w": 0.004657084299999999,
+        "active_total_power_w": 0.009823,
+        "area_total_mwta": 16574391.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.0045,
+        "energy_per_block_nj": 11.463850291666667,
+        "fmax_mhz": 71.4055,
+        "idle_total_power_w": 0.004315,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "baseline": {
+        "active_dynamic_power_w": 0.004905178299999999,
+        "active_static_power_w": 0.0047678217,
+        "active_total_power_w": 0.009673,
         "area_total_mwta": 16574391.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.0551,
-        "energy_per_block_nj": 12.135665191666666
+        "energy_per_block_nj": 12.135665191666666,
+        "fmax_mhz": 66.4225,
+        "idle_total_power_w": 0.004391,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "seed": 47
     },
     {
       "accepted": {
-        "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.3144,
-        "energy_per_block_nj": 11.661195333333334
+        "active_dynamic_power_w": 0.005113302500000001,
+        "active_static_power_w": 0.0046616975,
+        "active_total_power_w": 0.009775,
+        "area_total_mwta": 16574391.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.048,
+        "energy_per_block_nj": 11.443266666666666,
+        "fmax_mhz": 71.1847,
+        "idle_total_power_w": 0.004314,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "baseline": {
+        "active_dynamic_power_w": 0.005061102,
+        "active_static_power_w": 0.004958898,
+        "active_total_power_w": 0.01002,
         "area_total_mwta": 16679392.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.1883,
-        "energy_per_block_nj": 12.6822305
+        "energy_per_block_nj": 12.6822305,
+        "fmax_mhz": 65.8402,
+        "idle_total_power_w": 0.004574,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 971792.0,
+        "timing_channel_width": 50
       },
       "seed": 48
     },
     {
       "accepted": {
-        "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 12.836,
-        "energy_per_block_nj": 11.445433333333334
+        "active_dynamic_power_w": 0.0051049602,
+        "active_static_power_w": 0.0046690398,
+        "active_total_power_w": 0.009774,
+        "area_total_mwta": 16574391.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.1968,
+        "energy_per_block_nj": 11.5632936,
+        "fmax_mhz": 70.4385,
+        "idle_total_power_w": 0.004322,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "baseline": {
+        "active_dynamic_power_w": 0.005067062,
+        "active_static_power_w": 0.004942938,
+        "active_total_power_w": 0.01001,
         "area_total_mwta": 16679392.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.1773,
-        "energy_per_block_nj": 12.66039775
+        "energy_per_block_nj": 12.66039775,
+        "fmax_mhz": 65.8879,
+        "idle_total_power_w": 0.004566,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 971792.0,
+        "timing_channel_width": 50
       },
       "seed": 49
     },
     {
       "accepted": {
-        "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.306,
-        "energy_per_block_nj": 11.620573333333333
+        "active_dynamic_power_w": 0.0050633868999999995,
+        "active_static_power_w": 0.0046496131,
+        "active_total_power_w": 0.009713,
+        "area_total_mwta": 16574391.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.0502,
+        "energy_per_block_nj": 11.372466049999998,
+        "fmax_mhz": 71.1734,
+        "idle_total_power_w": 0.004298,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "baseline": {
+        "active_dynamic_power_w": 0.005201995,
+        "active_static_power_w": 0.005008005,
+        "active_total_power_w": 0.01021,
         "area_total_mwta": 16712190.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.8697,
-        "energy_per_block_nj": 12.651636416666667
+        "energy_per_block_nj": 12.651636416666667,
+        "fmax_mhz": 67.2508,
+        "idle_total_power_w": 0.004641,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 1004590.0,
+        "timing_channel_width": 52
       },
       "seed": 50
     },
     {
       "accepted": {
-        "area_total_mwta": 16679392.0,
-        "critical_path_delay_ns": 13.6894,
-        "energy_per_block_nj": 11.898370166666666
+        "active_dynamic_power_w": 0.0050751936,
+        "active_static_power_w": 0.004716806400000001,
+        "active_total_power_w": 0.009792,
+        "area_total_mwta": 16614693.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.3415,
+        "energy_per_block_nj": 11.702664,
+        "fmax_mhz": 69.7279,
+        "idle_total_power_w": 0.004369,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.005138784,
+        "active_static_power_w": 0.004941216,
+        "active_total_power_w": 0.01008,
         "area_total_mwta": 16679392.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.9928,
-        "energy_per_block_nj": 12.593952
+        "energy_per_block_nj": 12.593952,
+        "fmax_mhz": 66.6988,
+        "idle_total_power_w": 0.004578,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 971792.0,
+        "timing_channel_width": 50
       },
       "seed": 51
     },
     {
       "accepted": {
-        "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 12.9673,
-        "energy_per_block_nj": 11.540897
+        "active_dynamic_power_w": 0.005050171,
+        "active_static_power_w": 0.004659829,
+        "active_total_power_w": 0.00971,
+        "area_total_mwta": 16574391.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.209,
+        "energy_per_block_nj": 11.497449166666666,
+        "fmax_mhz": 70.3781,
+        "idle_total_power_w": 0.004309,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "baseline": {
+        "active_dynamic_power_w": 0.005229188,
+        "active_static_power_w": 0.004830811999999999,
+        "active_total_power_w": 0.01006,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.6629,
-        "energy_per_block_nj": 12.292397833333332
+        "energy_per_block_nj": 12.292397833333332,
+        "fmax_mhz": 68.1994,
+        "idle_total_power_w": 0.004456,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 52
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.0050459778,
+        "active_static_power_w": 0.0047160221999999995,
+        "active_total_power_w": 0.009762,
         "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.8582,
-        "energy_per_block_nj": 11.8372125
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.2233,
+        "energy_per_block_nj": 11.57065455,
+        "fmax_mhz": 70.3069,
+        "idle_total_power_w": 0.004384,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.005279604000000001,
+        "active_static_power_w": 0.004840395999999999,
+        "active_total_power_w": 0.01012,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.5316,
-        "energy_per_block_nj": 12.254982666666667
+        "energy_per_block_nj": 12.254982666666667,
+        "fmax_mhz": 68.8153,
+        "idle_total_power_w": 0.004485,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 53
     },
     {
       "accepted": {
-        "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.4093,
-        "energy_per_block_nj": 11.654916583333334
+        "active_dynamic_power_w": 0.00520389,
+        "active_static_power_w": 0.00484611,
+        "active_total_power_w": 0.01005,
+        "area_total_mwta": 16679392.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.0951,
+        "energy_per_block_nj": 11.80464625,
+        "fmax_mhz": 70.9464,
+        "idle_total_power_w": 0.004528,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 971792.0,
+        "timing_channel_width": 50
       },
       "baseline": {
+        "active_dynamic_power_w": 0.0050148575999999995,
+        "active_static_power_w": 0.0048491424,
+        "active_total_power_w": 0.009864,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.162,
-        "energy_per_block_nj": 12.463164
+        "energy_per_block_nj": 12.463164,
+        "fmax_mhz": 65.9543,
+        "idle_total_power_w": 0.004467,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 54
     },
     {
       "accepted": {
-        "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.7986,
-        "energy_per_block_nj": 11.809301833333334
+        "active_dynamic_power_w": 0.005067229499999999,
+        "active_static_power_w": 0.0048277705,
+        "active_total_power_w": 0.009895,
+        "area_total_mwta": 16679392.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.5291,
+        "energy_per_block_nj": 11.980453708333332,
+        "fmax_mhz": 68.8275,
+        "idle_total_power_w": 0.004461,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 971792.0,
+        "timing_channel_width": 50
       },
       "baseline": {
+        "active_dynamic_power_w": 0.005022271500000001,
+        "active_static_power_w": 0.0048427285,
+        "active_total_power_w": 0.009865,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.259,
-        "energy_per_block_nj": 12.544169583333336
+        "energy_per_block_nj": 12.544169583333336,
+        "fmax_mhz": 65.535,
+        "idle_total_power_w": 0.004454,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 55
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.0051119348,
+        "active_static_power_w": 0.0047300652,
+        "active_total_power_w": 0.009842,
         "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.7005,
-        "energy_per_block_nj": 11.759595833333332
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.209,
+        "energy_per_block_nj": 11.653748166666666,
+        "fmax_mhz": 70.3781,
+        "idle_total_power_w": 0.004375,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.0050046896,
+        "active_static_power_w": 0.0048393104000000004,
+        "active_total_power_w": 0.009844,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.0014,
-        "energy_per_block_nj": 12.306148466666667
+        "energy_per_block_nj": 12.306148466666667,
+        "fmax_mhz": 66.6605,
+        "idle_total_power_w": 0.004462,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 56
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.0050408088,
+        "active_static_power_w": 0.0047111912,
+        "active_total_power_w": 0.009752,
         "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.2829,
-        "energy_per_block_nj": 11.600399333333334
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.2934,
+        "energy_per_block_nj": 11.615769733333334,
+        "fmax_mhz": 69.9623,
+        "idle_total_power_w": 0.004355,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.004954719,
+        "active_static_power_w": 0.004835281,
+        "active_total_power_w": 0.00979,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.2005,
-        "energy_per_block_nj": 12.401074583333333
+        "energy_per_block_nj": 12.401074583333333,
+        "fmax_mhz": 65.7871,
+        "idle_total_power_w": 0.004459,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 57
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.005011339199999999,
+        "active_static_power_w": 0.0047326608,
+        "active_total_power_w": 0.009744,
         "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.4753,
-        "energy_per_block_nj": 11.779658083333334
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.4177,
+        "energy_per_block_nj": 11.7071724,
+        "fmax_mhz": 69.359,
+        "idle_total_power_w": 0.004384,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.005178,
+        "active_static_power_w": 0.004822,
+        "active_total_power_w": 0.01,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.7131,
-        "energy_per_block_nj": 12.260916666666668
+        "energy_per_block_nj": 12.260916666666668,
+        "fmax_mhz": 67.9668,
+        "idle_total_power_w": 0.004462,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 58
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.005182706799999999,
+        "active_static_power_w": 0.0047192932,
+        "active_total_power_w": 0.009902,
         "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.7461,
-        "energy_per_block_nj": 11.901831583333335
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.0362,
+        "energy_per_block_nj": 11.582204366666666,
+        "fmax_mhz": 71.2445,
+        "idle_total_power_w": 0.004381,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.004960727399999999,
+        "active_static_power_w": 0.0048372726,
+        "active_total_power_w": 0.009798,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.153,
-        "energy_per_block_nj": 12.3724245
+        "energy_per_block_nj": 12.3724245,
+        "fmax_mhz": 65.9937,
+        "idle_total_power_w": 0.004455,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 59
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.0050419586,
+        "active_static_power_w": 0.004716041399999999,
+        "active_total_power_w": 0.009758,
         "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.0388,
-        "energy_per_block_nj": 11.561069333333334
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.2145,
+        "energy_per_block_nj": 11.558757583333334,
+        "fmax_mhz": 70.3507,
+        "idle_total_power_w": 0.004362,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.004879086,
+        "active_static_power_w": 0.0047729140000000005,
+        "active_total_power_w": 0.009652,
         "area_total_mwta": 16574391.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.3366,
-        "energy_per_block_nj": 12.335738600000003
+        "energy_per_block_nj": 12.335738600000003,
+        "fmax_mhz": 65.2034,
+        "idle_total_power_w": 0.004364,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "seed": 60
     },
     {
       "accepted": {
-        "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.3577,
-        "energy_per_block_nj": 11.777038833333334
+        "active_dynamic_power_w": 0.0049810817,
+        "active_static_power_w": 0.0046479183000000006,
+        "active_total_power_w": 0.009629,
+        "area_total_mwta": 16574391.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.5039,
+        "energy_per_block_nj": 11.638171091666667,
+        "fmax_mhz": 68.9472,
+        "idle_total_power_w": 0.004268,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "baseline": {
+        "active_dynamic_power_w": 0.0047636154,
+        "active_static_power_w": 0.0048423846,
+        "active_total_power_w": 0.009606,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.8992,
-        "energy_per_block_nj": 12.727309600000002
+        "energy_per_block_nj": 12.727309600000002,
+        "fmax_mhz": 62.8962,
+        "idle_total_power_w": 0.004421,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 61
     },
     {
       "accepted": {
-        "area_total_mwta": 16679392.0,
-        "critical_path_delay_ns": 13.0791,
-        "energy_per_block_nj": 11.683996
+        "active_dynamic_power_w": 0.0051600253,
+        "active_static_power_w": 0.0047269747,
+        "active_total_power_w": 0.009887,
+        "area_total_mwta": 16614693.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 13.8683,
+        "energy_per_block_nj": 11.426323508333333,
+        "fmax_mhz": 72.107,
+        "idle_total_power_w": 0.004399,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.004930272,
+        "active_static_power_w": 0.004759728,
+        "active_total_power_w": 0.00969,
         "area_total_mwta": 16574391.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.9966,
-        "energy_per_block_nj": 12.109754500000001
+        "energy_per_block_nj": 12.109754500000001,
+        "fmax_mhz": 66.6819,
+        "idle_total_power_w": 0.004398,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "seed": 62
     },
     {
       "accepted": {
-        "area_total_mwta": 16679392.0,
-        "critical_path_delay_ns": 13.2358,
-        "energy_per_block_nj": 11.768832166666666
+        "active_dynamic_power_w": 0.0050249808,
+        "active_static_power_w": 0.004719019199999999,
+        "active_total_power_w": 0.009744,
+        "area_total_mwta": 16614693.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.4543,
+        "energy_per_block_nj": 11.7368916,
+        "fmax_mhz": 69.1837,
+        "idle_total_power_w": 0.004341,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.005167314,
+        "active_static_power_w": 0.004852685999999999,
+        "active_total_power_w": 0.01002,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.806,
-        "energy_per_block_nj": 12.363009999999997
+        "energy_per_block_nj": 12.363009999999997,
+        "fmax_mhz": 67.5401,
+        "idle_total_power_w": 0.004478,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 63
     },
     {
       "accepted": {
-        "area_total_mwta": 16679392.0,
-        "critical_path_delay_ns": 13.3708,
-        "energy_per_block_nj": 11.766303999999998
+        "active_dynamic_power_w": 0.005188875999999999,
+        "active_static_power_w": 0.004721124000000001,
+        "active_total_power_w": 0.00991,
+        "area_total_mwta": 16614693.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 13.9973,
+        "energy_per_block_nj": 11.559436916666668,
+        "fmax_mhz": 71.4425,
+        "idle_total_power_w": 0.004376,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.0049693032,
+        "active_static_power_w": 0.004843696800000001,
+        "active_total_power_w": 0.009813,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.2624,
-        "energy_per_block_nj": 12.480827600000001
+        "energy_per_block_nj": 12.480827600000001,
+        "fmax_mhz": 65.5204,
+        "idle_total_power_w": 0.004468,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 64
     },
     {
       "accepted": {
+        "active_dynamic_power_w": 0.005036274900000001,
+        "active_static_power_w": 0.004710725099999999,
+        "active_total_power_w": 0.009747,
         "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.5002,
-        "energy_per_block_nj": 11.767674333333334
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.2672,
+        "energy_per_block_nj": 11.5885332,
+        "fmax_mhz": 70.0911,
+        "idle_total_power_w": 0.00435,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.0050536892,
+        "active_static_power_w": 0.0048303108,
+        "active_total_power_w": 0.009884,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.1928,
-        "energy_per_block_nj": 12.513802933333332
+        "energy_per_block_nj": 12.513802933333332,
+        "fmax_mhz": 65.8207,
+        "idle_total_power_w": 0.004445,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 65
     },
     {
       "accepted": {
-        "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.1157,
-        "energy_per_block_nj": 11.596464749999999
+        "active_dynamic_power_w": 0.005082470399999999,
+        "active_static_power_w": 0.0046615296,
+        "active_total_power_w": 0.009744,
+        "area_total_mwta": 16574391.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.187,
+        "energy_per_block_nj": 11.519843999999999,
+        "fmax_mhz": 70.4872,
+        "idle_total_power_w": 0.004312,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "baseline": {
+        "active_dynamic_power_w": 0.0051098702,
+        "active_static_power_w": 0.0048431298,
+        "active_total_power_w": 0.009953,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.7666,
-        "energy_per_block_nj": 12.24766415
+        "energy_per_block_nj": 12.24766415,
+        "fmax_mhz": 67.7204,
+        "idle_total_power_w": 0.00448,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 66
     },
     {
       "accepted": {
-        "area_total_mwta": 16679392.0,
-        "critical_path_delay_ns": 12.9366,
-        "energy_per_block_nj": 11.621379
+        "active_dynamic_power_w": 0.0051363689,
+        "active_static_power_w": 0.0047166311,
+        "active_total_power_w": 0.009853,
+        "area_total_mwta": 16614693.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.294,
+        "energy_per_block_nj": 11.736565166666669,
+        "fmax_mhz": 69.9594,
+        "idle_total_power_w": 0.004355,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "baseline": {
+        "active_dynamic_power_w": 0.0050381919,
+        "active_static_power_w": 0.0048348081,
+        "active_total_power_w": 0.009873,
         "area_total_mwta": 16614693.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 15.1998,
-        "energy_per_block_nj": 12.50563545
+        "energy_per_block_nj": 12.50563545,
+        "fmax_mhz": 65.7902,
+        "idle_total_power_w": 0.004455,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 907093.0,
+        "timing_channel_width": 46
       },
       "seed": 67
     },
     {
       "accepted": {
-        "area_total_mwta": 16614693.0,
-        "critical_path_delay_ns": 13.3468,
-        "energy_per_block_nj": 11.689572333333334
+        "active_dynamic_power_w": 0.0049837085,
+        "active_static_power_w": 0.0046652915,
+        "active_total_power_w": 0.009649,
+        "area_total_mwta": 16574391.0,
+        "clb_blocks": 182,
+        "critical_path_delay_ns": 14.1813,
+        "energy_per_block_nj": 11.402946974999999,
+        "fmax_mhz": 70.5155,
+        "idle_total_power_w": 0.004319,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 866791.0,
+        "timing_channel_width": 44
       },
       "baseline": {
+        "active_dynamic_power_w": 0.005179512,
+        "active_static_power_w": 0.004960488,
+        "active_total_power_w": 0.01014,
         "area_total_mwta": 16679392.0,
+        "clb_blocks": 188,
         "critical_path_delay_ns": 14.991,
-        "energy_per_block_nj": 12.667394999999999
+        "energy_per_block_nj": 12.667394999999999,
+        "fmax_mhz": 66.7065,
+        "idle_total_power_w": 0.00458,
+        "logic_block_area_mwta": 15707600.0,
+        "memories": 0,
+        "registers": 892,
+        "routing_area_mwta": 971792.0,
+        "timing_channel_width": 50
       },
       "seed": 68
     }
   ],
   "result": "accepted",
-  "schema_version": 1,
+  "schema_version": 2,
   "score_definition": {
     "baseline": 1.0,
     "direction": "lower_is_better",
-    "formula": "geometric_mean(area_ratio, timing_ratio, energy_ratio)"
+    "energy_per_block_nj": "secondary_informative_metric",
+    "formula": "geometric_mean(area_ratio, critical_path_delay_ratio, active_total_power_ratio)",
+    "primary_metrics": [
+      "area_total_mwta",
+      "critical_path_delay_ns",
+      "active_total_power_w"
+    ]
   },
   "source": {
-    "accepted_rtl_sha256": "743e6c9ffcca6f00d35d5e73ba6f6478a9133a0c55a471c16d6e59d831aeeabc",
+    "accepted_rtl_sha256": "ea63b97faf69b14409a3077cd3357205c0e044b277d64537b98a4a4773a4f2e7",
     "corrected_baseline_sha256": "191a4f2148a4efda7aadd24480eb13d78a1d2c0c7e8a3fcc37c44f6a8e8011e5",
     "upstream_commit": "95f5c6de9e158371ba7185bf97c07a84153735d6",
     "upstream_path": "vtr_flow/benchmarks/verilog/sha.v",
@@ -948,68 +2390,104 @@
   },
   "summary": {
     "accepted": {
+      "active_dynamic_power_w": 0.0050741858,
+      "active_static_power_w": 0.004712652,
+      "active_total_power_w": 0.0097755,
       "area_total_mwta": 16614693.0,
-      "critical_path_delay_ns": 13.280850000000001,
-      "energy_per_block_nj": 11.639920958333331,
-      "score": 0.9401876300284054
+      "clb_blocks": 182.0,
+      "composite_per_seed_median": 0.978469312455353,
+      "critical_path_delay_ns": 14.209,
+      "energy_per_block_nj": 11.571831725,
+      "fmax_mhz": 70.3781,
+      "idle_total_power_w": 0.0043490000000000004,
+      "logic_block_area_mwta": 15707600.0,
+      "memories": 0.0,
+      "registers": 892.0,
+      "routing_area_mwta": 907093.0,
+      "score": 0.9773349538474899,
+      "timing_channel_width": 46.0
     },
     "baseline": {
+      "active_dynamic_power_w": 0.0050713231,
+      "active_static_power_w": 0.0048393525000000005,
+      "active_total_power_w": 0.0099125,
       "area_total_mwta": 16614693.0,
+      "clb_blocks": 188.0,
       "critical_path_delay_ns": 15.0054,
       "energy_per_block_nj": 12.389554387499999,
-      "score": 1.0
+      "fmax_mhz": 66.6426,
+      "idle_total_power_w": 0.004467,
+      "logic_block_area_mwta": 15707600.0,
+      "memories": 0.0,
+      "registers": 892.0,
+      "routing_area_mwta": 907093.0,
+      "score": 1.0,
+      "timing_channel_width": 46.0
     },
     "paired_ratio": {
+      "active_total_power_w": {
+        "ci95_two_sided": [
+          0.9812739913337283,
+          0.9911306152977609
+        ],
+        "estimate": 0.9861899892040519,
+        "log_stdev": 0.020005816584401336,
+        "losses": 18,
+        "lower_one_sided_95": 0.9820815046434027,
+        "ties": 0,
+        "upper_one_sided_95": 0.9903156613864058,
+        "wins": 46
+      },
       "area_total_mwta": {
         "ci95_two_sided": [
-          0.9990684016723661,
-          1.0003551623295646
+          0.9978509802402362,
+          0.9991605150476243
         ],
-        "estimate": 0.9997115749721509,
-        "log_stdev": 0.0025764013330349966,
-        "losses": 9,
-        "lower_one_sided_95": 0.9991742432309053,
-        "ties": 41,
-        "upper_one_sided_95": 1.0002491956774107,
-        "wins": 14
+        "estimate": 0.9985055329629431,
+        "log_stdev": 0.0026251675752520364,
+        "losses": 6,
+        "lower_one_sided_95": 0.9979586938654681,
+        "ties": 28,
+        "upper_one_sided_95": 0.9990526717050832,
+        "wins": 30
       },
       "composite": {
         "ci95_two_sided": [
-          0.9372744577144392,
-          0.9431098568651541
+          0.975905588523519,
+          0.9787664126990042
         ],
-        "estimate": 0.9401876300284054,
-        "log_stdev": 0.012423553361422444,
+        "estimate": 0.9773349538474899,
+        "log_stdev": 0.005859196626952218,
         "losses": 0,
-        "lower_one_sided_95": 0.937753361228979,
+        "lower_one_sided_95": 0.9761407264459249,
         "ties": 0,
-        "upper_one_sided_95": 0.942628217829003,
+        "upper_one_sided_95": 0.9785306422874566,
         "wins": 64
       },
       "critical_path_delay_ns": {
         "ci95_two_sided": [
-          0.8801816565852041,
-          0.891333648605668
+          0.9424554264353109,
+          0.9536250218852812
         ],
-        "estimate": 0.8857401014969747,
-        "log_stdev": 0.02520192795536819,
+        "estimate": 0.9480237743117392,
+        "log_stdev": 0.023583387940695134,
         "losses": 0,
-        "lower_one_sided_95": 0.8810942043343271,
+        "lower_one_sided_95": 0.9433697545623217,
         "ties": 0,
-        "upper_one_sided_95": 0.8904104958817579,
+        "upper_one_sided_95": 0.9527007541992395,
         "wins": 64
       },
       "energy_per_block_nj": {
         "ci95_two_sided": [
-          0.9348036184734467,
-          0.9423337729345956
+          0.9312605902120031,
+          0.9386169919903988
         ],
-        "estimate": 0.9385611438521175,
-        "log_stdev": 0.016059449022447245,
+        "estimate": 0.9349315557536786,
+        "log_stdev": 0.0157497982119581,
         "losses": 0,
-        "lower_one_sided_95": 0.9354210927995482,
+        "lower_one_sided_95": 0.9318638596612155,
         "ties": 0,
-        "upper_one_sided_95": 0.9417117355271816,
+        "upper_one_sided_95": 0.9380093507025552,
         "wins": 64
       }
     }

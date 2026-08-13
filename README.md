@@ -1,63 +1,98 @@
 # SHA-1 RTL optimization on VTR
 
-A four-line, cycle-equivalent RTL revision improves the estimated composite
-PPA score by **5.98%** under a frozen VTR 45 nm FPGA comparison.
+Three cycle-equivalent RTL transformations improve the paired primary PPA
+estimate by **2.27%** under a frozen VTR 45 nm FPGA comparison.
 
-| Metric | Corrected baseline | Accepted RTL | Paired improvement (95% CI) |
+| Primary metric | Corrected baseline | Accepted RTL | Paired improvement (95% CI) |
 |---|---:|---:|---:|
-| Total area | 16,614,693 MWTA | 16,614,693 MWTA | 0.03% (-0.04%, 0.09%) · neutral |
-| Critical path | 15.0054 ns | 13.28085 ns | **11.43%** (10.87%, 11.98%) |
-| Energy / block | 12.3896 nJ | 11.6399 nJ | **6.14%** (5.77%, 6.52%) |
-| Composite PPA | 1.000000 | 0.940188 | **5.98%** (5.69%, 6.27%) |
+| Total area | 16,614,693 MWTA | 16,614,693 MWTA | **0.15%** (0.08%, 0.21%) |
+| Critical path | 15.0054 ns | 14.2090 ns | **5.20%** (4.64%, 5.75%) |
+| Active total power | 9.9125 mW | 9.7755 mW | **1.38%** (0.89%, 1.87%) |
+| Composite estimator | 1.000000 | 0.977335 | **2.27%** (2.12%, 2.41%) |
 
-The result uses 64 fixed, paired VPR seeds. Timing, energy and composite score
-improve in all 64 comparisons; area is statistically neutral.
+The score is the equal-weight geometric mean of paired area, post-route delay
+and active-total-power ratios over 64 fixed certification seeds. `0.977335` is
+the paired geometric-mean estimator; the median of the 64 per-seed composite
+ratios is `0.978469`. Energy per block is secondary and improves by **6.51%**
+(95% CI: 6.14% to 6.87%).
 
-## Review the result
+The five search seeds (`1, 7, 19, 43, 97`) are disjoint from the fixed
+certification pool: the other 64 seeds in `1..68`. The certification sample is
+never extended after observing a candidate.
 
-- [Technical report](technical-report.pdf) — method, diagrams, statistics,
-  trade-offs and claims boundary.
-- [Exact four-line patch](rtl/baseline-to-accepted.patch).
+## Review
+
+- [Technical report](technical-report.pdf) - method, RTL transformations,
+  verification scope, distributions and limitations.
+- [Exact baseline-to-accepted patch](rtl/baseline-to-accepted.patch).
 - [Corrected baseline](rtl/baseline/sha.v) and [accepted RTL](rtl/accepted/sha.v).
-- [Compact 64-seed certification](results/certification.json).
+- [Compact certification](results/certification.json) with all 64 paired rows.
+- [Full raw evidence release](https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/tag/v1.3.0-rc4)
+  with baseline and accepted VTR/ACE outputs, formal/NIST evidence and an
+  11,362-file internal manifest.
 
 ## Verify
 
-The audit uses only the Python standard library. It checks every published
-checksum, reconstructs the RTL patch and recomputes medians, paired confidence
-intervals and the composite score from all 64 seed pairs.
+The compact audit uses only Python 3 and is intentionally described as a
+consistency check, not as raw-provenance certification:
 
 ```bash
 python3 verify.py
 ```
 
-Expected result:
+Expected ending:
 
 ```text
-Verification: PASS
+Compact package consistency: PASS
 paired_seeds=64
-composite_score=0.940187630028
-improvement=5.98% (95% CI 5.69% to 6.27%)
-formal_status=pass
+composite_estimate=0.977334953847
+composite_per_seed_median=0.978469312455
+improvement=2.27% (95% CI 2.12% to 2.41%)
+Full raw evidence: NOT CHECKED (pass --evidence-archive)
 ```
 
-The complete formal, functional, route and power logs are available in the
-[v1.2.0 release](https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/tag/v1.2.0).
+To audit every raw file, download the release asset and supply it explicitly:
+
+```bash
+curl -LO https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/download/v1.3.0-rc4/primary-ppa-full-evidence.tar.gz
+python3 verify.py --evidence-archive primary-ppa-full-evidence.tar.gz
+```
+
+The second command verifies the external archive digest, every internal member
+hash, the declared sanitization/correction provenance, exact formal and NIST
+markers and both RTL identities. It then derives every certification metric
+from all 128 raw VTR/ACE run trees and compares the results with both archived
+records and all compact rows before reporting `Full raw evidence: PASS`.
+
+The public bundle records one non-measurement correction explicitly: stale
+`cmd_i[2:0]` prose in the source flow manifest is published as the frozen
+`cmd_i[3:0]` RTL interface. Both source and public hashes are retained; RTL and
+all measurement outputs are unchanged.
+
+Adversarial verifier tests run with:
+
+```bash
+python3 -m unittest discover -s tests -v
+```
+
+## Rebuild the report
+
+The checked-in LaTeX source and generated data make the PDF rebuildable:
+
+```bash
+python3 scripts/generate_latex_data.py
+make technical-report
+```
 
 ## Scope
 
-This is a comparative estimate on VTR's open 45 nm FPGA architecture at
-0.9 V and 85 °C. It is not ASIC signoff, a commercial-FPGA measurement or
-manufactured silicon. SHA-1 is used only as a legacy compute benchmark.
-
-## Provenance and license
+This is a two-state, defined-input equivalence contract and a comparative
+estimate on VTR's open 45 nm FPGA architecture at 0.9 V and 85 °C. It does not
+claim identical X/Z propagation, ASIC signoff, a commercial-FPGA measurement
+or manufactured silicon. SHA-1 is used only as a legacy compute benchmark.
 
 The SHA-1 RTL descends from the OpenCores core redistributed by VTR at commit
-`95f5c6de9e158371ba7185bf97c07a84153735d6`. Its original copyright notice,
-redistribution condition and disclaimer remain in both RTL files. VTR, EQY and
-NIST remain governed by their respective upstream terms.
-
-The MIT License applies to the original Göther Labs case-study material and
-verification code. Third-party material retains its original terms.
+`95f5c6de9e158371ba7185bf97c07a84153735d6`. Third-party material retains its
+upstream terms; the repository MIT License covers original Göther Labs work.
 
 [Göther Labs](https://www.gotherlabs.com/)
