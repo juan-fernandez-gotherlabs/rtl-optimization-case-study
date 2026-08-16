@@ -300,20 +300,23 @@ A pair sum therefore lies in $[-32{,}512,32{,}768]$ and needs 17 signed bits. Th
 % Rewrite 2
 \newpageheading{7. Rewrite 2: balanced range-correct accumulation}{Source: int8\_matvec\_4x4.sv:59--70}
 
-The optimized RTL makes the intended adder topology and widths explicit. Each row first forms two independent 17-bit pair sums, then combines them in one 18-bit final sum.
+The baseline presents four already widened terms as one 32-bit chained expression and leaves its mapped association to synthesis. The optimized RTL makes both the intended topology and the minimum safe widths explicit.
 
 \begin{center}
 \begin{tikzpicture}[node distance=7mm]
-\node[input] (p0) {$p_{i0}$\\16 bit};
-\node[input,below=of p0] (p1) {$p_{i1}$\\16 bit};
-\node[input,below=of p1] (p2) {$p_{i2}$\\16 bit};
-\node[input,below=of p2] (p3) {$p_{i3}$\\16 bit};
-\node[accepted,right=22mm of p0,yshift=-7mm,minimum width=26mm] (s0) {$s_{i0}$\\17-bit add};
-\node[accepted,right=22mm of p2,yshift=-7mm,minimum width=26mm] (s1) {$s_{i1}$\\17-bit add};
-\node[accepted,right=23mm of s0,yshift=-18mm,minimum width=28mm] (d) {$d_i$\\18-bit add};
+\node[font=\small\bfseries,text=Mid] (bt) {Frozen baseline · wide source expression};
+\node[input,below=6mm of bt,xshift=-45mm,minimum width=31mm] (be) {$e_{i0},e_{i1},e_{i2},e_{i3}$\\four signed 32-bit terms};
+\node[gate,right=17mm of be,minimum width=47mm] (badd) {$e_{i0}+e_{i1}+e_{i2}+e_{i3}$\\32-bit chained expression};
+\node[input,right=of badd] (by) {$y_i$\\32 bit};
+\draw[signal] (be)--(badd); \draw[signal] (badd)--(by);
+
+\node[font=\small\bfseries,text=GotherBlue,below=19mm of be,xshift=45mm] (at) {Optimized RTL · explicit balanced tree};
+\node[input,below=6mm of at,xshift=-59mm,minimum width=27mm] (p) {$p_{i0},p_{i1},p_{i2},p_{i3}$\\four signed 16-bit terms};
+\node[accepted,right=14mm of p,yshift=5mm,minimum width=25mm] (s0) {$s_{i0}$\\17-bit add};
+\node[accepted,right=14mm of p,yshift=-8mm,minimum width=25mm] (s1) {$s_{i1}$\\17-bit add};
+\node[accepted,right=18mm of s0,yshift=-6.5mm,minimum width=27mm] (d) {$d_i$\\18-bit add};
 \node[input,right=of d] (y) {$y_i$\\32 bit};
-\draw[signal] (p0)--(s0); \draw[signal] (p1)--(s0);
-\draw[signal] (p2)--(s1); \draw[signal] (p3)--(s1);
+\draw[signal] (p.east)--(s0.west); \draw[signal] (p.east)--(s1.west);
 \draw[signal] (s0)--(d); \draw[signal] (s1)--(d); \draw[signal] (d)--(y);
 \end{tikzpicture}
 \end{center}
@@ -333,11 +336,19 @@ Integer addition is associative because every intermediate width covers its full
 % Rewrite 3
 \newpageheading{8. Rewrite 3: explicit signed output boundary}{Source: int8\_matvec\_4x4.sv:72--75}
 
-The final 18-bit dot product is sign-extended once, at the frozen 32-bit interface. This makes the overflow convention explicit: the mathematical four-term INT8 sum always fits, so no truncation, wraparound or saturation occurs.
+The baseline moves every 16-bit product into a 32-bit representation before addition. The optimized path remains range-sized through the complete sum and crosses the frozen 32-bit interface only once. No truncation, wraparound or saturation occurs.
 
 \begin{center}
-\begin{tikzpicture}[node distance=12mm]
-\node[input] (d) {$d_i[17{:}0]$\\exact signed sum};
+\begin{tikzpicture}[node distance=9mm]
+\node[font=\small\bfseries,text=Mid] (bt) {Frozen baseline · widen before accumulation};
+\node[input,below=6mm of bt,xshift=-49mm] (bp) {four 16-bit\\products};
+\node[gate,right=13mm of bp,minimum width=39mm] (bsext) {four independent\\16-to-32 sign extensions};
+\node[gate,right=of bsext,minimum width=31mm] (badd) {32-bit\\accumulation};
+\node[input,right=of badd] (by) {$y_i[31{:}0]$};
+\draw[signal] (bp)--(bsext); \draw[signal] (bsext)--(badd); \draw[signal] (badd)--(by);
+
+\node[font=\small\bfseries,text=GotherBlue,below=19mm of bp,xshift=49mm] (at) {Optimized RTL · widen once at output};
+\node[input,below=6mm of at,xshift=-48mm] (d) {$d_i[17{:}0]$\\exact signed sum};
 \node[accepted,right=of d,minimum width=43mm,minimum height=16mm] (sext) {replicate sign bit 14 times\\$\{\{14\{d_i[17]\}\},d_i\}$};
 \node[input,right=of sext] (y) {$y_i[31{:}0]$\\signed output};
 \draw[signal] (d)--(sext); \draw[signal] (sext)--(y);
