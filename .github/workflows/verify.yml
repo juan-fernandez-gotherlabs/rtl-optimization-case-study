@@ -1,4 +1,4 @@
-name: Verify published comparison
+name: Verify published RTL portfolio
 
 on:
   push:
@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 jobs:
-  comparison:
+  portfolio:
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
@@ -17,16 +17,20 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
-      - name: Verify compact package
+      - name: Verify both compact evidence packages
         run: python3 verify.py
-      - name: Run adversarial verifier tests
-        run: python3 -m unittest discover -s tests -v
+      - name: Run SHA-1 adversarial verifier tests
+        run: python3 -m unittest discover -s cases/sha1/tests -v
+      - name: Run INT8 adversarial verifier tests
+        run: python3 -m unittest discover -s cases/int8-matvec/tests -v
       - name: Confirm generated report data is current
         run: |
-          python3 scripts/generate_latex_data.py
-          git diff --exit-code -- report/latex/generated
+          python3 cases/sha1/scripts/generate_latex_data.py
+          python3 cases/int8-matvec/tools/generate_report_data.py
+          git diff --exit-code -- cases/sha1/report/latex/generated cases/int8-matvec/report/latex/generated
       - name: Verify repository hygiene
         run: |
-          python3 -m json.tool results/certification.json >/dev/null
+          python3 -m json.tool cases/sha1/results/certification.json >/dev/null
+          python3 -m json.tool cases/int8-matvec/certificate.json >/dev/null
           git diff --check
           git diff --exit-code

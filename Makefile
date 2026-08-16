@@ -1,26 +1,27 @@
-.PHONY: all verify test technical-report checksums clean
+.PHONY: all verify test reports checksums clean
 
 PYTHON ?= python3
-LATEXMK ?= latexmk
-SOURCE_DATE_EPOCH ?= 1786233600
 
-all: technical-report checksums verify test
+all: reports checksums verify test
 
 verify:
 	$(PYTHON) verify.py
 
 test:
-	$(PYTHON) -m unittest discover -s tests -v
+	$(PYTHON) -m unittest discover -s cases/sha1/tests -v
+	$(PYTHON) -m unittest discover -s cases/int8-matvec/tests -v
 
-technical-report:
-	$(PYTHON) scripts/generate_latex_data.py
-	mkdir -p tmp/latex
-	cd report/latex && SOURCE_DATE_EPOCH=$(SOURCE_DATE_EPOCH) FORCE_SOURCE_DATE=1 $(LATEXMK) -xelatex -interaction=nonstopmode -halt-on-error -outdir=../../tmp/latex technical-report.tex
-	cp tmp/latex/technical-report.pdf technical-report.pdf
-	$(PYTHON) scripts/normalize_pdf_id.py technical-report.pdf
+reports:
+	$(MAKE) -C cases/sha1 technical-report
+	$(MAKE) -C cases/int8-matvec technical-report
+	cp cases/sha1/technical-report.pdf SHA1-RTL-Optimization.pdf
+	cp cases/int8-matvec/technical-report.pdf INT8-MatVec-Optimization.pdf
 
 checksums:
-	$(PYTHON) scripts/write_manifest.py
+	$(PYTHON) cases/sha1/scripts/write_manifest.py
+	$(PYTHON) cases/int8-matvec/tools/write_manifest.py
+	$(PYTHON) verify.py --write-manifest
 
 clean:
-	rm -rf tmp/latex
+	$(MAKE) -C cases/sha1 clean
+	$(MAKE) -C cases/int8-matvec clean
