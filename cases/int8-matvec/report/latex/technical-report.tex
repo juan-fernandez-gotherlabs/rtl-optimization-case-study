@@ -1,0 +1,540 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[a4paper,top=20mm,bottom=22mm,left=19mm,right=19mm,headheight=14pt]{geometry}
+\usepackage{fontspec}
+\setsansfont{texgyreheros-regular.otf}[BoldFont=texgyreheros-bold.otf,ItalicFont=texgyreheros-italic.otf,BoldItalicFont=texgyreheros-bolditalic.otf]
+\setmainfont{texgyreheros-regular.otf}[BoldFont=texgyreheros-bold.otf,ItalicFont=texgyreheros-italic.otf,BoldItalicFont=texgyreheros-bolditalic.otf]
+\setmonofont{texgyrecursor-regular.otf}[BoldFont=texgyrecursor-bold.otf,ItalicFont=texgyrecursor-italic.otf,BoldItalicFont=texgyrecursor-bolditalic.otf,Scale=0.88]
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{microtype}
+\usepackage[table]{xcolor}
+\definecolor{GotherBlue}{HTML}{0A84FF}
+\definecolor{Ink}{HTML}{111111}
+\definecolor{Mid}{HTML}{666666}
+\definecolor{Rule}{HTML}{D9DDE3}
+\definecolor{Pale}{HTML}{F4F8FC}
+\usepackage{titlesec}
+\titleformat{\section}{\fontsize{20}{23}\bfseries\color{Ink}}{}{0pt}{}
+\titleformat{\subsection}{\fontsize{13.5}{16}\bfseries\color{Ink}}{}{0pt}{}
+\titlespacing*{\section}{0pt}{0pt}{12pt}
+\titlespacing*{\subsection}{0pt}{16pt}{7pt}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize\color{Mid}Göther Labs / Evaluated technical improvement}
+\fancyhead[R]{\footnotesize\color{Mid}INT8 MatVec RTL / VTR 45 nm}
+\fancyfoot[L]{\footnotesize\color{Mid}Compact certified VTR record · \EvidenceDate}
+\fancyfoot[R]{\footnotesize\color{Mid}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\usepackage{booktabs,tabularx,array}
+\usepackage{siunitx}
+\sisetup{detect-all,group-separator={,},group-minimum-digits=4}
+\newcolumntype{Y}{>{\rightskip=0pt plus 1fil\relax\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+\newcolumntype{P}[1]{>{\rightskip=0pt plus 1fil\relax\arraybackslash}p{#1}}
+\newcolumntype{B}[1]{>{\bfseries\rightskip=0pt plus 1fil\relax\arraybackslash}p{#1}}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=5mm}
+\usepackage{listings}
+\lstdefinelanguage{SystemVerilogDiff}{morekeywords={always_comb,assign,endmodule,input,logic,module,output,signed,wire},sensitive=true,morecomment=[l]{//}}
+\lstset{basicstyle=\ttfamily\footnotesize,keywordstyle=\color{GotherBlue}\bfseries,commentstyle=\color{Mid},columns=fullflexible,keepspaces=true,frame=none,backgroundcolor=\color{white},xleftmargin=0pt,aboveskip=7pt,belowskip=7pt,showspaces=false,showtabs=false,showstringspaces=false,breaklines=true,breakatwhitespace=false}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,fit,backgrounds}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=Ink,urlcolor=GotherBlue,citecolor=GotherBlue,pdfauthor={Göther Labs},pdftitle={INT8 MatVec RTL optimization on VTR - compact certified record},pdflang={en-GB}}
+\usepackage{seqsplit}
+
+\input{generated/metrics.tex}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5.5pt}
+\setlength{\emergencystretch}{2em}
+\newcommand{\hash}[1]{{\scriptsize\ttfamily\seqsplit{#1}}}
+\newcommand{\better}{\textcolor{GotherBlue}{\textbf{better}}}
+\newcommand{\neutral}{\textcolor{Mid}{\textbf{neutral}}}
+\newcommand{\smallcaps}[1]{\textcolor{Mid}{\fontsize{8.5}{10}\selectfont\bfseries\MakeUppercase{#1}}}
+\newcommand{\newpageheading}[2]{\clearpage\section{#1}\smallcaps{#2}\vspace{6pt}}
+\newcommand{\yes}{\textcolor{GotherBlue}{\textbf{PASS}}}
+\newcommand{\thead}[1]{\textcolor{white}{\textbf{#1}}}
+
+\newtcolorbox{claimbox}[1][]{enhanced,breakable,boxrule=0.6pt,leftrule=2.8pt,colback=white,colframe=GotherBlue,arc=0pt,left=4.5mm,right=4.5mm,top=4mm,bottom=4mm,#1}
+\newtcolorbox{scopebox}[1][]{enhanced,breakable,boxrule=0.5pt,colback=Pale,colframe=Rule,arc=2mm,left=4mm,right=4mm,top=3mm,bottom=3mm,#1}
+
+\tikzset{
+  signal/.style={-Latex,draw=Mid,line width=.75pt},
+  gate/.style={draw=Rule,fill=white,rounded corners=1.5pt,minimum width=17mm,minimum height=8mm,font=\scriptsize\bfseries,align=center},
+  accepted/.style={gate,draw=GotherBlue},
+  input/.style={draw=Rule,fill=white,rounded corners=1.5pt,minimum width=10mm,minimum height=7mm,font=\scriptsize,align=center},
+}
+
+\begin{document}
+
+% Cover
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture,overlay]
+  \fill[GotherBlue] (current page.north west) rectangle ([xshift=7mm]current page.south west);
+\end{tikzpicture}
+\vspace*{47mm}
+{\color{Mid}\fontsize{11}{14}\selectfont Göther Labs / Evaluated technical improvement}\par
+\vspace{5mm}
+{\color{Ink}\fontsize{29}{33}\selectfont\bfseries INT8 MatVec RTL optimization on VTR}\par
+\vspace{5mm}
+{\color{Mid}\fontsize{13}{16}\selectfont Certified paired VTR estimate · open 45 nm FPGA proxy}\par
+\vspace{19mm}
+\begin{claimbox}
+{\fontsize{15}{19}\selectfont\bfseries A range-correct balanced adder tree improves the paired area-delay-power estimate by \CompositeImprovement\%}
+\end{claimbox}
+\vspace{35mm}
+{\color{Mid}\fontsize{12}{15}\selectfont Prepared by Göther Labs}\par
+\vspace{4mm}
+{\color{Mid}\fontsize{12}{15}\selectfont Measurement completed: \EvidenceDate}\par
+\vfill
+{\color{Mid}\footnotesize Academic open-FPGA estimate. Not ASIC signoff, a commercial FPGA result, or manufactured silicon.}\par
+
+% Executive result
+\newpageheading{1. Executive result}{Frozen baseline versus optimized RTL}
+
+\begin{claimbox}
+\textbf{The optimized RTL improves the equal-weight area-delay-active-power estimator by \CompositeImprovement\% (95\% CI: \CompositeLow\% to \CompositeHigh\%) without changing the signed INT8 inputs, four signed INT32 outputs or exact matrix-vector arithmetic.}
+\end{claimbox}
+
+\renewcommand{\arraystretch}{1.42}
+\vspace{3mm}
+{\small
+\rowcolors{2}{Pale}{white}
+\begin{tabularx}{\textwidth}{@{}P{28mm}P{29mm}P{29mm}P{24mm}Y@{}}
+\rowcolor{Ink}
+\thead{Primary metric} & \thead{Baseline aggregate} & \thead{Optimized aggregate} & \thead{Paired improvement} & \thead{95\% CI / state} \\
+Total area & \BaselineArea\ MWTA & \OptimizedArea\ MWTA & \textbf{\AreaImprovement\%} & \AreaLow\% to \AreaHigh\% · \better \\
+Critical path & \BaselineDelay\ ns & \OptimizedDelay\ ns & \textbf{\TimingImprovement\%} & \TimingLow\% to \TimingHigh\% · \better \\
+Active total power & \BaselinePower\ mW & \OptimizedPower\ mW & \textbf{\PowerImprovement\%} & \PowerLow\% to \PowerHigh\% · \better \\
+Composite estimator & 1.000000 & \OptimizedScore & \textbf{\CompositeImprovement\%} & \CompositeLow\% to \CompositeHigh\% · \better \\
+\end{tabularx}
+\rowcolors{2}{}{}
+}
+
+\vspace{7mm}
+{\large\bfseries Paired primary PPA improvement}\par
+{\small\color{Mid}64 fixed held-out certification pairs · lower is better · bars are two-sided 95\% confidence intervals}\par
+\vspace{2mm}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  width=.96\textwidth,height=68mm,ymin=-.5,ymax=17.5,xmin=.6,xmax=4.4,
+  xtick={1,2,3,4},xticklabels={Area,Timing,Active power,Composite},
+  ytick={0,4,8,12,16},yticklabel={\pgfmathprintnumber{\tick}\%},
+  grid=major,grid style={draw=Rule},axis line style={draw=Mid},
+  tick label style={font=\footnotesize},ylabel={Improvement versus baseline},
+  legend style={at={(0.5,1.04)},anchor=south,draw=none,font=\footnotesize,legend columns=-1},
+]
+\addplot[draw=none,fill=Rule,opacity=.55] coordinates {(.6,-.10) (4.4,-.10) (4.4,.10) (.6,.10)} \closedcycle;
+\addlegendentry{No-change reference}
+\addplot[GotherBlue,line width=1.25pt,mark=*,error bars/.cd,y dir=both,y explicit] table[x=x,y=estimate,y error plus=plus,y error minus=minus,col sep=comma]{generated/executive-ci.csv};
+\addlegendentry{Paired estimate and 95\% CI}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+The aggregate values are geometric means across the fixed held-out sample. The reported composite value \OptimizedScore{} is the paired geometric-mean estimator; the median of the 64 per-pair composite ratios is \CompositeMedian. The estimator and its paired interval define acceptance.
+
+% Module
+\newpageheading{2. Module and benchmark}{What is being optimized}
+
+The evaluated module is an owned, Apache-2.0-licensed, synthesizable SystemVerilog implementation of a signed 4x4 matrix-vector product. Four signed 8-bit activations and sixteen signed 8-bit weights produce four exact signed 32-bit dot products:
+\[
+y_i=\sum_{j=0}^{3} w_{ij}x_j,\qquad i\in\{0,1,2,3\}.
+\]
+
+Quantized linear, projection and convolution operators repeatedly use this arithmetic primitive. The case deliberately isolates the compute kernel; it is not a complete layer, memory system, neural network, accelerator platform or deployment.
+
+\begin{lstlisting}[language=SystemVerilogDiff]
+module int8_matvec_4x4 (
+  input  logic signed [7:0]  x0, x1, x2, x3,
+  input  logic signed [7:0]  w00, w01, ... , w32, w33,
+  output logic signed [31:0] y0, y1, y2, y3
+);
+\end{lstlisting}
+
+\begin{center}
+\begin{tikzpicture}[node distance=9mm]
+\node[input] (in) {4 activations\\signed INT8};
+\node[input,below=7mm of in] (weights) {4x4 weights\\signed INT8};
+\node[accepted,right=18mm of in,yshift=-7mm,minimum width=34mm,minimum height=18mm] (products) {16 exact 8x8\\signed products};
+\node[accepted,right=of products,minimum width=34mm,minimum height=18mm] (trees) {four balanced\\dot-product trees};
+\node[input,right=of trees] (out) {4 outputs\\signed INT32};
+\draw[signal] (in)--(products); \draw[signal] (weights)--(products);
+\draw[signal] (products)--(trees); \draw[signal] (trees)--(out);
+\end{tikzpicture}
+\end{center}
+
+Only \texttt{int8\_matvec\_4x4.sv} is editable. Port names, signedness, widths, combinational behaviour and overflow semantics are frozen. Every result is compared with the checked-in owned baseline.
+
+The DUT itself is combinational. A trusted, identical measurement wrapper registers only the four 32-bit outputs to provide a stable input-to-output-register timing boundary. Its 72 registers are fixed evaluation infrastructure, not candidate state. The homogeneous target has LUT6 logic and flip-flops but no commercial DSP slices, BRAMs or ASIC MAC cells; the sixteen signed multipliers therefore map into LUT fabric.
+
+{\small
+\rowcolors{2}{Pale}{white}
+\begin{tabularx}{\textwidth}{@{}P{52mm}Y@{}}
+\rowcolor{Ink}\thead{Artifact} & \thead{SHA-256} \\
+Frozen baseline SystemVerilog & \hash{\BaselineHash} \\
+Optimized SystemVerilog & \hash{\OptimizedHash} \\
+\end{tabularx}
+\rowcolors{2}{}{}
+}
+
+% Contract
+\newpageheading{3. Evaluation contract}{Frozen before certification}
+
+{\small
+\rowcolors{2}{Pale}{white}
+\begin{tabularx}{\textwidth}{@{}B{39mm}Y@{}}
+\rowcolor{Ink}\thead{Dimension} & \thead{Frozen choice} \\
+Editable artifact & \texttt{int8\_matvec\_4x4.sv} only; submissions frozen by SHA-256. \\
+Functional behaviour & Exact ports, signed INT8 operands, signed INT32 outputs and combinational dot-product result. \\
+Arithmetic semantics & Each 8x8 product is exact signed 16-bit; each four-term sum is exact and sign-extended to 32 bits. \\
+Golden simulation & \FunctionalTests\ deterministic extreme, lane, row and seeded-random cases. \\
+Formal semantics & Exhaustive two-state combinational equivalence for every 160-bit input assignment. \\
+Physical flow & VTR/VPR commit \texttt{95f5c6de…}; pinned Linux/amd64 image; runtime network disabled. \\
+Architecture & \texttt{k6\_N10\_I40\_Fi6\_L4\_frac0\_ff1\_45nm.xml}; homogeneous LUT6 target, no DSP or BRAM model. \\
+Timing boundary & Fixed trusted wrapper registers the four outputs; identical for baseline and accepted RTL. \\
+Power & VTR PTM45, 0.9 V, $85\,^{\circ}$C; fixed active and idle activity profiles. \\
+Search sample & \SearchPairs\ paired placements; provisional ranking only. \\
+Certification sample & \CertificationPairs\ disjoint held-out pairs; fixed sample with no extension. \\
+Primary score & Equal-weight paired area, delay and active-total-power geometric mean. \\
+Validity envelope & Fail closed on missing metrics, route failure, oversized multiplier structure or declared resource limit. \\
+\end{tabularx}
+\rowcolors{2}{}{}
+}
+
+\vspace{8mm}
+\begin{center}
+\begin{tikzpicture}[node distance=7mm,scale=.88,transform shape]
+\node[accepted,minimum width=23mm,minimum height=13mm] (rtl) {optimized RTL\\hash frozen};
+\node[gate,right=of rtl,minimum width=24mm,minimum height=13mm] (struct) {syntax\\synthesis};
+\node[gate,right=of struct,minimum width=24mm,minimum height=13mm] (func) {\FunctionalTests\ golden\\simulations};
+\node[gate,right=of func,minimum width=24mm,minimum height=13mm] (formal) {exhaustive\\equivalence};
+\node[gate,right=of formal,minimum width=24mm,minimum height=13mm] (ppa) {\CertificationPairs\ paired\\PPA runs};
+\node[accepted,right=of ppa,minimum width=22mm,minimum height=13mm] (decision) {accept /\\reject};
+\foreach \a/\b in {rtl/struct,struct/func,func/formal,formal/ppa,ppa/decision}{\draw[signal] (\a)--(\b);}
+\end{tikzpicture}
+\end{center}
+
+\begin{scopebox}
+\textbf{Exact decision rule.} All correctness and evidence-integrity gates must pass. The composite one-sided 95\% upper confidence bound must be below 1.0, and no primary metric may have a one-sided 95\% lower bound above 1.0. Otherwise the result is inconclusive or regressed.
+\end{scopebox}
+
+% Verification
+\newpageheading{4. Verification before PPA}{Fail-closed evidence for the optimized hash}
+
+{\small
+\rowcolors{2}{Pale}{white}
+\begin{tabularx}{\textwidth}{@{}P{40mm}Y P{19mm}@{}}
+\rowcolor{Ink}\thead{Gate} & \thead{Published compact record} & \thead{Result} \\
+Structural policy & Exact interface, patch and synthesizable SystemVerilog identities & \yes \\
+Golden simulation & \FunctionalTests\ deterministic signed, extreme, lane, row and random cases & \yes \\
+Combinational formal & All four outputs for every 160-bit binary input assignment & \yes \\
+Physical validity & Width-sensitive mapping, resource envelope and complete metric extraction & \yes \\
+Independent replay & Baseline and optimized certification records reproduce exactly & \yes \\
+\end{tabularx}
+\rowcolors{2}{}{}
+}
+
+The mathematical reference evaluates signed integer dot products independently of the RTL expression shape. It covers zeros, unit impulses, alternating signs, $-128$, $127$, maximum positive and negative accumulation, individual rows and lanes, plus deterministic seeded vectors. A mismatch stops evaluation before synthesis-based scoring.
+
+The formal proof is unbounded because the design is combinational: it compares every output bit for every possible assignment of the twenty signed INT8 inputs. This is $2^{160}$ input assignments represented symbolically, not a claim that they were enumerated one by one. Inconclusive or timed-out proof is invalid.
+
+Implementation validity rejects missing or non-finite metrics, failed routing, inconsistent area/frequency/power identities, multiplier hard blocks, multiplier operands above the declared width and excessive logic resources. The earlier syntax-level AST count is not an authoritative PPA metric.
+
+\begin{lstlisting}
+python3 verify.py
+\end{lstlisting}
+
+\begin{claimbox}
+\textbf{Evidence boundary.} The public verifier establishes compact certificate consistency and exact published identities. Functional simulation, formal equivalence and independent VTR replay are certificate attestations, not jobs rerun by that verifier. This edition does not publish the raw VTR run trees required for a public raw-log provenance audit equivalent to the SHA-1 release asset.
+\end{claimbox}
+
+% Diff
+\newpageheading{5. Exact baseline-to-optimized diff}{All changed lines from int8\_matvec\_4x4.sv}
+
+The patch below is generated directly from the two checked-in RTL files. No testbench, reference model, architecture, activity profile, metric parser or tool flag is editable by the optimization candidate.
+
+\lstinputlisting[language=SystemVerilogDiff,basicstyle=\ttfamily\tiny]{../../rtl/changes.patch}
+
+\begin{scopebox}
+\textbf{Attribution boundary.} The measured PPA result belongs to one complete accepted patch. The following pages are three overlapping structural views of that same patch, not three independently measured rewrites; no exact fraction of the gain is assigned to one statement.
+\end{scopebox}
+
+% Structural view 1
+\newpageheading{6. Structural view 1: remove full-width extension bank}{One accepted patch · source: int8\_matvec\_4x4.sv:35--43 and 59--74}
+
+The baseline materializes sixteen signed 32-bit aliases before any addition. Every product is already exact in signed 16-bit form, so widening each term directly to the 32-bit output width is unnecessary.
+
+\begin{center}
+\begin{tikzpicture}[node distance=9mm]
+\node[font=\small\bfseries,text=Mid] (bt) {Frozen baseline};
+\node[input,below=6mm of bt,xshift=-45mm] (bp) {four 16-bit\\products};
+\node[gate,right=18mm of bp,minimum width=38mm] (be) {four 16-to-32-bit\\sign extensions};
+\node[gate,right=of be,minimum width=34mm] (ba) {wide add\\expression};
+\node[input,right=of ba] (by) {32-bit $y_i$};
+\draw[signal] (bp)--(be); \draw[signal] (be)--(ba); \draw[signal] (ba)--(by);
+
+\node[font=\small\bfseries,text=GotherBlue,below=26mm of bt] (at) {Optimized RTL};
+\node[input,below=6mm of at,xshift=-45mm] (ap) {four 16-bit\\products};
+\node[accepted,right=40mm of ap,minimum width=34mm] (aa) {range-sized\\adder tree};
+\node[input,right=of aa] (ay) {32-bit $y_i$};
+\draw[signal] (ap)--(aa); \draw[signal] (aa)--(ay);
+\end{tikzpicture}
+\end{center}
+
+For signed INT8 values $x,w\in[-128,127]$, each product lies in
+\[
+wx\in[-16{,}256,16{,}384].
+\]
+A pair sum therefore lies in $[-32{,}512,32{,}768]$ and needs 17 signed bits. The complete four-term dot product lies in $[-65{,}024,65{,}536]$ and needs 18 signed bits. No 32-bit intermediate is required before the interface boundary.
+
+\begin{claimbox}
+\textbf{Formal result.} Exhaustive combinational equivalence proves that removing the extension bank preserves every output bit for every binary input assignment.
+\end{claimbox}
+
+% Structural view 2
+\newpageheading{7. Structural view 2: balanced range-correct accumulation}{One accepted patch · source: int8\_matvec\_4x4.sv:59--70}
+
+The baseline presents four already widened terms as one 32-bit chained expression and leaves its mapped association to synthesis. The optimized RTL makes both the intended topology and the minimum safe widths explicit.
+
+\begin{center}
+\begin{tikzpicture}[node distance=7mm]
+\node[font=\small\bfseries,text=Mid] (bt) {Frozen baseline · wide source expression};
+\node[input,below=6mm of bt,xshift=-45mm,minimum width=31mm] (be) {$e_{i0},e_{i1},e_{i2},e_{i3}$\\four signed 32-bit terms};
+\node[gate,right=17mm of be,minimum width=47mm] (badd) {$e_{i0}+e_{i1}+e_{i2}+e_{i3}$\\32-bit chained expression};
+\node[input,right=of badd] (by) {$y_i$\\32 bit};
+\draw[signal] (be)--(badd); \draw[signal] (badd)--(by);
+
+\node[font=\small\bfseries,text=GotherBlue,below=19mm of be,xshift=45mm] (at) {Optimized RTL · explicit balanced tree};
+\node[input,below=6mm of at,xshift=-59mm,minimum width=27mm] (p) {$p_{i0},p_{i1},p_{i2},p_{i3}$\\four signed 16-bit terms};
+\node[accepted,right=14mm of p,yshift=5mm,minimum width=25mm] (s0) {$s_{i0}$\\17-bit add};
+\node[accepted,right=14mm of p,yshift=-8mm,minimum width=25mm] (s1) {$s_{i1}$\\17-bit add};
+\node[accepted,right=18mm of s0,yshift=-6.5mm,minimum width=27mm] (d) {$d_i$\\18-bit add};
+\node[input,right=of d] (y) {$y_i$\\32 bit};
+\draw[signal] (p.east)--(s0.west); \draw[signal] (p.east)--(s1.west);
+\draw[signal] (s0)--(d); \draw[signal] (s1)--(d); \draw[signal] (d)--(y);
+\end{tikzpicture}
+\end{center}
+
+For one row, the implementation is
+\begin{align*}
+s_{i0} &= \operatorname{sext}_{17}(p_{i0})+\operatorname{sext}_{17}(p_{i1}),\\
+s_{i1} &= \operatorname{sext}_{17}(p_{i2})+\operatorname{sext}_{17}(p_{i3}),\\
+d_i &= \operatorname{sext}_{18}(s_{i0})+\operatorname{sext}_{18}(s_{i1}).
+\end{align*}
+Integer addition is associative because every intermediate width covers its full mathematical range. The two-level topology avoids relying on tool interpretation of one wide chained expression and exposes width-sensitive mapping to synthesis.
+
+\begin{scopebox}
+\textbf{Scope.} This transformation is specific to four exact INT8 products and a 32-bit output contract. A different lane count, operand width, saturation rule or accumulation precision requires a new range proof and evaluation contract.
+\end{scopebox}
+
+% Structural view 3
+\newpageheading{8. Structural view 3: explicit signed output boundary}{One accepted patch · source: int8\_matvec\_4x4.sv:72--75}
+
+The baseline moves every 16-bit product into a 32-bit representation before addition. The optimized path remains range-sized through the complete sum and crosses the frozen 32-bit interface only once. No truncation, wraparound or saturation occurs.
+
+\begin{center}
+\begin{tikzpicture}[node distance=9mm]
+\node[font=\small\bfseries,text=Mid] (bt) {Frozen baseline · widen before accumulation};
+\node[input,below=6mm of bt,xshift=-49mm] (bp) {four 16-bit\\products};
+\node[gate,right=13mm of bp,minimum width=39mm] (bsext) {four independent\\16-to-32 sign extensions};
+\node[gate,right=of bsext,minimum width=31mm] (badd) {32-bit\\accumulation};
+\node[input,right=of badd] (by) {$y_i[31{:}0]$};
+\draw[signal] (bp)--(bsext); \draw[signal] (bsext)--(badd); \draw[signal] (badd)--(by);
+
+\node[font=\small\bfseries,text=GotherBlue,below=19mm of bp,xshift=49mm] (at) {Optimized RTL · widen once at output};
+\node[input,below=6mm of at,xshift=-48mm] (d) {$d_i[17{:}0]$\\exact signed sum};
+\node[accepted,right=of d,minimum width=43mm,minimum height=16mm] (sext) {replicate sign bit 14 times\\$\{\{14\{d_i[17]\}\},d_i\}$};
+\node[input,right=of sext] (y) {$y_i[31{:}0]$\\signed output};
+\draw[signal] (d)--(sext); \draw[signal] (sext)--(y);
+\end{tikzpicture}
+\end{center}
+
+For every representable result $d_i$,
+\[
+\operatorname{value}_{32}\!\left(\{\{14\{d_i[17]\}\},d_i\}\right)
+=\operatorname{value}_{18}(d_i)
+=\sum_{j=0}^{3}w_{ij}x_j.
+\]
+The output assignment changes neither combinational latency semantics nor the observable 32-bit value. It only prevents a wide internal representation from propagating backwards through the arithmetic cone.
+
+\begin{claimbox}
+\textbf{Correctness result.} All \FunctionalTests\ deterministic simulations and exhaustive formal equivalence agree on all four signed INT32 outputs. The accepted PPA measurement is therefore downstream of, and conditional on, exact arithmetic correctness.
+\end{claimbox}
+
+% PPA environment
+\newpageheading{9. PPA environment and statistics}{Open 45 nm FPGA proxy}
+
+The target matches the SHA-1 methodology case: VTR's homogeneous \texttt{k6\_N10\_I40\_Fi6\_L4\_frac0\_ff1\_45nm} architecture, with six-input LUTs clustered ten per logic block and the architecture's routing and timing model. Power uses PTM45 properties at 0.9 V and $85\,^{\circ}$C. MWTA is minimum-width-transistor area, not square-micrometre physical area.
+
+Two \ActivityCycles-cycle activity profiles are frozen: an active deterministic signed-INT8 workload containing extremes and a fixed xorshift64 sequence, and an idle all-zero data profile with the clock active. Active and idle power analyses reuse the same placement and route for a given design and blinded pair identity.
+
+The primary per-pair score is
+\[
+r_p=\sqrt[3]{r_{A,p}\,r_{D,p}\,r_{P,p}},
+\qquad
+\widehat r=\exp\!\left(\frac{1}{64}\sum_{p\in P}\log r_p\right),
+\]
+where $A$ is total MWTA, $D$ is post-route critical-path delay and $P$ is active total power. Fmax is reported as the reciprocal of routed delay and is not a separate score term.
+
+Two-sided 95\% Student-$t$ intervals use 63 degrees of freedom on paired log ratios. The one-sided bounds in the decision rule use the same predeclared fixed sample. These intervals quantify variation across the selected implementation pairs; they do not cover process, voltage, temperature, workload or tool-version uncertainty.
+
+\begin{scopebox}
+\textbf{Pair policy.} Search uses only \SearchPairs\ paired placements. Certification uses \CertificationPairs\ disjoint held-out pairs after the optimized RTL hash is frozen. The public certificate replaces reserved placement-seed identities with stable pair labels; the optimizer and candidate do not see the certification pool.
+\end{scopebox}
+
+% Distribution
+\newpageheading{10. Every paired certification result}{Primary PPA distributions}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  width=.96\textwidth,height=105mm,xmin=-8,xmax=19,ymin=.65,ymax=4.65,
+  ytick={1,2,3,4},yticklabels={Area,Timing,Active power,Composite},
+  xtick={-5,0,5,10,15},xticklabel={\pgfmathprintnumber{\tick}\%},
+  xlabel={Improvement relative to the same baseline geometric aggregate (right is better)},
+  grid=major,grid style={draw=Rule},axis line style={draw=Mid},
+  tick label style={font=\small},label style={font=\small\bfseries},
+  legend style={at={(0.5,1.03)},anchor=south,draw=none,font=\footnotesize,legend columns=-1},
+]
+\addplot[only marks,mark=*,mark size=1.35pt,Mid,opacity=.28] table[x=baseline_area,y expr=1+0.46*\thisrow{jitter},col sep=comma]{generated/pair-clouds.csv};
+\addlegendentry{Baseline pairs}
+\addplot[only marks,mark=*,mark size=1.35pt,GotherBlue,opacity=.38] table[x=optimized_area,y expr=1+0.46*\thisrow{jitter},col sep=comma]{generated/pair-clouds.csv};
+\addlegendentry{Optimized RTL pairs}
+\addplot[only marks,mark=*,mark size=1.35pt,Mid,opacity=.28,forget plot] table[x=baseline_timing,y expr=2+0.46*\thisrow{jitter},col sep=comma]{generated/pair-clouds.csv};
+\addplot[only marks,mark=*,mark size=1.35pt,GotherBlue,opacity=.38,forget plot] table[x=optimized_timing,y expr=2+0.46*\thisrow{jitter},col sep=comma]{generated/pair-clouds.csv};
+\addplot[only marks,mark=*,mark size=1.35pt,Mid,opacity=.28,forget plot] table[x=baseline_power,y expr=3+0.46*\thisrow{jitter},col sep=comma]{generated/pair-clouds.csv};
+\addplot[only marks,mark=*,mark size=1.35pt,GotherBlue,opacity=.38,forget plot] table[x=optimized_power,y expr=3+0.46*\thisrow{jitter},col sep=comma]{generated/pair-clouds.csv};
+\addplot[only marks,mark=*,mark size=1.35pt,Mid,opacity=.28,forget plot] table[x=baseline_composite,y expr=4+0.46*\thisrow{jitter},col sep=comma]{generated/pair-clouds.csv};
+\addplot[only marks,mark=*,mark size=1.35pt,GotherBlue,opacity=.38,forget plot] table[x=optimized_composite,y expr=4+0.46*\thisrow{jitter},col sep=comma]{generated/pair-clouds.csv};
+\addlegendimage{line legend,Ink,line width=1pt,mark=*,mark options={fill=Ink},mark size=1.4pt}
+\addlegendentry{Paired estimate and 95\% CI}
+\draw[Ink,line width=1pt] (axis cs:\AreaLow,1.23)--(axis cs:\AreaHigh,1.23); \fill[Ink] (axis cs:\AreaImprovement,1.23) circle[radius=1.8pt];
+\draw[Ink,line width=1pt] (axis cs:\TimingLow,2.23)--(axis cs:\TimingHigh,2.23); \fill[Ink] (axis cs:\TimingImprovement,2.23) circle[radius=1.8pt];
+\draw[Ink,line width=1pt] (axis cs:\PowerLow,3.23)--(axis cs:\PowerHigh,3.23); \fill[Ink] (axis cs:\PowerImprovement,3.23) circle[radius=1.8pt];
+\draw[Ink,line width=1pt] (axis cs:\CompositeLow,4.23)--(axis cs:\CompositeHigh,4.23); \fill[Ink] (axis cs:\CompositeImprovement,4.23) circle[radius=1.8pt];
+\draw[Ink,line width=1.1pt] (axis cs:0,.65)--(axis cs:0,4.65);
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\smallcaps{Figure 2 · overlaid baseline and optimized pair clouds}\par
+Gray and blue points are absolute results normalized to the same baseline geometric aggregate. The same blinded pair receives the same vertical jitter. Black points and segments show the paired estimator and interval that determine confidence.
+
+{\small
+\rowcolors{2}{Pale}{white}
+\begin{tabularx}{\textwidth}{@{}Y R R R@{}}
+\rowcolor{Ink}\thead{Metric} & \thead{Wins} & \thead{Ties} & \thead{Losses} \\
+Area & \AreaWins & \AreaTies & \AreaLosses \\
+Timing & \TimingWins & \TimingTies & \TimingLosses \\
+Active power & \PowerWins & \PowerTies & \PowerLosses \\
+Composite & \CompositeWins & \CompositeTies & \CompositeLosses \\
+\end{tabularx}
+\rowcolors{2}{}{}
+}
+
+% Secondary evidence
+\newpageheading{11. Secondary metrics and evidence identity}{Measured consequences and compact audit trail}
+
+{\small
+\rowcolors{2}{Pale}{white}
+\begin{tabularx}{\textwidth}{@{}Y R R Y@{}}
+\rowcolor{Ink}\thead{Metric} & \thead{Baseline aggregate} & \thead{Optimized aggregate} & \thead{Interpretation} \\
+Fmax & \BaselineFmax\ MHz & \OptimizedFmax\ MHz & \FmaxImprovement\% increase; reciprocal of routed delay \\
+Packed CLBs & \BaselineClb & \OptimizedClb & \ClbImprovement\% fewer in every pair \\
+Logic elements & \BaselineLogic & \OptimizedLogic & \LogicImprovement\% fewer in every pair \\
+Fixed wrapper registers & \BaselineRegisters & \OptimizedRegisters & Unchanged; not candidate datapath state \\
+Idle total power & \BaselineIdle\ mW & \OptimizedIdle\ mW & \IdleImprovement\% paired geometric improvement; excluded from score \\
+\end{tabularx}
+\rowcolors{2}{}{}
+}
+
+The accepted design uses no multiplier hard blocks because this academic architecture provides none: all multiply logic is LUT-mapped. It remains within the frozen resource envelope. Dynamic and static components are retained per pair, but only active total power enters the primary score. None of these fields is inferred from an RTL node count.
+
+{\small
+\rowcolors{2}{Pale}{white}
+\begin{tabularx}{\textwidth}{@{}P{46mm}Y@{}}
+\rowcolor{Ink}\thead{Public evidence object} & \thead{SHA-256 / identity} \\
+Compact certification record & \hash{\CertificateHash} \\
+Functional test-set identity & \hash{\FunctionalTestHash} \\
+VTR architecture identity & \hash{\ArchitectureHash} \\
+PTM technology identity & \hash{\TechnologyHash} \\
+Optimized primary record & \hash{\OptimizedPrimaryHash} \\
+Optimized replay record & \hash{\OptimizedReplayHash} \\
+\end{tabularx}
+\rowcolors{2}{}{}
+}
+
+The certificate also binds distinct primary and replay records for the baseline. These hashes identify the evidence used to issue the compact record; they do not substitute for publishing the underlying raw files.
+
+% Reproducibility
+\newpageheading{12. Reproduction and verifier trust model}{What each public command establishes}
+
+The repository separates three levels of evidence:
+\begin{enumerate}
+  \item \textbf{Git identity}: checksums cover the exact compact package and the commit records its history.
+  \item \textbf{Compact consistency}: \texttt{python3 verify.py} validates strict schemas, RTL hashes, the exact patch, all \CertificationPairs\ paired rows, derived metrics, formulas, confidence intervals, resource limits and acceptance rules.
+  \item \textbf{Independent replay attestation}: the compact certificate binds distinct primary and replay records and states that baseline and accepted records reproduce exactly. The raw VTR trees are not included in this public edition, so this level is not independently reparsed by the public verifier.
+\end{enumerate}
+
+\begin{lstlisting}
+git clone https://github.com/juan-fernandez-gotherlabs/\
+rtl-optimization-case-study.git
+cd rtl-optimization-case-study/cases/int8-matvec
+
+python3 verify.py
+python3 -m unittest discover -s tests -v
+\end{lstlisting}
+
+The verifier uses explicit checks rather than Python \texttt{assert}, requires exact checksum coverage, rejects duplicate or unexpected schema fields, non-finite measurements, altered RTL, metric substitutions, score substitutions and any leaked held-out seed identity. Its adversarial unit suite exercises these cases in CI.
+
+A clean physical rerun requires Linux/amd64, the pinned VTR commit, exact architecture and PTM files, fixed activity profiles and the sealed evaluation harness. This compact customer-facing package intentionally does not publish the optimization implementation or operational execution environment.
+
+\begin{scopebox}
+\textbf{Trust boundary.} A checksum proves content identity, not authorship or raw-run provenance. The Git commit and future case release are publication anchors. Public raw-log audit parity with SHA-1 requires a separately reviewed, hash-addressed INT8 evidence archive.
+\end{scopebox}
+
+% Limits
+\newpageheading{13. Limits and customer transfer}{What the result does and does not establish}
+
+This report does not provide:
+\begin{itemize}
+  \item ASIC synthesis, place-and-route or signoff;
+  \item commercial-FPGA implementation data, DSP/BRAM mapping or Vivado results;
+  \item extracted parasitics, PVT corners, clock-tree signoff, IR drop, EM, DRC/LVS, package, yield or production-test analysis;
+  \item board, silicon, measured-power or measured-energy evidence;
+  \item proof that the same structure improves a different matrix size, precision, architecture, technology or workload;
+  \item exact PPA attribution to one line or one structural aspect of the patch;
+  \item a complete neural-network layer, memory hierarchy or deployable AI accelerator;
+  \item a public raw VTR evidence archive equivalent to the historical SHA-1 v1.3.1 asset.
+\end{itemize}
+
+The 64-pair interval models implementation-seed variability for the fixed VTR contract. It does not model silicon process variation or generalise automatically to a customer technology.
+
+\begin{claimbox}
+\textbf{Transfer to a customer pilot.} Replace the academic proxy with customer-owned RTL, formal assumptions, libraries, constraints, activity, tools and signoff policy. The transferable capability is a small inspectable source change evaluated by a contract that can justify acceptance to the engineers responsible for the design.
+\end{claimbox}
+
+\subsection{Primary references}
+\begin{itemize}
+  \item \href{https://docs.verilogtorouting.org/en/latest/vpr/}{VTR/VPR documentation}
+  \item \href{https://docs.verilogtorouting.org/en/latest/vtr/power_estimation/}{VTR power estimation}
+  \item \href{https://yosyshq.readthedocs.io/projects/yosys/en/latest/}{Yosys documentation}
+  \item \href{https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study}{Public case-study repository}
+  \item \href{https://www.gotherlabs.com/}{Göther Labs}
+\end{itemize}
+
+\vspace{6mm}
+\begin{claimbox}
+\textbf{Conclusion.} Within the declared VTR 45 nm LUT-only FPGA proxy and exact signed-arithmetic contract, the accepted balanced-tree patch has a compact record attesting passed functional and formal gates and improves the paired primary PPA estimator by \CompositeImprovement\% (95\% CI \CompositeLow\% to \CompositeHigh\%). The compact calculations and before/after RTL are publicly auditable; the recorded jobs and raw-run provenance remain outside this edition.
+\end{claimbox}
+
+\end{document}

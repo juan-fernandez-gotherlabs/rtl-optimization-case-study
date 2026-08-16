@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import difflib
 import hashlib
+import importlib.util
 import json
 import shutil
 import subprocess
@@ -9,10 +10,11 @@ import tempfile
 import unittest
 from pathlib import Path
 
-import verify as public_verify
-
-
 ROOT = Path(__file__).resolve().parents[1]
+VERIFY_SPEC = importlib.util.spec_from_file_location("sha1_public_verify", ROOT / "verify.py")
+assert VERIFY_SPEC is not None and VERIFY_SPEC.loader is not None
+public_verify = importlib.util.module_from_spec(VERIFY_SPEC)
+VERIFY_SPEC.loader.exec_module(public_verify)
 
 
 def write_manifest(root: Path) -> None:
@@ -31,7 +33,7 @@ class VerifyAdversarialTests(unittest.TestCase):
     def copy(self) -> Path:
         temporary = Path(tempfile.mkdtemp(prefix="rtl-verify-test-"))
         self.addCleanup(shutil.rmtree, temporary)
-        for name in (".gitattributes", ".github", ".gitignore", "LICENSE", "Makefile", "README.md", "SHA256SUMS", "report", "results", "rtl", "scripts", "technical-report.pdf", "tests", "verify.py"):
+        for name in ("Makefile", "README.md", "SHA256SUMS", "report", "results", "rtl", "scripts", "technical-report.pdf", "tests", "verify.py"):
             source = ROOT / name
             target = temporary / name
             if source.is_dir():
