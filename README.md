@@ -27,7 +27,7 @@ never extended after observing a candidate.
 - [Exact baseline-to-accepted patch](rtl/baseline-to-accepted.patch).
 - [Corrected baseline](rtl/baseline/sha.v) and [accepted RTL](rtl/accepted/sha.v).
 - [Compact certification](results/certification.json) with all 64 paired rows.
-- [Full raw evidence release](https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/tag/v1.3.0-rc4)
+- [Full raw evidence release](https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/tag/v1.3.1)
   with baseline and accepted VTR/ACE outputs, formal/NIST evidence and an
   11,362-file internal manifest.
 
@@ -54,20 +54,29 @@ Full raw evidence: NOT CHECKED (pass --evidence-archive)
 To audit every raw file, download the release asset and supply it explicitly:
 
 ```bash
-curl -LO https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/download/v1.3.0-rc4/primary-ppa-full-evidence.tar.gz
+curl -LO https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/download/v1.3.1/primary-ppa-full-evidence.tar.gz
 python3 verify.py --evidence-archive primary-ppa-full-evidence.tar.gz
 ```
 
 The second command verifies the external archive digest, every internal member
-hash, the declared sanitization/correction provenance, exact formal and NIST
+hash, the declared sanitization provenance, exact formal and NIST
 markers and both RTL identities. It then derives every certification metric
 from all 128 raw VTR/ACE run trees and compares the results with both archived
 records and all compact rows before reporting `Full raw evidence: PASS`.
 
-The public bundle records one non-measurement correction explicitly: stale
-`cmd_i[2:0]` prose in the source flow manifest is published as the frozen
-`cmd_i[3:0]` RTL interface. Both source and public hashes are retained; RTL and
-all measurement outputs are unchanged.
+The frozen RTL interface is `cmd_i[2:0]` and `cmd_o[3:0]`. Release v1.3.1
+corrects the compact contract, report and bundled flow manifest, which v1.3.0
+had incorrectly described as `cmd_i[3:0]`. The baseline RTL, accepted RTL,
+raw measurement outputs, published metrics and acceptance result are unchanged.
+
+The v1.3.1 evidence asset can be reproduced byte-for-byte from the exact
+v1.3.0 asset without rerunning EDA tools:
+
+```bash
+python3 scripts/reissue_v1_3_1_evidence.py \
+  --source path/to/v1.3.0/primary-ppa-full-evidence.tar.gz \
+  --output primary-ppa-full-evidence.tar.gz
+```
 
 Adversarial verifier tests run with:
 

@@ -60,6 +60,8 @@ TWO_SIDED_T_95_DF63 = 1.9983405425207417
 ONE_SIDED_T_95_DF63 = 1.6694022217068127
 BUNDLE_ROOT = "rtl-sha-vtr-primary-ppa-evidence-v1"
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
+EXPECTED_MODULE_PORTS = ("clk_i", "rst_i", "text_i", "text_o", "cmd_i", "cmd_w_i", "cmd_o")
+EXPECTED_INTERFACE = "sha1(clk_i, rst_i, text_i[31:0], text_o[31:0], cmd_i[2:0], cmd_w_i, cmd_o[3:0])"
 
 REQUIRED_MANIFEST = {
     ".gitattributes",
@@ -80,6 +82,7 @@ REQUIRED_MANIFEST = {
     "scripts/build_evidence_bundle.py",
     "scripts/generate_latex_data.py",
     "scripts/normalize_pdf_id.py",
+    "scripts/reissue_v1_3_1_evidence.py",
     "scripts/write_manifest.py",
     "technical-report.pdf",
     "tests/test_verify.py",
@@ -219,6 +222,43 @@ def verify_patch() -> None:
     require(generated == published, "published patch does not match the two RTL files")
 
 
+def extract_rtl_interface(path: Path) -> str:
+    text = path.read_text(encoding="utf-8")
+    modules = list(re.finditer(r"\bmodule\s+sha1\s*\(([^)]*)\)\s*;", text, re.DOTALL))
+    require(len(modules) == 1, f"expected one sha1 module declaration in {path.name}")
+    module_ports = tuple(part.strip() for part in modules[0].group(1).split(","))
+    require(module_ports == EXPECTED_MODULE_PORTS, f"wrong sha1 module port order in {path.name}")
+
+    declarations: dict[str, tuple[str, str | None]] = {}
+    pattern = re.compile(
+        r"^\s*(input|output)\s*(?:\[\s*(\d+)\s*:\s*(\d+)\s*\]\s*)?([A-Za-z_]\w*)\s*;",
+        re.MULTILINE,
+    )
+    for match in pattern.finditer(text):
+        direction, high, low, name = match.groups()
+        if name not in EXPECTED_MODULE_PORTS:
+            continue
+        require(name not in declarations, f"duplicate port declaration for {name} in {path.name}")
+        width = None if high is None else f"{high}:{low}"
+        declarations[name] = (direction, width)
+    require(set(declarations) == set(EXPECTED_MODULE_PORTS), f"incomplete sha1 port declarations in {path.name}")
+    expected_directions = {
+        "clk_i": "input",
+        "rst_i": "input",
+        "text_i": "input",
+        "text_o": "output",
+        "cmd_i": "input",
+        "cmd_w_i": "input",
+        "cmd_o": "output",
+    }
+    require(
+        all(declarations[name][0] == expected_directions[name] for name in EXPECTED_MODULE_PORTS),
+        f"wrong sha1 port direction in {path.name}",
+    )
+    rendered = [name if declarations[name][1] is None else f"{name}[{declarations[name][1]}]" for name in EXPECTED_MODULE_PORTS]
+    return f"sha1({', '.join(rendered)})"
+
+
 def verify_contract(data: dict[str, Any]) -> None:
     exact_keys(
         data,
@@ -238,6 +278,9 @@ def verify_contract(data: dict[str, Any]) -> None:
         require(type(source[name]) is str and HEX64.fullmatch(source[name]) is not None, f"invalid {name}")
     require(sha256(ROOT / "rtl/baseline/sha.v") == source["corrected_baseline_sha256"], "baseline RTL hash mismatch")
     require(sha256(ROOT / "rtl/accepted/sha.v") == source["accepted_rtl_sha256"], "accepted RTL hash mismatch")
+    baseline_interface = extract_rtl_interface(ROOT / "rtl/baseline/sha.v")
+    accepted_interface = extract_rtl_interface(ROOT / "rtl/accepted/sha.v")
+    require(baseline_interface == accepted_interface, "baseline and accepted RTL interfaces differ")
 
     contract = data["contract"]
     require(type(contract) is dict, "contract must be an object")
@@ -247,7 +290,8 @@ def verify_contract(data: dict[str, Any]) -> None:
         "contract",
     )
     require(contract["editable_artifact"] == "sha.v", "wrong editable artifact")
-    require(contract["interface"] == "sha1(clk_i, rst_i, text_i[31:0], text_o[31:0], cmd_i[3:0], cmd_w_i, cmd_o[3:0])", "wrong interface contract")
+    require(contract["interface"] == baseline_interface, "published interface does not match the RTL declarations")
+    require(contract["interface"] == EXPECTED_INTERFACE, "wrong interface contract")
     require(contract["busy_cycles_per_block"] == 80.0, "wrong busy-cycle count")
     require(strict_int(contract["nist_short_long_cases"], "nist_short_long_cases") == 129, "wrong NIST case count")
     require(contract["formal_status"] == "pass", "formal status is not pass")

@@ -22,9 +22,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 BUNDLE_ROOT = "rtl-sha-vtr-primary-ppa-evidence-v1"
 REPLACEMENT = b"<SOURCE_WORKTREE>"
-INTERFACE_MANIFEST = "flow/benchmarks/sha_vtr_manifest.json"
-STALE_INTERFACE = b"cmd_i[2:0]"
-FROZEN_INTERFACE = b"cmd_i[3:0]"
 
 
 @dataclass(frozen=True)
@@ -124,7 +121,6 @@ def main() -> int:
     needles = [str(domain).encode(), str(domain.parent.parent).encode()]
     manifest: list[dict[str, object]] = []
     modified_members: list[dict[str, object]] = []
-    corrected_members: list[dict[str, object]] = []
 
     with args.output.open("wb") as raw:
         with gzip.GzipFile(filename="", mode="wb", fileobj=raw, mtime=0, compresslevel=6) as zipped:
@@ -150,15 +146,6 @@ def main() -> int:
                         if count:
                             after = after.replace(needle, REPLACEMENT)
                             replacements += count
-                    correction_description: str | None = None
-                    if item.archive_path == INTERFACE_MANIFEST:
-                        if after.count(STALE_INTERFACE) != 1 or FROZEN_INTERFACE in after:
-                            raise ValueError("archived interface correction no longer matches exactly once")
-                        after = after.replace(STALE_INTERFACE, FROZEN_INTERFACE)
-                        correction_description = (
-                            "Correct stale cmd_i[2:0] prose to the frozen RTL interface cmd_i[3:0]; "
-                            "measurement RTL and raw outputs are unchanged"
-                        )
                     add_bytes(archive, item.archive_path, after, item.source.stat().st_mode & 0o777)
                     entry = {
                         "path": item.archive_path,
@@ -176,16 +163,6 @@ def main() -> int:
                                 "public_sha256": digest(after),
                             }
                         )
-                    if correction_description is not None:
-                        corrected_members.append(
-                            {
-                                "path": item.archive_path,
-                                "description": correction_description,
-                                "source_sha256": digest(before),
-                                "public_sha256": digest(after),
-                            }
-                        )
-
                 record = {
                     "schema_version": 2,
                     "bundle": BUNDLE_ROOT,
@@ -198,8 +175,8 @@ def main() -> int:
                         "modified_members": modified_members,
                     },
                     "corrections": {
-                        "modified_member_count": len(corrected_members),
-                        "modified_members": corrected_members,
+                        "modified_member_count": 0,
+                        "modified_members": [],
                     },
                 }
                 payload = (json.dumps(record, indent=2, sort_keys=True) + "\n").encode()
@@ -210,7 +187,7 @@ def main() -> int:
     print(f"sha256={hashlib.sha256(args.output.read_bytes()).hexdigest()}")
     print(f"manifest_members={len(manifest)}")
     print(f"sanitized_members={len(modified_members)}")
-    print(f"corrected_members={len(corrected_members)}")
+    print("corrected_members=0")
     return 0
 
 

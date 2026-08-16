@@ -156,7 +156,7 @@ module sha1(clk_i, rst_i, text_i, text_o, cmd_i, cmd_w_i, cmd_o);
   input clk_i, rst_i, cmd_w_i;
   input  [31:0] text_i;
   output [31:0] text_o;
-  input  [3:0]  cmd_i;
+  input  [2:0]  cmd_i;
   output [3:0]  cmd_o;
 endmodule
 \end{lstlisting}
@@ -248,7 +248,7 @@ The formal proof is scoped to two-state, defined-input hardware semantics after 
 
 The public release asset contains both raw evidence trees, the exact accepted and baseline records, the formal and functional inputs, tool-flow sources and an internal manifest for every archived member. The compact repository checks arithmetic and identity. The full-evidence mode additionally verifies all 11,362 archived files, validates declared public transformations, derives every certification metric from all 128 raw VTR/ACE run trees, compares them with both archived records and compact rows, and binds every measured run to the corresponding RTL hash.
 
-The bundle records one documentation-only correction with source and public hashes: stale \texttt{cmd\_i[2:0]} prose in the source flow manifest is published as the frozen \texttt{cmd\_i[3:0]} RTL interface. The measurement RTL and every raw output remain unchanged.
+Release \texttt{v1.3.1} corrects an interface-description error in \texttt{v1.3.0}: the measurement RTL has always declared \texttt{cmd\_i[2:0]}, while the earlier compact contract, report and bundled flow manifest stated \texttt{cmd\_i[3:0]}. The reissued bundle restores the flow manifest to its recorded source hash. The baseline RTL, accepted RTL, raw outputs, metrics and acceptance result are unchanged.
 
 \begin{lstlisting}
 python3 verify.py
@@ -486,7 +486,7 @@ Archive size & \EvidenceArchiveBytes\ bytes \\
 }
 
 The release asset is available from
-\href{https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/tag/v1.3.0-rc4}{the public \texttt{v1.3.0-rc4} release}. Its internal manifest covers every member; the Git release and this report provide the external content anchor.
+\href{https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/tag/v1.3.1}{the public \texttt{v1.3.1} release}. Its internal manifest covers every member; the Git release and this report provide the external content anchor.
 
 % Reproducibility
 \newpageheading{12. Reproduction and verifier trust model}{What each command establishes}
@@ -500,7 +500,7 @@ The repository intentionally separates three levels of evidence:
 
 \begin{lstlisting}
 curl -LO https://github.com/juan-fernandez-gotherlabs/\
-rtl-optimization-case-study/releases/download/v1.3.0-rc4/\
+rtl-optimization-case-study/releases/download/v1.3.1/\
 primary-ppa-full-evidence.tar.gz
 
 python3 verify.py --evidence-archive \

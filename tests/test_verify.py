@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import difflib
 import hashlib
 import json
 import shutil
@@ -107,6 +108,44 @@ Circuit successfully routed with a channel width factor of {metrics['timing_chan
         root = self.copy()
         self.mutate_json(root, lambda data: data.__setitem__("correctness", {}))
         self.assertNotEqual(self.run_verify(root).returncode, 0)
+
+    def test_wrong_interface_contract_fails_after_rehash(self) -> None:
+        root = self.copy()
+        self.mutate_json(
+            root,
+            lambda data: data["contract"].__setitem__(
+                "interface",
+                "sha1(clk_i, rst_i, text_i[31:0], text_o[31:0], cmd_i[3:0], cmd_w_i, cmd_o[3:0])",
+            ),
+        )
+        result = self.run_verify(root)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("published interface does not match the RTL declarations", result.stderr)
+
+    def test_rtl_interface_drift_fails_even_after_rehash(self) -> None:
+        root = self.copy()
+        baseline_path = root / "rtl/baseline/sha.v"
+        accepted_path = root / "rtl/accepted/sha.v"
+        baseline = baseline_path.read_text(encoding="utf-8")
+        self.assertEqual(baseline.count("input\t[2:0]\tcmd_i;"), 1)
+        baseline_path.write_text(baseline.replace("input\t[2:0]\tcmd_i;", "input\t[3:0]\tcmd_i;"), encoding="utf-8")
+        patch = "".join(
+            difflib.unified_diff(
+                baseline_path.read_text(encoding="utf-8").splitlines(keepends=True),
+                accepted_path.read_text(encoding="utf-8").splitlines(keepends=True),
+                fromfile="rtl/baseline/sha.v",
+                tofile="rtl/accepted/sha.v",
+            )
+        )
+        (root / "rtl/baseline-to-accepted.patch").write_text(patch, encoding="utf-8")
+        result_path = root / "results/certification.json"
+        data = json.loads(result_path.read_text(encoding="utf-8"))
+        data["source"]["corrected_baseline_sha256"] = hashlib.sha256(baseline_path.read_bytes()).hexdigest()
+        result_path.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        write_manifest(root)
+        result = self.run_verify(root)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("baseline and accepted RTL interfaces differ", result.stderr)
 
     def test_fractional_seed_fails_after_rehash(self) -> None:
         root = self.copy()

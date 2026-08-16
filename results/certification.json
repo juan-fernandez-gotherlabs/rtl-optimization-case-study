@@ -22,7 +22,7 @@
     "formal_semantics": "two_state_defined_inputs_after_declared_reset",
     "formal_status": "pass",
     "image_id": "sha256:c0badc2d2bb57364ff37477b3d2c482ef01f7d3df6211e9802e2c54367c33baf",
-    "interface": "sha1(clk_i, rst_i, text_i[31:0], text_o[31:0], cmd_i[3:0], cmd_w_i, cmd_o[3:0])",
+    "interface": "sha1(clk_i, rst_i, text_i[31:0], text_o[31:0], cmd_i[2:0], cmd_w_i, cmd_o[3:0])",
     "nist_corpus_sha256": "80bdcf3dabd50da28367f8c6e5d818c13d40d67cc8da897ce7efac553ed13df0",
     "nist_short_long_cases": 129,
     "nominal_voltage_v": 0.9,
@@ -114,17 +114,17 @@
   },
   "full_evidence": {
     "accepted_record_path": "records/accepted-certification.json",
-    "archive_bytes": 145901014,
-    "archive_sha256": "fd345d155d5f2225d3a3a6e9f0431b9db4b0f0dcc1d1951083c53a7997821704",
+    "archive_bytes": 145900859,
+    "archive_sha256": "24d37a964bce19ccba13b7e7e6410965394437c8d4d960f34e3ba80d1b565cff",
     "asset_name": "primary-ppa-full-evidence.tar.gz",
     "baseline_record_path": "records/baseline.json",
     "bundle_manifest_path": "MANIFEST.json",
     "certification_result_sha256": "12a3b40974d760898d583cf85768602f8e1d5a0ba3d771d60ff88940002f30dd",
     "distribution": "GitHub release asset; complete baseline and accepted raw evidence",
-    "download_url": "https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/download/v1.3.0-rc4/primary-ppa-full-evidence.tar.gz",
+    "download_url": "https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/download/v1.3.1/primary-ppa-full-evidence.tar.gz",
     "evidence_file_count": 5018,
     "formal_driver_log_sha256": "2836ffc302152cb420ca6b2855205460ce6e6b5b1d8312c1ec6fa02e9f4f810a",
-    "release_url": "https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/tag/v1.3.0-rc4"
+    "release_url": "https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/tag/v1.3.1"
   },
   "per_seed": [
     {
