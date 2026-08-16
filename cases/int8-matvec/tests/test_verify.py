@@ -56,6 +56,16 @@ class Int8PublicVerifierTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("INT8 MatVec compact evidence: PASS", result.stdout)
 
+    def test_public_claim_boundary_is_explicit(self) -> None:
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        report = (ROOT / "report/latex/technical-report.tex").read_text(encoding="utf-8")
+        self.assertIn("72 registers belong", readme)
+        self.assertIn("no commercial DSP-slice, BRAM or ASIC MAC-cell model", readme)
+        self.assertIn("does not rerun the recorded functional", readme)
+        self.assertIn("Fixed wrapper registers", report)
+        self.assertIn("three overlapping structural views", report)
+        self.assertNotIn("\\newpageheading{6. Rewrite", report)
+
     def test_false_formal_status_fails_after_rehash(self) -> None:
         root = self.copy()
         self.mutate(root, lambda data: data["correctness"].__setitem__("formal_passed", False))

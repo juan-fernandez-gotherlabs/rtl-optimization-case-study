@@ -27,9 +27,12 @@ receive an improvement score.
 ## 3. Measure on a pinned target
 
 Both current cases use a pinned Linux/amd64 VTR flow, homogeneous academic LUT6
-architecture and PTM 45 nm model at 0.9 V and 85 degrees C. Total area,
-post-route critical-path delay and active total power are implementation-model
-estimates, not physical measurements.
+architecture and PTM 45 nm model at 0.9 V and 85 degrees C. The target does not
+model commercial DSP slices, BRAM or ASIC arithmetic cells. Case-specific fixed
+wrappers may provide the clocked measurement boundary; wrapper resources must
+be labelled separately from candidate RTL. Total area, post-route critical-path
+delay and active total power are implementation-model estimates, not physical
+measurements.
 
 The composite score is the equal-weight paired geometric mean of:
 
@@ -56,10 +59,17 @@ Acceptance requires:
 ## 5. Publish only the evidence boundary
 
 The client-facing package contains before/after RTL, an exact patch, compact
-paired measurements, hashes, reports and fail-closed verification. Reserved
-identities may be replaced by stable pair labels in a compact certificate.
+paired measurements, hashes, reports and fail-closed consistency verification.
+Reserved identities may be replaced by stable pair labels in a compact
+certificate. Such a certificate can attest that functional, formal and
+independent-replay gates passed, but it does not make those gates publicly
+rerunnable unless their harnesses and raw outputs are also published.
 
 Raw EDA logs can be distributed as hash-addressed release assets when the case
 publication policy requires full provenance replay. Operational optimization
 infrastructure remains private because it is neither necessary to understand
 the claim nor part of the delivered technical improvement.
+
+SHA-1 v1.3.1 is the current raw-provenance example. The first INT8 edition is a
+compact certification record and must not be described as raw-audit-equivalent
+until a separately reviewed evidence archive exists.

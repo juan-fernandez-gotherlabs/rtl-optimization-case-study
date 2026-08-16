@@ -23,7 +23,7 @@
 \fancyhf{}
 \fancyhead[L]{\footnotesize\color{Mid}Göther Labs / Evaluated technical improvement}
 \fancyhead[R]{\footnotesize\color{Mid}INT8 MatVec RTL / VTR 45 nm}
-\fancyfoot[L]{\footnotesize\color{Mid}Certified PPA evidence snapshot · \EvidenceDate}
+\fancyfoot[L]{\footnotesize\color{Mid}Compact certified VTR record · \EvidenceDate}
 \fancyfoot[R]{\footnotesize\color{Mid}\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0pt}
@@ -46,7 +46,7 @@
 \pgfplotsset{compat=1.18}
 \usepackage[most]{tcolorbox}
 \usepackage{hyperref}
-\hypersetup{colorlinks=true,linkcolor=Ink,urlcolor=GotherBlue,citecolor=GotherBlue,pdfauthor={Göther Labs},pdftitle={INT8 MatVec RTL optimization on VTR - certified PPA evidence},pdflang={en-GB}}
+\hypersetup{colorlinks=true,linkcolor=Ink,urlcolor=GotherBlue,citecolor=GotherBlue,pdfauthor={Göther Labs},pdftitle={INT8 MatVec RTL optimization on VTR - compact certified record},pdflang={en-GB}}
 \usepackage{seqsplit}
 
 \input{generated/metrics.tex}
@@ -84,7 +84,7 @@
 \vspace{5mm}
 {\color{Ink}\fontsize{29}{33}\selectfont\bfseries INT8 MatVec RTL optimization on VTR}\par
 \vspace{5mm}
-{\color{Mid}\fontsize{13}{16}\selectfont Certified PPA estimate · open 45 nm FPGA proxy}\par
+{\color{Mid}\fontsize{13}{16}\selectfont Certified paired VTR estimate · open 45 nm FPGA proxy}\par
 \vspace{19mm}
 \begin{claimbox}
 {\fontsize{15}{19}\selectfont\bfseries A range-correct balanced adder tree improves the paired area-delay-power estimate by \CompositeImprovement\%}
@@ -174,6 +174,8 @@ module int8_matvec_4x4 (
 
 Only \texttt{int8\_matvec\_4x4.sv} is editable. Port names, signedness, widths, combinational behaviour and overflow semantics are frozen. Every result is compared with the checked-in owned baseline.
 
+The DUT itself is combinational. A trusted, identical measurement wrapper registers only the four 32-bit outputs to provide a stable input-to-output-register timing boundary. Its 72 registers are fixed evaluation infrastructure, not candidate state. The homogeneous target has LUT6 logic and flip-flops but no commercial DSP slices, BRAMs or ASIC MAC cells; the sixteen signed multipliers therefore map into LUT fabric.
+
 {\small
 \rowcolors{2}{Pale}{white}
 \begin{tabularx}{\textwidth}{@{}P{52mm}Y@{}}
@@ -197,7 +199,8 @@ Arithmetic semantics & Each 8x8 product is exact signed 16-bit; each four-term s
 Golden simulation & \FunctionalTests\ deterministic extreme, lane, row and seeded-random cases. \\
 Formal semantics & Exhaustive two-state combinational equivalence for every 160-bit input assignment. \\
 Physical flow & VTR/VPR commit \texttt{95f5c6de…}; pinned Linux/amd64 image; runtime network disabled. \\
-Architecture & \texttt{k6\_N10\_I40\_Fi6\_L4\_frac0\_ff1\_45nm.xml}. \\
+Architecture & \texttt{k6\_N10\_I40\_Fi6\_L4\_frac0\_ff1\_45nm.xml}; homogeneous LUT6 target, no DSP or BRAM model. \\
+Timing boundary & Fixed trusted wrapper registers the four outputs; identical for baseline and accepted RTL. \\
 Power & VTR PTM45, 0.9 V, $85\,^{\circ}$C; fixed active and idle activity profiles. \\
 Search sample & \SearchPairs\ paired placements; provisional ranking only. \\
 Certification sample & \CertificationPairs\ disjoint held-out pairs; fixed sample with no extension. \\
@@ -230,7 +233,7 @@ Validity envelope & Fail closed on missing metrics, route failure, oversized mul
 {\small
 \rowcolors{2}{Pale}{white}
 \begin{tabularx}{\textwidth}{@{}P{40mm}Y P{19mm}@{}}
-\rowcolor{Ink}\thead{Gate} & \thead{Published evidence} & \thead{Result} \\
+\rowcolor{Ink}\thead{Gate} & \thead{Published compact record} & \thead{Result} \\
 Structural policy & Exact interface, patch and synthesizable SystemVerilog identities & \yes \\
 Golden simulation & \FunctionalTests\ deterministic signed, extreme, lane, row and random cases & \yes \\
 Combinational formal & All four outputs for every 160-bit binary input assignment & \yes \\
@@ -251,7 +254,7 @@ python3 verify.py
 \end{lstlisting}
 
 \begin{claimbox}
-\textbf{Evidence boundary.} The public verifier establishes compact certificate consistency and exact published identities. The certificate records exact independent replay, but this INT8 package does not yet publish the raw VTR run trees required for a public raw-log provenance audit equivalent to the SHA-1 release asset.
+\textbf{Evidence boundary.} The public verifier establishes compact certificate consistency and exact published identities. Functional simulation, formal equivalence and independent VTR replay are certificate attestations, not jobs rerun by that verifier. This edition does not publish the raw VTR run trees required for a public raw-log provenance audit equivalent to the SHA-1 release asset.
 \end{claimbox}
 
 % Diff
@@ -262,11 +265,11 @@ The patch below is generated directly from the two checked-in RTL files. No test
 \lstinputlisting[language=SystemVerilogDiff,basicstyle=\ttfamily\tiny]{../../rtl/changes.patch}
 
 \begin{scopebox}
-\textbf{Attribution boundary.} The measured PPA result belongs to the complete patch. The following pages explain three structural aspects of that patch; no exact fraction of the gain is assigned to one statement.
+\textbf{Attribution boundary.} The measured PPA result belongs to one complete accepted patch. The following pages are three overlapping structural views of that same patch, not three independently measured rewrites; no exact fraction of the gain is assigned to one statement.
 \end{scopebox}
 
-% Rewrite 1
-\newpageheading{6. Rewrite 1: remove full-width extension bank}{Source: int8\_matvec\_4x4.sv:35--43 and 59--74}
+% Structural view 1
+\newpageheading{6. Structural view 1: remove full-width extension bank}{One accepted patch · source: int8\_matvec\_4x4.sv:35--43 and 59--74}
 
 The baseline materializes sixteen signed 32-bit aliases before any addition. Every product is already exact in signed 16-bit form, so widening each term directly to the 32-bit output width is unnecessary.
 
@@ -297,8 +300,8 @@ A pair sum therefore lies in $[-32{,}512,32{,}768]$ and needs 17 signed bits. Th
 \textbf{Formal result.} Exhaustive combinational equivalence proves that removing the extension bank preserves every output bit for every binary input assignment.
 \end{claimbox}
 
-% Rewrite 2
-\newpageheading{7. Rewrite 2: balanced range-correct accumulation}{Source: int8\_matvec\_4x4.sv:59--70}
+% Structural view 2
+\newpageheading{7. Structural view 2: balanced range-correct accumulation}{One accepted patch · source: int8\_matvec\_4x4.sv:59--70}
 
 The baseline presents four already widened terms as one 32-bit chained expression and leaves its mapped association to synthesis. The optimized RTL makes both the intended topology and the minimum safe widths explicit.
 
@@ -333,8 +336,8 @@ Integer addition is associative because every intermediate width covers its full
 \textbf{Scope.} This transformation is specific to four exact INT8 products and a 32-bit output contract. A different lane count, operand width, saturation rule or accumulation precision requires a new range proof and evaluation contract.
 \end{scopebox}
 
-% Rewrite 3
-\newpageheading{8. Rewrite 3: explicit signed output boundary}{Source: int8\_matvec\_4x4.sv:72--75}
+% Structural view 3
+\newpageheading{8. Structural view 3: explicit signed output boundary}{One accepted patch · source: int8\_matvec\_4x4.sv:72--75}
 
 The baseline moves every 16-bit product into a 32-bit representation before addition. The optimized path remains range-sized through the complete sum and crosses the frozen 32-bit interface only once. No truncation, wraparound or saturation occurs.
 
@@ -448,13 +451,13 @@ Composite & \CompositeWins & \CompositeTies & \CompositeLosses \\
 Fmax & \BaselineFmax\ MHz & \OptimizedFmax\ MHz & \FmaxImprovement\% increase; reciprocal of routed delay \\
 Packed CLBs & \BaselineClb & \OptimizedClb & \ClbImprovement\% fewer in every pair \\
 Logic elements & \BaselineLogic & \OptimizedLogic & \LogicImprovement\% fewer in every pair \\
-Registers & \BaselineRegisters & \OptimizedRegisters & Unchanged \\
+Fixed wrapper registers & \BaselineRegisters & \OptimizedRegisters & Unchanged; not candidate datapath state \\
 Idle total power & \BaselineIdle\ mW & \OptimizedIdle\ mW & \IdleImprovement\% paired geometric improvement; excluded from score \\
 \end{tabularx}
 \rowcolors{2}{}{}
 }
 
-The optimized design uses no multiplier hard blocks and remains within the frozen resource envelope. Dynamic and static components are retained per pair, but only active total power enters the primary score. None of these fields is inferred from an RTL node count.
+The accepted design uses no multiplier hard blocks because this academic architecture provides none: all multiply logic is LUT-mapped. It remains within the frozen resource envelope. Dynamic and static components are retained per pair, but only active total power enters the primary score. None of these fields is inferred from an RTL node count.
 
 {\small
 \rowcolors{2}{Pale}{white}
@@ -479,7 +482,7 @@ The repository separates three levels of evidence:
 \begin{enumerate}
   \item \textbf{Git identity}: checksums cover the exact compact package and the commit records its history.
   \item \textbf{Compact consistency}: \texttt{python3 verify.py} validates strict schemas, RTL hashes, the exact patch, all \CertificationPairs\ paired rows, derived metrics, formulas, confidence intervals, resource limits and acceptance rules.
-  \item \textbf{Independent replay attestation}: the compact certificate binds distinct primary and replay records and states that baseline and optimized records reproduce exactly. The raw VTR trees are not included in this public edition, so this level is not independently reparsed by the public verifier.
+  \item \textbf{Independent replay attestation}: the compact certificate binds distinct primary and replay records and states that baseline and accepted records reproduce exactly. The raw VTR trees are not included in this public edition, so this level is not independently reparsed by the public verifier.
 \end{enumerate}
 
 \begin{lstlisting}
@@ -505,7 +508,7 @@ A clean physical rerun requires Linux/amd64, the pinned VTR commit, exact archit
 This report does not provide:
 \begin{itemize}
   \item ASIC synthesis, place-and-route or signoff;
-  \item commercial-FPGA implementation data or Vivado results;
+  \item commercial-FPGA implementation data, DSP/BRAM mapping or Vivado results;
   \item extracted parasitics, PVT corners, clock-tree signoff, IR drop, EM, DRC/LVS, package, yield or production-test analysis;
   \item board, silicon, measured-power or measured-energy evidence;
   \item proof that the same structure improves a different matrix size, precision, architecture, technology or workload;
@@ -531,7 +534,7 @@ The 64-pair interval models implementation-seed variability for the fixed VTR co
 
 \vspace{6mm}
 \begin{claimbox}
-\textbf{Conclusion.} Within the declared VTR 45 nm FPGA proxy and exact signed-arithmetic contract, the optimized balanced-tree patch passes the published functional and formal gates and improves the paired primary PPA estimator by \CompositeImprovement\% (95\% CI \CompositeLow\% to \CompositeHigh\%). The compact calculations and before/after RTL are publicly auditable; raw-run provenance remains outside this edition.
+\textbf{Conclusion.} Within the declared VTR 45 nm LUT-only FPGA proxy and exact signed-arithmetic contract, the accepted balanced-tree patch has a compact record attesting passed functional and formal gates and improves the paired primary PPA estimator by \CompositeImprovement\% (95\% CI \CompositeLow\% to \CompositeHigh\%). The compact calculations and before/after RTL are publicly auditable; the recorded jobs and raw-run provenance remain outside this edition.
 \end{claimbox}
 
 \end{document}
