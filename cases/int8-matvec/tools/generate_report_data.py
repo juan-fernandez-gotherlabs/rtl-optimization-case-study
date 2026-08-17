@@ -37,6 +37,7 @@ def ci_values(item: dict) -> tuple[float, float, float]:
 
 def main() -> int:
     data = json.loads((ROOT / "certificate.json").read_text(encoding="utf-8"))
+    full_evidence = json.loads((ROOT / "full-evidence.json").read_text(encoding="utf-8"))
     rows = data["pairs"]
     if len(rows) != 64:
         raise SystemExit("certification evidence is not an exact 64-pair sample")
@@ -117,6 +118,8 @@ def main() -> int:
         "BaselineHash": data["rtl"]["baseline_sha256"],
         "OptimizedHash": data["rtl"]["optimized_sha256"],
         "CertificateHash": sha256(ROOT / "certificate.json"),
+        "EvidenceArchiveHash": full_evidence["archive_sha256"],
+        "EvidenceArchiveName": full_evidence["asset_name"].replace("_", r"\_"),
         "FunctionalTestHash": data["correctness"]["functional_test_set_sha256"],
         "ArchitectureHash": measurement["fpga_architecture"]["sha256"],
         "TechnologyHash": measurement["fpga_architecture"]["technology_sha256"],

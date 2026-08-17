@@ -32,5 +32,6 @@ jobs:
         run: |
           python3 -m json.tool cases/sha1/results/certification.json >/dev/null
           python3 -m json.tool cases/int8-matvec/certificate.json >/dev/null
+          python3 -m json.tool cases/int8-matvec/full-evidence.json >/dev/null
           git diff --check
           git diff --exit-code

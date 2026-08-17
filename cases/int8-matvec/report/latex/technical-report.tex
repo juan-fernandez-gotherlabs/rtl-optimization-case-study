@@ -23,7 +23,7 @@
 \fancyhf{}
 \fancyhead[L]{\footnotesize\color{Mid}Göther Labs / Evaluated technical improvement}
 \fancyhead[R]{\footnotesize\color{Mid}INT8 MatVec RTL / VTR 45 nm}
-\fancyfoot[L]{\footnotesize\color{Mid}Compact certified VTR record · \EvidenceDate}
+\fancyfoot[L]{\footnotesize\color{Mid}Certified VTR record and raw audit · \EvidenceDate}
 \fancyfoot[R]{\footnotesize\color{Mid}\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0pt}
@@ -46,7 +46,7 @@
 \pgfplotsset{compat=1.18}
 \usepackage[most]{tcolorbox}
 \usepackage{hyperref}
-\hypersetup{colorlinks=true,linkcolor=Ink,urlcolor=GotherBlue,citecolor=GotherBlue,pdfauthor={Göther Labs},pdftitle={INT8 MatVec RTL optimization on VTR - compact certified record},pdflang={en-GB}}
+\hypersetup{colorlinks=true,linkcolor=Ink,urlcolor=GotherBlue,citecolor=GotherBlue,pdfauthor={Göther Labs},pdftitle={INT8 MatVec RTL optimization on VTR - certified raw-evidence report},pdflang={en-GB}}
 \usepackage{seqsplit}
 
 \input{generated/metrics.tex}
@@ -233,7 +233,7 @@ Validity envelope & Fail closed on missing metrics, route failure, oversized mul
 {\small
 \rowcolors{2}{Pale}{white}
 \begin{tabularx}{\textwidth}{@{}P{40mm}Y P{19mm}@{}}
-\rowcolor{Ink}\thead{Gate} & \thead{Published compact record} & \thead{Result} \\
+\rowcolor{Ink}\thead{Gate} & \thead{Published evidence} & \thead{Result} \\
 Structural policy & Exact interface, patch and synthesizable SystemVerilog identities & \yes \\
 Golden simulation & \FunctionalTests\ deterministic signed, extreme, lane, row and random cases & \yes \\
 Combinational formal & All four outputs for every 160-bit binary input assignment & \yes \\
@@ -254,7 +254,7 @@ python3 verify.py
 \end{lstlisting}
 
 \begin{claimbox}
-\textbf{Evidence boundary.} The public verifier establishes compact certificate consistency and exact published identities. Functional simulation, formal equivalence and independent VTR replay are certificate attestations, not jobs rerun by that verifier. This edition does not publish the raw VTR run trees required for a public raw-log provenance audit equivalent to the SHA-1 release asset.
+\textbf{Evidence boundary.} The compact check establishes certificate consistency and exact published identities. With the separately downloaded raw archive, the same verifier audits every member, checks all four functional and formal pass logs, and independently re-extracts all 256 blinded post-route PPA rows. It does not rerun Verilator, Yosys or VTR.
 \end{claimbox}
 
 % Diff
@@ -442,7 +442,7 @@ Composite & \CompositeWins & \CompositeTies & \CompositeLosses \\
 }
 
 % Secondary evidence
-\newpageheading{11. Secondary metrics and evidence identity}{Measured consequences and compact audit trail}
+\newpageheading{11. Secondary metrics and evidence identity}{Measured consequences and public audit trail}
 
 {\small
 \rowcolors{2}{Pale}{white}
@@ -469,20 +469,23 @@ VTR architecture identity & \hash{\ArchitectureHash} \\
 PTM technology identity & \hash{\TechnologyHash} \\
 Optimized primary record & \hash{\OptimizedPrimaryHash} \\
 Optimized replay record & \hash{\OptimizedReplayHash} \\
+Full raw-evidence archive & \texttt{\EvidenceArchiveName} \\
+Full archive SHA-256 & \hash{\EvidenceArchiveHash} \\
 \end{tabularx}
 \rowcolors{2}{}{}
 }
 
-The certificate also binds distinct primary and replay records for the baseline. These hashes identify the evidence used to issue the compact record; they do not substitute for publishing the underlying raw files.
+The certificate also binds distinct primary and replay records for the baseline. The release archive supplies the underlying functional, formal and routed VTR outputs for both RTL variants and both evidence roles while keeping reserved placement identities blinded.
 
 % Reproducibility
 \newpageheading{12. Reproduction and verifier trust model}{What each public command establishes}
 
-The repository separates three levels of evidence:
+The repository separates four levels of evidence:
 \begin{enumerate}
   \item \textbf{Git identity}: checksums cover the exact compact package and the commit records its history.
   \item \textbf{Compact consistency}: \texttt{python3 verify.py} validates strict schemas, RTL hashes, the exact patch, all \CertificationPairs\ paired rows, derived metrics, formulas, confidence intervals, resource limits and acceptance rules.
-  \item \textbf{Independent replay attestation}: the compact certificate binds distinct primary and replay records and states that baseline and accepted records reproduce exactly. The raw VTR trees are not included in this public edition, so this level is not independently reparsed by the public verifier.
+  \item \textbf{Raw provenance replay}: \texttt{python3 verify.py --evidence-archive ...} verifies the hash-addressed archive, functional and formal pass logs, four 64-pair evidence legs and PPA values re-extracted from VTR timing and power reports.
+  \item \textbf{Independent execution}: the primary and reproduction legs are separate complete tool runs; exact agreement is checked through the public raw evidence rather than accepted as an unsupported assertion.
 \end{enumerate}
 
 \begin{lstlisting}
@@ -491,15 +494,17 @@ rtl-optimization-case-study.git
 cd rtl-optimization-case-study/cases/int8-matvec
 
 python3 verify.py
+python3 verify.py --evidence-archive \
+  int8-matvec-vtr45-full-evidence-v1.tar.gz
 python3 -m unittest discover -s tests -v
 \end{lstlisting}
 
 The verifier uses explicit checks rather than Python \texttt{assert}, requires exact checksum coverage, rejects duplicate or unexpected schema fields, non-finite measurements, altered RTL, metric substitutions, score substitutions and any leaked held-out seed identity. Its adversarial unit suite exercises these cases in CI.
 
-A clean physical rerun requires Linux/amd64, the pinned VTR commit, exact architecture and PTM files, fixed activity profiles and the sealed evaluation harness. This compact customer-facing package intentionally does not publish the optimization implementation or operational execution environment.
+A fresh EDA rerun requires Linux/amd64, the pinned VTR commit, exact architecture and PTM files, fixed activity profiles and the published evaluation contract. The customer-facing package intentionally excludes the optimization implementation and operational execution environment because neither is needed to audit the delivered before/after result.
 
 \begin{scopebox}
-\textbf{Trust boundary.} A checksum proves content identity, not authorship or raw-run provenance. The Git commit and future case release are publication anchors. Public raw-log audit parity with SHA-1 requires a separately reviewed, hash-addressed INT8 evidence archive.
+\textbf{Trust boundary.} The Git commit and release identify the published package. The raw archive permits provenance and metric re-extraction comparable to SHA-1, but remains recorded evidence: it is not a fresh third-party tool execution and cannot establish physical-chip behaviour.
 \end{scopebox}
 
 % Limits
@@ -513,8 +518,7 @@ This report does not provide:
   \item board, silicon, measured-power or measured-energy evidence;
   \item proof that the same structure improves a different matrix size, precision, architecture, technology or workload;
   \item exact PPA attribution to one line or one structural aspect of the patch;
-  \item a complete neural-network layer, memory hierarchy or deployable AI accelerator;
-  \item a public raw VTR evidence archive equivalent to the historical SHA-1 v1.3.1 asset.
+  \item a complete neural-network layer, memory hierarchy or deployable AI accelerator.
 \end{itemize}
 
 The 64-pair interval models implementation-seed variability for the fixed VTR contract. It does not model silicon process variation or generalise automatically to a customer technology.
@@ -534,7 +538,7 @@ The 64-pair interval models implementation-seed variability for the fixed VTR co
 
 \vspace{6mm}
 \begin{claimbox}
-\textbf{Conclusion.} Within the declared VTR 45 nm LUT-only FPGA proxy and exact signed-arithmetic contract, the accepted balanced-tree patch has a compact record attesting passed functional and formal gates and improves the paired primary PPA estimator by \CompositeImprovement\% (95\% CI \CompositeLow\% to \CompositeHigh\%). The compact calculations and before/after RTL are publicly auditable; the recorded jobs and raw-run provenance remain outside this edition.
+\textbf{Conclusion.} Within the declared VTR 45 nm LUT-only FPGA proxy and exact signed-arithmetic contract, the accepted balanced-tree patch passes the recorded functional and exhaustive formal gates and improves the paired primary PPA estimator by \CompositeImprovement\% (95\% CI \CompositeLow\% to \CompositeHigh\%). The before/after RTL, compact calculations, raw primary runs and raw independent reproduction are publicly auditable. This remains academic implementation evidence, not a physical measurement.
 \end{claimbox}
 
 \end{document}

@@ -70,6 +70,8 @@ publication policy requires full provenance replay. Operational optimization
 infrastructure remains private because it is neither necessary to understand
 the claim nor part of the delivered technical improvement.
 
-SHA-1 v1.3.1 is the current raw-provenance example. The first INT8 edition is a
-compact certification record and must not be described as raw-audit-equivalent
-until a separately reviewed evidence archive exists.
+SHA-1 and INT8 each publish a separately downloadable, hash-addressed raw
+evidence archive. Their public verifiers bind the archive to the compact case,
+audit all members and re-extract the reported PPA metrics. This is provenance
+replay, not a fresh EDA execution; independently rerunning the pinned tools is a
+separate and more expensive reproduction step.

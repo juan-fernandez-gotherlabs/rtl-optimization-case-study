@@ -10,7 +10,7 @@ from the optimization search.
 | Case | Circuit | Correctness evidence | Certification | Result |
 |---|---|---|---|---:|
 | [SHA-1 RTL](cases/sha1/README.md) | Stateful cryptographic datapath and command protocol | NIST SHAVS, cycle regression and sequential formal equivalence | 64 fixed pairs, disjoint from search, with raw-evidence audit | **2.27% better** |
-| [INT8 MatVec RTL](cases/int8-matvec/README.md) | Signed-INT8 4x4 matrix-vector kernel for quantized AI arithmetic | Compact record attesting 151 deterministic tests and exhaustive combinational equivalence | 64 fixed held-out pairs with independent-replay attestation | **8.3230% better** |
+| [INT8 MatVec RTL](cases/int8-matvec/README.md) | Signed-INT8 4x4 matrix-vector kernel for quantized AI arithmetic | 151 deterministic tests and exhaustive combinational equivalence, with public raw logs | 64 fixed held-out pairs, independently reproduced, with raw-evidence audit | **8.3230% better** |
 
 ### Read the reports
 
@@ -57,13 +57,11 @@ Portfolio verification: PASS
 ```
 
 Each case directory contains its baseline, accepted RTL, exact patch,
-certificate, report source, checksums and adversarial verifier tests. SHA-1
-v1.3.1 additionally has a hash-addressed raw-evidence release asset. The first
-INT8 publication is deliberately a compact certification record: its verifier
-recomputes the paired result and checks the published identities, but does not
-rerun simulation, formal equivalence or VTR and does not independently parse
-raw run trees. Raw audit parity must be published separately before it is
-claimed.
+certificate, report source, checksums and adversarial verifier tests. Both
+cases have separately downloadable, hash-addressed raw-evidence release assets.
+The compact checks require only Python; when an evidence archive is supplied,
+the case verifier also audits every archived file and independently re-extracts
+the published post-route PPA rows. It does not rerun the EDA tools.
 
 ## Claim boundary
 
