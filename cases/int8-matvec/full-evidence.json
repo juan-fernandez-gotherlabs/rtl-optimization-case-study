@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "asset_name": "int8-matvec-vtr45-full-evidence-v1.tar.gz",
+  "archive_sha256": "ecfa2f611438cadeb21af8de5d6d6e5f4fecc3546618a7eab6b6f54f8cb57f04",
+  "archive_bytes": 392176437,
+  "bundle_root": "int8-matvec-vtr45-full-evidence-v1",
+  "member_count": 14748,
+  "release_tag": "v2.0.1",
+  "download_url": "https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/download/v2.0.1/int8-matvec-vtr45-full-evidence-v1.tar.gz"
+}

@@ -1,7 +1,9 @@
 # INT8 4x4 matrix-vector RTL optimization
 
 [Read the technical report](../../INT8-MatVec-Optimization.pdf) or run the
-compact verifier with `python3 verify.py` from this directory.
+compact verifier with `python3 verify.py` from this directory. The complete
+blinded raw archive is a release asset, kept out of Git because it contains all
+four 64-pair VTR run sets.
 
 This case optimizes a small, synthesizable signed-INT8 matrix-vector datapath:
 four input values, a 4x4 weight matrix, sixteen signed multiplications and four
@@ -31,10 +33,10 @@ LUT fabric, with no commercial DSP-slice, BRAM or ASIC MAC-cell model.
 
 ## Verification and certification
 
-- the compact record attests that 151 deterministic signed, extreme, lane and
-  seeded-random simulations passed;
-- it attests that exhaustive Yosys combinational equivalence covered every
-  160-bit input assignment;
+- 151 deterministic signed, extreme, lane and seeded-random simulations passed
+  in both primary and independent-reproduction runs for each RTL;
+- exhaustive Yosys combinational equivalence covered every 160-bit input
+  assignment in all four evidence legs;
 - five optimizer-visible VTR placement pairs rank search candidates only;
 - 64 disjoint held-out pairs determine certification;
 - baseline and accepted certification records carry an exact independent-replay
@@ -42,19 +44,46 @@ LUT fabric, with no commercial DSP-slice, BRAM or ASIC MAC-cell model.
 - the composite one-sided 95% upper confidence bound remains below `1.0`;
 - every primary metric passes its non-regression bound and the resource envelope.
 
-The public compact certificate replaces held-out placement-seed identities with
-stable pair labels. It retains both designs' complete paired metrics so the
-statistics and decision can be recomputed without exposing the reserved pool.
-The public verifier checks certificate consistency, RTL identity, the exact
-patch and all derived statistics. It does not rerun the recorded functional,
-formal or VTR jobs and does not parse raw VTR run trees.
+The public certificate and archive replace held-out placement-seed identities
+with stable pair labels. The compact verifier checks certificate consistency,
+RTL identity, the exact patch and all derived statistics. With the raw archive
+it additionally verifies every member hash, checks the four functional and
+formal pass records, and re-extracts all 256 post-route area, timing and power
+rows before matching them to the certificate. It does not rerun the EDA tools.
+
+## Verify
+
+The compact audit uses only Python 3:
+
+```bash
+python3 verify.py
+```
+
+Expected ending:
+
+```text
+held_out_pairs=64
+composite_score=0.916769683690
+improvement=8.3230%
+Full raw evidence: NOT CHECKED (pass --evidence-archive)
+```
+
+To audit every raw file, download the release asset and supply it explicitly:
+
+```bash
+curl -LO https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/download/v2.0.1/int8-matvec-vtr45-full-evidence-v1.tar.gz
+python3 verify.py --evidence-archive \
+  int8-matvec-vtr45-full-evidence-v1.tar.gz
+```
 
 ## Public artifacts
 
+- [Download the full raw-evidence archive](https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/download/v2.0.1/int8-matvec-vtr45-full-evidence-v1.tar.gz)
 - [`rtl/baseline/int8_matvec_4x4.sv`](rtl/baseline/int8_matvec_4x4.sv)
 - [`rtl/optimized/int8_matvec_4x4.sv`](rtl/optimized/int8_matvec_4x4.sv)
 - [`rtl/changes.patch`](rtl/changes.patch)
 - [`certificate.json`](certificate.json)
+- [`full-evidence.json`](full-evidence.json)
 - [`technical-report.pdf`](technical-report.pdf)
 
 ## Claim boundary
@@ -62,9 +91,9 @@ formal or VTR jobs and does not parse raw VTR run trees.
 These are paired academic VTR PTM 45 nm post-route estimates at 0.9 V and
 85 degrees C on a homogeneous LUT6 target without commercial DSP or BRAM
 resources. They are not physical FPGA measurements, Vivado results, ASIC or
-silicon signoff, board measurements, measured power or measured energy. This
-compact edition is not a public raw-log provenance audit equivalent to the
-historical SHA-1 v1.3.1 release asset.
+silicon signoff, board measurements, measured power or measured energy. The raw
+archive establishes provenance and independent metric re-extraction comparable
+to SHA-1; it does not turn academic estimates into physical measurements.
 
 The RTL is owned by the Evolther project and Apache-2.0 licensed. The
 optimization implementation and private execution data are intentionally
