@@ -58,10 +58,40 @@ SEARCH_SEEDS = [1, 7, 19, 43, 97]
 CERTIFICATION_SEEDS = [seed for seed in range(1, 69) if seed not in SEARCH_SEEDS]
 TWO_SIDED_T_95_DF63 = 1.9983405425207417
 ONE_SIDED_T_95_DF63 = 1.6694022217068127
-BUNDLE_ROOT = "rtl-sha-vtr-primary-ppa-evidence-v1"
+BUNDLE_ROOT = "rtl-sha-vtr-primary-ppa-evidence-v2"
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
+PROTECTED_ENGINE_MARKER = bytes.fromhex("636f646578")
 EXPECTED_MODULE_PORTS = ("clk_i", "rst_i", "text_i", "text_o", "cmd_i", "cmd_w_i", "cmd_o")
 EXPECTED_INTERFACE = "sha1(clk_i, rst_i, text_i[31:0], text_o[31:0], cmd_i[2:0], cmd_w_i, cmd_o[3:0])"
+VTR_COMMIT = "95f5c6de9e158371ba7185bf97c07a84153735d6"
+IMAGE_ID = "sha256:c0badc2d2bb57364ff37477b3d2c482ef01f7d3df6211e9802e2c54367c33baf"
+ARCHITECTURE = "vtr_flow/arch/power/k6_N10_I40_Fi6_L4_frac0_ff1_45nm.xml"
+ARCHITECTURE_SHA256 = "262792caef81931ae09b77d252158bde03c78954175d4b761e6d437317575307"
+TECHNOLOGY = "vtr_flow/tech/PTM_45nm/45nm.xml"
+TECHNOLOGY_SHA256 = "3080dea13bf7134109f8a83c79426ec0965e07639a61866fe9ae4bd05b5227cb"
+NIST_CORPUS_SHA256 = "80bdcf3dabd50da28367f8c6e5d818c13d40d67cc8da897ce7efac553ed13df0"
+EQY_COMMIT = "6734d8c2df366be50ea9e734c6cb10609b5f32c2"
+EQY_PASS_MARKER_SHA256 = "9aeb6fa6171b28a9ae33345754b973b407317736d6ac333dd1e4a45d07c575be"
+ACCEPTANCE_POLICY = {
+    "validity": "all structural, functional, NIST, formal, route, power and evidence-integrity gates pass",
+    "improvement": "composite one-sided 95% upper confidence bound < 1.0",
+    "non_regression": "every primary metric one-sided 95% lower confidence bound <= 1.0",
+    "sample": "fixed disjoint 64-seed pool; never extended after observing the result",
+}
+FULL_EVIDENCE_AUTHORITY = {
+    "distribution": "GitHub release asset; public-only baseline and accepted raw evidence",
+    "asset_name": "sha1-vtr45-full-evidence-v2.tar.gz",
+    "release_url": "https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/tag/v2.1.0",
+    "download_url": "https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/download/v2.1.0/sha1-vtr45-full-evidence-v2.tar.gz",
+    "archive_sha256": "3c1d8badd0b8409da212857a07bcbe9f7e99fde74474f056b1a54f6392b01eff",
+    "archive_bytes": 145891493,
+    "bundle_manifest_path": "MANIFEST.json",
+    "baseline_record_path": "records/baseline.json",
+    "accepted_record_path": "records/accepted-certification.json",
+    "certification_result_sha256": "49e9b983d5ede369e3b7e701a9e3866c14e1d119462b496768fdfc8439b163bf",
+    "formal_driver_log_sha256": "2836ffc302152cb420ca6b2855205460ce6e6b5b1d8312c1ec6fa02e9f4f810a",
+    "evidence_file_count": 5018,
+}
 
 REQUIRED_MANIFEST = {
     "Makefile",
@@ -79,6 +109,7 @@ REQUIRED_MANIFEST = {
     "scripts/generate_latex_data.py",
     "scripts/normalize_pdf_id.py",
     "scripts/reissue_v1_3_1_evidence.py",
+    "scripts/reissue_public_evidence.py",
     "scripts/write_manifest.py",
     "technical-report.pdf",
     "tests/test_verify.py",
@@ -269,7 +300,8 @@ def verify_contract(data: dict[str, Any]) -> None:
     require(type(source) is dict, "source must be an object")
     exact_keys(source, {"upstream_repository", "upstream_commit", "upstream_path", "corrected_baseline_sha256", "accepted_rtl_sha256"}, "source")
     require(source["upstream_repository"] == "https://github.com/verilog-to-routing/vtr-verilog-to-routing", "wrong upstream repository")
-    require(source["upstream_commit"] == "95f5c6de9e158371ba7185bf97c07a84153735d6", "wrong upstream commit")
+    require(source["upstream_commit"] == VTR_COMMIT, "wrong upstream commit")
+    require(source["upstream_path"] == "vtr_flow/benchmarks/verilog/sha.v", "wrong upstream path")
     for name in ("corrected_baseline_sha256", "accepted_rtl_sha256"):
         require(type(source[name]) is str and HEX64.fullmatch(source[name]) is not None, f"invalid {name}")
     require(sha256(ROOT / "rtl/baseline/sha.v") == source["corrected_baseline_sha256"], "baseline RTL hash mismatch")
@@ -290,15 +322,26 @@ def verify_contract(data: dict[str, Any]) -> None:
     require(contract["interface"] == EXPECTED_INTERFACE, "wrong interface contract")
     require(contract["busy_cycles_per_block"] == 80.0, "wrong busy-cycle count")
     require(strict_int(contract["nist_short_long_cases"], "nist_short_long_cases") == 129, "wrong NIST case count")
+    require(contract["nist_corpus_sha256"] == NIST_CORPUS_SHA256, "wrong NIST corpus identity")
     require(contract["formal_status"] == "pass", "formal status is not pass")
+    require(contract["eqy_commit"] == EQY_COMMIT, "wrong EQY commit")
+    require(contract["eqy_pass_marker_sha256"] == EQY_PASS_MARKER_SHA256, "wrong EQY pass-marker identity")
     require(contract["formal_semantics"] == "two_state_defined_inputs_after_declared_reset", "formal semantics are not explicit")
+    require(contract["vtr_commit"] == VTR_COMMIT, "wrong VTR commit")
+    require(contract["image_id"] == IMAGE_ID, "wrong container image identity")
     require(contract["platform"] == "linux/amd64", "wrong measurement platform")
+    require(contract["architecture"] == ARCHITECTURE, "wrong architecture path")
+    require(contract["architecture_sha256"] == ARCHITECTURE_SHA256, "wrong architecture identity")
+    require(contract["technology"] == TECHNOLOGY, "wrong technology path")
+    require(contract["technology_sha256"] == TECHNOLOGY_SHA256, "wrong technology identity")
+    require(contract["nominal_voltage_v"] == 0.9 and contract["temperature_c"] == 85, "wrong operating point")
     require(contract["search_seeds"] == SEARCH_SEEDS, "wrong search-seed pool")
     require(contract["seeds"] == CERTIFICATION_SEEDS, "wrong certification-seed pool")
     require(strict_int(contract["seed_count"], "seed_count") == 64, "wrong seed count")
     policy = contract["certification_seed_policy"]
     require(type(policy) is dict, "certification seed policy must be an object")
     exact_keys(policy, {"authority", "disjoint_from_search", "stopping_rule", "confidence_level"}, "certification_seed_policy")
+    require(policy["authority"] == "fixed_sample_statistical_acceptance", "wrong certification authority")
     require(strict_bool(policy["disjoint_from_search"], "disjoint_from_search"), "seed pools are not disjoint")
     require(policy["stopping_rule"] == "fixed_n_64_no_extension", "wrong stopping rule")
     close(float(policy["confidence_level"]), 0.95, "confidence_level")
@@ -318,8 +361,11 @@ def verify_contract(data: dict[str, Any]) -> None:
 
     acceptance = data["acceptance_policy"]
     exact_keys(acceptance, {"validity", "improvement", "non_regression", "sample"}, "acceptance_policy")
-    require(acceptance["improvement"] == "composite one-sided 95% upper confidence bound < 1.0", "wrong improvement gate")
-    require(acceptance["non_regression"] == "every primary metric one-sided 95% lower confidence bound <= 1.0", "wrong non-regression gate")
+    require(acceptance == ACCEPTANCE_POLICY, "acceptance policy drift")
+
+    evidence = data["full_evidence"]
+    exact_keys(evidence, set(FULL_EVIDENCE_AUTHORITY), "full_evidence")
+    require(evidence == FULL_EVIDENCE_AUTHORITY, "full-evidence authority drift")
 
 
 def verify_statistics(data: dict[str, Any]) -> dict[str, float]:
@@ -598,8 +644,9 @@ def verify_full_evidence(data: dict[str, Any], archive_path: Path) -> None:
         stream = archive.extractfile(file_members[manifest_name])
         require(stream is not None, "cannot read internal evidence manifest")
         manifest = load_json_bytes(stream.read(), "evidence MANIFEST.json")
-        exact_keys(manifest, {"schema_version", "bundle", "purpose", "member_count", "members", "sanitization", "corrections"}, "evidence manifest")
-        require(manifest["schema_version"] == 2 and manifest["bundle"] == BUNDLE_ROOT, "wrong evidence manifest identity")
+        exact_keys(manifest, {"schema_version", "bundle", "purpose", "member_count", "members", "transformations", "omissions"}, "evidence manifest")
+        require(manifest["schema_version"] == 3 and manifest["bundle"] == BUNDLE_ROOT, "wrong evidence manifest identity")
+        require(manifest["purpose"] == "primary_ppa_public_evidence_without_optimization_infrastructure", "wrong evidence purpose")
         entries = manifest["members"]
         require(type(entries) is list and len(entries) == strict_int(manifest["member_count"], "member_count"), "invalid evidence member count")
         expected_names = {manifest_name}
@@ -609,7 +656,7 @@ def verify_full_evidence(data: dict[str, Any], archive_path: Path) -> None:
         raw_runs: dict[tuple[str, int], dict[str, bytes]] = {}
         for index, entry in enumerate(entries):
             require(type(entry) is dict, f"manifest member {index} must be an object")
-            exact_keys(entry, {"path", "bytes", "sha256", "source_sha256"} if entry.get("path") != "README.txt" else {"path", "bytes", "sha256"}, f"manifest member {index}")
+            exact_keys(entry, {"path", "bytes", "sha256", "source_sha256"}, f"manifest member {index}")
             relative = entry["path"]
             require(type(relative) is str, f"manifest path {index} must be a string")
             name = f"{BUNDLE_ROOT}/{relative}"
@@ -622,10 +669,10 @@ def verify_full_evidence(data: dict[str, Any], archive_path: Path) -> None:
             require(len(payload) == strict_int(entry["bytes"], f"manifest[{relative}].bytes"), f"byte count mismatch: {relative}")
             require(sha256_bytes(payload) == entry["sha256"], f"hash mismatch: {relative}")
             require(b"/Users/juanjosefernandezmorales/" not in payload, f"unsanitized host path: {relative}")
+            require(PROTECTED_ENGINE_MARKER not in payload.lower(), f"operational engine marker leaked: {relative}")
             public_hashes[relative] = entry["sha256"]
-            if "source_sha256" in entry:
-                require(type(entry["source_sha256"]) is str and HEX64.fullmatch(entry["source_sha256"]) is not None, f"invalid source hash: {relative}")
-                source_hashes[relative] = entry["source_sha256"]
+            require(type(entry["source_sha256"]) is str and HEX64.fullmatch(entry["source_sha256"]) is not None, f"invalid source hash: {relative}")
+            source_hashes[relative] = entry["source_sha256"]
             if relative in {"records/accepted-certification.json", "records/baseline.json", "rtl/baseline/sha.v", "rtl/accepted/sha.v", "runs/accepted/formal_driver.log", "runs/accepted/sha1_cycle/PASS", "runs/accepted/nist_run.log", "flow/benchmarks/sha_vtr_manifest.json"}:
                 payloads[relative] = payload
             raw_match = re.fullmatch(r"runs/(baseline|accepted)/seed_(\d+)/(vpr_stdout\.log|active\.power|idle\.power|sha\.v)", relative)
@@ -635,40 +682,35 @@ def verify_full_evidence(data: dict[str, Any], archive_path: Path) -> None:
         require(set(file_members) == expected_names, "archive contains unmanifested members")
         require(sum(name.startswith(f"{BUNDLE_ROOT}/runs/accepted/") for name in file_members) == strict_int(evidence["evidence_file_count"], "evidence_file_count"), "accepted evidence file count mismatch")
 
-        sanitization = manifest["sanitization"]
-        exact_keys(sanitization, {"replacement", "modified_member_count", "modified_members"}, "evidence sanitization")
-        require(sanitization["replacement"] == "<SOURCE_WORKTREE>", "wrong sanitization replacement token")
-        sanitized = sanitization["modified_members"]
-        require(type(sanitized) is list and len(sanitized) == strict_int(sanitization["modified_member_count"], "modified_member_count"), "invalid sanitization records")
-        sanitized_paths: set[str] = set()
-        for index, item in enumerate(sanitized):
-            require(type(item) is dict, f"sanitization record {index} must be an object")
-            exact_keys(item, {"path", "replacements", "source_sha256", "public_sha256"}, f"sanitization record {index}")
+        transformations = manifest["transformations"]
+        exact_keys(transformations, {"modified_member_count", "modified_members"}, "evidence transformations")
+        transformed = transformations["modified_members"]
+        require(type(transformed) is list and len(transformed) == strict_int(transformations["modified_member_count"], "transformation count"), "invalid transformation records")
+        transformed_paths: set[str] = set()
+        for index, item in enumerate(transformed):
+            require(type(item) is dict, f"transformation record {index} must be an object")
+            exact_keys(item, {"path", "description", "source_sha256", "public_sha256"}, f"transformation record {index}")
             path = item["path"]
-            require(type(path) is str and path not in sanitized_paths, f"duplicate sanitization path: {path}")
-            sanitized_paths.add(path)
-            require(strict_int(item["replacements"], f"sanitization[{path}].replacements") > 0, f"invalid replacement count: {path}")
-            require(item["source_sha256"] == source_hashes.get(path), f"sanitization source hash mismatch: {path}")
-            require(item["public_sha256"] == public_hashes.get(path), f"sanitization public hash mismatch: {path}")
+            require(type(path) is str and path not in transformed_paths, f"duplicate transformation path: {path}")
+            transformed_paths.add(path)
+            require(type(item["description"]) is str and bool(item["description"]), f"missing transformation description: {path}")
+            require(item["source_sha256"] == source_hashes.get(path), f"transformation source hash mismatch: {path}")
+            require(item["public_sha256"] == public_hashes.get(path), f"transformation public hash mismatch: {path}")
+        require(transformed_paths == {path for path, source_hash in source_hashes.items() if source_hash != public_hashes[path]}, "source/public hash differences are not completely explained")
 
-        corrections = manifest["corrections"]
-        exact_keys(corrections, {"modified_member_count", "modified_members"}, "evidence corrections")
-        corrected = corrections["modified_members"]
-        require(type(corrected) is list and len(corrected) == strict_int(corrections["modified_member_count"], "correction count"), "invalid correction records")
-        corrected_paths: set[str] = set()
-        for index, item in enumerate(corrected):
-            require(type(item) is dict, f"correction record {index} must be an object")
-            exact_keys(item, {"path", "description", "source_sha256", "public_sha256"}, f"correction record {index}")
-            path = item["path"]
-            require(type(path) is str and path not in corrected_paths, f"duplicate correction path: {path}")
-            corrected_paths.add(path)
-            require(type(item["description"]) is str and item["description"], f"missing correction description: {path}")
-            require(item["source_sha256"] == source_hashes.get(path), f"correction source hash mismatch: {path}")
-            require(item["public_sha256"] == public_hashes.get(path), f"correction public hash mismatch: {path}")
-
-        transformed_paths = {path for path, source_hash in source_hashes.items() if source_hash != public_hashes[path]}
-        require(not sanitized_paths & corrected_paths, "a member cannot be both sanitized and corrected")
-        require(transformed_paths == sanitized_paths | corrected_paths, "source/public hash differences are not completely explained")
+        omissions = manifest["omissions"]
+        exact_keys(omissions, {"omitted_member_count", "omitted_members"}, "evidence omissions")
+        omitted = omissions["omitted_members"]
+        require(type(omitted) is list and len(omitted) == strict_int(omissions["omitted_member_count"], "omission count"), "invalid omission records")
+        expected_omissions = {"flow/config.py", "flow/runner.py", "flow/evaluator.py", "flow/eval_script.py"}
+        omitted_paths: set[str] = set()
+        for index, item in enumerate(omitted):
+            exact_keys(item, {"path", "reason", "source_sha256"}, f"omission record {index}")
+            require(type(item["path"]) is str and item["path"] not in omitted_paths, f"duplicate omission path: {index}")
+            omitted_paths.add(item["path"])
+            require(type(item["reason"]) is str and bool(item["reason"]), f"missing omission reason: {item['path']}")
+            require(type(item["source_sha256"]) is str and HEX64.fullmatch(item["source_sha256"]) is not None, f"invalid omission source hash: {item['path']}")
+        require(omitted_paths == expected_omissions, "wrong operational omission set")
 
     require(sha256_bytes(payloads["records/accepted-certification.json"]) == evidence["certification_result_sha256"], "accepted certification record hash mismatch")
     require(sha256_bytes(payloads["runs/accepted/formal_driver.log"]) == evidence["formal_driver_log_sha256"], "formal driver hash mismatch")

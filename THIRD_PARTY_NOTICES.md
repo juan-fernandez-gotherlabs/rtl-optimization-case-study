@@ -14,9 +14,13 @@ their upstream terms.
 
 ## INT8 MatVec case
 
-The baseline and optimized INT8 MatVec RTL were authored for the Evolther
-project in 2026 and are licensed under Apache License 2.0. A copy of that
-license is included at `cases/int8-matvec/LICENSE`.
+The baseline and optimized INT8 MatVec RTL are original work copyright 2026
+Juan José Fernández, authored for this Evolther/Göther Labs case study and
+licensed under Apache License 2.0. A copy of that license is included at
+`cases/int8-matvec/LICENSE`. The frozen evidence-bound source files retain the
+original “Evolther contributors” header; for this case that designation refers
+to Juan José Fernández. The files are kept byte-exact so their published
+certificate and raw evidence remain verifiable.
 
 The INT8 implementation results use the open Verilog-to-Routing toolchain and
 academic VTR/PTM architecture models. Tool names identify the measurement

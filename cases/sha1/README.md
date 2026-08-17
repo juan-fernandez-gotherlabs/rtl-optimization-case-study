@@ -3,8 +3,8 @@
 This is the historical methodology-qualification case in the
 [Evolther hardware results portfolio](../../README.md).
 
-Three cycle-equivalent RTL transformations improve the paired primary PPA
-estimate by **2.27%** under a frozen VTR 45 nm FPGA comparison.
+Three cycle-equivalent RTL transformations reduce the paired primary PPA
+composite estimate by **2.27%** under a frozen VTR 45 nm FPGA comparison.
 
 | Primary metric | Corrected baseline | Accepted RTL | Paired improvement (95% CI) |
 |---|---:|---:|---:|
@@ -21,7 +21,9 @@ ratios is `0.978469`. Energy per block is secondary and improves by **6.51%**
 
 The five search seeds (`1, 7, 19, 43, 97`) are disjoint from the fixed
 certification pool: the other 64 seeds in `1..68`. The certification sample is
-never extended after observing a candidate.
+never extended after observing a candidate. Here, certification means
+acceptance under the published project contract, not accredited certification
+or an external assurance opinion.
 
 ## Review
 
@@ -30,13 +32,14 @@ never extended after observing a candidate.
 - [Exact baseline-to-accepted patch](rtl/baseline-to-accepted.patch).
 - [Corrected baseline](rtl/baseline/sha.v) and [accepted RTL](rtl/accepted/sha.v).
 - [Compact certification](results/certification.json) with all 64 paired rows.
-- [Full raw evidence release](https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/tag/v1.3.1)
-  with baseline and accepted VTR/ACE outputs, formal/NIST evidence and an
-  11,362-file internal manifest.
+- [Public-only raw evidence release](https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/tag/v2.1.0)
+  with baseline and accepted VTR/ACE outputs, formal/NIST evidence and a
+  11,358-member internal manifest. Operational optimization modules are omitted
+  because they are not needed to verify the delivered before/after result.
 
 ## Verify
 
-The compact audit uses only Python 3 and is intentionally described as a
+The compact check uses only Python 3 and is intentionally described as a
 consistency check, not as raw-provenance certification:
 
 ```bash
@@ -54,11 +57,11 @@ improvement=2.27% (95% CI 2.12% to 2.41%)
 Full raw evidence: NOT CHECKED (pass --evidence-archive)
 ```
 
-To audit every raw file, download the release asset and supply it explicitly:
+To verify every raw file, download the release asset and supply it explicitly:
 
 ```bash
-curl -LO https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/download/v1.3.1/primary-ppa-full-evidence.tar.gz
-python3 verify.py --evidence-archive primary-ppa-full-evidence.tar.gz
+curl -LO https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/download/v2.1.0/sha1-vtr45-full-evidence-v2.tar.gz
+python3 verify.py --evidence-archive sha1-vtr45-full-evidence-v2.tar.gz
 ```
 
 The second command verifies the external archive digest, every internal member
@@ -79,6 +82,17 @@ v1.3.0 asset without rerunning EDA tools:
 python3 scripts/reissue_v1_3_1_evidence.py \
   --source path/to/v1.3.0/primary-ppa-full-evidence.tar.gz \
   --output primary-ppa-full-evidence.tar.gz
+```
+
+The public-only v2 archive is a deterministic reissue of that exact v1.3.1
+asset. It preserves measurement and correctness evidence, replaces an
+operational run pathname with a public token, omits four operational modules
+and records every transformation and omission:
+
+```bash
+python3 scripts/reissue_public_evidence.py \
+  --source path/to/v1.3.1/primary-ppa-full-evidence.tar.gz \
+  --output sha1-vtr45-full-evidence-v2.tar.gz
 ```
 
 Adversarial verifier tests run with:

@@ -87,7 +87,7 @@
 {\color{Mid}\fontsize{13}{16}\selectfont Auditable primary PPA estimate · open 45 nm FPGA proxy}\par
 \vspace{19mm}
 \begin{claimbox}
-{\fontsize{15}{19}\selectfont\bfseries Three cycle-equivalent RTL transformations improve the paired area-delay-power estimate by \CompositeEstimate\%}
+{\fontsize{15}{19}\selectfont\bfseries Three cycle-equivalent RTL transformations reduce the paired area-delay-power estimate by \CompositeEstimate\%}
 \end{claimbox}
 \vspace{35mm}
 {\color{Mid}\fontsize{12}{15}\selectfont Prepared by Göther Labs}\par
@@ -246,18 +246,18 @@ Physical integrity & Every VTR/ACE output for both designs and all 64 seeds & \y
 
 The formal proof is scoped to two-state, defined-input hardware semantics after the declared reset. It compares the complete sequential design and all selected cut points. A timeout or inconclusive result is a failure. This is deliberately narrower than claiming identical Verilog X/Z propagation; that distinction matters for the majority rewrite and is stated rather than hidden.
 
-The public release asset contains both raw evidence trees, the exact accepted and baseline records, the formal and functional inputs, tool-flow sources and an internal manifest for every archived member. The compact repository checks arithmetic and identity. The full-evidence mode additionally verifies all 11,362 archived files, validates declared public transformations, derives every certification metric from all 128 raw VTR/ACE run trees, compares them with both archived records and compact rows, and binds every measured run to the corresponding RTL hash.
+The public release asset contains both raw evidence trees, the exact accepted and baseline records, formal and functional inputs, public measurement-flow sources and an internal manifest for every included evidence member. The compact repository checks arithmetic and identity. The full-evidence mode additionally verifies all 11,358 manifested evidence members, validates declared public transformations and omissions, derives every certification metric from all 128 raw VTR/ACE run trees, compares them with both archived records and compact rows, and binds every measured run to the corresponding RTL hash. Operational optimization modules are not part of the public evidence boundary.
 
 Release \texttt{v1.3.1} corrects an interface-description error in \texttt{v1.3.0}: the measurement RTL has always declared \texttt{cmd\_i[2:0]}, while the earlier compact contract, report and bundled flow manifest stated \texttt{cmd\_i[3:0]}. The reissued bundle restores the flow manifest to its recorded source hash. The baseline RTL, accepted RTL, raw outputs, metrics and acceptance result are unchanged.
 
 \begin{lstlisting}
 python3 verify.py
 python3 verify.py --evidence-archive \
-  primary-ppa-full-evidence.tar.gz
+  sha1-vtr45-full-evidence-v2.tar.gz
 \end{lstlisting}
 
 \begin{claimbox}
-\textbf{Evidence boundary.} ``Compact package consistency: PASS'' does not certify raw EDA provenance. Only the second command may report ``Full raw evidence: PASS''.
+\textbf{Evidence boundary.} ``Compact package consistency: PASS'' does not verify raw EDA provenance. Only the second command may report ``Full raw evidence: PASS''. ``Certification'' in the artifacts means project-contract acceptance, not accredited assurance.
 \end{claimbox}
 
 The 500 deterministic MCY mutations qualify the verification stack: 454 are detected by simulation, 28 additional distinguishable mutations are rejected only by formal, and 18 are proved equivalent. These qualification results are included with the baseline evidence and are not counted as candidate improvements.
@@ -486,7 +486,7 @@ Archive size & \EvidenceArchiveBytes\ bytes \\
 }
 
 The release asset is available from
-\href{https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/tag/v1.3.1}{the public \texttt{v1.3.1} release}. Its internal manifest covers every member; the Git release and this report provide the external content anchor.
+\href{https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/tag/v2.1.0}{the public \texttt{v2.1.0} release}. Its internal manifest covers every included member and declares the four operational omissions; the Git release and this report provide the external content anchor.
 
 % Reproducibility
 \newpageheading{12. Reproduction and verifier trust model}{What each command establishes}
@@ -495,24 +495,24 @@ The repository intentionally separates three levels of evidence:
 \begin{enumerate}
   \item \textbf{Git identity}: checksums cover the exact compact package and the commit records its history.
   \item \textbf{Compact consistency}: \texttt{python3 verify.py} validates strict schemas, RTL hashes, the exact patch, all 64 rows, auxiliary fields, formulas, confidence intervals and acceptance rules.
-  \item \textbf{Raw-evidence audit}: supplying the release archive verifies its external digest, internal manifest, all 11,362 files, declared transformations, formal/NIST markers and RTL identities, then independently parses every raw VTR/ACE certification run and binds every published metric to those logs.
+  \item \textbf{Raw-provenance verification}: supplying the release archive verifies its external digest, internal manifest, all 11,358 evidence members, declared transformations and omissions, formal/NIST markers and RTL identities, then parses every raw VTR/ACE certification run and binds every published metric to those logs.
 \end{enumerate}
 
 \begin{lstlisting}
 curl -LO https://github.com/juan-fernandez-gotherlabs/\
-rtl-optimization-case-study/releases/download/v1.3.1/\
-primary-ppa-full-evidence.tar.gz
+rtl-optimization-case-study/releases/download/v2.1.0/\
+sha1-vtr45-full-evidence-v2.tar.gz
 
 python3 verify.py --evidence-archive \
-  primary-ppa-full-evidence.tar.gz
+  sha1-vtr45-full-evidence-v2.tar.gz
 \end{lstlisting}
 
-The verifier uses explicit checks rather than Python \texttt{assert}, rejects duplicate JSON keys, non-finite values, fractional seeds, unit-scale violations, incomplete manifests, altered auxiliary fields and rehashed raw-log substitutions, and behaves identically under \texttt{python -O}. Its adversarial unit suite exercises these cases in CI.
+The verifier uses explicit checks rather than Python \texttt{assert}, rejects duplicate JSON keys, non-finite values, fractional seeds, unit-scale violations, incomplete manifests, altered fixed authorities, auxiliary fields and rehashed raw-log substitutions, and behaves identically under \texttt{python -O}. Its adversarial unit suite exercises these cases in CI.
 
-The included flow snapshot pins the Dockerfile, Python lock, VTR and EQY commits, architecture, PTM, activity vectors, harnesses and evaluator sources. A clean physical rerun still requires Docker with Linux/amd64 support, two CPUs, 7 GB RAM and the pinned source checkouts. Runtime networking is disabled.
+The included public flow snapshot pins the Dockerfile, Python lock, VTR and EQY commits, architecture, PTM, activity vectors and harnesses. A clean physical rerun still requires Docker with Linux/amd64 support, two CPUs, 7 GB RAM and the pinned source checkouts. Runtime networking is disabled.
 
 \begin{scopebox}
-\textbf{Trust boundary.} A checksum proves content identity, not authorship. The Git commit/tag and public release are the publication anchors. A customer deployment should add organisation-controlled signing or an attestation service to that release process.
+\textbf{Trust boundary.} A checksum proves content identity, not authorship. The Git commit/tag and public release are the publication anchors. This is not yet a signed independent third-party audit. A customer deployment should add organisation-controlled signing or an attestation service to that release process.
 \end{scopebox}
 
 % Limits
@@ -547,7 +547,7 @@ The 64-seed interval models implementation-seed variability for the fixed VTR co
 
 \vspace{6mm}
 \begin{claimbox}
-\textbf{Conclusion.} Within the declared VTR 45 nm FPGA proxy and two-state contract, the accepted three-transformation patch passes the published functional and formal gates and improves the paired primary PPA estimator by \CompositeEstimate\% (95\% CI \CompositeLow\% to \CompositeHigh\%). The compact calculations and complete raw evidence are both publicly auditable.
+\textbf{Conclusion.} Within the declared VTR 45 nm FPGA proxy and two-state contract, the accepted three-transformation patch passes the published functional and formal gates and reduces the paired primary PPA estimator by \CompositeEstimate\% (95\% CI \CompositeLow\% to \CompositeHigh\%). The compact calculations and complete raw evidence are publicly verifiable; this is not a physical measurement or an externally audited result.
 \end{claimbox}
 
 \end{document}

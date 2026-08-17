@@ -42,10 +42,10 @@ area ratio x critical-path-delay ratio x active-total-power ratio
 
 expressed in log space. Lower is better and the frozen baseline is `1.0`.
 
-## 4. Separate search from certification
+## 4. Separate search from project-contract certification
 
 The optimizer-visible sample ranks candidates. Once a candidate is frozen by
-RTL hash, a disjoint held-out sample determines the certification result. The
+RTL hash, a disjoint held-out sample determines the project-contract result. The
 sample size and stopping rule are fixed before observing certification.
 
 Acceptance requires:
@@ -69,6 +69,10 @@ Raw EDA logs can be distributed as hash-addressed release assets when the case
 publication policy requires full provenance replay. Operational optimization
 infrastructure remains private because it is neither necessary to understand
 the claim nor part of the delivered technical improvement.
+
+Here, “certification” means acceptance under the source-controlled project
+contract. It is not an accredited certification, an assurance opinion or an
+external third-party audit.
 
 SHA-1 and INT8 each publish a separately downloadable, hash-addressed raw
 evidence archive. Their public verifiers bind the archive to the compact case,

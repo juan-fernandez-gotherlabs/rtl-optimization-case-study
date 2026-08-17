@@ -114,17 +114,17 @@
   },
   "full_evidence": {
     "accepted_record_path": "records/accepted-certification.json",
-    "archive_bytes": 145900859,
-    "archive_sha256": "24d37a964bce19ccba13b7e7e6410965394437c8d4d960f34e3ba80d1b565cff",
-    "asset_name": "primary-ppa-full-evidence.tar.gz",
+    "archive_bytes": 145891493,
+    "archive_sha256": "3c1d8badd0b8409da212857a07bcbe9f7e99fde74474f056b1a54f6392b01eff",
+    "asset_name": "sha1-vtr45-full-evidence-v2.tar.gz",
     "baseline_record_path": "records/baseline.json",
     "bundle_manifest_path": "MANIFEST.json",
-    "certification_result_sha256": "12a3b40974d760898d583cf85768602f8e1d5a0ba3d771d60ff88940002f30dd",
-    "distribution": "GitHub release asset; complete baseline and accepted raw evidence",
-    "download_url": "https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/download/v1.3.1/primary-ppa-full-evidence.tar.gz",
+    "certification_result_sha256": "49e9b983d5ede369e3b7e701a9e3866c14e1d119462b496768fdfc8439b163bf",
+    "distribution": "GitHub release asset; public-only baseline and accepted raw evidence",
+    "download_url": "https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/download/v2.1.0/sha1-vtr45-full-evidence-v2.tar.gz",
     "evidence_file_count": 5018,
     "formal_driver_log_sha256": "2836ffc302152cb420ca6b2855205460ce6e6b5b1d8312c1ec6fa02e9f4f810a",
-    "release_url": "https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/tag/v1.3.1"
+    "release_url": "https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/tag/v2.1.0"
   },
   "per_seed": [
     {

@@ -33,14 +33,17 @@ LUT fabric, with no commercial DSP-slice, BRAM or ASIC MAC-cell model.
 
 ## Verification and certification
 
+Here, certification means acceptance under the published project contract; it
+is not accredited certification or an external assurance opinion.
+
 - 151 deterministic signed, extreme, lane and seeded-random simulations passed
-  in both primary and independent-reproduction runs for each RTL;
+  in both primary and separate replay runs for each RTL;
 - exhaustive Yosys combinational equivalence covered every 160-bit input
   assignment in all four evidence legs;
 - five optimizer-visible VTR placement pairs rank search candidates only;
 - 64 disjoint held-out pairs determine certification;
-- baseline and accepted certification records carry an exact independent-replay
-  attestation;
+- baseline and accepted records carry an exact deterministic-replay
+  attestation; this is not a third-party reproduction;
 - the composite one-sided 95% upper confidence bound remains below `1.0`;
 - every primary metric passes its non-regression bound and the resource envelope.
 
@@ -53,7 +56,7 @@ rows before matching them to the certificate. It does not rerun the EDA tools.
 
 ## Verify
 
-The compact audit uses only Python 3:
+The compact consistency check uses only Python 3:
 
 ```bash
 python3 verify.py
@@ -68,7 +71,7 @@ improvement=8.3230%
 Full raw evidence: NOT CHECKED (pass --evidence-archive)
 ```
 
-To audit every raw file, download the release asset and supply it explicitly:
+To verify every raw file, download the release asset and supply it explicitly:
 
 ```bash
 curl -LO https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/download/v2.0.1/int8-matvec-vtr45-full-evidence-v1.tar.gz
@@ -92,9 +95,9 @@ These are paired academic VTR PTM 45 nm post-route estimates at 0.9 V and
 85 degrees C on a homogeneous LUT6 target without commercial DSP or BRAM
 resources. They are not physical FPGA measurements, Vivado results, ASIC or
 silicon signoff, board measurements, measured power or measured energy. The raw
-archive establishes provenance and independent metric re-extraction comparable
+archive establishes provenance and metric re-extraction comparable
 to SHA-1; it does not turn academic estimates into physical measurements.
 
-The RTL is owned by the Evolther project and Apache-2.0 licensed. The
+The INT8 RTL is copyright 2026 Juan José Fernández and Apache-2.0 licensed. The
 optimization implementation and private execution data are intentionally
 outside this public evidence package.

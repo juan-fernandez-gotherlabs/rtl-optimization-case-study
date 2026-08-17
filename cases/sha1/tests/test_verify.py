@@ -95,6 +95,15 @@ Circuit successfully routed with a channel width factor of {metrics['timing_chan
         self.assertIn("Compact package consistency: PASS", result.stdout)
         self.assertIn("Full raw evidence: NOT CHECKED", result.stdout)
 
+    def test_public_bundle_builder_has_no_operational_optimization_inputs(self) -> None:
+        source = (ROOT / "scripts/build_evidence_bundle.py").read_text(encoding="utf-8").lower()
+        public_flow_files = source.split("flow_files = [", 1)[1].split("]", 1)[0]
+        for marker in ('"config.py"', '"runner.py"', '"evaluator.py"', '"eval_script.py"'):
+            self.assertNotIn(marker, public_flow_files)
+        self.assertNotIn("evidence/ppa45/runs/", source)
+        for option in ("--accepted-run", "--accepted-record", "--baseline-run"):
+            self.assertIn(option, source)
+
     def test_missing_manifest_entry_fails(self) -> None:
         root = self.copy()
         lines = (root / "SHA256SUMS").read_text().splitlines()
@@ -176,6 +185,23 @@ Circuit successfully routed with a channel width factor of {metrics['timing_chan
         root = self.copy()
         self.mutate_json(root, lambda data: data["summary"]["accepted"].__setitem__("clb_blocks", 1))
         self.assertNotEqual(self.run_verify(root).returncode, 0)
+
+    def test_rehashed_authority_drift_fails(self) -> None:
+        mutations = {
+            "VTR commit": lambda data: data["contract"].__setitem__("vtr_commit", "0" * 40),
+            "architecture": lambda data: data["contract"].__setitem__("architecture_sha256", "0" * 64),
+            "technology": lambda data: data["contract"].__setitem__("technology_sha256", "0" * 64),
+            "NIST corpus": lambda data: data["contract"].__setitem__("nist_corpus_sha256", "0" * 64),
+            "EQY commit": lambda data: data["contract"].__setitem__("eqy_commit", "0" * 40),
+            "container image": lambda data: data["contract"].__setitem__("image_id", "sha256:" + "0" * 64),
+            "validity policy": lambda data: data["acceptance_policy"].__setitem__("validity", "route only"),
+            "sample policy": lambda data: data["acceptance_policy"].__setitem__("sample", "adaptive sample"),
+        }
+        for label, mutation in mutations.items():
+            with self.subTest(label=label):
+                root = self.copy()
+                self.mutate_json(root, mutation)
+                self.assertNotEqual(self.run_verify(root).returncode, 0)
 
     def test_duplicate_json_key_fails(self) -> None:
         root = self.copy()

@@ -23,7 +23,7 @@
 \fancyhf{}
 \fancyhead[L]{\footnotesize\color{Mid}Göther Labs / Evaluated technical improvement}
 \fancyhead[R]{\footnotesize\color{Mid}INT8 MatVec RTL / VTR 45 nm}
-\fancyfoot[L]{\footnotesize\color{Mid}Certified VTR record and raw audit · \EvidenceDate}
+\fancyfoot[L]{\footnotesize\color{Mid}Project-contract VTR evidence · \EvidenceDate}
 \fancyfoot[R]{\footnotesize\color{Mid}\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0pt}
@@ -46,7 +46,7 @@
 \pgfplotsset{compat=1.18}
 \usepackage[most]{tcolorbox}
 \usepackage{hyperref}
-\hypersetup{colorlinks=true,linkcolor=Ink,urlcolor=GotherBlue,citecolor=GotherBlue,pdfauthor={Göther Labs},pdftitle={INT8 MatVec RTL optimization on VTR - certified raw-evidence report},pdflang={en-GB}}
+\hypersetup{colorlinks=true,linkcolor=Ink,urlcolor=GotherBlue,citecolor=GotherBlue,pdfauthor={Göther Labs},pdftitle={INT8 MatVec RTL optimization on VTR - project-contract evidence report},pdflang={en-GB}}
 \usepackage{seqsplit}
 
 \input{generated/metrics.tex}
@@ -84,7 +84,7 @@
 \vspace{5mm}
 {\color{Ink}\fontsize{29}{33}\selectfont\bfseries INT8 MatVec RTL optimization on VTR}\par
 \vspace{5mm}
-{\color{Mid}\fontsize{13}{16}\selectfont Certified paired VTR estimate · open 45 nm FPGA proxy}\par
+{\color{Mid}\fontsize{13}{16}\selectfont Project-contract paired VTR estimate · open 45 nm FPGA proxy}\par
 \vspace{19mm}
 \begin{claimbox}
 {\fontsize{15}{19}\selectfont\bfseries A range-correct balanced adder tree improves the paired area-delay-power estimate by \CompositeImprovement\%}
@@ -238,7 +238,7 @@ Structural policy & Exact interface, patch and synthesizable SystemVerilog ident
 Golden simulation & \FunctionalTests\ deterministic signed, extreme, lane, row and random cases & \yes \\
 Combinational formal & All four outputs for every 160-bit binary input assignment & \yes \\
 Physical validity & Width-sensitive mapping, resource envelope and complete metric extraction & \yes \\
-Independent replay & Baseline and optimized certification records reproduce exactly & \yes \\
+Separate replay & Baseline and optimized records reproduce exactly; not third-party work & \yes \\
 \end{tabularx}
 \rowcolors{2}{}{}
 }
@@ -254,7 +254,7 @@ python3 verify.py
 \end{lstlisting}
 
 \begin{claimbox}
-\textbf{Evidence boundary.} The compact check establishes certificate consistency and exact published identities. With the separately downloaded raw archive, the same verifier audits every member, checks all four functional and formal pass logs, and independently re-extracts all 256 blinded post-route PPA rows. It does not rerun Verilator, Yosys or VTR.
+\textbf{Evidence boundary.} The compact check establishes certificate consistency and exact published identities. With the separately downloaded raw archive, the same verifier verifies every member, checks all four functional and formal pass logs, and re-extracts all 256 blinded post-route PPA rows. It does not rerun Verilator, Yosys or VTR.
 \end{claimbox}
 
 % Diff
@@ -485,7 +485,7 @@ The repository separates four levels of evidence:
   \item \textbf{Git identity}: checksums cover the exact compact package and the commit records its history.
   \item \textbf{Compact consistency}: \texttt{python3 verify.py} validates strict schemas, RTL hashes, the exact patch, all \CertificationPairs\ paired rows, derived metrics, formulas, confidence intervals, resource limits and acceptance rules.
   \item \textbf{Raw provenance replay}: \texttt{python3 verify.py --evidence-archive ...} verifies the hash-addressed archive, functional and formal pass logs, four 64-pair evidence legs and PPA values re-extracted from VTR timing and power reports.
-  \item \textbf{Independent execution}: the primary and reproduction legs are separate complete tool runs; exact agreement is checked through the public raw evidence rather than accepted as an unsupported assertion.
+  \item \textbf{Separate project replay}: the primary and replay legs are separate complete tool runs; exact agreement is checked through the public raw evidence. This does not establish organisational independence.
 \end{enumerate}
 
 \begin{lstlisting}
@@ -499,12 +499,12 @@ python3 verify.py --evidence-archive \
 python3 -m unittest discover -s tests -v
 \end{lstlisting}
 
-The verifier uses explicit checks rather than Python \texttt{assert}, requires exact checksum coverage, rejects duplicate or unexpected schema fields, non-finite measurements, altered RTL, metric substitutions, score substitutions and any leaked held-out seed identity. Its adversarial unit suite exercises these cases in CI.
+The verifier uses explicit checks rather than Python \texttt{assert}, requires exact checksum coverage, rejects duplicate or unexpected schema fields, non-finite measurements, altered RTL, authority drift, metric substitutions, score substitutions and any leaked held-out seed identity. Its adversarial unit suite exercises these cases in CI.
 
 A fresh EDA rerun requires Linux/amd64, the pinned VTR commit, exact architecture and PTM files, fixed activity profiles and the published evaluation contract. The customer-facing package intentionally excludes the optimization implementation and operational execution environment because neither is needed to audit the delivered before/after result.
 
 \begin{scopebox}
-\textbf{Trust boundary.} The Git commit and release identify the published package. The raw archive permits provenance and metric re-extraction comparable to SHA-1, but remains recorded evidence: it is not a fresh third-party tool execution and cannot establish physical-chip behaviour.
+\textbf{Trust boundary.} The Git commit and release identify the published package. The raw archive permits provenance and metric re-extraction comparable to SHA-1, but remains recorded evidence: it is not a fresh third-party tool execution and cannot establish physical-chip behaviour. ``Certification'' here means project-contract acceptance, not accredited assurance.
 \end{scopebox}
 
 % Limits
@@ -538,7 +538,7 @@ The 64-pair interval models implementation-seed variability for the fixed VTR co
 
 \vspace{6mm}
 \begin{claimbox}
-\textbf{Conclusion.} Within the declared VTR 45 nm LUT-only FPGA proxy and exact signed-arithmetic contract, the accepted balanced-tree patch passes the recorded functional and exhaustive formal gates and improves the paired primary PPA estimator by \CompositeImprovement\% (95\% CI \CompositeLow\% to \CompositeHigh\%). The before/after RTL, compact calculations, raw primary runs and raw independent reproduction are publicly auditable. This remains academic implementation evidence, not a physical measurement.
+\textbf{Conclusion.} Within the declared VTR 45 nm LUT-only FPGA proxy and exact signed-arithmetic contract, the accepted balanced-tree patch passes the recorded functional and exhaustive formal gates and reduces the paired primary PPA estimator by \CompositeImprovement\% (95\% CI \CompositeLow\% to \CompositeHigh\%). The before/after RTL, compact calculations, raw primary runs and separate project replay are publicly verifiable. This remains academic implementation evidence, not a physical measurement or an externally audited result.
 \end{claimbox}
 
 \end{document}

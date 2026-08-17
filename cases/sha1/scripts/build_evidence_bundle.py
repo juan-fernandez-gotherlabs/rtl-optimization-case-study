@@ -20,8 +20,10 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-BUNDLE_ROOT = "rtl-sha-vtr-primary-ppa-evidence-v1"
+BUNDLE_ROOT = "rtl-sha-vtr-primary-ppa-evidence-v2"
 REPLACEMENT = b"<SOURCE_WORKTREE>"
+RUN_REPLACEMENT = b"<ACCEPTED_EVIDENCE_ROOT>"
+OMITTED_FLOW_FILES = ("config.py", "runner.py", "evaluator.py", "eval_script.py")
 
 
 @dataclass(frozen=True)
@@ -46,14 +48,13 @@ def add_bytes(archive: tarfile.TarFile, name: str, payload: bytes, mode: int = 0
     archive.addfile(info, io.BytesIO(payload))
 
 
-def sources(domain: Path) -> list[Source]:
-    accepted_run = domain / (
-        "evidence/ppa45/runs/codex_campaign_sol_high_dev32_20gen_20260809/"
-        "g05-f1-mux-direct-read-cert64-evidence-attempt2"
-    )
-    accepted_record = accepted_run.parent / "g05-f1-mux-direct-read-cert64-attempt2.json"
-    baseline_run = domain / "evidence/ppa45/runs/certification_baseline_v2_20260802"
-
+def sources(
+    domain: Path,
+    *,
+    accepted_run: Path,
+    accepted_record: Path,
+    baseline_run: Path,
+) -> list[Source]:
     required_files = {
         accepted_record: "records/accepted-certification.json",
         domain / "evidence/ppa45/baseline.json": "records/baseline.json",
@@ -77,10 +78,6 @@ def sources(domain: Path) -> list[Source]:
     flow_files = [
         "Dockerfile.vtr-ppa45-linux-amd64",
         "requirements-ppa45-linux-amd64.lock",
-        "config.py",
-        "runner.py",
-        "evaluator.py",
-        "eval_script.py",
         "certify_baseline.py",
         "activity_vectors.py",
         "generate_nist_corpus.py",
@@ -110,15 +107,23 @@ def sources(domain: Path) -> list[Source]:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--domain-root", required=True, type=Path)
+    parser.add_argument("--accepted-run", required=True, type=Path)
+    parser.add_argument("--accepted-record", required=True, type=Path)
+    parser.add_argument("--baseline-run", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
     args = parser.parse_args()
 
     domain = args.domain_root.expanduser().resolve()
-    if not (domain / "evaluator.py").is_file():
+    if not (domain / "Dockerfile.vtr-ppa45-linux-amd64").is_file():
         raise SystemExit(f"not an RTL SHA VTR domain root: {domain}")
     args.output.parent.mkdir(parents=True, exist_ok=True)
 
-    needles = [str(domain).encode(), str(domain.parent.parent).encode()]
+    accepted_run = args.accepted_run.expanduser().resolve()
+    replacement_rules = [
+        (str(accepted_run).encode(), RUN_REPLACEMENT),
+        (str(domain).encode(), REPLACEMENT),
+        (str(domain.parent.parent).encode(), REPLACEMENT),
+    ]
     manifest: list[dict[str, object]] = []
     modified_members: list[dict[str, object]] = []
 
@@ -133,19 +138,28 @@ def main() -> int:
                     "Host source-worktree paths are replaced by <SOURCE_WORKTREE>.\n"
                 ).encode()
                 add_bytes(archive, "README.txt", readme)
-                manifest.append(
-                    {"path": "README.txt", "bytes": len(readme), "sha256": digest(readme)}
-                )
+                manifest.append({"path": "README.txt", "bytes": len(readme), "sha256": digest(readme), "source_sha256": digest(readme)})
 
-                for item in sources(domain):
+                for item in sources(
+                    domain,
+                    accepted_run=args.accepted_run.expanduser().resolve(),
+                    accepted_record=args.accepted_record.expanduser().resolve(),
+                    baseline_run=args.baseline_run.expanduser().resolve(),
+                ):
                     before = item.source.read_bytes()
                     after = before
-                    replacements = 0
-                    for needle in needles:
+                    replacement_count = 0
+                    descriptions = []
+                    for needle, replacement in replacement_rules:
                         count = after.count(needle)
                         if count:
-                            after = after.replace(needle, REPLACEMENT)
-                            replacements += count
+                            after = after.replace(needle, replacement)
+                            replacement_count += count
+                            descriptions.append(
+                                "Accepted-run pathname replaced by a stable public evidence token."
+                                if replacement == RUN_REPLACEMENT
+                                else "Host source-worktree paths replaced by the public source token."
+                            )
                     add_bytes(archive, item.archive_path, after, item.source.stat().st_mode & 0o777)
                     entry = {
                         "path": item.archive_path,
@@ -154,29 +168,36 @@ def main() -> int:
                         "source_sha256": digest(before),
                     }
                     manifest.append(entry)
-                    if replacements:
+                    if replacement_count:
                         modified_members.append(
                             {
                                 "path": item.archive_path,
-                                "replacements": replacements,
+                                "description": " ".join(dict.fromkeys(descriptions)),
                                 "source_sha256": digest(before),
                                 "public_sha256": digest(after),
                             }
                         )
+                omissions = [
+                    {
+                        "path": f"flow/{relative}",
+                        "source_sha256": digest((domain / relative).read_bytes()),
+                        "reason": "Operational optimization module; not required to verify the delivered before/after evidence.",
+                    }
+                    for relative in OMITTED_FLOW_FILES
+                ]
                 record = {
-                    "schema_version": 2,
+                    "schema_version": 3,
                     "bundle": BUNDLE_ROOT,
-                    "purpose": "primary_ppa_full_public_audit_evidence",
+                    "purpose": "primary_ppa_public_evidence_without_optimization_infrastructure",
                     "member_count": len(manifest),
                     "members": manifest,
-                    "sanitization": {
-                        "replacement": REPLACEMENT.decode(),
+                    "transformations": {
                         "modified_member_count": len(modified_members),
                         "modified_members": modified_members,
                     },
-                    "corrections": {
-                        "modified_member_count": 0,
-                        "modified_members": [],
+                    "omissions": {
+                        "omitted_member_count": len(omissions),
+                        "omitted_members": omissions,
                     },
                 }
                 payload = (json.dumps(record, indent=2, sort_keys=True) + "\n").encode()

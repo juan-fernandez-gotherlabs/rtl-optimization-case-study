@@ -2,15 +2,15 @@
 
 Evolther improves bounded technical implementations while preserving a frozen
 functional contract. Each published result is verified for correctness,
-measured on a pinned implementation target and certified on evidence separated
-from the optimization search.
+measured on a pinned implementation target and accepted under a fixed project
+contract using evidence separated from the optimization search.
 
 ## Results at a glance
 
-| Case | Circuit | Correctness evidence | Certification | Result |
+| Case | Circuit | Correctness evidence | Project-contract evidence | Result |
 |---|---|---|---|---:|
-| [SHA-1 RTL](cases/sha1/README.md) | Stateful cryptographic datapath and command protocol | NIST SHAVS, cycle regression and sequential formal equivalence | 64 fixed pairs, disjoint from search, with raw-evidence audit | **2.27% better** |
-| [INT8 MatVec RTL](cases/int8-matvec/README.md) | Signed-INT8 4x4 matrix-vector kernel for quantized AI arithmetic | 151 deterministic tests and exhaustive combinational equivalence, with public raw logs | 64 fixed held-out pairs, independently reproduced, with raw-evidence audit | **8.3230% better** |
+| [SHA-1 RTL](cases/sha1/README.md) | Stateful cryptographic datapath and command protocol | NIST SHAVS, cycle regression and sequential formal equivalence | 64 fixed pairs, disjoint from search, with raw-provenance verification | **2.27% lower composite estimate** |
+| [INT8 MatVec RTL](cases/int8-matvec/README.md) | Signed-INT8 4x4 matrix-vector kernel for quantized AI arithmetic | 151 deterministic tests and exhaustive combinational equivalence, with public raw logs | 64 fixed held-out pairs plus a separate deterministic replay, with raw-provenance verification | **8.3230% lower composite estimate** |
 
 ### Read the reports
 
@@ -20,7 +20,8 @@ from the optimization search.
   quantized AI-kernel case.
 
 The reports are intentionally available at the repository root so a technical
-customer can reach the result without navigating the evidence tree.
+customer can reach the result without navigating the evidence tree. Percentages
+are case-specific and are not a cross-circuit performance comparison.
 
 ## What the evidence means
 
@@ -33,7 +34,7 @@ Frozen baseline and requirements
               |
   pinned implementation metrics
               |
-   held-out paired certification
+   held-out paired acceptance
 ```
 
 The optimization mechanism is outside this public package. The inspectable
@@ -60,7 +61,7 @@ Each case directory contains its baseline, accepted RTL, exact patch,
 certificate, report source, checksums and adversarial verifier tests. Both
 cases have separately downloadable, hash-addressed raw-evidence release assets.
 The compact checks require only Python; when an evidence archive is supplied,
-the case verifier also audits every archived file and independently re-extracts
+the case verifier also verifies every archived file and re-extracts
 the published post-route PPA rows. It does not rerun the EDA tools.
 
 ## Claim boundary
@@ -74,7 +75,8 @@ manufactured-silicon evidence. Percentages are specific to each frozen circuit,
 target and evaluation contract.
 
 Read [METHODOLOGY.md](METHODOLOGY.md) for the common evidence model and
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for provenance and licensing.
+[AUDIT.md](AUDIT.md) for the external-audit protocol and current review status.
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) records provenance and licensing.
 
 ## Evaluating a customer design
 

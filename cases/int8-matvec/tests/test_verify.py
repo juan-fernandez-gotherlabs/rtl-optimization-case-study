@@ -119,6 +119,21 @@ class Int8PublicVerifierTests(unittest.TestCase):
         self.mutate(root, lambda data: data["summary"].__setitem__("score", 0.1))
         self.assertNotEqual(self.run_verify(root).returncode, 0)
 
+    def test_rehashed_authority_drift_fails(self) -> None:
+        mutations = {
+            "toolchain": lambda data: data["measurement"]["toolchain"].__setitem__("vtr_commit", "0" * 40),
+            "architecture": lambda data: data["measurement"]["fpga_architecture"].__setitem__("sha256", "0" * 64),
+            "functional identity": lambda data: data["correctness"].__setitem__("functional_test_set_sha256", "0" * 64),
+            "score formula": lambda data: data["score_definition"].__setitem__("formula", "area only"),
+            "validity limits": lambda data: data["summary"]["validity_limits"].__setitem__("maximum_logic_elements", 999999),
+            "source evidence": lambda data: data["independent_replay"]["source_evidence_sha256"].__setitem__("baseline_primary", "0" * 64),
+        }
+        for label, mutation in mutations.items():
+            with self.subTest(label=label):
+                root = self.copy()
+                self.mutate(root, mutation)
+                self.assertNotEqual(self.run_verify(root).returncode, 0)
+
     def test_held_out_seed_identity_is_rejected(self) -> None:
         root = self.copy()
         self.mutate(root, lambda data: data["pairs"][0].__setitem__("seed", 2))

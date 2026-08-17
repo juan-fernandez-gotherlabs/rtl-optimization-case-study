@@ -20,6 +20,7 @@ ROOT_MANIFEST = {
     ".gitattributes",
     ".github/workflows/verify.yml",
     ".gitignore",
+    "AUDIT.md",
     "INT8-MatVec-Optimization.pdf",
     "LICENSE",
     "METHODOLOGY.md",

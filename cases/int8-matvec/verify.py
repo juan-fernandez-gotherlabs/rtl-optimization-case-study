@@ -44,6 +44,60 @@ ROW_METRICS = (
 TWO_SIDED_T_95_DF63 = 1.9983405425207417
 ONE_SIDED_T_95_DF63 = 1.6694022217068127
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
+CLAIM_BOUNDARY = "Blinded paired statistical certification using academic VTR PTM 45 nm post-route estimates; not physical, commercial FPGA, ASIC, silicon, board, signoff, measured-power, or measured-energy evidence."
+FUNCTIONAL_TEST_SET_SHA256 = "87abb71f1542981919fb62e299e0c19ff4cfacae20f41d50d0a41756d345c513"
+FORMAL_SCOPE = "Unbounded combinational equivalence of all four outputs for every 160-bit input assignment against the owned frozen baseline."
+TOOLCHAIN = {
+    "docker_image": "evolther-vtr-ppa45:95f5c6de-linux-amd64",
+    "docker_image_id": "sha256:c0badc2d2bb57364ff37477b3d2c482ef01f7d3df6211e9802e2c54367c33baf",
+    "network_during_evaluation": "disabled",
+    "platform": "linux/amd64",
+    "vtr_commit": "95f5c6de9e158371ba7185bf97c07a84153735d6",
+}
+FPGA_ARCHITECTURE = {
+    "classification": "VTR academic homogeneous FPGA architecture",
+    "lut_inputs": 6,
+    "nominal_voltage_v": 0.9,
+    "selection_rationale": "Use the exact non-fracturable LUT6 architecture and PTM point qualified by the repository's SHA-1 workflow.",
+    "sha256": "262792caef81931ae09b77d252158bde03c78954175d4b761e6d437317575307",
+    "technology_path": "vtr_flow/tech/PTM_45nm/45nm.xml",
+    "technology_sha256": "3080dea13bf7134109f8a83c79426ec0965e07639a61866fe9ae4bd05b5227cb",
+    "temperature_c": 85,
+    "vtr_path": "vtr_flow/arch/power/k6_N10_I40_Fi6_L4_frac0_ff1_45nm.xml",
+}
+ACTIVITY = {
+    "cycles": 2048,
+    "profiles": [
+        "active deterministic signed-INT8 extremes plus xorshift64 workload",
+        "idle all-zero data with active clock",
+    ],
+    "workload_seed_hex": "0x1a184d475eed",
+}
+SCORE_FORMULA = "paired geometric mean of area, critical-path delay, and active-total-power ratios"
+ACCEPTANCE_RULE = "Composite upper one-sided 95% bound < 1.0 and no primary metric lower one-sided 95% bound > 1.0."
+VALIDITY_LIMITS = {
+    "maximum_active_power_ratio": 2.0,
+    "maximum_area_ratio": 2.0,
+    "maximum_critical_path_ratio": 2.0,
+    "maximum_logic_elements": 6000,
+    "maximum_multiplier_blocks": 0,
+    "maximum_multiplier_operand_width": 64,
+}
+SOURCE_EVIDENCE_SHA256 = {
+    "baseline_primary": "bf4f024891eec15a19a22ff0ea0e4609bfa7613deb758681f864a7c2d2f158b7",
+    "baseline_replay": "25efb7578ed201bab9b7bac6ae043821b583cd7e9143d2c4ad23ce02a065d8ec",
+    "optimized_primary": "5f42601df61768be36b23594205c8d61d138bb4ed760443af0bbef0b43948a7d",
+    "optimized_replay": "441b9da134214162176d16a79e740dc50c1cdb1c9a244e6a1fa640b906304a6d",
+}
+FLOW_SHA256 = {
+    "flow/Dockerfile.vtr-ppa45-linux-amd64": "4ad557b059853351308ab4b9138be265b6328a34252fddc9c940dac3545f9327",
+    "flow/activity_vectors.py": "118945c313b05bec478341c6adda7c110dc5026094dee66073bad0aa173d28cd",
+    "flow/benchmark.py": "c3d5d703ceebe37b1df887c53af07314b6cbcd478b34daec5a7c28cad216b3a2",
+    "flow/certification_contract.public.json": "84399097c4d40385907903ee41458c27d504e7fbaf375fb2bdcb8a32c4abafff",
+    "flow/ppa_manifest.json": "9e64620a0a54e82a2c0fd1216f221b10d00b59dbcfda252478d12a7c66e51762",
+    "flow/vtr_ppa.py": "ac6305d6aa4a2945bf51224035cc9926c1eba68275f6d79c125f516e9400bec8",
+}
+FUNCTIONAL_TESTBENCH_SHA256 = "78047436c27ae524b1614b303312def364313cf4ab8bcfa7ca5c48e2f64557ee"
 
 REQUIRED_MANIFEST = {
     "LICENSE",
@@ -216,9 +270,9 @@ def verify_certificate(data: dict[str, Any]) -> float:
         "root",
     )
     require(data["schema_version"] == 1 and data["case_id"] == "int8-matvec-vtr45-v1", "wrong certificate identity")
-    require(data["status"] == "certified_and_independently_reproduced", "certificate is not independently reproduced")
+    require(data["status"] == "certified_and_independently_reproduced", "certificate lacks the required replay status")
     require(data["decision"] == "evidence_improvement", "certificate did not accept an improvement")
-    require(data["claim_boundary"] == "Blinded paired statistical certification using academic VTR PTM 45 nm post-route estimates; not physical, commercial FPGA, ASIC, silicon, board, signoff, measured-power, or measured-energy evidence.", "claim boundary drift")
+    require(data["claim_boundary"] == CLAIM_BOUNDARY, "claim boundary drift")
     reject_private_fields(data)
 
     rtl = data["rtl"]
@@ -231,21 +285,27 @@ def verify_certificate(data: dict[str, Any]) -> float:
     require(correctness["functional_passed"] is True, "functional verification did not pass")
     require(correctness["formal_passed"] is True, "formal equivalence did not pass")
     require(correctness["functional_test_count"] == 151, "wrong functional test count")
-    require(type(correctness["functional_test_set_sha256"]) is str and HEX64.fullmatch(correctness["functional_test_set_sha256"]), "invalid functional test identity")
-    require("every 160-bit input assignment" in correctness["formal_scope"], "formal scope is not explicit")
+    require(correctness["functional_test_set_sha256"] == FUNCTIONAL_TEST_SET_SHA256, "wrong functional test identity")
+    require(correctness["formal_scope"] == FORMAL_SCOPE, "formal scope drift")
 
     measurement = data["measurement"]
     exact_keys(measurement, {"toolchain", "fpga_architecture", "activity", "search_pair_count", "certification_pair_count", "pools_disjoint", "pair_identity_policy"}, "measurement")
+    exact_keys(measurement["toolchain"], set(TOOLCHAIN), "measurement.toolchain")
+    exact_keys(measurement["fpga_architecture"], set(FPGA_ARCHITECTURE), "measurement.fpga_architecture")
+    exact_keys(measurement["activity"], set(ACTIVITY), "measurement.activity")
+    require(measurement["toolchain"] == TOOLCHAIN, "toolchain authority drift")
+    require(measurement["fpga_architecture"] == FPGA_ARCHITECTURE, "FPGA architecture authority drift")
+    require(measurement["activity"] == ACTIVITY, "activity authority drift")
     require(measurement["search_pair_count"] == 5 and measurement["certification_pair_count"] == 64, "wrong search/certification counts")
     require(measurement["pools_disjoint"] is True, "measurement pools are not disjoint")
-    require(measurement["toolchain"]["platform"] == "linux/amd64", "wrong measurement platform")
-    require(measurement["fpga_architecture"]["nominal_voltage_v"] == 0.9, "wrong nominal voltage")
-    require(measurement["fpga_architecture"]["temperature_c"] == 85, "wrong temperature")
+    require(measurement["pair_identity_policy"] == "Held-out VTR seed identities are replaced by stable pair labels in the public compact certificate.", "pair identity policy drift")
 
     score = data["score_definition"]
     exact_keys(score, {"direction", "baseline", "primary_metrics", "formula", "acceptance_rule"}, "score_definition")
     require(score["direction"] == "lower_is_better" and score["baseline"] == 1.0, "wrong score direction")
     require(score["primary_metrics"] == list(PRIMARY), "wrong primary metrics")
+    require(score["formula"] == SCORE_FORMULA, "score formula drift")
+    require(score["acceptance_rule"] == ACCEPTANCE_RULE, "acceptance rule drift")
 
     pairs = data["pairs"]
     require(type(pairs) is list and len(pairs) == 64, "certificate must contain exactly 64 pairs")
@@ -304,14 +364,19 @@ def verify_certificate(data: dict[str, Any]) -> float:
     for metric in maxima:
         require(max(values["optimized"][metric]) == maxima[metric], f"wrong resource maximum: {metric}")
     limits = summary["validity_limits"]
+    exact_keys(limits, set(VALIDITY_LIMITS), "validity_limits")
+    require(limits == VALIDITY_LIMITS, "validity-limit authority drift")
     require(maxima["logic_elements"] <= limits["maximum_logic_elements"], "logic-element validity limit failed")
     require(maxima["multiplier_blocks"] <= limits["maximum_multiplier_blocks"], "multiplier-block validity limit failed")
+    require(max(row["optimized"]["area_total_mwta"] / row["baseline"]["area_total_mwta"] for row in pairs) <= limits["maximum_area_ratio"], "area-ratio validity limit failed")
+    require(max(row["optimized"]["critical_path_delay_ns"] / row["baseline"]["critical_path_delay_ns"] for row in pairs) <= limits["maximum_critical_path_ratio"], "delay-ratio validity limit failed")
+    require(max(row["optimized"]["active_total_power_w"] / row["baseline"]["active_total_power_w"] for row in pairs) <= limits["maximum_active_power_ratio"], "power-ratio validity limit failed")
 
     replay = data["independent_replay"]
     exact_keys(replay, {"baseline_exact", "optimized_exact", "source_evidence_sha256"}, "independent_replay")
     require(replay["baseline_exact"] is True and replay["optimized_exact"] is True, "independent replay failed")
     exact_keys(replay["source_evidence_sha256"], {"baseline_primary", "baseline_replay", "optimized_primary", "optimized_replay"}, "source evidence")
-    require(all(type(value) is str and HEX64.fullmatch(value) for value in replay["source_evidence_sha256"].values()), "invalid source evidence identity")
+    require(replay["source_evidence_sha256"] == SOURCE_EVIDENCE_SHA256, "source evidence identity drift")
     return calculated["composite"]["estimate"]
 
 
@@ -471,8 +536,8 @@ def verify_full_evidence(data: dict[str, Any], metadata: dict[str, Any], archive
         records: dict[str, dict[str, Any]] = {}
         candidates: dict[str, bytes] = {}
         bundled_certificate: bytes | None = None
-        functional_passes: set[str] = set()
-        formal_passes: set[str] = set()
+        functional_artifacts: dict[str, dict[str, bytes]] = {}
+        formal_logs: dict[str, bytes] = {}
         raw_runs: dict[tuple[str, str], dict[str, bytes]] = {}
         for index, entry in enumerate(entries):
             require(type(entry) is dict, f"manifest member {index} must be an object")
@@ -510,12 +575,15 @@ def verify_full_evidence(data: dict[str, Any], metadata: dict[str, Any], archive
             candidate_match = re.fullmatch(r"runs/(baseline-primary|baseline-replay|accepted-primary|accepted-replay)/candidate\.sv", relative)
             if candidate_match:
                 candidates[candidate_match.group(1)] = payload
-            functional_match = re.fullmatch(r"runs/(baseline-primary|baseline-replay|accepted-primary|accepted-replay)/functional/functional_run\.stdout\.log", relative)
-            if functional_match and b"FUNCTIONAL_PASS cases=151" in payload:
-                functional_passes.add(functional_match.group(1))
+            functional_match = re.fullmatch(
+                r"runs/(baseline-primary|baseline-replay|accepted-primary|accepted-replay)/functional/(candidate\.sv|functional_testbench\.sv|functional_run\.stdout\.log|functional_run\.stderr\.log)",
+                relative,
+            )
+            if functional_match:
+                functional_artifacts.setdefault(functional_match.group(1), {})[functional_match.group(2)] = payload
             formal_match = re.fullmatch(r"runs/(baseline-primary|baseline-replay|accepted-primary|accepted-replay)/results/formal\.log", relative)
-            if formal_match and b"Equivalence successfully proven" in payload:
-                formal_passes.add(formal_match.group(1))
+            if formal_match:
+                formal_logs[formal_match.group(1)] = payload
             raw_match = re.fullmatch(
                 r"runs/(baseline-primary|baseline-replay|accepted-primary|accepted-replay)/(held-out-\d{2})/(vpr\.crit_path\.out|active\.power|idle\.power)",
                 relative,
@@ -552,24 +620,73 @@ def verify_full_evidence(data: dict[str, Any], metadata: dict[str, Any], archive
     legs = {"baseline-primary", "baseline-replay", "accepted-primary", "accepted-replay"}
     require(bundled_certificate is not None and sha256_bytes(bundled_certificate) == sha256(RESULT), "bundle compact certificate mismatch")
     require(set(records) == legs and set(candidates) == legs, "archive does not contain all four evidence records and RTL inputs")
-    require(functional_passes == legs, "one or more functional replay logs did not pass 151 cases")
-    require(formal_passes == legs, "one or more exhaustive formal-equivalence logs did not pass")
+    require(set(functional_artifacts) == legs and set(formal_logs) == legs, "archive does not contain all functional/formal evidence legs")
+    for relative, expected_hash in FLOW_SHA256.items():
+        require(public_hashes.get(relative) == expected_hash, f"flow authority identity mismatch: {relative}")
     require(set(raw_runs) == {(leg, f"held-out-{index:02d}") for leg in legs for index in range(1, 65)}, "archive does not contain exactly four blinded 64-pair PPA sets")
     baseline_hash = data["rtl"]["baseline_sha256"]
     accepted_hash = data["rtl"]["optimized_sha256"]
     for leg in legs:
         expected_hash = baseline_hash if leg.startswith("baseline-") else accepted_hash
         require(sha256_bytes(candidates[leg]) == expected_hash, f"wrong candidate RTL identity: {leg}")
+        functional = functional_artifacts[leg]
+        require(
+            set(functional) == {"candidate.sv", "functional_testbench.sv", "functional_run.stdout.log", "functional_run.stderr.log"},
+            f"incomplete functional evidence: {leg}",
+        )
+        require(functional["candidate.sv"] == candidates[leg], f"functional candidate differs from measured candidate: {leg}")
+        require(sha256_bytes(functional["functional_testbench.sv"]) == FUNCTIONAL_TESTBENCH_SHA256, f"functional testbench identity mismatch: {leg}")
+        stdout = functional["functional_run.stdout.log"]
+        require(stdout.count(b"FUNCTIONAL_PASS cases=151") == 1, f"functional pass marker is not unique: {leg}")
+        require(functional["functional_run.stderr.log"] == b"", f"functional stderr is not empty: {leg}")
+        require(re.search(rb"(?i)(?:FUNCTIONAL_FAIL|ASSERTION FAILED|%Error|fatal)", stdout) is None, f"functional failure marker present: {leg}")
+        formal = formal_logs[leg]
+        require(formal.count(b"Found 384 $equiv cells") == 1, f"formal equivalence-cell count mismatch: {leg}")
+        require(formal.count(b"384 are proven and 0 are unproven") == 1, f"formal proof closure mismatch: {leg}")
+        require(formal.count(b"Equivalence successfully proven!") == 1, f"formal success marker mismatch: {leg}")
         record = records[leg]
-        require(record.get("status") == "qualified" and record.get("functional_passed") is True and record.get("formal_passed") is True, f"unqualified evidence record: {leg}")
-        require(record.get("artifact_rtl_sha256") == expected_hash, f"record RTL identity mismatch: {leg}")
-        require(record.get("seed_count") == 64, f"wrong held-out count: {leg}")
+        exact_keys(
+            record,
+            {
+                "active_vector_sha256", "activity_blif_sha256", "aggregates", "artifact",
+                "artifact_rtl_sha256", "certification_manifest_sha256", "claim_boundary",
+                "contract_revision", "docker_image_id", "elapsed_seconds", "evidence_role",
+                "formal_passed", "functional_passed", "functional_test_count",
+                "functional_test_set_sha256", "idle_vector_sha256", "pair_identity_policy",
+                "per_seed", "schema_version", "search_contract_manifest_sha256", "seed_count",
+                "seed_workers", "status",
+            },
+            f"record.{leg}",
+        )
+        expected_artifact = "baseline" if leg.startswith("baseline-") else "campaign_best"
+        expected_role = "primary" if leg.endswith("-primary") else "independent_reproduction"
+        require(record["schema_version"] == 1 and record["status"] == "qualified", f"unqualified evidence record: {leg}")
+        require(record["artifact"] == expected_artifact and record["evidence_role"] == expected_role, f"record role drift: {leg}")
+        require(record["functional_passed"] is True and record["formal_passed"] is True, f"correctness record failed: {leg}")
+        require(record["functional_test_count"] == 151 and record["functional_test_set_sha256"] == FUNCTIONAL_TEST_SET_SHA256, f"functional authority mismatch: {leg}")
+        require(record["claim_boundary"] == CLAIM_BOUNDARY, f"record claim boundary drift: {leg}")
+        require(record["contract_revision"] == "int8-matvec-vtr45-held-out-certification64-v1", f"record contract revision drift: {leg}")
+        require(record["docker_image_id"] == TOOLCHAIN["docker_image_id"], f"record image identity drift: {leg}")
+        require(record["certification_manifest_sha256"] == "2a988ca82d46fb72631880899f5f2686a4b0274b1b17afd58379437ed59c5441", f"certification manifest drift: {leg}")
+        require(record["search_contract_manifest_sha256"] == FLOW_SHA256["flow/ppa_manifest.json"], f"search manifest drift: {leg}")
+        require(record["pair_identity_policy"] == "Held-out seed identities replaced by stable pair labels.", f"record pair policy drift: {leg}")
+        require(record["idle_vector_sha256"] == "9734f9350c07b82aac0b6082b4cb75efd863934c758b9195b5e692a935715e34", f"idle activity identity drift: {leg}")
+        expected_active = "0792b04f00e89c7d837b8016a6e119baf61c5e36453f1bbfbb89025b97e7a62e" if leg.startswith("baseline-") else "8dae31a5e9084ac483a65f836fdad05c2913bbe8958e8f072947f27333cca463"
+        expected_blif = "7edb883c23691ab07b73f9de0f96445542d2f4e4384cd0d766544072c2494a0a" if leg.startswith("baseline-") else "b6b697a00d92970d164a039b07231c739c1bb5723dcc5a95950b420fc667e098"
+        require(record["active_vector_sha256"] == expected_active and record["activity_blif_sha256"] == expected_blif, f"active activity identity drift: {leg}")
+        require(record["artifact_rtl_sha256"] == expected_hash, f"record RTL identity mismatch: {leg}")
+        require(record["seed_count"] == 64 and record["seed_workers"] == 2, f"wrong held-out execution shape: {leg}")
+        finite(record["elapsed_seconds"], f"record.{leg}.elapsed_seconds")
         reject_private_fields(record, f"record.{leg}")
         rows = record.get("per_seed")
         require(type(rows) is list and len(rows) == 64, f"wrong record rows: {leg}")
         for index, row in enumerate(rows, 1):
             require(type(row) is dict and row.get("pair_id") == f"held-out-{index:02d}", f"wrong blinded pair ordering: {leg}/{index}")
             exact_keys(row, set(ROW_METRICS) | {"pair_id"}, f"record.{leg}.{index}")
+        expected_summary_side = "baseline" if leg.startswith("baseline-") else "optimized"
+        exact_keys(record["aggregates"], set(data["summary"][expected_summary_side]), f"record.{leg}.aggregates")
+        for metric, value in record["aggregates"].items():
+            raw_close(value, data["summary"][expected_summary_side][metric], f"record {leg} aggregate {metric}")
 
     for index, compact in enumerate(data["pairs"], 1):
         pair_id = f"held-out-{index:02d}"
