@@ -1,264 +1,564 @@
-\documentclass[11pt,a4paper]{article}
-\usepackage[a4paper,margin=20mm,headheight=22pt]{geometry}
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[a4paper,top=20mm,bottom=22mm,left=19mm,right=19mm,headheight=14pt]{geometry}
 \usepackage{fontspec}
-\setmainfont{texgyreheros-regular.otf}[BoldFont=texgyreheros-bold.otf,ItalicFont=texgyreheros-italic.otf,BoldItalicFont=texgyreheros-bolditalic.otf]
 \setsansfont{texgyreheros-regular.otf}[BoldFont=texgyreheros-bold.otf,ItalicFont=texgyreheros-italic.otf,BoldItalicFont=texgyreheros-bolditalic.otf]
-\setmonofont{texgyrecursor-regular.otf}[BoldFont=texgyrecursor-bold.otf,ItalicFont=texgyrecursor-italic.otf,BoldItalicFont=texgyrecursor-bolditalic.otf,Scale=.90]
+\setmainfont{texgyreheros-regular.otf}[BoldFont=texgyreheros-bold.otf,ItalicFont=texgyreheros-italic.otf,BoldItalicFont=texgyreheros-bolditalic.otf]
+\setmonofont{texgyrecursor-regular.otf}[BoldFont=texgyrecursor-bold.otf,ItalicFont=texgyrecursor-italic.otf,BoldItalicFont=texgyrecursor-bolditalic.otf,Scale=0.88]
+\renewcommand{\familydefault}{\sfdefault}
 \usepackage{microtype}
 \usepackage[table]{xcolor}
-\definecolor{Ink}{HTML}{122230}
-\definecolor{Mid}{HTML}{536675}
-\definecolor{Rule}{HTML}{D6E0E5}
-\definecolor{Pale}{HTML}{F2F6F7}
-\definecolor{GotherBlue}{HTML}{126A82}
-\definecolor{Accent}{HTML}{20A3A8}
-\usepackage{booktabs,tabularx,array,colortbl}
-\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
-\newcolumntype{R}{>{\raggedleft\arraybackslash}p{25mm}}
-\newcolumntype{B}[1]{>{\bfseries\raggedright\arraybackslash}p{#1}}
-\usepackage{amsmath,amssymb}
+\definecolor{GotherBlue}{HTML}{0A84FF}
+\definecolor{Ink}{HTML}{111111}
+\definecolor{Mid}{HTML}{666666}
+\definecolor{Rule}{HTML}{D9DDE3}
+\definecolor{Pale}{HTML}{F4F8FC}
+\usepackage{titlesec}
+\titleformat{\section}{\fontsize{20}{23}\bfseries\color{Ink}}{}{0pt}{}
+\titleformat{\subsection}{\fontsize{13.5}{16}\bfseries\color{Ink}}{}{0pt}{}
+\titlespacing*{\section}{0pt}{0pt}{12pt}
+\titlespacing*{\subsection}{0pt}{16pt}{7pt}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize\color{Mid}Göther Labs / Evaluated technical improvement}
+\fancyhead[R]{\footnotesize\color{Mid}ML-KEM CBD RTL / VTR 45 nm}
+\fancyfoot[L]{\footnotesize\color{Mid}Prospectively frozen publication evidence · \EvidenceDate}
+\fancyfoot[R]{\footnotesize\color{Mid}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\usepackage{booktabs,tabularx,array}
+\usepackage{siunitx}
+\sisetup{detect-all,group-separator={,},group-minimum-digits=4}
+\newcolumntype{Y}{>{\rightskip=0pt plus 1fil\relax\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+\newcolumntype{P}[1]{>{\rightskip=0pt plus 1fil\relax\arraybackslash}p{#1}}
+\newcolumntype{B}[1]{>{\bfseries\rightskip=0pt plus 1fil\relax\arraybackslash}p{#1}}
+\usepackage{amsmath,amssymb,mathtools}
 \usepackage{enumitem}
 \setlist{nosep,leftmargin=5mm}
 \usepackage{listings}
-\lstdefinelanguage{VerilogDiff}{morekeywords={always,assign,begin,case,default,end,endcase,if,module,reg},sensitive=true,morecomment=[l]{//}}
-\lstset{basicstyle=\ttfamily\footnotesize,keywordstyle=\color{GotherBlue}\bfseries,commentstyle=\color{Mid},columns=fullflexible,keepspaces=true,frame=none,backgroundcolor=\color{white},xleftmargin=0pt,showstringspaces=false,breaklines=true}
+\lstdefinelanguage{VerilogDiff}{morekeywords={always,assign,begin,case,default,end,endcase,else,if,module,input,output,reg,wire},sensitive=true,morecomment=[l]{//}}
+\lstset{basicstyle=\ttfamily\footnotesize,keywordstyle=\color{GotherBlue}\bfseries,commentstyle=\color{Mid},columns=fullflexible,keepspaces=true,frame=none,backgroundcolor=\color{white},xleftmargin=0pt,aboveskip=7pt,belowskip=7pt,showspaces=false,showtabs=false,showstringspaces=false,breaklines=true,breakatwhitespace=false}
 \usepackage{tikz}
-\usetikzlibrary{arrows.meta,positioning,calc}
+\usetikzlibrary{arrows.meta,positioning,calc,fit,backgrounds}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
 \usepackage[most]{tcolorbox}
 \usepackage{hyperref}
-\hypersetup{colorlinks=true,linkcolor=Ink,urlcolor=GotherBlue,citecolor=GotherBlue,pdfauthor={Göther Labs},pdftitle={ML-KEM CBD RTL optimization on VTR},pdflang={en-GB}}
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[L]{\small\color{Mid} Göther Labs / Verified RTL optimization}
-\fancyhead[R]{\small\color{Mid} ML-KEM CBD}
-\fancyfoot[C]{\small\color{Mid}\thepage}
-\renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{Rule}\leaders\hrule height \headrulewidth\hfill}}
+\hypersetup{colorlinks=true,linkcolor=Ink,urlcolor=GotherBlue,citecolor=GotherBlue,pdfauthor={Göther Labs},pdftitle={ML-KEM CBD RTL optimization on VTR - prospective publication evidence},pdflang={en-GB}}
+\usepackage{seqsplit}
+
+\input{generated/metrics.tex}
+
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{5.5pt}
 \setlength{\emergencystretch}{2em}
-\input{generated/metrics.tex}
+\newcommand{\hash}[1]{{\scriptsize\ttfamily\seqsplit{#1}}}
+\newcommand{\better}{\textcolor{GotherBlue}{\textbf{better}}}
+\newcommand{\neutral}{\textcolor{Mid}{\textbf{neutral}}}
+\newcommand{\smallcaps}[1]{\textcolor{Mid}{\fontsize{8.5}{10}\selectfont\bfseries\MakeUppercase{#1}}}
+\newcommand{\newpageheading}[2]{\clearpage\section{#1}\smallcaps{#2}\vspace{6pt}}
+\newcommand{\yes}{\textcolor{GotherBlue}{\textbf{PASS}}}
+\newcommand{\thead}[1]{\textcolor{white}{\textbf{#1}}}
 
-\newcommand{\newpageheading}[2]{\clearpage{\color{GotherBlue}\small\bfseries #2}\par\vspace{1mm}{\color{Ink}\LARGE\bfseries #1}\par\vspace{4mm}\color{Ink}}
-\newcommand{\hash}[1]{\texttt{\small\expandafter\detokenize\expandafter{#1}}}
-\newtcolorbox{claimbox}[1][]{enhanced,breakable,boxrule=0.6pt,leftrule=3pt,colback=white,colframe=GotherBlue,arc=0pt,left=4.5mm,right=4.5mm,top=4mm,bottom=4mm,#1}
+\newtcolorbox{claimbox}[1][]{enhanced,breakable,boxrule=0.6pt,leftrule=2.8pt,colback=white,colframe=GotherBlue,arc=0pt,left=4.5mm,right=4.5mm,top=4mm,bottom=4mm,before upper=\raggedright,#1}
 \newtcolorbox{scopebox}[1][]{enhanced,breakable,boxrule=0.5pt,colback=Pale,colframe=Rule,arc=2mm,left=4mm,right=4mm,top=3mm,bottom=3mm,#1}
-\tikzset{signal/.style={-Latex,draw=Mid,line width=.75pt},gate/.style={draw=Rule,fill=white,rounded corners=1.5pt,minimum width=24mm,minimum height=10mm,font=\scriptsize\bfseries,align=center},accepted/.style={gate,draw=GotherBlue,fill=GotherBlue!4},input/.style={draw=Rule,fill=white,rounded corners=1.5pt,minimum width=19mm,minimum height=8mm,font=\scriptsize,align=center}}
+
+\tikzset{
+  signal/.style={-Latex,draw=Mid,line width=.75pt},
+  gate/.style={draw=Rule,fill=white,rounded corners=1.5pt,minimum width=17mm,minimum height=8mm,font=\scriptsize\bfseries,align=center},
+  accepted/.style={gate,draw=GotherBlue},
+  input/.style={draw=Rule,fill=white,rounded corners=1.5pt,minimum width=10mm,minimum height=7mm,font=\scriptsize,align=center},
+}
 
 \begin{document}
+
+% Cover
 \thispagestyle{empty}
 \begin{tikzpicture}[remember picture,overlay]
   \fill[GotherBlue] (current page.north west) rectangle ([xshift=7mm]current page.south west);
-  \fill[Pale] ([xshift=7mm]current page.north west) rectangle (current page.south east);
-  \draw[Accent,line width=1.2pt] ([xshift=28mm,yshift=-36mm]current page.north west)--([xshift=-25mm,yshift=-36mm]current page.north east);
 \end{tikzpicture}
-\vspace*{45mm}
+\vspace*{47mm}
 {\color{Mid}\fontsize{11}{14}\selectfont Göther Labs / Evaluated technical improvement}\par
 \vspace{5mm}
 {\color{Ink}\fontsize{29}{33}\selectfont\bfseries ML-KEM CBD RTL optimization on VTR}\par
 \vspace{5mm}
-{\color{Mid}\fontsize{13}{16}\selectfont Post-quantum cryptographic IP / open 45 nm FPGA proxy}\par
+{\color{Mid}\fontsize{13}{16}\selectfont Prospectively frozen paired PPA estimate · open 45 nm FPGA proxy}\par
 \vspace{19mm}
 \begin{claimbox}
-{\fontsize{15}{19}\selectfont\bfseries A fixed-chunk state representation reduces the paired area-delay-power estimate by \CompositeImprovement\% across 64 prospectively frozen publication pairs.}
+{\fontsize{15}{19}\selectfont\bfseries A fixed-chunk state representation reduces the paired area-delay-power estimate by \CompositeImprovement\%}
 \end{claimbox}
+\vspace{35mm}
+{\color{Mid}\fontsize{12}{15}\selectfont Prepared by Göther Labs}\par
+\vspace{4mm}
+{\color{Mid}\fontsize{12}{15}\selectfont Measurement completed: \EvidenceDate}\par
 \vfill
-{\color{Mid}\small Source: HOPE-MLKEM CBD at pinned commit \texttt{72a90d80...}}\par
-{\color{Mid}\small Evidence completed: 21 August 2026}\par
-\vspace{8mm}
-{\color{Mid}\footnotesize Academic comparative estimate. Not ASIC signoff, commercial-FPGA characterization, side-channel analysis, or certification of the complete ML-KEM implementation.}\par
+{\color{Mid}\footnotesize Academic open-FPGA estimate. Not ASIC signoff, a commercial FPGA result, side-channel analysis, or certification of a complete ML-KEM implementation.}\par
 
-\newpageheading{1. Executive result}{The result a technical customer can review first}
+% Executive result
+\newpageheading{1. Executive result}{Frozen baseline versus optimized RTL}
+
 \begin{claimbox}
-\textbf{The optimized RTL preserves the complete interface and defined-input cycle behaviour while improving the fixed 64-pair composite estimate by \CompositeImprovement\% (two-sided 95\% descriptive interval: \CompositeLow\% to \CompositeHigh\%).}
+\textbf{The optimized RTL improves the equal-weight area-delay-active-power estimator by \CompositeImprovement\% (95\% CI: \CompositeLow\% to \CompositeHigh\%) without changing the interface, defined-input cycle behaviour, latency, output order or ML-KEM CBD coefficient arithmetic.}
 \end{claimbox}
 
 \renewcommand{\arraystretch}{1.42}
+\vspace{3mm}
+{\small
 \rowcolors{2}{Pale}{white}
-\begin{tabularx}{\textwidth}{@{}B{31mm}R R R Y@{}}
-\rowcolor{Ink}\color{white}Metric & \color{white}Baseline & \color{white}Optimized & \color{white}Improvement & \color{white}95\% interval \\
-Total area (MWTA) & \BaselineArea & \OptimizedArea & \textbf{\AreaImprovement\%} & \AreaLow\% to \AreaHigh\% \\
-Critical path & \BaselineDelay\ ns & \OptimizedDelay\ ns & \textbf{\DelayImprovement\%} & \DelayLow\% to \DelayHigh\% \\
-Active total power & \BaselinePower\ mW & \OptimizedPower\ mW & \textbf{\PowerImprovement\%} & \PowerLow\% to \PowerHigh\% \\
-Composite score & 1.000000 & \CompositeScore & \textbf{\CompositeImprovement\%} & \CompositeLow\% to \CompositeHigh\% \\
+\begin{tabularx}{\textwidth}{@{}P{28mm}P{29mm}P{29mm}P{24mm}Y@{}}
+\rowcolor{Ink}
+\thead{Primary metric} & \thead{Baseline aggregate} & \thead{Optimized aggregate} & \thead{Paired improvement} & \thead{95\% CI / state} \\
+Total area & \BaselineArea\ MWTA & \OptimizedArea\ MWTA & \textbf{\AreaImprovement\%} & \AreaLow\% to \AreaHigh\% · \better \\
+Critical path & \BaselineDelay\ ns & \OptimizedDelay\ ns & \textbf{\DelayImprovement\%} & \DelayLow\% to \DelayHigh\% · \better \\
+Active total power & \BaselinePower\ mW & \OptimizedPower\ mW & \textbf{\PowerImprovement\%} & \PowerLow\% to \PowerHigh\% · \better \\
+Composite estimator & 1.000000 & \CompositeScore & \textbf{\CompositeImprovement\%} & \CompositeLow\% to \CompositeHigh\% · \better \\
 \end{tabularx}
 \rowcolors{2}{}{}
+}
 
-\vspace{6mm}
-MWTA is VTR's minimum-width transistor-area unit. The optimized implementation uses \OptimizedClb{} packed CLBs instead of \BaselineClb{} (\ClbImprovement\% fewer). Reciprocal routed delay corresponds to a \FmaxImprovement\% increase in the frequency estimate. The score is the equal-weight geometric mean of paired area, delay and active-total-power ratios; percentages are not added.
-
-\begin{scopebox}
-\textbf{Publication design.} The RTL was frozen before a new pool of \PairCount{} seeds was measured. A prior fixed \InitialPairCount{}-pair result had shown \InitialImprovement\% improvement and is disclosed as selection history. The publication pool was not extended or edited after measurement.
-\end{scopebox}
-
-\newpageheading{2. Module and industrial context}{A real post-quantum cryptographic building block}
-ML-KEM is the module-lattice key-encapsulation mechanism standardised in NIST FIPS 203. The evaluated module is the centred-binomial-distribution (CBD) sampler from the open \href{https://github.com/HWSec-CSIC/hope-mlkem}{HOPE-MLKEM} hardware implementation. It converts pseudorandom SHAKE bits into small positive and negative polynomial coefficients used as controlled mathematical noise.
-
-This is one block inside ML-KEM, not a complete key-encapsulation engine. Its relevance is nevertheless concrete: it is synthesizable RTL from a real post-quantum design, with the state movement, modes and command behaviour expected in cryptographic IP.
-
-\begin{center}
-\begin{tikzpicture}[node distance=10mm]
-\node[input] (shake) {1,088-bit\\SHAKE input};
-\node[accepted,right=of shake,minimum width=36mm,minimum height=16mm] (state) {CBD state\\eta mode};
-\node[accepted,right=of state,minimum width=38mm,minimum height=16mm] (sample) {bit-group sums\\difference / mod $q$};
-\node[input,right=of sample] (out) {four\\coefficients};
-\draw[signal] (shake)--(state); \draw[signal] (state)--(sample); \draw[signal] (sample)--(out);
-\end{tikzpicture}
-\end{center}
-
-The source is pinned to commit \texttt{72a90d80484d45d0bed1e0f9903bd0fb78cceb47}, path \texttt{rtl/cbd.v}, under the MIT License. The evaluation baseline differs from upstream only by provenance comments.
-
-\newpageheading{3. Architectural change}{Replace wide variable movement with fixed movement plus metadata}
-The baseline stores 1,096 bits in \texttt{reg\_shake}. Each active cycle selects either a 16-bit or a 24-bit right shift according to \texttt{eta}. Generic mapping exposes this as a wide selection network around more than one thousand enabled flip-flops.
-
-\begin{center}
-\begin{tikzpicture}[node distance=8mm]
-\node[font=\small\bfseries,text=Mid] (bt) {Baseline};
-\node[input,below=6mm of bt,xshift=-44mm] (bs) {1,096-bit state};
-\node[gate,right=12mm of bs,minimum width=34mm] (bm) {16 / 24-bit\\wide shift select};
-\node[input,right=12mm of bm] (bo) {logical head};
-\draw[signal] (bs)--(bm); \draw[signal] (bm)--(bo);
-\node[font=\small\bfseries,text=GotherBlue,below=27mm of bt] (at) {Optimized};
-\node[input,below=6mm of at,xshift=-44mm] (as) {fixed 24-bit\\chunk shift};
-\node[accepted,right=12mm of as,minimum width=34mm] (ap) {two-bit\\byte phase};
-\node[input,right=12mm of ap] (ao) {same logical head};
-\draw[signal] (as)--(ap); \draw[signal] (ap)--(ao);
-\end{tikzpicture}
-\end{center}
-
-The optimized RTL always moves physical chunks by 24 bits. A two-bit phase records the remaining byte offset needed to represent a logical 16-bit advance. This is analogous to retaining data in place and moving a read pointer instead of repeatedly moving the full data structure.
-
-The public interface, addresses, output coefficients, completion cycle, reset, load, second-load, stalls and both eta modes remain unchanged.
-
-The exact source change is published as \texttt{rtl/changes.patch}.
-
-\newpageheading{4. Correctness contract}{Sequential behaviour, not only arithmetic equivalence}
-The candidate passes three layers before any PPA metric is accepted:
-
-\rowcolors{2}{Pale}{white}
-\begin{tabularx}{\textwidth}{@{}B{36mm}Y B{20mm}@{}}
-\rowcolor{Ink}\color{white}Gate & \color{white}Scope & \color{white}Result \\
-Structure and lint & Verilator lint; Yosys module, interface, hierarchy and synthesis checks & PASS \\
-Cycle regression & \FunctionalCycles{} cycles and \FunctionalChecks{} checks covering reset, eta 2/3, stalls, reload and second-load & PASS \\
-Formal equivalence & EQY SAT five-step temporal induction after two reset cycles; complete joined 1,096-bit logical-state refinement & PASS \\
-\end{tabularx}
-\rowcolors{2}{}{}
-
-Five-step induction is not a five-cycle bounded claim. The induction establishes an invariant for arbitrary future cycles after reset. Public outputs remain final obligations, and arithmetic temporaries are excluded as accidental match points.
-
-\begin{scopebox}
-\textbf{Formal boundary.} Equivalence uses two-state, defined-input hardware semantics after the declared reset. It does not claim identical Verilog X/Z propagation. The full archive contains the configuration, testbench and raw pass logs bound to the optimized RTL hash.
-\end{scopebox}
-
-Baseline RTL SHA-256:\par\hash{\BaselineHash}\par
-Optimized RTL SHA-256:\par\hash{\OptimizedHash}
-
-\newpageheading{5. Frozen evaluation contract}{What may not change after candidate selection}
-\rowcolors{2}{Pale}{white}
-\begin{tabularx}{\textwidth}{@{}B{42mm}Y@{}}
-\rowcolor{Ink}\color{white}Dimension & \color{white}Frozen choice \\
-Editable artifact & Optimized \texttt{cbd.v} only; final hash fixed before publication measurements \\
-Functional behaviour & Exact ports, reset, loading, modes, stalls, addresses, termination and cycle outputs \\
-Physical flow & Pinned VTR Linux/amd64 image, k6-N10 LUT6 architecture and PTM 45 nm model \\
-Runtime envelope & Network disabled, 2 CPU, 7 GiB RAM per container \\
-Power activity & ACE deterministic probabilities: input static 0.5, input switching 0.2, clock 0.2, seed 1 \\
-Search & Seeds 1, 7 and 19; optimizer-visible only \\
-Initial confirmation & Twelve fixed disjoint pairs; observed before publication protocol \\
-Publication confirmation & Seeds 101 through 164; fixed $n=64$ with no extension \\
-Primary score & Equal-weight paired geometric mean of area, delay and active total power \\
-Acceptance & Composite one-sided 95\% upper log bound below zero; no primary metric wholly regressed \\
-\end{tabularx}
-\rowcolors{2}{}{}
-
-Changing the target, activity model, seed pool, score or correctness semantics produces a different experiment. It cannot be represented as an improvement within this result.
-
-\newpageheading{6. Paired evidence}{Variation across the 64 frozen implementation pairs}
+\vspace{7mm}
+{\large\bfseries Paired primary PPA improvement}\par
+{\small\color{Mid}64 prospectively frozen publication pairs · lower is better · bars are two-sided 95\% confidence intervals}\par
+\vspace{2mm}
 \begin{center}
 \begin{tikzpicture}
 \begin{axis}[
-  width=\textwidth,height=73mm,
-  xlabel={Publication pair},ylabel={Optimized / baseline ratio},
-  xmin=0,xmax=65,ymin=0.75,ymax=1.25,
-  grid=major,grid style={Rule},axis line style={Mid},tick label style={font=\scriptsize},
-  legend style={draw=none,fill=none,font=\scriptsize,at={(0.5,-0.24)},anchor=north,legend columns=4,/tikz/every even column/.append style={column sep=4mm}},
+  width=.96\textwidth,height=68mm,ymin=-.5,ymax=17.5,xmin=.6,xmax=4.4,
+  xtick={1,2,3,4},xticklabels={Area,Timing,Active power,Composite},
+  ytick={0,4,8,12,16},yticklabel={\pgfmathprintnumber{\tick}\%},
+  grid=major,grid style={draw=Rule},axis line style={draw=Mid},
+  tick label style={font=\footnotesize},ylabel={Improvement versus baseline},
+  legend style={at={(0.5,1.04)},anchor=south,draw=none,font=\footnotesize,legend columns=-1},
 ]
-\addplot[only marks,mark=*,mark size=1.4pt,color=GotherBlue] table[x expr=\coordindex+1,y=area_ratio,col sep=comma]{generated/pair-clouds.csv};
-\addlegendentry{Area}
-\addplot[only marks,mark=square*,mark size=1.3pt,color=Accent] table[x expr=\coordindex+1,y=delay_ratio,col sep=comma]{generated/pair-clouds.csv};
-\addlegendentry{Delay}
-\addplot[only marks,mark=triangle*,mark size=1.5pt,color=Mid] table[x expr=\coordindex+1,y=power_ratio,col sep=comma]{generated/pair-clouds.csv};
-\addlegendentry{Power}
-\addplot[only marks,mark=diamond*,mark size=1.3pt,color=Ink] table[x expr=\coordindex+1,y=composite_ratio,col sep=comma]{generated/pair-clouds.csv};
-\addlegendentry{Composite}
-\addplot[black,dashed] coordinates {(0,1) (65,1)};
+\addplot[draw=none,fill=Rule,opacity=.55] coordinates {(.6,-.10) (4.4,-.10) (4.4,.10) (.6,.10)} \closedcycle;
+\addlegendentry{No-change reference}
+\addplot[GotherBlue,line width=1.25pt,mark=*,error bars/.cd,y dir=both,y explicit] table[x=x,y=estimate,y error plus=plus,y error minus=minus,col sep=comma]{generated/executive-ci.csv};
+\addlegendentry{Paired estimate and 95\% CI}
 \end{axis}
 \end{tikzpicture}
 \end{center}
 
-Area and CLB count reflect the mapped structure plus routing. Delay and power vary with placement seed, which is why acceptance uses paired ratios rather than comparing one favourable implementation. The confidence intervals quantify implementation-seed variability for this exact academic target; they do not represent semiconductor process variation.
+The aggregate values are geometric means across the fixed publication sample. The reported composite \CompositeScore{} is the paired geometric-mean estimator; the median of the 64 per-pair composite ratios is \CompositeMedian. The estimator and its predeclared paired interval define acceptance.
 
-\newpageheading{7. Evidence package}{A small review path with a deeper audit path}
-The Git repository contains the before/after RTL, exact patch, compact certificate, report, checksums and a fail-closed Python verifier. A customer can check the complete compact package with:
+% Module
+\newpageheading{2. Module and benchmark}{What is being optimized}
+
+The evaluated module is the stateful centred-binomial-distribution (CBD) sampler from the public
+\href{https://github.com/HWSec-CSIC/hope-mlkem}{HOPE-MLKEM hardware implementation}. The exact upstream source is
+\href{https://github.com/HWSec-CSIC/hope-mlkem/blob/72a90d80484d45d0bed1e0f9903bd0fb78cceb47/rtl/cbd.v}{\texttt{rtl/cbd.v} at pinned commit \texttt{72a90d80...}}, under the MIT License.
+
+ML-KEM, standardised in NIST FIPS 203, uses small sampled polynomial coefficients as controlled mathematical noise. This block consumes 1,088 pseudorandom SHAKE bits, supports the eta-2 and eta-3 sampling modes, and emits four 12-bit coefficients per active cycle through two 24-bit write words. It is one synthesizable cryptographic building block, not a complete key-encapsulation engine.
+
+\begin{lstlisting}[language=VerilogDiff]
+module CBD(clk, rst, load, start, eta, scnd, in_shake,
+           end_op, en_write, data_in_1, data_in_2,
+           addr_1, addr_2);
+  input clk, rst, load, start, scnd;
+  input  [1:0] eta;       input  [1087:0] in_shake;
+  output end_op, en_write;
+  output [23:0] data_in_1, data_in_2;
+  output [7:0] addr_1, addr_2;
+endmodule
+\end{lstlisting}
+
+\begin{center}
+\begin{tikzpicture}[node distance=9mm]
+\node[input] (in) {1,088-bit\\SHAKE input};
+\node[accepted,right=of in,minimum width=30mm,minimum height=14mm] (state) {load · state\\eta 2 / eta 3};
+\node[accepted,right=of state,minimum width=34mm,minimum height=14mm] (sample) {bit-group sums\\difference mod $q$};
+\node[input,right=of sample] (out) {four 12-bit\\coefficients};
+\draw[signal] (in)--(state); \draw[signal] (state)--(sample); \draw[signal] (sample)--(out);
+\end{tikzpicture}
+\end{center}
+
+Only \texttt{cbd.v} is editable. Reset, load and second-load semantics, stalls, eta modes, write enable, addresses, termination, outputs and all defined-input cycle timing remain fixed.
+
+{\small
+\rowcolors{2}{Pale}{white}
+\begin{tabularx}{\textwidth}{@{}P{52mm}Y@{}}
+\rowcolor{Ink}\thead{Artifact} & \thead{SHA-256} \\
+Frozen baseline \texttt{cbd.v} & \hash{\BaselineHash} \\
+Optimized \texttt{cbd.v} & \hash{\OptimizedHash} \\
+\end{tabularx}
+\rowcolors{2}{}{}
+}
+
+% Contract
+\newpageheading{3. Evaluation contract}{Frozen before publication measurement}
+
+{\small
+\rowcolors{2}{Pale}{white}
+\begin{tabularx}{\textwidth}{@{}B{39mm}Y@{}}
+\rowcolor{Ink}\thead{Dimension} & \thead{Frozen choice} \\
+Editable artifact & \texttt{cbd.v} only; baseline and optimized sources frozen by SHA-256. \\
+Functional behaviour & Exact interface, reset, loading, modes, stalls, addresses, termination and defined-input cycle outputs. \\
+Golden simulation & \FunctionalCycles{} deterministic dual-design cycles and \FunctionalChecks{} comparisons. \\
+Formal semantics & Two-state sequential equivalence after two active-low reset cycles; full 1,096-bit joined logical-state refinement. \\
+Formal tool & EQY \texttt{v0.67-1-g6734d8c}; SAT five-step temporal induction; fail closed. \\
+Physical flow & VTR/VPR commit \texttt{95f5c6de...}; pinned Linux/amd64 image; runtime network disabled. \\
+Architecture & \texttt{k6\_N10\_I40\_Fi6\_L4\_frac0\_ff1\_45nm.xml}; homogeneous LUT6 target. \\
+Power & VTR PTM45, 0.9 V, $85\,^{\circ}$C; deterministic ACE probabilistic activity. \\
+Search sample & Seeds 1, 7 and 19; optimizer-visible provisional ranking only. \\
+Initial confirmation & \InitialPairCount{} fixed disjoint pairs; observed before the publication protocol. \\
+Publication sample & Seeds 101 through 164; disjoint, fixed $n=\PairCount$, no extension. \\
+Primary score & Equal-weight paired area, delay and active-total-power geometric mean. \\
+\end{tabularx}
+\rowcolors{2}{}{}
+}
+
+\vspace{8mm}
+\begin{center}
+\begin{tikzpicture}[node distance=7mm,scale=.88,transform shape]
+\node[accepted,minimum width=23mm,minimum height=13mm] (rtl) {optimized RTL\\hash frozen};
+\node[gate,right=of rtl,minimum width=24mm,minimum height=13mm] (struct) {interface\\lint · synthesis};
+\node[gate,right=of struct,minimum width=24mm,minimum height=13mm] (func) {\FunctionalChecks\ cycle\\comparisons};
+\node[gate,right=of func,minimum width=24mm,minimum height=13mm] (formal) {sequential EQY\\fail closed};
+\node[gate,right=of formal,minimum width=24mm,minimum height=13mm] (ppa) {\PairCount\ paired\\PPA runs};
+\node[accepted,right=of ppa,minimum width=22mm,minimum height=13mm] (decision) {accept /\\reject};
+\foreach \a/\b in {rtl/struct,struct/func,func/formal,formal/ppa,ppa/decision}{\draw[signal] (\a)--(\b);}
+\end{tikzpicture}
+\end{center}
+
+\begin{scopebox}
+\textbf{Exact decision rule.} All correctness and evidence-integrity gates must pass. The composite one-sided 95\% upper log-ratio bound must be below zero, and no primary metric may have a one-sided 95\% lower log-ratio bound above zero. Otherwise the result is inconclusive or regressed.
+\end{scopebox}
+
+The publication protocol was frozen before either publication baseline or optimized measurement. The prior \InitialPairCount{}-pair result, with \InitialImprovement\% improvement, is disclosed as selection history and is not pooled into the 64-pair confirmation.
+
+% Verification
+\newpageheading{4. Verification before PPA}{Fail-closed evidence for the optimized hash}
+
+{\small
+\rowcolors{2}{Pale}{white}
+\begin{tabularx}{\textwidth}{@{}P{40mm}Y P{19mm}@{}}
+\rowcolor{Ink}\thead{Gate} & \thead{Published evidence} & \thead{Result} \\
+Structural policy & Exact module, interface, hierarchy, patch and synthesizable Verilog identities & \yes \\
+Cycle regression & Reset, eta 2/3, stalls, reload, second-load, completion and cycle outputs & \yes \\
+Sequential formal & Five-step temporal induction over the complete 1,096-bit logical-state relation & \yes \\
+Physical validity & Route success, finite metrics, resource identities and complete paired extraction & \yes \\
+Raw provenance & All 541 archive members and all 128 post-route PPA rows rechecked & \yes \\
+\end{tabularx}
+\rowcolors{2}{}{}
+}
+
+The cycle regression compares the frozen baseline and optimized design at every observed cycle, not only at final completion. It exercises reset, both supported eta modes, active and stalled cycles, first and second loads, address advancement, write data and termination behaviour. A mismatch stops evaluation before PPA scoring.
+
+The formal proof joins the two different physical representations through the logical \texttt{reg\_shake} view. Five-step induction is not a five-cycle bounded test: it establishes the transition invariant for arbitrary future cycles after reset. Outputs remain proof obligations, while arithmetic temporaries are excluded as accidental match points. Inconclusive or timed-out proof is invalid.
 
 \begin{lstlisting}
 python3 verify.py
 \end{lstlisting}
 
-The separately downloadable raw archive contains all baseline and optimized timing and ACE power outputs for the 64 pairs, correctness logs, formal inputs, publication protocol and an internal hash manifest. Supplying it to the same verifier additionally re-extracts every primary metric:
+\begin{claimbox}
+\textbf{Evidence boundary.} The compact check establishes certificate consistency and exact published identities. With the separately downloaded raw archive, the same verifier checks every member, correctness pass logs and all 128 baseline/optimized post-route rows. It re-extracts recorded metrics; it does not rerun Verilator, Yosys, EQY or VTR.
+\end{claimbox}
 
-\begin{lstlisting}
-python3 verify.py --evidence-archive \
-  mlkem-cbd-vtr45-full-evidence-v1.tar.gz
-\end{lstlisting}
+Cycle-test SHA-256: \hash{\CycleTestHash}\par
+Formal-config SHA-256: \hash{\FormalConfigHash}
 
-The compact verifier rejects altered RTL, patch drift, metric or score substitution, non-finite JSON, authority changes and incomplete manifests. Full-evidence mode also rejects unsafe archive paths, unexpected files, host paths, credential markers, failed routes and any raw metric that differs from the certificate.
+% Diff
+\newpageheading{5. Exact baseline-to-optimized diff}{All changed lines from cbd.v}
+
+The patch below is generated directly from the two checked-in RTL files. No testbench, formal harness, architecture, activity model, metric parser, seed pool or tool flag is editable by the optimization candidate.
+
+\lstinputlisting[language=VerilogDiff,basicstyle=\ttfamily\scriptsize]{../../rtl/changes.patch}
 
 \begin{scopebox}
-\textbf{Audit meaning.} Raw-provenance verification checks the recorded files and re-derives the result; it does not rerun the EDA tools. A fresh external reproduction remains a separate, stronger review step.
+\textbf{Attribution boundary.} The measured PPA result belongs to this one complete accepted patch. The following pages are three overlapping structural views of the same patch, not three independently measured rewrites; no exact fraction of the gain is assigned to one statement.
 \end{scopebox}
 
-Certificate SHA-256:\par\hash{\CertificateHash}
+Patch SHA-256: \hash{\PatchHash}
 
-\newpageheading{8. Portfolio and customer relevance}{Why this case complements SHA-1 and INT8 MatVec}
-The three public cases demonstrate different optimization classes:
+% Structural view 1
+\newpageheading{6. Structural view 1: remove the wide variable shift}{One accepted patch · source: optimized cbd.v:24--62}
 
+The baseline stores the logical sampler state directly in 1,096 enabled flip-flops. Every active cycle asks synthesis to choose between a 16-bit and a 24-bit right shift according to \texttt{eta}. That variable movement appears around the complete wide state even though both modes consume the same data in a regular sequence.
+
+\begin{center}
+\begin{tikzpicture}[node distance=9mm]
+\node[font=\small\bfseries,text=Mid] (bt) {Frozen baseline};
+\node[input,below=6mm of bt,xshift=-45mm] (bs) {1,096-bit\\logical state};
+\node[gate,right=18mm of bs,minimum width=39mm] (bm) {wide 16 / 24-bit\\shift selection};
+\node[input,right=of bm] (bo) {next logical\\state};
+\draw[signal] (bs)--(bm); \draw[signal] (bm)--(bo);
+
+\node[font=\small\bfseries,text=GotherBlue,below=27mm of bt] (at) {Optimized RTL};
+\node[input,below=6mm of at,xshift=-45mm] (as) {1,096-bit\\chunk state};
+\node[accepted,right=18mm of as,minimum width=39mm] (am) {fixed 24-bit movement\\plus 2-bit phase};
+\node[input,right=of am] (ao) {same logical\\state};
+\draw[signal] (as)--(am); \draw[signal] (am)--(ao);
+\end{tikzpicture}
+\end{center}
+
+The optimized RTL keeps the wide physical register in \texttt{shake\_chunks}. Its only non-load movement is a fixed 24-bit shift. The two-bit \texttt{shake\_phase} records an outstanding byte offset, and a combinational view presents the unchanged logical head to all original coefficient arithmetic.
+
+If $C_t$ is the physical chunk state and $p_t$ is the byte phase, the logical state is
+\[
+L_t = C_t \gg (8p_t), \qquad p_t\in\{0,1,2\}.
+\]
+The datapath continues to read $L_t$ exactly where it previously read the baseline state. The transformation changes representation, not the sampling formula.
+
+\begin{claimbox}
+\textbf{Structural result.} Packed CLB demand falls from \BaselineClb{} to \OptimizedClb{} (\ClbImprovement\% fewer) under the fixed LUT6 architecture. This is an implementation result, not an RTL line-count estimate.
+\end{claimbox}
+
+% Structural view 2
+\newpageheading{7. Structural view 2: encode eta-2 movement as phase}{One accepted patch · source: optimized cbd.v:31--38 and 51--59}
+
+Eta-3 consumes 24 bits per active cycle, so the physical and logical movements already match. Eta-2 consumes 16 bits. The optimized representation realizes three 16-bit logical advances using two fixed 24-bit physical advances and the phase sequence $0\rightarrow2\rightarrow1\rightarrow0$.
+
+\begin{center}
+{\small
 \rowcolors{2}{Pale}{white}
-\begin{tabularx}{\textwidth}{@{}B{30mm}B{37mm}Y@{}}
-\rowcolor{Ink}\color{white}Case & \color{white}Domain & \color{white}Transformation class \\
-SHA-1 & Legacy sequential cryptography & Shared Boolean structure and direct state readout \\
+\begin{tabularx}{.88\textwidth}{@{}P{27mm}P{34mm}P{37mm}Y@{}}
+\rowcolor{Ink}\thead{Current phase} & \thead{Physical action} & \thead{Next phase} & \thead{Logical advance} \\
+$0$ & hold $C_t$ & $2$ & $0+16=16$ bits \\
+$2$ & $C_t\gg24$ & $1$ & $24-8=16$ bits \\
+$1$ & $C_t\gg24$ & $0$ & $24-8=16$ bits \\
+\end{tabularx}
+\rowcolors{2}{}{}
+}
+\end{center}
+
+For eta-2 the transition relation satisfies
+\[
+L_{t+1}=C_{t+1}\gg(8p_{t+1})=L_t\gg16
+\]
+in all three phase cases. For eta-3, the phase is retained while $C_{t+1}=C_t\gg24$, so the same relation gives $L_{t+1}=L_t\gg24$. This remains true even if defined input sequences change \texttt{eta}; the proof does not depend on a software promise that the mode stays constant.
+
+\begin{center}
+\begin{tikzpicture}[node distance=17mm]
+\node[accepted,minimum width=26mm,minimum height=12mm] (p0) {phase 0\\logical +16};
+\node[accepted,right=of p0,minimum width=26mm,minimum height=12mm] (p2) {phase 2\\physical +24};
+\node[accepted,right=of p2,minimum width=26mm,minimum height=12mm] (p1) {phase 1\\physical +24};
+\draw[signal,bend left=16] (p0) to node[above,font=\scriptsize]{hold chunks} (p2);
+\draw[signal,bend left=16] (p2) to node[above,font=\scriptsize]{shift chunks} (p1);
+\draw[signal,bend left=30] (p1) to node[below,font=\scriptsize]{shift chunks} (p0);
+\end{tikzpicture}
+\end{center}
+
+\begin{scopebox}
+\textbf{Scope.} This representation is specific to a stream whose supported logical advances are 16 and 24 bits and whose load boundary restores phase zero. Different consumption widths or load semantics require a new invariant and a new evaluation.
+\end{scopebox}
+
+% Structural view 3
+\newpageheading{8. Structural view 3: preserve loading, stalls and outputs}{One accepted patch · source: optimized cbd.v:40--62 and 64--134}
+
+The optimization is safe only if representation metadata follows every control path. Reset clears both chunk state and phase. A first load writes \texttt{\{8'h00,in\_shake\}} and restores phase zero. A second load preserves the low byte of the current logical view, not an arbitrary physical byte, then also restores phase zero.
+
+\begin{center}
+\begin{tikzpicture}[node distance=8mm]
+\node[input,minimum width=24mm,minimum height=12mm] (reset) {reset\\zero state};
+\node[gate,right=of reset,minimum width=29mm,minimum height=12mm] (load) {load / second load\\phase $\leftarrow0$};
+\node[accepted,right=of load,minimum width=32mm,minimum height=12mm] (active) {active advance\\eta 2 / eta 3};
+\node[gate,right=of active,minimum width=25mm,minimum height=12mm] (stall) {stall / done\\hold state};
+\draw[signal] (reset)--(load); \draw[signal] (load)--(active); \draw[signal] (active)--(stall);
+\draw[signal,bend left=30] (stall) to node[below,font=\scriptsize]{reload} (load);
+\end{tikzpicture}
+\end{center}
+
+When \texttt{start} is low or \texttt{end\_op} is high, neither \texttt{shake\_chunks} nor \texttt{shake\_phase} is assigned, so both retain state. The original counter, coefficient equations, write enable, write addresses and completion logic are byte-for-byte unchanged below the state block.
+
+This is a sequential refinement rather than a purely combinational identity. The formal harness first proves the joined logical relation between baseline state and optimized $(C,p)$, then checks every public output on every future cycle:
+\[
+\texttt{baseline.reg\_shake}=C\gg(8p)
+\quad\Longrightarrow\quad
+\texttt{outputs}_{B}=\texttt{outputs}_{O}.
+\]
+
+\begin{claimbox}
+\textbf{Correctness result.} All \FunctionalChecks{} recorded cycle checks pass, and EQY proves the transition relation inductively after the declared reset. The PPA result is downstream of, and conditional on, this exact cycle-equivalence gate.
+\end{claimbox}
+
+The conceptual step is not that the source is longer or the function larger. It is that physical state encoding changes while the externally visible sequential machine remains identical. That proof obligation distinguishes this case from a local Boolean rewrite or an arithmetic-width reduction.
+
+% PPA environment
+\newpageheading{9. PPA environment and statistics}{Open 45 nm FPGA proxy}
+
+The target matches the other portfolio cases: VTR's homogeneous \texttt{k6\_N10\_I40\_Fi6\_L4\_frac0\_ff1\_45nm} architecture, with six-input LUTs clustered ten per logic block and the architecture's routing and timing model. Power uses PTM45 properties at 0.9 V and $85\,^{\circ}$C. MWTA is minimum-width-transistor area, not square-micrometre physical area.
+
+ACE supplies a deterministic probabilistic activity model: primary-input static probability 0.5, switching probability 0.2, clock probability 0.2 and ACE seed 1. Baseline and optimized legs use the same placement seed and the same activity contract. This estimates relative active total power for the fixed academic model; it is not application-trace energy.
+
+The primary per-pair score is
+\[
+r_p=\sqrt[3]{r_{A,p}\,r_{D,p}\,r_{P,p}},
+\qquad
+\widehat r=\exp\!\left(\frac{1}{64}\sum_{p=1}^{64}\log r_p\right),
+\]
+where $A$ is total MWTA, $D$ is post-route critical-path delay and $P$ is active total power. Fmax is the reciprocal of routed delay and is not a separate score term.
+
+Two-sided 95\% Student-$t$ intervals use 63 degrees of freedom on paired log ratios. The one-sided lower improvements are \AreaAcceptanceLow\% area, \DelayAcceptanceLow\% delay, \PowerAcceptanceLow\% power and \CompositeAcceptanceLow\% composite. All remain on the improvement side of zero under the predeclared rule.
+
+\begin{scopebox}
+\textbf{Pair policy.} Three search seeds and the earlier \InitialPairCount{}-pair confirmation were observed before the publication protocol. The optimized RTL hash was then frozen, and the disjoint seeds 101--164 were measured exactly once as the 64-pair publication pool. The pool was not extended, filtered or pooled with earlier evidence.
+\end{scopebox}
+
+These intervals quantify implementation-seed variability for this exact target. They do not cover process, voltage, temperature, workload, side-channel leakage or tool-version uncertainty.
+
+% Distribution
+\newpageheading{10. Every paired publication result}{Primary PPA distributions}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  width=.96\textwidth,height=105mm,xmin=-12,xmax=22,ymin=.65,ymax=4.65,
+  ytick={1,2,3,4},yticklabels={Area,Timing,Active power,Composite},
+  xtick={-10,-5,0,5,10,15,20},xticklabel={\pgfmathprintnumber{\tick}\%},
+  xlabel={Improvement relative to the same baseline geometric aggregate (right is better)},
+  grid=major,grid style={draw=Rule},axis line style={draw=Mid},
+  tick label style={font=\small},label style={font=\small\bfseries},
+  legend style={at={(0.5,1.03)},anchor=south,draw=none,font=\footnotesize,legend columns=-1},
+]
+\addplot[only marks,mark=*,mark size=1.35pt,Mid,opacity=.28] table[x=baseline_area,y expr=1+0.46*\thisrow{jitter},col sep=comma]{generated/pair-clouds.csv};
+\addlegendentry{Baseline pairs}
+\addplot[only marks,mark=*,mark size=1.35pt,GotherBlue,opacity=.38] table[x=optimized_area,y expr=1+0.46*\thisrow{jitter},col sep=comma]{generated/pair-clouds.csv};
+\addlegendentry{Optimized RTL pairs}
+\addplot[only marks,mark=*,mark size=1.35pt,Mid,opacity=.28,forget plot] table[x=baseline_timing,y expr=2+0.46*\thisrow{jitter},col sep=comma]{generated/pair-clouds.csv};
+\addplot[only marks,mark=*,mark size=1.35pt,GotherBlue,opacity=.38,forget plot] table[x=optimized_timing,y expr=2+0.46*\thisrow{jitter},col sep=comma]{generated/pair-clouds.csv};
+\addplot[only marks,mark=*,mark size=1.35pt,Mid,opacity=.28,forget plot] table[x=baseline_power,y expr=3+0.46*\thisrow{jitter},col sep=comma]{generated/pair-clouds.csv};
+\addplot[only marks,mark=*,mark size=1.35pt,GotherBlue,opacity=.38,forget plot] table[x=optimized_power,y expr=3+0.46*\thisrow{jitter},col sep=comma]{generated/pair-clouds.csv};
+\addplot[only marks,mark=*,mark size=1.35pt,Mid,opacity=.28,forget plot] table[x=baseline_composite,y expr=4+0.46*\thisrow{jitter},col sep=comma]{generated/pair-clouds.csv};
+\addplot[only marks,mark=*,mark size=1.35pt,GotherBlue,opacity=.38,forget plot] table[x=optimized_composite,y expr=4+0.46*\thisrow{jitter},col sep=comma]{generated/pair-clouds.csv};
+\addlegendimage{line legend,Ink,line width=1pt,mark=*,mark options={fill=Ink},mark size=1.4pt}
+\addlegendentry{Paired estimate and 95\% CI}
+\draw[Ink,line width=1pt] (axis cs:\AreaLow,1.23)--(axis cs:\AreaHigh,1.23); \fill[Ink] (axis cs:\AreaImprovement,1.23) circle[radius=1.8pt];
+\draw[Ink,line width=1pt] (axis cs:\DelayLow,2.23)--(axis cs:\DelayHigh,2.23); \fill[Ink] (axis cs:\DelayImprovement,2.23) circle[radius=1.8pt];
+\draw[Ink,line width=1pt] (axis cs:\PowerLow,3.23)--(axis cs:\PowerHigh,3.23); \fill[Ink] (axis cs:\PowerImprovement,3.23) circle[radius=1.8pt];
+\draw[Ink,line width=1pt] (axis cs:\CompositeLow,4.23)--(axis cs:\CompositeHigh,4.23); \fill[Ink] (axis cs:\CompositeImprovement,4.23) circle[radius=1.8pt];
+\draw[Ink,line width=1.1pt] (axis cs:0,.65)--(axis cs:0,4.65);
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\smallcaps{Figure 2 · overlaid baseline and optimized pair clouds}\par
+Gray and blue points are absolute results normalized to the same baseline geometric aggregate. The same pair receives the same vertical jitter. Black points and segments show the paired estimator and interval that determine confidence.
+
+{\small
+\rowcolors{2}{Pale}{white}
+\begin{tabularx}{\textwidth}{@{}Y R R R@{}}
+\rowcolor{Ink}\thead{Metric} & \thead{Wins} & \thead{Ties} & \thead{Losses} \\
+Area & \AreaWins & \AreaTies & \AreaLosses \\
+Timing & \TimingWins & \TimingTies & \TimingLosses \\
+Active power & \PowerWins & \PowerTies & \PowerLosses \\
+Composite & \CompositeWins & \CompositeTies & \CompositeLosses \\
+\end{tabularx}
+\rowcolors{2}{}{}
+}
+
+% Secondary evidence
+\newpageheading{11. Secondary metrics and evidence identity}{Measured consequences and public audit trail}
+
+{\small
+\rowcolors{2}{Pale}{white}
+\begin{tabularx}{\textwidth}{@{}Y R R Y@{}}
+\rowcolor{Ink}\thead{Metric} & \thead{Baseline aggregate} & \thead{Optimized aggregate} & \thead{Interpretation} \\
+Fmax & \BaselineFmax\ MHz & \OptimizedFmax\ MHz & \FmaxImprovement\% increase; reciprocal of routed delay \\
+Packed CLBs & \BaselineClb & \OptimizedClb & \ClbImprovement\% fewer in every pair \\
+Used logic area & \BaselineUsedLogicArea\ MWTA & \OptimizedUsedLogicArea\ MWTA & \UsedLogicImprovement\% lower in every pair \\
+Routing area & \BaselineRoutingArea\ MWTA & \OptimizedRoutingArea\ MWTA & Placement-seed dependent; included in total area \\
+Initial confirmation & 1.000000 & 0.905348 & \InitialImprovement\% on 12 earlier pairs; selection history only \\
+\end{tabularx}
+\rowcolors{2}{}{}
+}
+
+The optimized netlist uses no multiplier or memory hard blocks under this academic architecture. CLB and used-logic-area reductions are stable structural consequences; routing, timing and power vary with placement. None of these values is inferred from RTL line count or an AST proxy.
+
+{\small
+\rowcolors{2}{Pale}{white}
+\begin{tabularx}{\textwidth}{@{}P{46mm}Y@{}}
+\rowcolor{Ink}\thead{Public evidence object} & \thead{SHA-256 / identity} \\
+Compact certification record & \hash{\CertificateHash} \\
+Publication protocol & \hash{\ProtocolHash} \\
+Evaluator & \hash{\EvaluatorHash} \\
+Baseline publication record & \hash{\BaselineRecordHash} \\
+Optimized publication record & \hash{\OptimizedRecordHash} \\
+VTR architecture & \hash{\ArchitectureHash} \\
+PTM technology & \hash{\TechnologyHash} \\
+Full raw-evidence archive & \texttt{\EvidenceArchiveName} \\
+Full archive SHA-256 & \hash{\EvidenceArchiveHash} \\
+\end{tabularx}
+\rowcolors{2}{}{}
+}
+
+The \EvidenceArchiveMembers-member archive binds the source, protocol, verifier inputs, correctness logs and all baseline/optimized VTR and ACE reports for publication seeds 101--164. Its optimized record differs from the internal source record only by a declared sanitization of the local evidence-root path.
+
+% Reproducibility
+\newpageheading{12. Reproduction and verifier trust model}{What each public command establishes}
+
+The repository separates four levels of evidence:
+\begin{enumerate}
+  \item \textbf{Git identity}: checksums cover the exact compact package and the commit records its history.
+  \item \textbf{Compact consistency}: \texttt{python3 verify.py} validates strict schemas, RTL hashes, exact patch, 64 paired rows, formulas, intervals, authority and acceptance decision.
+  \item \textbf{Raw provenance replay}: \texttt{python3 verify.py --evidence-archive ...} verifies all archive members, correctness logs and metrics re-extracted from 128 timing and ACE power reports.
+  \item \textbf{Fresh EDA reproduction}: reruns the published contract with the pinned tools and target; this is a separate, stronger review step and is not performed by the compact verifier.
+\end{enumerate}
+
+\begin{lstlisting}
+git clone https://github.com/juan-fernandez-gotherlabs/\
+rtl-optimization-case-study.git
+cd rtl-optimization-case-study/cases/mlkem-cbd
+
+python3 verify.py
+python3 verify.py --evidence-archive \
+  mlkem-cbd-vtr45-full-evidence-v1.tar.gz
+python3 -m unittest discover -s tests -v
+\end{lstlisting}
+
+The verifier uses explicit checks rather than Python \texttt{assert}, requires exact manifest coverage, rejects duplicate or unexpected fields, non-finite measurements, unsafe archive paths, altered RTL, patch drift, authority changes, metric substitution, score substitution, incomplete evidence and any raw value that differs from the compact certificate. Its adversarial unit suite exercises these cases in CI.
+
+A fresh EDA rerun requires Linux/amd64, the pinned VTR commit, exact architecture and PTM files, the ACE activity transform, the EQY formal configuration and the frozen publication protocol. A different target or activity model is a new experiment.
+
+\begin{scopebox}
+\textbf{Trust boundary.} The Git commit and release identify the published package. Raw-provenance verification re-derives the reported result from recorded files, but it is not a fresh third-party tool execution and cannot establish physical-chip behaviour. ``Certification'' here means project-contract acceptance, not accredited assurance.
+\end{scopebox}
+
+% Limits
+\newpageheading{13. Limits and customer transfer}{What the result does and does not establish}
+
+The portfolio now covers three distinct optimization classes:
+
+{\small
+\rowcolors{2}{Pale}{white}
+\begin{tabularx}{\textwidth}{@{}B{28mm}P{40mm}Y@{}}
+\rowcolor{Ink}\thead{Case} & \thead{Domain} & \thead{Transformation class} \\
+SHA-1 & Sequential legacy cryptography & Shared Boolean structure and direct state readout \\
 INT8 MatVec & Quantized AI arithmetic & Range-correct widths and balanced accumulation \\
 ML-KEM CBD & Post-quantum cryptographic IP & Alternative physical state representation with a formal refinement relation \\
 \end{tabularx}
 \rowcolors{2}{}{}
+}
 
-ML-KEM CBD is particularly relevant to teams implementing cryptographic FPGA/ASIC IP or preparing post-quantum migration. The case demonstrates an engagement pattern rather than a product claim: freeze one owned block and target, prove exact behaviour, measure an implementation objective and deliver auditable before/after evidence.
+Cross-case percentages are not a cross-circuit ranking. The new case is not larger by source line count; it is conceptually different because it changes the encoding and evolution of sequential state while proving the same public machine. Its industrial relevance is post-quantum cryptographic hardware, particularly teams evaluating FPGA or ASIC ML-KEM IP.
 
-Cross-case percentages are not an apples-to-apples benchmark. Each circuit has its own interface, workload or activity model and implementation distribution. The supported claim is the paired improvement inside each frozen case.
-
-\newpageheading{9. Limitations}{What the evidence does not establish}
-This result does not claim:
+This report does not provide:
 \begin{itemize}
-  \item ASIC synthesis, place-and-route or signoff;
-  \item Vivado, Quartus or commercial-FPGA device performance;
-  \item physical-board, measured-power, measured-energy or manufactured-silicon results;
-  \item side-channel resistance, masking quality, constant-time software behaviour or fault resistance;
-  \item security certification of HOPE-MLKEM or a complete FIPS 203 implementation;
-  \item application-workload power, because ACE probabilistic activity is used;
-  \item that the same state representation improves a different technology, architecture or integration context;
-  \item accredited certification or independent third-party assurance.
+  \item ASIC synthesis, place-and-route, PVT analysis or signoff;
+  \item commercial-FPGA implementation data, Vivado, Quartus or board measurements;
+  \item measured power, measured energy or manufactured-silicon evidence;
+  \item side-channel resistance, masking quality, fault resistance or security certification;
+  \item certification of HOPE-MLKEM or of a complete FIPS 203 implementation;
+  \item proof that the same representation improves another technology, integration or workload;
+  \item exact PPA attribution to one line or one structural view of the accepted patch.
 \end{itemize}
 
-The open PTM 45 nm FPGA proxy is useful for controlled relative experimentation. A customer pilot should replace it with the customer's implementation target, activity, constraints and signoff boundary.
-
 \begin{claimbox}
-\textbf{Conclusion.} Within the exact published VTR/PTM45 contract, the frozen optimized CBD RTL passes sequential correctness gates and reduces the prospectively confirmed paired PPA estimator by \CompositeImprovement\%. The result is understandable from the compact package and auditable down to every raw publication-pair metric.
+\textbf{Transfer to a customer pilot.} Replace the academic proxy with customer-owned RTL, security assumptions, libraries, constraints, activity, tools and signoff policy. The transferable capability is a small inspectable state transformation evaluated by a frozen contract and justified with cycle regression, sequential formal proof and paired implementation evidence.
 \end{claimbox}
 
-\vfill
-\small\color{Mid}
-Primary sources: \href{https://csrc.nist.gov/pubs/fips/203/final}{NIST FIPS 203}; \href{https://github.com/HWSec-CSIC/hope-mlkem}{HWSec-CSIC HOPE-MLKEM}; \href{https://github.com/verilog-to-routing/vtr-verilog-to-routing}{Verilog-to-Routing}. Tool and project names identify provenance and do not imply endorsement.
+\subsection{Primary references}
+\begin{itemize}
+  \item \href{https://csrc.nist.gov/pubs/fips/203/final}{NIST FIPS 203: Module-Lattice-Based Key-Encapsulation Mechanism Standard}
+  \item \href{https://github.com/HWSec-CSIC/hope-mlkem}{HWSec-CSIC HOPE-MLKEM source repository}
+  \item \href{https://docs.verilogtorouting.org/en/latest/vpr/}{VTR/VPR documentation and power estimation}
+  \item \href{https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study}{Public case-study repository}
+  \item \href{https://www.gotherlabs.com/}{Göther Labs}
+\end{itemize}
+
+\vspace{3mm}
+\begin{claimbox}
+\textbf{Conclusion.} Within the declared VTR/PTM45 LUT6 proxy and exact sequential contract, the optimized CBD state representation passes the recorded cycle and formal gates and reduces the prospectively confirmed paired primary PPA estimator by \CompositeImprovement\% (95\% CI \CompositeLow\% to \CompositeHigh\%). The before/after RTL, compact calculations and every raw publication-pair metric are publicly auditable.
+\end{claimbox}
 
 \end{document}
