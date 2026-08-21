@@ -156,7 +156,8 @@ module CBD(clk, rst, load, start, eta, scnd, in_shake,
            end_op, en_write, data_in_1, data_in_2,
            addr_1, addr_2);
   input clk, rst, load, start, scnd;
-  input  [1:0] eta;       input  [1087:0] in_shake;
+  input  [1:0] eta;
+  input  [1087:0] in_shake;
   output end_op, en_write;
   output [23:0] data_in_1, data_in_2;
   output [7:0] addr_1, addr_2;
