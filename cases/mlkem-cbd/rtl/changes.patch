@@ -1,0 +1,52 @@
+--- rtl/baseline/cbd.v
++++ rtl/optimized/cbd.v
+@@ -21,19 +21,43 @@
+     output [7:0]    addr_2
+     );
+ 
++    // Keep the wide physical state on a fixed 24-bit shift. A two-bit byte
++    // phase represents the 16-bit eta=2 advance without a 16/24 mux on every
++    // flip-flop. reg_shake is the synthesized logical refinement view used by
++    // the datapath and by sequential equivalence.
++    reg [1095:0] shake_chunks;
++    reg [1:0] shake_phase;
+     reg [1095:0] reg_shake;
++    always @* begin
++        case (shake_phase)
++            2'd0: reg_shake = shake_chunks;
++            2'd1: reg_shake = shake_chunks >> 8;
++            2'd2: reg_shake = shake_chunks >> 16;
++            default: reg_shake = shake_chunks >> 24;
++        endcase
++    end
++
+     always @(posedge clk) begin
+-        if(!rst) reg_shake <= 0;
++        if(!rst) begin
++            shake_chunks <= 0;
++            shake_phase <= 0;
++        end
+         else begin
+             if(load) begin
+-                if(scnd)                    reg_shake <= {in_shake, reg_shake[7:0]};
+-                else                        reg_shake <= {8'h00, in_shake};
++                if(scnd)                    shake_chunks <= {in_shake, reg_shake[7:0]};
++                else                        shake_chunks <= {8'h00, in_shake};
++                shake_phase <= 0;
+             end
+             else if(start & !end_op) begin
+-                if(eta == 2'b11)            reg_shake <= reg_shake >> 24;
+-                else                        reg_shake <= reg_shake >> 16;
++                if(eta == 2'b11) begin
++                    shake_chunks <= shake_chunks >> 24;
++                end
++                else begin
++                    if(shake_phase != 0)     shake_chunks <= shake_chunks >> 24;
++                    if(shake_phase == 0)     shake_phase <= 2;
++                    else                    shake_phase <= shake_phase - 1'b1;
++                end
+             end
+-            else                            reg_shake <= reg_shake;
+         end
+     end
+ 

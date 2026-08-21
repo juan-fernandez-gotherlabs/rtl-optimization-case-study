@@ -1,46 +1,58 @@
-# SHA-1 RTL optimization on VTR
+# SHA-1 RTL optimization
 
-This is the historical methodology-qualification case in the
-[Evolther hardware results portfolio](../../README.md).
+Historical methodology-qualification case in the
+[verified RTL portfolio](../../README.md).
 
-Three cycle-equivalent RTL transformations reduce the paired primary PPA
-composite estimate by **2.27%** under a frozen VTR 45 nm FPGA comparison.
+## What this module does
 
-| Primary metric | Corrected baseline | Accepted RTL | Paired improvement (95% CI) |
-|---|---:|---:|---:|
-| Total area | 16,614,693 MWTA | 16,614,693 MWTA | **0.15%** (0.08%, 0.21%) |
-| Critical path | 15.0054 ns | 14.2090 ns | **5.20%** (4.64%, 5.75%) |
-| Active total power | 9.9125 mW | 9.7755 mW | **1.38%** (0.89%, 1.87%) |
-| Composite estimator | 1.000000 | 0.977335 | **2.27%** (2.12%, 2.41%) |
+The sequential SHA-1 compression module receives a 512-bit block through a
+32-bit command/data interface and updates a 160-bit chaining state over 80
+rounds. SHA-1 is retained as a legacy compute benchmark, not recommended as a
+modern security primitive.
 
-The score is the equal-weight geometric mean of paired area, post-route delay
-and active-total-power ratios over 64 fixed certification seeds. `0.977335` is
-the paired geometric-mean estimator; the median of the 64 per-seed composite
-ratios is `0.978469`. Energy per block is secondary and improves by **6.51%**
-(95% CI: 6.14% to 6.87%).
+## What changed
 
-The five search seeds (`1, 7, 19, 43, 97`) are disjoint from the fixed
-certification pool: the other 64 seeds in `1..68`. The certification sample is
-never extended after observing a candidate. Here, certification means
-acceptance under the published project contract, not accredited certification
-or an external assurance opinion.
+Three cycle-equivalent transformations simplify the Boolean and readout logic:
 
-## Review
+- replace XOR with OR where the choose-function terms are mutually exclusive;
+- share XOR terms across the parity and majority round functions;
+- read the five chaining-state registers directly instead of slicing a
+  temporary 160-bit concatenation.
 
-- [Technical report](technical-report.pdf) - method, RTL transformations,
-  verification scope, distributions and limitations.
-- [Exact baseline-to-accepted patch](rtl/baseline-to-accepted.patch).
-- [Corrected baseline](rtl/baseline/sha.v) and [accepted RTL](rtl/accepted/sha.v).
-- [Compact certification](results/certification.json) with all 64 paired rows.
-- [Public-only raw evidence release](https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/tag/v2.1.0)
-  with baseline and accepted VTR/ACE outputs, formal/NIST evidence and a
-  11,358-member internal manifest. Operational optimization modules are omitted
-  because they are not needed to verify the delivered before/after result.
+The interface, reset, command protocol, read order, latency, throughput and
+defined-input cycle behaviour remain fixed. See the
+[exact patch](rtl/baseline-to-accepted.patch).
+
+## Result
+
+| Metric | Baseline | Optimized | Paired improvement | 95% interval |
+|---|---:|---:|---:|---:|
+| Total area | 16,614,693 MWTA | 16,614,693 MWTA | **0.15%** | 0.08% to 0.21% |
+| Critical path | 15.0054 ns | 14.2090 ns | **5.20%** | 4.64% to 5.75% |
+| Active total power | 9.9125 mW | 9.7755 mW | **1.38%** | 0.89% to 1.87% |
+| Composite PPA | 1.000000 | 0.977335 | **2.27%** | 2.12% to 2.41% |
+
+MWTA is VTR's minimum-width transistor-area unit. Packed CLBs fall from 188 to
+182. Energy per completed block is secondary and improves by 6.51% (95%
+interval: 6.14% to 6.87%). The composite is the
+equal-weight geometric mean of paired area, post-route delay and active-total-
+power ratios over 64 fixed pairs. Cross-case percentages are not a
+cross-circuit performance ranking.
+
+## Correctness evidence
+
+- 129 NIST SHA-1 Short and Long Message cases;
+- deterministic cycle-level protocol regression;
+- complete two-state sequential EQY equivalence after reset;
+- 64 certification seeds disjoint from five optimizer-visible search seeds;
+- raw VTR/ACE timing, area and power records for baseline and optimized RTL.
+
+Here, certification means acceptance under the published project contract,
+not accredited certification or an external assurance opinion.
 
 ## Verify
 
-The compact check uses only Python 3 and is intentionally described as a
-consistency check, not as raw-provenance certification:
+Compact consistency verification requires only Python 3:
 
 ```bash
 python3 verify.py
@@ -51,74 +63,35 @@ Expected ending:
 ```text
 Compact package consistency: PASS
 paired_seeds=64
-composite_estimate=0.977334953847
-composite_per_seed_median=0.978469312455
 improvement=2.27% (95% CI 2.12% to 2.41%)
 Full raw evidence: NOT CHECKED (pass --evidence-archive)
 ```
 
-To verify every raw file, download the release asset and supply it explicitly:
+For raw-provenance verification, download the
+[v2.1.0 evidence asset](https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/download/v2.1.0/sha1-vtr45-full-evidence-v2.tar.gz)
+and run:
 
 ```bash
-curl -LO https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/download/v2.1.0/sha1-vtr45-full-evidence-v2.tar.gz
 python3 verify.py --evidence-archive sha1-vtr45-full-evidence-v2.tar.gz
 ```
 
-The second command verifies the external archive digest, every internal member
-hash, the declared sanitization provenance, exact formal and NIST
-markers and both RTL identities. It then derives every certification metric
-from all 128 raw VTR/ACE run trees and compares the results with both archived
-records and all compact rows before reporting `Full raw evidence: PASS`.
+This checks every archived member and re-extracts all 128 publication-run PPA
+rows. It does not rerun the EDA tools.
 
-The frozen RTL interface is `cmd_i[2:0]` and `cmd_o[3:0]`. Release v1.3.1
-corrects the compact contract, report and bundled flow manifest, which v1.3.0
-had incorrectly described as `cmd_i[3:0]`. The baseline RTL, accepted RTL,
-raw measurement outputs, published metrics and acceptance result are unchanged.
+## Source and licensing
 
-The v1.3.1 evidence asset can be reproduced byte-for-byte from the exact
-v1.3.0 asset without rerunning EDA tools:
+The RTL descends from the OpenCores core redistributed by VTR at pinned commit
+`95f5c6de9e158371ba7185bf97c07a84153735d6`. Source headers retain the
+original copyright, redistribution condition and disclaimer.
 
-```bash
-python3 scripts/reissue_v1_3_1_evidence.py \
-  --source path/to/v1.3.0/primary-ppa-full-evidence.tar.gz \
-  --output primary-ppa-full-evidence.tar.gz
-```
+Earlier releases corrected a documentation-level interface description from
+`cmd_i[3:0]` to the actual `cmd_i[2:0]`. The measured RTL, raw outputs, metrics
+and acceptance result were unchanged. Full transformation history remains in
+the [technical report](technical-report.pdf) and immutable releases.
 
-The public-only v2 archive is a deterministic reissue of that exact v1.3.1
-asset. It preserves measurement and correctness evidence, replaces an
-operational run pathname with a public token, omits four operational modules
-and records every transformation and omission:
+## Claim boundary
 
-```bash
-python3 scripts/reissue_public_evidence.py \
-  --source path/to/v1.3.1/primary-ppa-full-evidence.tar.gz \
-  --output sha1-vtr45-full-evidence-v2.tar.gz
-```
-
-Adversarial verifier tests run with:
-
-```bash
-python3 -m unittest discover -s tests -v
-```
-
-## Rebuild the report
-
-The checked-in LaTeX source and generated data make the PDF rebuildable:
-
-```bash
-python3 scripts/generate_latex_data.py
-make technical-report
-```
-
-## Scope
-
-This is a two-state, defined-input equivalence contract and a comparative
-estimate on VTR's open 45 nm FPGA architecture at 0.9 V and 85 °C. It does not
-claim identical X/Z propagation, ASIC signoff, a commercial-FPGA measurement
-or manufactured silicon. SHA-1 is used only as a legacy compute benchmark.
-
-The SHA-1 RTL descends from the OpenCores core redistributed by VTR at commit
-`95f5c6de9e158371ba7185bf97c07a84153735d6`. Third-party material retains its
-upstream terms; the repository MIT License covers original Göther Labs work.
-
-[Göther Labs](https://www.gotherlabs.com/)
+This is a comparative VTR/PTM 45 nm FPGA estimate under two-state,
+defined-input semantics. It is not ASIC signoff, a commercial-FPGA result,
+physical-board measurement, measured energy, manufactured-silicon evidence or
+an endorsement of SHA-1 for new security systems.

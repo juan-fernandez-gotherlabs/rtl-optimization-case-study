@@ -1,0 +1,1930 @@
+{
+  "authority": "prospectively_frozen_64_pair_publication_confirmation",
+  "case_id": "mlkem-cbd-vtr45",
+  "claim_boundary": [
+    "relative academic VTR/PTM45 FPGA estimates under the exact published contract",
+    "ACE probabilistic activity estimate rather than application-workload energy",
+    "not ASIC signoff, commercial-FPGA characterization, board measurement, or manufactured-silicon evidence",
+    "not side-channel analysis or certification of the complete ML-KEM implementation",
+    "project-contract certification rather than accredited or third-party certification"
+  ],
+  "correctness": {
+    "cycle_test_sha256": "3cf3c7d63a8a0ac14660e9436c9b860efd1a3efc5af595220639353cdf7bfeb1",
+    "formal_config_sha256": "1ec06bad2ca3c1861f99c0615bdd6d83e2d09ca6b243ed9c7b665da657b83ee7",
+    "formal_passed": true,
+    "formal_scope": "EQY SAT 5-step temporal induction after two-cycle active-low reset, full joined 1096-bit reg_shake refinement view, two-state normalization",
+    "formal_tool": "EQY v0.67-1-g6734d8c",
+    "functional_checks": 239,
+    "functional_cycles": 239,
+    "functional_passed": true,
+    "simulation_tool": "Verilator 5.020",
+    "synthesis_tool": "Yosys 0.55 (git 60f126cd0)"
+  },
+  "decision": "evidence_improvement",
+  "measurement": {
+    "activity": {
+      "ace_seed": 1,
+      "clock_probability": 0.2,
+      "driver_transform_sha256": "eb04751f9f59a7895dbf01e20ef08c5d0b0f750a8aa33472c4e689182150fe97",
+      "method": "ACE probabilistic activity",
+      "primary_input_static_probability": 0.5,
+      "primary_input_switch_probability": 0.2
+    },
+    "baseline_record_sha256": "a919d24bc01948d94510118e4dd7a8271c97841ab4db1ec3327cf9aab4ba24e6",
+    "evaluator_sha256": "b91dc19ab42285d4477d6ca9f1d97c9216bb9725e114026a8c123e71713c1106",
+    "evaluator_version": "rtl-mlkem-cbd-vtr-publication-v1",
+    "optimized_record_sha256": "1e6975a17af1880629d5b5f9c203c71e346751bd951d5475b867efcd789e10fd",
+    "pools_disjoint": true,
+    "protocol_frozen_at_utc": "2026-08-21T09:02:28Z",
+    "protocol_sha256": "cce84fcc54e048137b5a3a89bb0a4e3b92141106ec8330bccb344812b0b02a2c",
+    "publication_pair_count": 64,
+    "publication_seeds": [
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136,
+      137,
+      138,
+      139,
+      140,
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      147,
+      148,
+      149,
+      150,
+      151,
+      152,
+      153,
+      154,
+      155,
+      156,
+      157,
+      158,
+      159,
+      160,
+      161,
+      162,
+      163,
+      164
+    ],
+    "toolchain": {
+      "architecture": "vtr_flow/arch/power/k6_N10_I40_Fi6_L4_frac0_ff1_45nm.xml",
+      "architecture_sha256": "262792caef81931ae09b77d252158bde03c78954175d4b761e6d437317575307",
+      "cpu_limit": 2,
+      "image": "evolther-vtr-ppa45:95f5c6de-linux-amd64",
+      "image_id": "sha256:c0badc2d2bb57364ff37477b3d2c482ef01f7d3df6211e9802e2c54367c33baf",
+      "memory_limit_gib": 7,
+      "network": "none",
+      "platform": "linux/amd64",
+      "technology": "vtr_flow/tech/PTM_45nm/45nm.xml",
+      "technology_sha256": "3080dea13bf7134109f8a83c79426ec0965e07639a61866fe9ae4bd05b5227cb",
+      "vtr_commit": "95f5c6de9e158371ba7185bf97c07a84153735d6"
+    }
+  },
+  "pairs": [
+    {
+      "baseline": {
+        "active_total_power_w": 0.06063,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.28918,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06175,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.68472,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-01",
+      "ratio": {
+        "active_total_power_w": 1.0184727032822034,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.9025220309277071,
+        "critical_path_delay_ns": 0.8590732960612518
+      },
+      "seed": 101
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06405,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.18901,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06284,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.5833,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-02",
+      "ratio": {
+        "active_total_power_w": 0.9811085089773613,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.8900769325461684,
+        "critical_path_delay_ns": 0.8554049763547951
+      },
+      "seed": 102
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06286,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.26734,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06059,
+        "area_total_mwta": 19515180.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.81499,
+        "routing_area_mwta": 4963780.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-03",
+      "ratio": {
+        "active_total_power_w": 0.9638880050906776,
+        "area_total_mwta": 0.8635257011020637,
+        "composite": 0.9061762322145853,
+        "critical_path_delay_ns": 0.8939971973172983
+      },
+      "seed": 103
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06721,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 3.94143,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.05872,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.90117,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-04",
+      "ratio": {
+        "active_total_power_w": 0.8736795119773842,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.8990054905621245,
+        "critical_path_delay_ns": 0.9897854332057147
+      },
+      "seed": 104
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06565,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 3.96697,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.05634,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.90049,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-05",
+      "ratio": {
+        "active_total_power_w": 0.8581873571972582,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.8916862352834205,
+        "critical_path_delay_ns": 0.9832416176578094
+      },
+      "seed": 105
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06279,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 3.98979,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.05231,
+        "area_total_mwta": 19515180.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 4.02309,
+        "routing_area_mwta": 4963780.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-06",
+      "ratio": {
+        "active_total_power_w": 0.8330944417900941,
+        "area_total_mwta": 0.8635257011020637,
+        "composite": 0.8985172210282073,
+        "critical_path_delay_ns": 1.008346303940809
+      },
+      "seed": 106
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06668,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 3.93272,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06056,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.7722,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-07",
+      "ratio": {
+        "active_total_power_w": 0.9082183563287343,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.9012153786620762,
+        "critical_path_delay_ns": 0.959183465896377
+      },
+      "seed": 107
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06756,
+        "area_total_mwta": 23126080.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.01872,
+        "routing_area_mwta": 4963780.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06013,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.89747,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-08",
+      "ratio": {
+        "active_total_power_w": 0.8900236826524572,
+        "area_total_mwta": 0.8210868422145041,
+        "composite": 0.8915832402334329,
+        "critical_path_delay_ns": 0.9698287016761556
+      },
+      "seed": 108
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06519,
+        "area_total_mwta": 23126080.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.22473,
+        "routing_area_mwta": 4963780.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06017,
+        "area_total_mwta": 18808360.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.63542,
+        "routing_area_mwta": 4256960.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-09",
+      "ratio": {
+        "active_total_power_w": 0.9229943242828655,
+        "area_total_mwta": 0.8132965033416818,
+        "composite": 0.86443933984782,
+        "critical_path_delay_ns": 0.8605094290049304
+      },
+      "seed": 109
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.0678,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 3.87743,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06008,
+        "area_total_mwta": 19515180.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.78748,
+        "routing_area_mwta": 4963780.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-10",
+      "ratio": {
+        "active_total_power_w": 0.8861356932153392,
+        "area_total_mwta": 0.8635257011020637,
+        "composite": 0.9075292402202672,
+        "critical_path_delay_ns": 0.9768016443881643
+      },
+      "seed": 110
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06748,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 3.91721,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.05923,
+        "area_total_mwta": 19180420.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.89762,
+        "routing_area_mwta": 4629020.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-11",
+      "ratio": {
+        "active_total_power_w": 0.8777415530527564,
+        "area_total_mwta": 0.8487129315708102,
+        "composite": 0.9050030432152487,
+        "critical_path_delay_ns": 0.9949989916292463
+      },
+      "seed": 111
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06616,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.01445,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06294,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.56455,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-12",
+      "ratio": {
+        "active_total_power_w": 0.9513301088270858,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.8920062710504075,
+        "critical_path_delay_ns": 0.887929853404576
+      },
+      "seed": 112
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06415,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.16066,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06313,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.61564,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-13",
+      "ratio": {
+        "active_total_power_w": 0.9840997661730321,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.8956781273138564,
+        "critical_path_delay_ns": 0.8690063595679531
+      },
+      "seed": 113
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.05824,
+        "area_total_mwta": 23298290.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 3.99482,
+        "routing_area_mwta": 5135990.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06142,
+        "area_total_mwta": 18808360.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.76305,
+        "routing_area_mwta": 4256960.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-14",
+      "ratio": {
+        "active_total_power_w": 1.0546016483516485,
+        "area_total_mwta": 0.8072849981693936,
+        "composite": 0.929079121055028,
+        "critical_path_delay_ns": 0.9419823671654793
+      },
+      "seed": 114
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06546,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.04632,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06233,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.90301,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-15",
+      "ratio": {
+        "active_total_power_w": 0.9521845401772074,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.9172438229646622,
+        "critical_path_delay_ns": 0.9645826331086025
+      },
+      "seed": 115
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06662,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 3.96902,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06425,
+        "area_total_mwta": 19515180.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.58883,
+        "routing_area_mwta": 4963780.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-16",
+      "ratio": {
+        "active_total_power_w": 0.9644250975682979,
+        "area_total_mwta": 0.8635257011020637,
+        "composite": 0.9097829431775337,
+        "critical_path_delay_ns": 0.9042106111836171
+      },
+      "seed": 116
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.0586,
+        "area_total_mwta": 23298290.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.09733,
+        "routing_area_mwta": 5135990.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06554,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.38958,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-17",
+      "ratio": {
+        "active_total_power_w": 1.1184300341296929,
+        "area_total_mwta": 0.8150177545218984,
+        "composite": 0.9102072250283183,
+        "critical_path_delay_ns": 0.8272655607432157
+      },
+      "seed": 117
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06321,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.08352,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06162,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.61726,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-18",
+      "ratio": {
+        "active_total_power_w": 0.9748457522543901,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.8985831181965178,
+        "critical_path_delay_ns": 0.8858190972494319
+      },
+      "seed": 118
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.0625,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.01508,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.05615,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 4.03536,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-19",
+      "ratio": {
+        "active_total_power_w": 0.8984,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.9120469933961215,
+        "critical_path_delay_ns": 1.0050509578887592
+      },
+      "seed": 119
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06122,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.00809,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06226,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.76777,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-20",
+      "ratio": {
+        "active_total_power_w": 1.0169879124469128,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.9295773024942035,
+        "critical_path_delay_ns": 0.940041266538426
+      },
+      "seed": 120
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.0634,
+        "area_total_mwta": 23298290.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.38175,
+        "routing_area_mwta": 5135990.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.0592,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.75737,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-21",
+      "ratio": {
+        "active_total_power_w": 0.9337539432176657,
+        "area_total_mwta": 0.8150177545218984,
+        "composite": 0.8673851093285756,
+        "critical_path_delay_ns": 0.857504421749301
+      },
+      "seed": 121
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06625,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 3.98956,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06153,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.7553,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-22",
+      "ratio": {
+        "active_total_power_w": 0.9287547169811321,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.9022734204377324,
+        "critical_path_delay_ns": 0.9412817453553776
+      },
+      "seed": 122
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06334,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.00455,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06152,
+        "area_total_mwta": 19515180.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.65843,
+        "routing_area_mwta": 4963780.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-23",
+      "ratio": {
+        "active_total_power_w": 0.9712661825071046,
+        "area_total_mwta": 0.8635257011020637,
+        "composite": 0.915064109041675,
+        "critical_path_delay_ns": 0.9135683160405039
+      },
+      "seed": 123
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.05581,
+        "area_total_mwta": 23126080.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.44428,
+        "routing_area_mwta": 4963780.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06124,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.88751,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-24",
+      "ratio": {
+        "active_total_power_w": 1.0972943916860778,
+        "area_total_mwta": 0.8210868422145041,
+        "composite": 0.9236925756114895,
+        "critical_path_delay_ns": 0.8747221147182446
+      },
+      "seed": 124
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06604,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 3.97036,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.05843,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.82163,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-25",
+      "ratio": {
+        "active_total_power_w": 0.8847668079951545,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.8944315948048083,
+        "critical_path_delay_ns": 0.962539920813226
+      },
+      "seed": 125
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06748,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 3.85086,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06202,
+        "area_total_mwta": 19515180.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.77435,
+        "routing_area_mwta": 4963780.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-26",
+      "ratio": {
+        "active_total_power_w": 0.9190871369294605,
+        "area_total_mwta": 0.8635257011020637,
+        "composite": 0.9196843553351627,
+        "critical_path_delay_ns": 0.9801317108386179
+      },
+      "seed": 126
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06518,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.10015,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.05273,
+        "area_total_mwta": 19515180.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 4.02774,
+        "routing_area_mwta": 4963780.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-27",
+      "ratio": {
+        "active_total_power_w": 0.8089904878797177,
+        "area_total_mwta": 0.8635257011020637,
+        "composite": 0.882050509850746,
+        "critical_path_delay_ns": 0.9823396704998596
+      },
+      "seed": 127
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06116,
+        "area_total_mwta": 23298290.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 3.82827,
+        "routing_area_mwta": 5135990.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06346,
+        "area_total_mwta": 18808360.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.79413,
+        "routing_area_mwta": 4256960.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-28",
+      "ratio": {
+        "active_total_power_w": 1.037606278613473,
+        "area_total_mwta": 0.8072849981693936,
+        "composite": 0.939845298854944,
+        "critical_path_delay_ns": 0.991082133705303
+      },
+      "seed": 128
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06555,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.03977,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06826,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.37866,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-29",
+      "ratio": {
+        "active_total_power_w": 1.0413424866514112,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.9011389337124148,
+        "critical_path_delay_ns": 0.8363495941600636
+      },
+      "seed": 129
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06825,
+        "area_total_mwta": 23298290.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.02529,
+        "routing_area_mwta": 5135990.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.05359,
+        "area_total_mwta": 19515180.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 4.04518,
+        "routing_area_mwta": 4963780.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-30",
+      "ratio": {
+        "active_total_power_w": 0.7852014652014652,
+        "area_total_mwta": 0.8376228469986424,
+        "composite": 0.8710774364197805,
+        "critical_path_delay_ns": 1.0049412588906639
+      },
+      "seed": 130
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.065,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 3.99759,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.05988,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.95069,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-31",
+      "ratio": {
+        "active_total_power_w": 0.9212307692307692,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.9145602475882678,
+        "critical_path_delay_ns": 0.9882679314286857
+      },
+      "seed": 131
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06227,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.13334,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06469,
+        "area_total_mwta": 19687390.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.58551,
+        "routing_area_mwta": 5135990.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-32",
+      "ratio": {
+        "active_total_power_w": 1.0388630158985064,
+        "area_total_mwta": 0.8711458081667582,
+        "composite": 0.9224998720534219,
+        "critical_path_delay_ns": 0.8674606976440362
+      },
+      "seed": 132
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06316,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 3.92092,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06083,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.83931,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-33",
+      "ratio": {
+        "active_total_power_w": 0.9631095630145663,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.9253618104808576,
+        "critical_path_delay_ns": 0.9791860073656181
+      },
+      "seed": 133
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06813,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 3.85921,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06194,
+        "area_total_mwta": 19515180.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.73211,
+        "routing_area_mwta": 4963780.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-34",
+      "ratio": {
+        "active_total_power_w": 0.9091442829884046,
+        "area_total_mwta": 0.8635257011020637,
+        "composite": 0.9122657458243344,
+        "critical_path_delay_ns": 0.9670657984406135
+      },
+      "seed": 134
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.05819,
+        "area_total_mwta": 23298290.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.3473,
+        "routing_area_mwta": 5135990.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.05153,
+        "area_total_mwta": 19515180.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 4.17849,
+        "routing_area_mwta": 4963780.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-35",
+      "ratio": {
+        "active_total_power_w": 0.8855473449046228,
+        "area_total_mwta": 0.8376228469986424,
+        "composite": 0.8933466612414643,
+        "critical_path_delay_ns": 0.9611690014491754
+      },
+      "seed": 135
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06871,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 3.79801,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06121,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.75626,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-36",
+      "ratio": {
+        "active_total_power_w": 0.8908455828845875,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.9046180836203883,
+        "critical_path_delay_ns": 0.9890074012443358
+      },
+      "seed": 136
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06772,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 3.88282,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06069,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.86863,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-37",
+      "ratio": {
+        "active_total_power_w": 0.8961901949202599,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.9086598026239381,
+        "critical_path_delay_ns": 0.9963454396546839
+      },
+      "seed": 137
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06554,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.01843,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06273,
+        "area_total_mwta": 19515180.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.54248,
+        "routing_area_mwta": 4963780.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-38",
+      "ratio": {
+        "active_total_power_w": 0.9571254195910893,
+        "area_total_mwta": 0.8635257011020637,
+        "composite": 0.8998394709969354,
+        "critical_path_delay_ns": 0.8815582204990505
+      },
+      "seed": 138
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06551,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 3.97894,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.0618,
+        "area_total_mwta": 19515180.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.77435,
+        "routing_area_mwta": 4963780.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-39",
+      "ratio": {
+        "active_total_power_w": 0.9433674248206381,
+        "area_total_mwta": 0.8635257011020637,
+        "composite": 0.9176498005837533,
+        "critical_path_delay_ns": 0.948581783087958
+      },
+      "seed": 139
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06834,
+        "area_total_mwta": 23298290.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.02758,
+        "routing_area_mwta": 5135990.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.05632,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.79523,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-40",
+      "ratio": {
+        "active_total_power_w": 0.8241147205150717,
+        "area_total_mwta": 0.8150177545218984,
+        "composite": 0.8585841930933246,
+        "critical_path_delay_ns": 0.9423102706836363
+      },
+      "seed": 140
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.05598,
+        "area_total_mwta": 22791320.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.22228,
+        "routing_area_mwta": 4629020.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06503,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.4491,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-41",
+      "ratio": {
+        "active_total_power_w": 1.161664880314398,
+        "area_total_mwta": 0.8331470050879018,
+        "composite": 0.9246706746027814,
+        "critical_path_delay_ns": 0.8168809268925794
+      },
+      "seed": 141
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.05662,
+        "area_total_mwta": 23126080.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.37629,
+        "routing_area_mwta": 4963780.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06169,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.70702,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-42",
+      "ratio": {
+        "active_total_power_w": 1.0895443306252208,
+        "area_total_mwta": 0.8210868422145041,
+        "composite": 0.9116978792649039,
+        "critical_path_delay_ns": 0.8470690927703602
+      },
+      "seed": 142
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06231,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.24341,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06639,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.59902,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-43",
+      "ratio": {
+        "active_total_power_w": 1.065479056331247,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.9122964851435682,
+        "critical_path_delay_ns": 0.8481433564044012
+      },
+      "seed": 143
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06343,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 3.96669,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06049,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.72246,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-44",
+      "ratio": {
+        "active_total_power_w": 0.9536496925744916,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.9093439006360047,
+        "critical_path_delay_ns": 0.9384297739425063
+      },
+      "seed": 144
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06123,
+        "area_total_mwta": 23298290.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 3.93081,
+        "routing_area_mwta": 5135990.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06087,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.76083,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-45",
+      "ratio": {
+        "active_total_power_w": 0.9941205291523763,
+        "area_total_mwta": 0.8150177545218984,
+        "composite": 0.9186200511765205,
+        "critical_path_delay_ns": 0.9567570042815602
+      },
+      "seed": 145
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06409,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.18746,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06009,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.78557,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-46",
+      "ratio": {
+        "active_total_power_w": 0.9375877672023717,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.8930219252295996,
+        "critical_path_delay_ns": 0.9040253518839583
+      },
+      "seed": 146
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.07003,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 3.56172,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.05978,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.92966,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-47",
+      "ratio": {
+        "active_total_power_w": 0.8536341567899473,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.9249542867929755,
+        "critical_path_delay_ns": 1.10330402165246
+      },
+      "seed": 147
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06849,
+        "area_total_mwta": 22791320.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 3.84998,
+        "routing_area_mwta": 4629020.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.0561,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 4.12479,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-48",
+      "ratio": {
+        "active_total_power_w": 0.8190976784932107,
+        "area_total_mwta": 0.8331470050879018,
+        "composite": 0.9008799070077004,
+        "critical_path_delay_ns": 1.071379591582294
+      },
+      "seed": 148
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06306,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.00115,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06445,
+        "area_total_mwta": 19515180.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.5509,
+        "routing_area_mwta": 4963780.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-49",
+      "ratio": {
+        "active_total_power_w": 1.0220424992071042,
+        "area_total_mwta": 0.8635257011020637,
+        "composite": 0.9217913124049749,
+        "critical_path_delay_ns": 0.8874698524174299
+      },
+      "seed": 149
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06616,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.05496,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06277,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.64531,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-50",
+      "ratio": {
+        "active_total_power_w": 0.9487605804111247,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.8948827072670602,
+        "critical_path_delay_ns": 0.8989755755913744
+      },
+      "seed": 150
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06192,
+        "area_total_mwta": 23126080.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.16422,
+        "routing_area_mwta": 4963780.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06108,
+        "area_total_mwta": 19180420.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.64863,
+        "routing_area_mwta": 4629020.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-51",
+      "ratio": {
+        "active_total_power_w": 0.9864341085271318,
+        "area_total_mwta": 0.8293848330542833,
+        "composite": 0.8949664938275969,
+        "critical_path_delay_ns": 0.8761856962408325
+      },
+      "seed": 151
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06526,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.13085,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06227,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.73322,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-52",
+      "ratio": {
+        "active_total_power_w": 0.954183266932271,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.8981659623375451,
+        "critical_path_delay_ns": 0.9037413607368945
+      },
+      "seed": 152
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06322,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.26682,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06281,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.65306,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-53",
+      "ratio": {
+        "active_total_power_w": 0.993514710534641,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.8940741449758624,
+        "critical_path_delay_ns": 0.8561551694235988
+      },
+      "seed": 153
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06862,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 3.83461,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06092,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.79987,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-54",
+      "ratio": {
+        "active_total_power_w": 0.8877878169629846,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.9041701822810603,
+        "critical_path_delay_ns": 0.9909404085421984
+      },
+      "seed": 154
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06356,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.24851,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.05263,
+        "area_total_mwta": 19515180.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 4.08073,
+        "routing_area_mwta": 4963780.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-55",
+      "ratio": {
+        "active_total_power_w": 0.82803650094399,
+        "area_total_mwta": 0.8635257011020637,
+        "composite": 0.8822845112832729,
+        "critical_path_delay_ns": 0.960508507688578
+      },
+      "seed": 155
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06359,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.25367,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06263,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.75308,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-56",
+      "ratio": {
+        "active_total_power_w": 0.9849032866802958,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.9004725515696268,
+        "critical_path_delay_ns": 0.8823157414656051
+      },
+      "seed": 156
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.05875,
+        "area_total_mwta": 23126080.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.14444,
+        "routing_area_mwta": 4963780.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.05183,
+        "area_total_mwta": 19515180.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 4.20654,
+        "routing_area_mwta": 4963780.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-57",
+      "ratio": {
+        "active_total_power_w": 0.8822127659574469,
+        "area_total_mwta": 0.8438602651205911,
+        "composite": 0.9108237518297203,
+        "critical_path_delay_ns": 1.0149839302776733
+      },
+      "seed": 157
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06471,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.13646,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.05994,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.85102,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-58",
+      "ratio": {
+        "active_total_power_w": 0.9262865090403337,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.898177219029482,
+        "critical_path_delay_ns": 0.9309941350816884
+      },
+      "seed": 158
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06335,
+        "area_total_mwta": 22791320.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.30158,
+        "routing_area_mwta": 4629020.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.05508,
+        "area_total_mwta": 19515180.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.89415,
+        "routing_area_mwta": 4963780.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-59",
+      "ratio": {
+        "active_total_power_w": 0.8694554064719809,
+        "area_total_mwta": 0.8562549251206161,
+        "composite": 0.8767552106757164,
+        "critical_path_delay_ns": 0.90528363996485
+      },
+      "seed": 159
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.05985,
+        "area_total_mwta": 23126080.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.06878,
+        "routing_area_mwta": 4963780.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.05438,
+        "area_total_mwta": 19515180.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.90301,
+        "routing_area_mwta": 4963780.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-60",
+      "ratio": {
+        "active_total_power_w": 0.9086048454469506,
+        "area_total_mwta": 0.8438602651205911,
+        "composite": 0.9026658534893882,
+        "critical_path_delay_ns": 0.9592580576978849
+      },
+      "seed": 160
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06868,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 3.89263,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06368,
+        "area_total_mwta": 18808360.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.62126,
+        "routing_area_mwta": 4256960.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-61",
+      "ratio": {
+        "active_total_power_w": 0.9271986022131624,
+        "area_total_mwta": 0.8322496772041053,
+        "composite": 0.8953943066152789,
+        "critical_path_delay_ns": 0.9302862075255033
+      },
+      "seed": 161
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06727,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 3.96423,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.05927,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.77568,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-62",
+      "ratio": {
+        "active_total_power_w": 0.8810762598483723,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.8900503037096462,
+        "critical_path_delay_ns": 0.9524371693872454
+      },
+      "seed": 162
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06503,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.06271,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06468,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.4624,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-63",
+      "ratio": {
+        "active_total_power_w": 0.9946178686759957,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.8930391507361911,
+        "critical_path_delay_ns": 0.852239022721287
+      },
+      "seed": 163
+    },
+    {
+      "baseline": {
+        "active_total_power_w": 0.06404,
+        "area_total_mwta": 22599420.0,
+        "clb_count": 337,
+        "critical_path_delay_ns": 4.18407,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 18162300.0
+      },
+      "optimized": {
+        "active_total_power_w": 0.06052,
+        "area_total_mwta": 18988520.0,
+        "clb_count": 270,
+        "critical_path_delay_ns": 3.84292,
+        "routing_area_mwta": 4437120.0,
+        "used_logic_area_mwta": 14551400.0
+      },
+      "pair_id": "publication-64",
+      "ratio": {
+        "active_total_power_w": 0.9450343535290443,
+        "area_total_mwta": 0.8402215632082594,
+        "composite": 0.9001217868901513,
+        "critical_path_delay_ns": 0.918464557237331
+      },
+      "seed": 164
+    }
+  ],
+  "prior_confirmation": {
+    "candidate_sha256": "da0b4e79beb9cf9cc24c3ce949068c3a29316273a6320e283f4201fbd884c9ef",
+    "improvement_percent": 9.465184861868913,
+    "pair_count": 12,
+    "result_sha256": "cb446b6a1962f6341fb79151e8713c7cd55053cfac7150449587fc6841c64390",
+    "role": "initial fixed 12-pair result observed before the publication protocol",
+    "score": 0.9053481513813109
+  },
+  "rtl": {
+    "baseline": {
+      "path": "rtl/baseline/cbd.v",
+      "sha256": "c152f96a682ea390c610dc32ee00a317c0ad990f9b082451325cdaf12f2218b0"
+    },
+    "interface": "CBD(clk, rst, load, start, eta[1:0], scnd, in_shake[1087:0], end_op, en_write, data_in_1[23:0], data_in_2[23:0], addr_1[7:0], addr_2[7:0])",
+    "module": "CBD",
+    "optimized": {
+      "path": "rtl/optimized/cbd.v",
+      "sha256": "da0b4e79beb9cf9cc24c3ce949068c3a29316273a6320e283f4201fbd884c9ef"
+    },
+    "patch": {
+      "path": "rtl/changes.patch",
+      "sha256": "18ac09ca7be4c10484e5948d8798fee6fd1bfbe23b9f38989e18fc2a7da80b82"
+    }
+  },
+  "schema_version": 1,
+  "score_definition": {
+    "acceptance_rule": "composite one-sided 95% upper log-ratio bound < 0 and no primary metric one-sided 95% lower log-ratio bound > 0",
+    "direction": "lower_is_better",
+    "formula": "equal-weight geometric mean of paired optimized/baseline area, delay, and active-total-power ratios",
+    "primary_metrics": [
+      "area_total_mwta",
+      "critical_path_delay_ns",
+      "active_total_power_w"
+    ]
+  },
+  "source": {
+    "commit": "72a90d80484d45d0bed1e0f9903bd0fb78cceb47",
+    "license": "MIT",
+    "license_sha256": "766453e0284e5169589bc138b7144978367679e9dfaf2d67696393ab2f356e1a",
+    "path": "rtl/cbd.v",
+    "project": "HOPE-MLKEM CBD",
+    "repository": "https://github.com/HWSec-CSIC/hope-mlkem",
+    "upstream_sha256": "95a12bbae8ad4c255c6d8b0bce862d3593e960e1d754fefe46378a32340f00d0"
+  },
+  "status": "accepted",
+  "summary": {
+    "baseline": {
+      "active_total_power_w": 0.06410630312078937,
+      "area_total_mwta": 22751866.911763385,
+      "clb_count": 337.0,
+      "critical_path_delay_ns": 4.0537684687452025
+    },
+    "confidence": {
+      "acceptance_one_sided_95": {
+        "active_total_power_w": {
+          "lower_improvement_percent": 4.353762020978113,
+          "lower_log_ratio": -0.07843146403843389,
+          "mean_log_ratio": -0.061472643013478726,
+          "standard_error": 0.010158618938230654,
+          "upper_improvement_percent": 7.543457625947458,
+          "upper_log_ratio": -0.044513821988523564
+        },
+        "area_total_mwta": {
+          "lower_improvement_percent": 15.589454328987184,
+          "lower_log_ratio": -0.17704712329921063,
+          "mean_log_ratio": -0.17326248339107383,
+          "standard_error": 0.002267062939611607,
+          "upper_improvement_percent": 16.225969349429025,
+          "upper_log_ratio": -0.16947784348293704
+        },
+        "composite": {
+          "lower_improvement_percent": 9.399153690049133,
+          "lower_log_ratio": -0.1061067183748146,
+          "mean_log_ratio": -0.10240667509408255,
+          "standard_error": 0.0022163881373951245,
+          "upper_improvement_percent": 10.067133193928013,
+          "upper_log_ratio": -0.0987066318133505
+        },
+        "critical_path_delay_ns": {
+          "lower_improvement_percent": 5.72425627615697,
+          "lower_log_ratio": -0.08602354375721918,
+          "mean_log_ratio": -0.07248489887769509,
+          "standard_error": 0.008109875920544815,
+          "upper_improvement_percent": 8.242737214134143,
+          "upper_log_ratio": -0.058946253998170994
+        }
+      },
+      "descriptive_two_sided_95": {
+        "active_total_power_w": {
+          "lower_improvement_percent": 4.03361987930746,
+          "lower_log_ratio": -0.08177302309376405,
+          "mean_log_ratio": -0.061472643013478726,
+          "standard_error": 0.010158618938230654,
+          "upper_improvement_percent": 7.851891011158685,
+          "upper_log_ratio": -0.0411722629331934
+        },
+        "area_total_mwta": {
+          "lower_improvement_percent": 15.5264838932884,
+          "lower_log_ratio": -0.17779284717574595,
+          "mean_log_ratio": -0.17326248339107383,
+          "standard_error": 0.002267062939611607,
+          "upper_improvement_percent": 16.288418356566904,
+          "upper_log_ratio": -0.16873211960640172
+        },
+        "composite": {
+          "lower_improvement_percent": 9.33307660676358,
+          "lower_log_ratio": -0.10683577336700126,
+          "mean_log_ratio": -0.10240667509408255,
+          "standard_error": 0.0022163881373951245,
+          "upper_improvement_percent": 10.132675304630045,
+          "upper_log_ratio": -0.09797757682116384
+        },
+        "critical_path_delay_ns": {
+          "lower_improvement_percent": 5.4724259376408675,
+          "lower_log_ratio": -0.08869119272453252,
+          "mean_log_ratio": -0.07248489887769509,
+          "standard_error": 0.008109875920544815,
+          "upper_improvement_percent": 8.48718718312872,
+          "upper_log_ratio": -0.056278605030857666
+        }
+      }
+    },
+    "improvement_percent": {
+      "active_total_power_w": 5.962132868582404,
+      "area_total_mwta": 15.908314083526376,
+      "clb": 19.881305637982194,
+      "composite": 9.733761329552394,
+      "critical_path_delay_ns": 6.992020819708111,
+      "fmax": 7.517656959468377
+    },
+    "optimized": {
+      "active_total_power_w": 0.06028420015159172,
+      "area_total_mwta": 19132428.46357415,
+      "clb_count": 270.0,
+      "critical_path_delay_ns": 3.770328133427775
+    },
+    "paired_ratio": {
+      "active_total_power_w": 0.940378671314176,
+      "area_total_mwta": 0.8409168591647362,
+      "composite": 0.9026623867044761,
+      "critical_path_delay_ns": 0.9300797918029189
+    }
+  }
+}

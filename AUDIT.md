@@ -7,13 +7,13 @@ means acceptance under the fixed, source-controlled project contract.
 
 ## Current status
 
-| Layer | SHA-1 | INT8 MatVec |
-|---|---|---|
-| Compact consistency verifier | Public and automated | Public and automated |
-| Raw-provenance verification | Public release asset and verifier | Public blinded release asset and verifier |
-| Separate deterministic replay by the project | Not claimed as third-party work | Recorded for baseline and accepted RTL |
-| Fresh EDA rerun by an external organisation | Not yet signed off | Not yet signed off |
-| Accredited certification or assurance | None | None |
+| Layer | SHA-1 | INT8 MatVec | ML-KEM CBD |
+|---|---|---|---|
+| Compact consistency verifier | Public and automated | Public and automated | Public and automated |
+| Raw-provenance verification | Public release asset and verifier | Public blinded release asset and verifier | Public 64-pair release asset and verifier |
+| Separate deterministic replay by the project | Not claimed as third-party work | Recorded for baseline and accepted RTL | Not claimed as third-party work |
+| Fresh EDA rerun by an external organisation | Not yet signed off | Not yet signed off | Not yet signed off |
+| Accredited certification or assurance | None | None | None |
 
 The raw verifier recomputes metrics from archived logs. It does not rerun the
 EDA tools, and a project-operated replay is not organisational independence.
@@ -44,6 +44,7 @@ From the repository root:
 python3 verify.py
 python3 -m unittest discover -s cases/sha1/tests -v
 python3 -m unittest discover -s cases/int8-matvec/tests -v
+python3 -m unittest discover -s cases/mlkem-cbd/tests -v
 ```
 
 Then download each release asset using the URL in its case README, verify the
@@ -54,6 +55,8 @@ python3 cases/sha1/verify.py --evidence-archive \
   path/to/sha1-vtr45-full-evidence-v2.tar.gz
 python3 cases/int8-matvec/verify.py --evidence-archive \
   path/to/int8-matvec-vtr45-full-evidence-v1.tar.gz
+python3 cases/mlkem-cbd/verify.py --evidence-archive \
+  path/to/mlkem-cbd-vtr45-full-evidence-v1.tar.gz
 ```
 
 The reviewer must fail the audit if an archive member, fixed authority,

@@ -26,13 +26,18 @@ receive an improvement score.
 
 ## 3. Measure on a pinned target
 
-Both current cases use a pinned Linux/amd64 VTR flow, homogeneous academic LUT6
+All current cases use a pinned Linux/amd64 VTR flow, homogeneous academic LUT6
 architecture and PTM 45 nm model at 0.9 V and 85 degrees C. The target does not
 model commercial DSP slices, BRAM or ASIC arithmetic cells. Case-specific fixed
 wrappers may provide the clocked measurement boundary; wrapper resources must
 be labelled separately from candidate RTL. Total area, post-route critical-path
 delay and active total power are implementation-model estimates, not physical
 measurements.
+
+SHA-1 and INT8 MatVec use fixed active traces. ML-KEM CBD uses deterministic
+ACE probabilistic activity with declared input and clock probabilities. These
+case-specific power contracts support paired comparison inside each case, not
+cross-case workload-energy ranking.
 
 The composite score is the equal-weight paired geometric mean of:
 
@@ -74,8 +79,8 @@ Here, “certification” means acceptance under the source-controlled project
 contract. It is not an accredited certification, an assurance opinion or an
 external third-party audit.
 
-SHA-1 and INT8 each publish a separately downloadable, hash-addressed raw
-evidence archive. Their public verifiers bind the archive to the compact case,
-audit all members and re-extract the reported PPA metrics. This is provenance
-replay, not a fresh EDA execution; independently rerunning the pinned tools is a
-separate and more expensive reproduction step.
+SHA-1, INT8 MatVec and ML-KEM CBD each publish a separately downloadable,
+hash-addressed raw evidence archive. Their public verifiers bind the archive to
+the compact case, audit all members and re-extract the reported PPA metrics.
+This is provenance replay, not a fresh EDA execution; independently rerunning
+the pinned tools is a separate and more expensive reproduction step.
