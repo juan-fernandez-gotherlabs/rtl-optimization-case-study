@@ -1,0 +1,10 @@
+{
+  "archive_bytes": 1468397,
+  "archive_sha256": "bc628858c80725a373df8ded0155d7bbbbd71e4aef84038f73aa1a19c290598f",
+  "asset_name": "mlkem-cbd-vtr45-full-evidence-v1.tar.gz",
+  "bundle_root": "mlkem-cbd-vtr45-full-evidence-v1",
+  "download_url": "https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/download/v2.2.0/mlkem-cbd-vtr45-full-evidence-v1.tar.gz",
+  "member_count": 541,
+  "release_tag": "v2.2.0",
+  "schema_version": 1
+}

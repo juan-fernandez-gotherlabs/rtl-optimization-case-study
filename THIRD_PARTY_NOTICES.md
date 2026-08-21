@@ -25,3 +25,16 @@ certificate and raw evidence remain verifiable.
 The INT8 implementation results use the open Verilog-to-Routing toolchain and
 academic VTR/PTM architecture models. Tool names identify the measurement
 environment and do not imply vendor endorsement.
+
+## ML-KEM CBD case
+
+The CBD RTL baseline descends from `rtl/cbd.v` in the HWSec-CSIC HOPE-MLKEM
+repository at pinned commit `72a90d80484d45d0bed1e0f9903bd0fb78cceb47`.
+The evaluated baseline adds provenance comments only. The baseline and optimized
+RTL retain the upstream MIT terms, a copy of which is included at
+`cases/mlkem-cbd/LICENSE`.
+
+NIST FIPS 203 is cited to identify the standardized ML-KEM algorithm. This case
+does not imply NIST, HWSec-CSIC, VTR or any tool-provider endorsement. The VTR
+architecture and PTM technology model remain under their respective upstream
+terms.

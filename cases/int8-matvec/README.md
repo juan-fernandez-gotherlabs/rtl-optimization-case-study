@@ -1,62 +1,62 @@
 # INT8 4x4 matrix-vector RTL optimization
 
-[Read the technical report](../../INT8-MatVec-Optimization.pdf) or run the
-compact verifier with `python3 verify.py` from this directory. The complete
-blinded raw archive is a release asset, kept out of Git because it contains all
-four 64-pair VTR run sets.
+Quantized-arithmetic case in the
+[verified RTL portfolio](../../README.md).
 
-This case optimizes a small, synthesizable signed-INT8 matrix-vector datapath:
-four input values, a 4x4 weight matrix, sixteen signed multiplications and four
-signed-INT32 outputs. Matrix-vector multiplication is a central arithmetic
-primitive in quantized linear and projection layers. This case is deliberately
-not presented as a complete neural network, accelerator platform or deployment.
+## What this module does
+
+The combinational datapath accepts four signed INT8 activations and a 4x4
+signed INT8 weight matrix. It performs sixteen exact 8x8 multiplications and
+returns four signed INT32 dot products. Matrix-vector multiplication is a core
+operation in quantized linear and projection layers; this case is not presented
+as a complete neural network or accelerator platform.
+
+## What changed
+
+The optimized RTL replaces sixteen unnecessary 32-bit product extensions and a
+wide chained accumulation with a balanced, range-correct tree:
+
+- pairwise products are accumulated in signed 17-bit sums;
+- each row is completed in one signed 18-bit sum;
+- sign extension to the 32-bit interface occurs once, at the output.
+
+The exact mathematical dot product and every output bit remain unchanged. See
+the [exact patch](rtl/changes.patch).
 
 ## Result
 
-| Primary metric | Frozen baseline | Accepted RTL | Paired improvement |
-|---|---:|---:|---:|
-| VTR total area estimate | 33,892,339 MWTA | 28,607,064 MWTA | **15.5943%** |
-| Post-route critical path | 11.1642 ns | 10.8085 ns | **3.1868%** |
-| Active total power estimate | 22.4567 mW | 21.1749 mW | **5.7081%** |
-| Composite score | 1.000000 | 0.916770 | **8.3230%** |
+| Metric | Baseline | Optimized | Paired improvement | 95% interval |
+|---|---:|---:|---:|---:|
+| Total area | 33,892,339 MWTA | 28,607,064 MWTA | **15.5943%** | 15.5355% to 15.6531% |
+| Critical path | 11.1642 ns | 10.8085 ns | **3.1868%** | 2.5843% to 3.7855% |
+| Active total power | 22.4567 mW | 21.1749 mW | **5.7081%** | 5.1622% to 6.2509% |
+| Composite PPA | 1.000000 | 0.916770 | **8.3230%** | 8.1997% to 8.4462% |
 
-The accepted RTL replaces unnecessary full-width product extensions and a
-wide accumulation expression with a balanced, range-correct 17/18-bit adder
-tree. The mathematical dot product and the four signed-INT32 outputs are
-unchanged.
+MWTA is VTR's minimum-width transistor-area unit. Packed CLBs fall from 368 to
+304 and mapped logic elements from 2,586 to 2,467. The PPA flow places the DUT
+behind a fixed output-register wrapper; the reported 72 registers belong to
+that unchanged wrapper, not to candidate datapath state. The target has no commercial DSP-slice, BRAM or ASIC MAC-cell model,
+so every multiplier maps to LUT fabric.
 
-The PPA flow places the combinational DUT behind a fixed measurement wrapper
-that registers only the four 32-bit outputs. The reported 72 registers belong
-to that unchanged wrapper and are not state added to the candidate datapath.
-The academic target is homogeneous LUT6 logic: the signed multipliers map to
-LUT fabric, with no commercial DSP-slice, BRAM or ASIC MAC-cell model.
+The composite is the equal-weight geometric mean of paired area, post-route
+delay and active-total-power ratios over 64 fixed pairs. Cross-case percentages
+are not a cross-circuit performance ranking.
 
-## Verification and certification
+## Correctness evidence
 
-Here, certification means acceptance under the published project contract; it
-is not accredited certification or an external assurance opinion.
+- 151 deterministic signed, extreme, lane and seeded-random simulations;
+- exhaustive Yosys combinational equivalence for every 160-bit input assignment;
+- 64 held-out publication pairs disjoint from five optimizer-visible pairs;
+- a separate deterministic project replay for baseline and optimized RTL;
+- raw VTR timing, area and active/idle power evidence for all four legs.
 
-- 151 deterministic signed, extreme, lane and seeded-random simulations passed
-  in both primary and separate replay runs for each RTL;
-- exhaustive Yosys combinational equivalence covered every 160-bit input
-  assignment in all four evidence legs;
-- five optimizer-visible VTR placement pairs rank search candidates only;
-- 64 disjoint held-out pairs determine certification;
-- baseline and accepted records carry an exact deterministic-replay
-  attestation; this is not a third-party reproduction;
-- the composite one-sided 95% upper confidence bound remains below `1.0`;
-- every primary metric passes its non-regression bound and the resource envelope.
-
-The public certificate and archive replace held-out placement-seed identities
-with stable pair labels. The compact verifier checks certificate consistency,
-RTL identity, the exact patch and all derived statistics. With the raw archive
-it additionally verifies every member hash, checks the four functional and
-formal pass records, and re-extracts all 256 post-route area, timing and power
-rows before matching them to the certificate. It does not rerun the EDA tools.
+The replay is project-operated evidence, not independent third-party
+reproduction. Certification means acceptance under the published project
+contract, not accredited certification.
 
 ## Verify
 
-The compact consistency check uses only Python 3:
+Compact consistency verification requires only Python 3:
 
 ```bash
 python3 verify.py
@@ -65,39 +65,34 @@ python3 verify.py
 Expected ending:
 
 ```text
+INT8 MatVec compact evidence: PASS
 held_out_pairs=64
-composite_score=0.916769683690
 improvement=8.3230%
 Full raw evidence: NOT CHECKED (pass --evidence-archive)
 ```
 
-To verify every raw file, download the release asset and supply it explicitly:
+For raw-provenance verification, download the
+[v2.0.1 evidence asset](https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/download/v2.0.1/int8-matvec-vtr45-full-evidence-v1.tar.gz)
+and run:
 
 ```bash
-curl -LO https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/download/v2.0.1/int8-matvec-vtr45-full-evidence-v1.tar.gz
-python3 verify.py --evidence-archive \
-  int8-matvec-vtr45-full-evidence-v1.tar.gz
+python3 verify.py --evidence-archive int8-matvec-vtr45-full-evidence-v1.tar.gz
 ```
 
-## Public artifacts
+Full mode re-extracts all 256 post-route PPA rows and checks the four functional
+and formal pass records. It does not rerun the EDA tools.
 
-- [Download the full raw-evidence archive](https://github.com/juan-fernandez-gotherlabs/rtl-optimization-case-study/releases/download/v2.0.1/int8-matvec-vtr45-full-evidence-v1.tar.gz)
-- [`rtl/baseline/int8_matvec_4x4.sv`](rtl/baseline/int8_matvec_4x4.sv)
-- [`rtl/optimized/int8_matvec_4x4.sv`](rtl/optimized/int8_matvec_4x4.sv)
-- [`rtl/changes.patch`](rtl/changes.patch)
-- [`certificate.json`](certificate.json)
-- [`full-evidence.json`](full-evidence.json)
-- [`technical-report.pdf`](technical-report.pdf)
+## Source and licensing
+
+The baseline and optimized RTL are original work copyright 2026 Juan José
+Fernández and licensed under Apache License 2.0. The frozen source files retain
+their original Evolther-contributors header and are kept byte-exact to preserve
+their published evidence identities.
 
 ## Claim boundary
 
-These are paired academic VTR PTM 45 nm post-route estimates at 0.9 V and
-85 degrees C on a homogeneous LUT6 target without commercial DSP or BRAM
-resources. They are not physical FPGA measurements, Vivado results, ASIC or
-silicon signoff, board measurements, measured power or measured energy. The raw
-archive establishes provenance and metric re-extraction comparable
-to SHA-1; it does not turn academic estimates into physical measurements.
-
-The INT8 RTL is copyright 2026 Juan José Fernández and Apache-2.0 licensed. The
-optimization implementation and private execution data are intentionally
-outside this public evidence package.
+These are paired VTR/PTM 45 nm estimates at 0.9 V and 85 degrees C on a
+homogeneous LUT6 target. They are not Vivado results, ASIC signoff,
+physical-board measurements, measured power or energy, manufactured-silicon
+evidence, or proof that the same structure improves another matrix size,
+precision, architecture or workload.
