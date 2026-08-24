@@ -1,7 +1,8 @@
-# Evolther verified RTL optimization results
+# Göther Labs verified RTL optimization results
 
-Three small, auditable before/after RTL cases show how Evolther improves a
-frozen implementation while preserving its functional contract. Each package
+Three small, auditable before/after RTL cases show how Göther Labs applies
+Evölther to improve a frozen implementation while preserving its functional
+contract. Each package
 contains the baseline, optimized RTL, exact patch, paired measurements,
 correctness evidence, report, checksums and a fail-closed verifier.
 
@@ -107,4 +108,4 @@ implementation target, objective and validity limits. Göther Labs can then
 produce a bounded before/after result and an agreed evidence package before a
 larger engagement.
 
-[Göther Labs](https://www.gotherlabs.com/)
+[Evaluate one RTL block with Göther Labs](https://www.gotherlabs.com/rtl-optimization/)
