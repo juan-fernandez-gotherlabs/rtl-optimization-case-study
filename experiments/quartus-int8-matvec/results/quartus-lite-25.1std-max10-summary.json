@@ -1,0 +1,209 @@
+{
+  "claim_boundary": "Quartus implementation evidence for the exact device, tool version, constraints, wrapper, and mapping mode; not board measurement or a cross-vendor comparison.",
+  "comparisons": [
+    {
+      "mapping": "dsp_auto",
+      "power": {
+        "core_dynamic_w_reduction_percent": 11.297760210804,
+        "static_w_reduction_percent": 0.011096316023,
+        "total_thermal_w_reduction_percent": 2.496020836348
+      },
+      "resource_reduction_percent": {
+        "embedded_multiplier_9bit_elements": 0.0,
+        "embedded_multiplier_blocks": 0.0,
+        "logic_elements": 1.465201465201,
+        "registers": 0.0
+      },
+      "timing": {
+        "datapath_delay_reduction_percent": 10.973923350454,
+        "estimated_fmax_improvement_percent": 12.320307754606,
+        "wns_delta_ns": 1.111
+      }
+    },
+    {
+      "mapping": "lut_only",
+      "power": {
+        "core_dynamic_w_reduction_percent": -9.019812304484,
+        "static_w_reduction_percent": -0.011102475852,
+        "total_thermal_w_reduction_percent": -1.370294534572
+      },
+      "resource_reduction_percent": {
+        "embedded_multiplier_9bit_elements": null,
+        "embedded_multiplier_blocks": null,
+        "logic_elements": 1.264367816092,
+        "registers": 0.0
+      },
+      "timing": {
+        "datapath_delay_reduction_percent": 8.726938681773,
+        "estimated_fmax_improvement_percent": 9.562377531025,
+        "wns_delta_ns": 1.14
+      }
+    }
+  ],
+  "contract": {
+    "clock_period_ns": 5.0,
+    "device": "10M50DAF484C7G",
+    "family": "MAX 10",
+    "quartus_version": "25.1std.0 Build 1129 10/21/2025 SC Lite Edition"
+  },
+  "runs": [
+    {
+      "clock_period_ns": 5.0,
+      "device": "10M50DAF484C7G",
+      "family": "MAX 10",
+      "mapping": "dsp_auto",
+      "power": {
+        "confidence": "low_insufficient_toggle_rate_data",
+        "core_dynamic_w": 0.03036,
+        "method": "quartus_vectorless_estimate",
+        "static_w": 0.09012,
+        "status": "complete",
+        "total_thermal_w": 0.13822
+      },
+      "quartus_version": "25.1std.0 Build 1129 10/21/2025 SC Lite Edition",
+      "resources": {
+        "embedded_multiplier_9bit_elements": 16,
+        "embedded_multiplier_blocks": 8,
+        "logic_elements": 273,
+        "registers": 128
+      },
+      "schema_version": 1,
+      "source_sha256": {
+        "dut": "c2472728e2d52b29ad451f5c9779ebb749c318e9be048d03e6a6555c735eda53",
+        "wrapper": "f344a7920b370004e62dc49543dd9ae007538f68fcfcfb79f5bdd438b9f2b4aa"
+      },
+      "status": "complete",
+      "timing": {
+        "datapath_delay_ns": 10.124,
+        "estimated_fmax_mhz": 98.78,
+        "hold_slack_ns": 1.61,
+        "method": "quartus_slow_1200mv_85c_post_fit",
+        "target_met": false,
+        "unconstrained_clocks": 0,
+        "unconstrained_input_ports": 160,
+        "unconstrained_output_ports": 128,
+        "wns_ns": -5.124
+      },
+      "variant": "baseline"
+    },
+    {
+      "clock_period_ns": 5.0,
+      "device": "10M50DAF484C7G",
+      "family": "MAX 10",
+      "mapping": "dsp_auto",
+      "power": {
+        "confidence": "low_insufficient_toggle_rate_data",
+        "core_dynamic_w": 0.02693,
+        "method": "quartus_vectorless_estimate",
+        "static_w": 0.09011,
+        "status": "complete",
+        "total_thermal_w": 0.13477
+      },
+      "quartus_version": "25.1std.0 Build 1129 10/21/2025 SC Lite Edition",
+      "resources": {
+        "embedded_multiplier_9bit_elements": 16,
+        "embedded_multiplier_blocks": 8,
+        "logic_elements": 269,
+        "registers": 128
+      },
+      "schema_version": 1,
+      "source_sha256": {
+        "dut": "25327189f78f238e909fa5940afff9e2b000547336cdc614ee9ea9c4633aa11f",
+        "wrapper": "f344a7920b370004e62dc49543dd9ae007538f68fcfcfb79f5bdd438b9f2b4aa"
+      },
+      "status": "complete",
+      "timing": {
+        "datapath_delay_ns": 9.013,
+        "estimated_fmax_mhz": 110.95,
+        "hold_slack_ns": 1.512,
+        "method": "quartus_slow_1200mv_85c_post_fit",
+        "target_met": false,
+        "unconstrained_clocks": 0,
+        "unconstrained_input_ports": 160,
+        "unconstrained_output_ports": 128,
+        "wns_ns": -4.013
+      },
+      "variant": "optimized"
+    },
+    {
+      "clock_period_ns": 5.0,
+      "device": "10M50DAF484C7G",
+      "family": "MAX 10",
+      "mapping": "lut_only",
+      "power": {
+        "confidence": "low_insufficient_toggle_rate_data",
+        "core_dynamic_w": 0.01918,
+        "method": "quartus_vectorless_estimate",
+        "static_w": 0.09007,
+        "status": "complete",
+        "total_thermal_w": 0.12698
+      },
+      "quartus_version": "25.1std.0 Build 1129 10/21/2025 SC Lite Edition",
+      "resources": {
+        "embedded_multiplier_9bit_elements": 0,
+        "embedded_multiplier_blocks": 0,
+        "logic_elements": 1740,
+        "registers": 288
+      },
+      "schema_version": 1,
+      "source_sha256": {
+        "dut": "c2472728e2d52b29ad451f5c9779ebb749c318e9be048d03e6a6555c735eda53",
+        "wrapper": "f344a7920b370004e62dc49543dd9ae007538f68fcfcfb79f5bdd438b9f2b4aa"
+      },
+      "status": "complete",
+      "timing": {
+        "datapath_delay_ns": 13.063,
+        "estimated_fmax_mhz": 76.55,
+        "hold_slack_ns": 2.417,
+        "method": "quartus_slow_1200mv_85c_post_fit",
+        "target_met": false,
+        "unconstrained_clocks": 0,
+        "unconstrained_input_ports": 160,
+        "unconstrained_output_ports": 128,
+        "wns_ns": -8.063
+      },
+      "variant": "baseline"
+    },
+    {
+      "clock_period_ns": 5.0,
+      "device": "10M50DAF484C7G",
+      "family": "MAX 10",
+      "mapping": "lut_only",
+      "power": {
+        "confidence": "low_insufficient_toggle_rate_data",
+        "core_dynamic_w": 0.02091,
+        "method": "quartus_vectorless_estimate",
+        "static_w": 0.09008,
+        "status": "complete",
+        "total_thermal_w": 0.12872
+      },
+      "quartus_version": "25.1std.0 Build 1129 10/21/2025 SC Lite Edition",
+      "resources": {
+        "embedded_multiplier_9bit_elements": 0,
+        "embedded_multiplier_blocks": 0,
+        "logic_elements": 1718,
+        "registers": 288
+      },
+      "schema_version": 1,
+      "source_sha256": {
+        "dut": "25327189f78f238e909fa5940afff9e2b000547336cdc614ee9ea9c4633aa11f",
+        "wrapper": "f344a7920b370004e62dc49543dd9ae007538f68fcfcfb79f5bdd438b9f2b4aa"
+      },
+      "status": "complete",
+      "timing": {
+        "datapath_delay_ns": 11.923,
+        "estimated_fmax_mhz": 83.87,
+        "hold_slack_ns": 2.774,
+        "method": "quartus_slow_1200mv_85c_post_fit",
+        "target_met": false,
+        "unconstrained_clocks": 0,
+        "unconstrained_input_ports": 160,
+        "unconstrained_output_ports": 128,
+        "wns_ns": -6.923
+      },
+      "variant": "optimized"
+    }
+  ],
+  "schema_version": 1,
+  "status": "complete"
+}
