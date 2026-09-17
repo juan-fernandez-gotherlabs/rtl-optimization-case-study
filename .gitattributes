@@ -1,3 +1,7 @@
 *.pdf binary
 *.v whitespace=-trailing-space,-space-before-tab,-blank-at-eof
 *.patch whitespace=-trailing-space,-space-before-tab
+experiments/quartus-int8-matvec/evidence/*/*/*/*.log binary
+experiments/quartus-int8-matvec/evidence/*/*/*/*.qpf binary
+experiments/quartus-int8-matvec/evidence/*/*/*/output_files/*.rpt binary
+experiments/quartus-int8-matvec/evidence/*/summary.csv binary

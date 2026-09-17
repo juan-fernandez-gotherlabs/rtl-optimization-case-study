@@ -1,0 +1,42 @@
+{
+  "clock_period_ns": 5.0,
+  "device": "10M50DAF484C7G",
+  "execution_environment": "apple_silicon_colima_qemu_x86_64",
+  "family": "MAX 10",
+  "fitter_seed": 1,
+  "mapping": "lut_only",
+  "power": {
+    "confidence": "low_insufficient_toggle_rate_data",
+    "core_dynamic_w": 0.02091,
+    "method": "quartus_vectorless_estimate",
+    "static_w": 0.09008,
+    "status": "complete",
+    "total_thermal_w": 0.12872
+  },
+  "quartus_version": "25.1std.0 Build 1129 10/21/2025 SC Lite Edition",
+  "resources": {
+    "embedded_multiplier_9bit_elements": 0,
+    "embedded_multiplier_blocks": 0,
+    "logic_elements": 1718,
+    "registers": 288
+  },
+  "schema_version": 1,
+  "source_sha256": {
+    "dut": "25327189f78f238e909fa5940afff9e2b000547336cdc614ee9ea9c4633aa11f",
+    "wrapper": "f344a7920b370004e62dc49543dd9ae007538f68fcfcfb79f5bdd438b9f2b4aa"
+  },
+  "status": "complete",
+  "threads": 4,
+  "timing": {
+    "datapath_delay_ns": 11.923,
+    "estimated_fmax_mhz": 83.87,
+    "hold_slack_ns": 2.774,
+    "method": "quartus_slow_1200mv_85c_post_fit",
+    "target_met": false,
+    "unconstrained_clocks": 0,
+    "unconstrained_input_ports": 160,
+    "unconstrained_output_ports": 128,
+    "wns_ns": -6.923
+  },
+  "variant": "optimized"
+}

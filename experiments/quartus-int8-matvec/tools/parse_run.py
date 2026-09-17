@@ -79,6 +79,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--period-ns", required=True, type=float)
     parser.add_argument("--quartus-version", required=True)
     parser.add_argument("--power-status", required=True, type=int)
+    parser.add_argument("--fitter-seed", required=True, type=int)
+    parser.add_argument("--threads", required=True, type=int)
+    parser.add_argument("--execution-environment", required=True)
     return parser.parse_args()
 
 
@@ -176,6 +179,9 @@ def main() -> int:
         "device": args.device,
         "clock_period_ns": args.period_ns,
         "quartus_version": args.quartus_version,
+        "fitter_seed": args.fitter_seed,
+        "threads": args.threads,
+        "execution_environment": args.execution_environment,
         "source_sha256": {
             "dut": sha256_file(dut),
             "wrapper": sha256_file(wrapper),

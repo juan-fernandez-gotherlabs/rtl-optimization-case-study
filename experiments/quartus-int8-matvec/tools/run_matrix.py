@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -28,10 +29,19 @@ DATA_PORT_WIDTHS = {
     "w30": 8, "w31": 8, "w32": 8, "w33": 8,
     "y0": 32, "y1": 32, "y2": 32, "y3": 32,
 }
+DEFAULT_FITTER_SEED = 1
+DEFAULT_THREADS = 4
 
 
 def positive_number(value: str) -> float:
     number = float(value)
+    if number <= 0:
+        raise argparse.ArgumentTypeError("must be positive")
+    return number
+
+
+def positive_integer(value: str) -> int:
+    number = int(value)
     if number <= 0:
         raise argparse.ArgumentTypeError("must be positive")
     return number
@@ -55,8 +65,9 @@ def resolve_executable(value: str, label: str) -> str:
     return resolved
 
 
-def qsf_quote(path: Path) -> str:
-    value = str(path.resolve()).replace("\\", "\\\\").replace('"', '\\"')
+def qsf_quote(path: Path, *, relative_to: Path) -> str:
+    value = os.path.relpath(path.resolve(), relative_to.resolve())
+    value = value.replace("\\", "\\\\").replace('"', '\\"')
     return f'"{value}"'
 
 
@@ -68,6 +79,8 @@ def write_project(
     family: str,
     device: str,
     period_ns: float,
+    fitter_seed: int,
+    threads: int,
 ) -> str:
     project = f"int8_{variant}_{mapping}"
     dut = CASE_ROOT / "rtl" / variant / "int8_matvec_4x4.sv"
@@ -90,12 +103,12 @@ def write_project(
         f'set_global_assignment -name FAMILY "{family}"',
         f"set_global_assignment -name DEVICE {device}",
         "set_global_assignment -name TOP_LEVEL_ENTITY int8_matvec_registered_top",
-        f"set_global_assignment -name SYSTEMVERILOG_FILE {qsf_quote(dut)}",
-        f"set_global_assignment -name SYSTEMVERILOG_FILE {qsf_quote(wrapper)}",
-        f"set_global_assignment -name SDC_FILE {qsf_quote(sdc)}",
+        f"set_global_assignment -name SYSTEMVERILOG_FILE {qsf_quote(dut, relative_to=run_dir)}",
+        f"set_global_assignment -name SYSTEMVERILOG_FILE {qsf_quote(wrapper, relative_to=run_dir)}",
+        f"set_global_assignment -name SDC_FILE {qsf_quote(sdc, relative_to=run_dir)}",
         "set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files",
-        "set_global_assignment -name NUM_PARALLEL_PROCESSORS 4",
-        "set_global_assignment -name SEED 1",
+        f"set_global_assignment -name NUM_PARALLEL_PROCESSORS {threads}",
+        f"set_global_assignment -name SEED {fitter_seed}",
         "set_location_assignment PIN_M8 -to clk",
         'set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clk',
         f"set_global_assignment -name AUTO_DSP_RECOGNITION {dsp_setting}",
@@ -145,6 +158,13 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--family", default="MAX 10")
     parser.add_argument("--device", default="10M50DAF484C7G")
     parser.add_argument("--period-ns", type=positive_number, default=5.0)
+    parser.add_argument("--fitter-seed", type=positive_integer, default=DEFAULT_FITTER_SEED)
+    parser.add_argument("--threads", type=positive_integer, default=DEFAULT_THREADS)
+    parser.add_argument(
+        "--execution-environment",
+        default="unspecified",
+        help="stable provenance label such as native_x86_64 or colima_qemu_x86_64",
+    )
     parser.add_argument("--output-root", type=Path, default=ROOT / "output")
     parser.add_argument(
         "--resume",
@@ -164,6 +184,9 @@ def can_resume(
     period_ns: float,
     dut_sha256: str,
     wrapper_sha256: str,
+    fitter_seed: int,
+    threads: int,
+    execution_environment: str,
 ) -> bool:
     if not summary_path.is_file():
         return False
@@ -180,6 +203,9 @@ def can_resume(
         and payload.get("clock_period_ns") == period_ns
         and payload.get("source_sha256", {}).get("dut") == dut_sha256
         and payload.get("source_sha256", {}).get("wrapper") == wrapper_sha256
+        and payload.get("fitter_seed") == fitter_seed
+        and payload.get("threads") == threads
+        and payload.get("execution_environment") == execution_environment
     )
 
 
@@ -225,6 +251,9 @@ def main(argv: list[str] | None = None) -> int:
             period_ns=args.period_ns,
             dut_sha256=dut_sha256,
             wrapper_sha256=wrapper_sha256,
+            fitter_seed=args.fitter_seed,
+            threads=args.threads,
+            execution_environment=args.execution_environment,
         ):
             print(f"\nReusing completed {variant}/{mapping} ...", flush=True)
             continue
@@ -235,6 +264,8 @@ def main(argv: list[str] | None = None) -> int:
             family=args.family,
             device=args.device,
             period_ns=args.period_ns,
+            fitter_seed=args.fitter_seed,
+            threads=args.threads,
         )
         print(f"\nRunning {variant}/{mapping} ...", flush=True)
         run_logged(
@@ -261,6 +292,9 @@ def main(argv: list[str] | None = None) -> int:
                 "--period-ns", f"{args.period_ns:.9f}",
                 "--quartus-version", version,
                 "--power-status", str(power_status),
+                "--fitter-seed", str(args.fitter_seed),
+                "--threads", str(args.threads),
+                "--execution-environment", args.execution_environment,
             ],
             check=True,
         )
@@ -274,6 +308,10 @@ def main(argv: list[str] | None = None) -> int:
         "family": args.family,
         "device": args.device,
         "clock_period_ns": args.period_ns,
+        "fitter_seed": args.fitter_seed,
+        "threads": args.threads,
+        "execution_environment": args.execution_environment,
+        "timing_corner": "slow_1200mv_85c_post_fit",
         "source_sha256": {
             "baseline": sha256_file(
                 CASE_ROOT / "rtl" / "baseline" / "int8_matvec_4x4.sv"

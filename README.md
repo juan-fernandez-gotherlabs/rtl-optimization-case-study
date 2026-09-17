@@ -18,6 +18,19 @@ All three headline values use 64 fixed paired implementations and the same
 equal-weight area-delay-power score form. They are valid within each case's
 own frozen contract; they are not a cross-circuit performance ranking.
 
+## Commercial-tool transfer experiments
+
+The published case contracts above remain tied to VTR. Separate transfer
+experiments test the same frozen RTL changes with commercial FPGA tools without
+mixing their metrics into the VTR headline scores.
+
+| Experiment | Tool and target | Evidence status | Transfer result |
+| --- | --- | --- | --- |
+| [INT8 MatVec on Quartus](experiments/quartus-int8-matvec/README.md) | Quartus Prime Lite 25.1std.0, MAX 10 | Complete exploratory run; reports and verifier checked in | **+12.32% estimated Fmax with normal DSP inference; +9.56% in the logic-only control** |
+
+See the [commercial-tool experiment index](experiments/README.md) for the
+separate evidence boundary and limitations.
+
 ## Why the third case matters
 
 The portfolio now spans three distinct kinds of hardware reasoning:
@@ -65,7 +78,7 @@ The optimization machinery is outside this public package. The inspectable
 boundary is the input RTL, accepted RTL, exact source change, correctness
 result, paired measurement certificate and public verifier.
 
-## Verify all three cases
+## Verify the portfolio and transfer evidence
 
 Only Python 3 is required for compact consistency verification:
 
@@ -79,6 +92,7 @@ Expected ending:
 SHA-1 compact evidence: PASS
 INT8 MatVec compact evidence: PASS
 ML-KEM CBD compact evidence: PASS
+Quartus INT8 MatVec compact evidence: PASS
 Portfolio verification: PASS
 ```
 
@@ -89,12 +103,17 @@ recorded evidence; it does not rerun the EDA tools.
 
 ## Claim boundary
 
-The cases use academic VTR/PTM 45 nm post-route comparisons on a homogeneous
-LUT6 target. Power comes from either a fixed activity trace or the explicitly
-declared ACE probabilistic model. These are not ASIC signoff, commercial-FPGA
-characterization, Vivado or Quartus results, physical-board measurements,
-measured energy or manufactured-silicon evidence. The ML-KEM case is also not
-side-channel analysis or certification of a complete cryptographic system.
+The three headline cases use academic VTR/PTM 45 nm post-route comparisons on a
+homogeneous LUT6 target. Power comes from either a fixed activity trace or the
+explicitly declared ACE probabilistic model. Those headline figures are not
+ASIC signoff, commercial-FPGA characterization, Vivado or Quartus results,
+physical-board measurements, measured energy or manufactured-silicon evidence.
+
+Commercial-tool transfer experiments have their own narrower claim boundaries.
+The Quartus experiment is a fixed-seed emulated implementation comparison, not
+a physical-board measurement, native-host replay or measured-power result. The
+ML-KEM case is also not side-channel analysis or certification of a complete
+cryptographic system.
 
 Read [METHODOLOGY.md](METHODOLOGY.md) for the common evidence model and
 [AUDIT.md](AUDIT.md) for the external-audit protocol.

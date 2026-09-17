@@ -105,7 +105,15 @@ def compare(mapping: str, baseline: dict[str, Any], optimized: dict[str, Any]) -
 def validate_contract(runs: list[dict[str, Any]]) -> None:
     reference = runs[0]
     for run in runs[1:]:
-        for key in ("family", "device", "clock_period_ns", "quartus_version"):
+        for key in (
+            "family",
+            "device",
+            "clock_period_ns",
+            "quartus_version",
+            "fitter_seed",
+            "threads",
+            "execution_environment",
+        ):
             if run[key] != reference[key]:
                 raise SummaryError(
                     f"mixed run contract for {key}: {reference[key]!r} != {run[key]!r}"
@@ -149,6 +157,10 @@ def main(argv: list[str] | None = None) -> int:
             "device": runs[0]["device"],
             "clock_period_ns": runs[0]["clock_period_ns"],
             "quartus_version": runs[0]["quartus_version"],
+            "fitter_seed": runs[0]["fitter_seed"],
+            "threads": runs[0]["threads"],
+            "execution_environment": runs[0]["execution_environment"],
+            "timing_corner": "slow_1200mv_85c_post_fit",
         },
         "runs": runs,
         "comparisons": comparisons,

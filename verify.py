@@ -17,6 +17,9 @@ CASES = {
     "int8-matvec": ROOT / "cases/int8-matvec",
     "mlkem-cbd": ROOT / "cases/mlkem-cbd",
 }
+EXPERIMENTS = {
+    "quartus-int8-matvec": ROOT / "experiments/quartus-int8-matvec",
+}
 ROOT_MANIFEST = {
     ".gitattributes",
     ".github/workflows/verify.yml",
@@ -33,6 +36,7 @@ ROOT_MANIFEST = {
     "cases/int8-matvec/SHA256SUMS",
     "cases/mlkem-cbd/SHA256SUMS",
     "cases/sha1/SHA256SUMS",
+    "experiments/quartus-int8-matvec/SHA256SUMS",
     "verify.py",
 }
 
@@ -128,6 +132,23 @@ def run_case(name: str) -> None:
     )
 
 
+def run_experiment(name: str) -> None:
+    experiment = EXPERIMENTS[name]
+    result = subprocess.run(
+        [sys.executable, "verify.py"],
+        cwd=experiment,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    if result.stdout:
+        print(result.stdout.rstrip())
+    require(
+        result.returncode == 0,
+        f"{name} verification failed: {result.stderr.strip()}",
+    )
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--case", choices=("all", *CASES), default="all")
@@ -142,6 +163,9 @@ def main(argv: list[str] | None = None) -> int:
     names = CASES if args.case == "all" else (args.case,)
     for name in names:
         run_case(name)
+    if args.case == "all":
+        for name in EXPERIMENTS:
+            run_experiment(name)
     print("Portfolio verification: PASS")
     return 0
 

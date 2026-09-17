@@ -1,0 +1,5 @@
+variant,mapping,family,device,quartus_version,clock_period_ns,logic_elements,registers,embedded_multiplier_blocks,embedded_multiplier_9bit_elements,wns_ns,datapath_delay_ns,estimated_fmax_mhz,total_thermal_w,core_dynamic_w,static_w
+baseline,dsp_auto,MAX 10,10M50DAF484C7G,25.1std.0 Build 1129 10/21/2025 SC Lite Edition,5.0,273,128,8,16,-5.124,10.124,98.78,0.13822,0.03036,0.09012
+optimized,dsp_auto,MAX 10,10M50DAF484C7G,25.1std.0 Build 1129 10/21/2025 SC Lite Edition,5.0,269,128,8,16,-4.013,9.013,110.95,0.13477,0.02693,0.09011
+baseline,lut_only,MAX 10,10M50DAF484C7G,25.1std.0 Build 1129 10/21/2025 SC Lite Edition,5.0,1740,288,0,0,-8.063,13.063,76.55,0.12698,0.01918,0.09007
+optimized,lut_only,MAX 10,10M50DAF484C7G,25.1std.0 Build 1129 10/21/2025 SC Lite Edition,5.0,1718,288,0,0,-6.923,11.923,83.87,0.12872,0.02091,0.09008

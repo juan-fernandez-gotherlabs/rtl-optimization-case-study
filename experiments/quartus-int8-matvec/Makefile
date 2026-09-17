@@ -1,4 +1,4 @@
-.PHONY: check matrix summarize docker-image docker-matrix docker-shell clean
+.PHONY: check verify matrix summarize evidence checksums clean
 
 PYTHON ?= python3
 QUARTUS_SH ?= quartus_sh
@@ -6,25 +6,28 @@ QUARTUS_POW ?= quartus_pow
 FAMILY ?= MAX 10
 DEVICE ?= 10M50DAF484C7G
 PERIOD_NS ?= 5.000
+FITTER_SEED ?= 1
+THREADS ?= 4
+EXECUTION_ENVIRONMENT ?= unspecified
 OUTPUT_ROOT ?= output
 
 check:
 	$(PYTHON) tools/check_flow.py
 
+verify: check
+	$(PYTHON) verify.py
+
 matrix: check
-	$(PYTHON) tools/run_matrix.py --quartus-sh "$(QUARTUS_SH)" --quartus-pow "$(QUARTUS_POW)" --family "$(FAMILY)" --device "$(DEVICE)" --period-ns "$(PERIOD_NS)" --output-root "$(OUTPUT_ROOT)"
+	$(PYTHON) tools/run_matrix.py --quartus-sh "$(QUARTUS_SH)" --quartus-pow "$(QUARTUS_POW)" --family "$(FAMILY)" --device "$(DEVICE)" --period-ns "$(PERIOD_NS)" --fitter-seed "$(FITTER_SEED)" --threads "$(THREADS)" --execution-environment "$(EXECUTION_ENVIRONMENT)" --output-root "$(OUTPUT_ROOT)"
 
 summarize:
 	$(PYTHON) tools/summarize_results.py "$(OUTPUT_ROOT)"
 
-docker-image:
-	docker build --platform linux/amd64 -t gother-quartus-runner:ubuntu22.04 docker
+evidence:
+	$(PYTHON) tools/package_evidence.py "$(OUTPUT_ROOT)" evidence/quartus-lite-25.1std-max10 --result-snapshot results/quartus-lite-25.1std-max10-summary.json
 
-docker-matrix:
-	QUARTUS_DEVICE="$(DEVICE)" QUARTUS_FAMILY="$(FAMILY)" QUARTUS_PERIOD_NS="$(PERIOD_NS)" docker/run-matrix.sh
-
-docker-shell:
-	docker/run-shell.sh
+checksums:
+	$(PYTHON) tools/write_manifest.py
 
 clean:
 	@echo "Remove $(OUTPUT_ROOT) explicitly after preserving any evidence you need."

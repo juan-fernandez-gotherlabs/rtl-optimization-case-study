@@ -9,6 +9,8 @@ import sys
 import tempfile
 from pathlib import Path
 
+from run_matrix import write_project
+
 
 ROOT = Path(__file__).resolve().parents[1]
 CASE_ROOT = ROOT.parents[1] / "cases" / "int8-matvec"
@@ -36,6 +38,9 @@ def test_summarizer() -> None:
                     "device": "10M50DAF484C7G",
                     "clock_period_ns": 5.0,
                     "quartus_version": "Version 25.1std.0",
+                    "fitter_seed": 1,
+                    "threads": 4,
+                    "execution_environment": "test_fixture",
                     "resources": {
                         "logic_elements": 90 if optimized else 100,
                         "registers": 288,
@@ -73,10 +78,35 @@ def test_summarizer() -> None:
         )
         combined = json.loads((output / "summary.json").read_text(encoding="utf-8"))
         require(len(combined["runs"]) == 4, "summarizer did not preserve all runs")
+        logic_reduction = combined["comparisons"][0]["resource_reduction_percent"][
+            "logic_elements"
+        ]
         require(
-            combined["comparisons"][0]["resource_reduction_percent"]["logic_elements"] == 10.0,
+            logic_reduction == 10.0,
             "wrong logic-element reduction",
         )
+
+
+def test_project_is_relocatable() -> None:
+    with tempfile.TemporaryDirectory(
+        prefix="quartus-project-test-", dir=ROOT
+    ) as temporary:
+        run_dir = Path(temporary) / "baseline" / "dsp_auto"
+        run_dir.mkdir(parents=True)
+        project = write_project(
+            run_dir,
+            variant="baseline",
+            mapping="dsp_auto",
+            family="MAX 10",
+            device="10M50DAF484C7G",
+            period_ns=5.0,
+            fitter_seed=1,
+            threads=4,
+        )
+        qsf = (run_dir / f"{project}.qsf").read_text(encoding="utf-8")
+        require(str(ROOT) not in qsf, "QSF contains an absolute repository path")
+        require("SYSTEMVERILOG_FILE \"" in qsf, "QSF omits RTL inputs")
+        require("set_global_assignment -name SEED 1" in qsf, "QSF omits seed")
 
 
 def main() -> int:
@@ -95,6 +125,7 @@ def main() -> int:
         "quartus_pow", "10M50DAF484C7G", "VIRTUAL_PIN",
     ):
         require(token in runner, f"Quartus flow is missing required operation: {token}")
+    test_project_is_relocatable()
     test_summarizer()
     print("Quartus transfer flow static checks: PASS")
     return 0

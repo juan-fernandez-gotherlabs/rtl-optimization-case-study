@@ -75,6 +75,21 @@ publication policy requires full provenance replay. Operational optimization
 infrastructure remains private because it is neither necessary to understand
 the claim nor part of the delivered technical improvement.
 
+## 6. Keep commercial-tool transfer evidence separate
+
+A transfer experiment reuses frozen case RTL but establishes a new
+implementation contract for a commercial tool, device, constraints and mapping
+policy. Its absolute resource, timing and power values are not combined with
+the academic-target composite score. A valid transfer comparison must implement
+both the frozen baseline and optimized RTL under the same commercial-tool
+contract; implementing only the optimized RTL cannot attribute an improvement.
+
+Transfer evidence is labelled independently by maturity. An exploratory result
+may publish exact reports and a compact verifier while still awaiting native-
+host replay, multiple placement seeds, activity-driven power or board
+measurement. Those missing layers remain explicit limitations rather than being
+inferred from the stronger VTR case package.
+
 Here, “certification” means acceptance under the source-controlled project
 contract. It is not an accredited certification, an assurance opinion or an
 external third-party audit.

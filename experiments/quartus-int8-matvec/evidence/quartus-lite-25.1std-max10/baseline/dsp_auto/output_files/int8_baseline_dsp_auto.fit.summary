@@ -1,0 +1,18 @@
+Fitter Status : Successful - Thu Sep 17 11:10:48 2026
+Quartus Prime Version : 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
+Revision Name : int8_baseline_dsp_auto
+Top-level Entity Name : int8_matvec_registered_top
+Family : MAX 10
+Device : 10M50DAF484C7G
+Timing Models : Final
+Total logic elements : 273 / 49,760 ( < 1 % )
+    Total combinational functions : 221 / 49,760 ( < 1 % )
+    Dedicated logic registers : 128 / 49,760 ( < 1 % )
+Total registers : 128
+Total pins : 1 / 360 ( < 1 % )
+Total virtual pins : 288
+Total memory bits : 0 / 1,677,312 ( 0 % )
+Embedded Multiplier 9-bit elements : 16 / 288 ( 6 % )
+Total PLLs : 0 / 4 ( 0 % )
+UFM blocks : 0 / 1 ( 0 % )
+ADC blocks : 0 / 2 ( 0 % )
