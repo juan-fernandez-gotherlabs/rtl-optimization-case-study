@@ -38,5 +38,7 @@ jobs:
           python3 -m json.tool cases/int8-matvec/full-evidence.json >/dev/null
           python3 -m json.tool cases/mlkem-cbd/certificate.json >/dev/null
           python3 -m json.tool cases/mlkem-cbd/full-evidence.json >/dev/null
+          python3 -m json.tool experiments/quartus-int8-matvec/results/quartus-lite-25.1std-max10-summary.json >/dev/null
+          python3 -m json.tool experiments/quartus-int8-matvec/evidence/quartus-lite-25.1std-max10/MANIFEST.json >/dev/null
           git diff --check
           git diff --exit-code

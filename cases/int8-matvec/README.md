@@ -42,6 +42,17 @@ The composite is the equal-weight geometric mean of paired area, post-route
 delay and active-total-power ratios over 64 fixed pairs. Cross-case percentages
 are not a cross-circuit performance ranking.
 
+## Commercial FPGA transfer
+
+The exact frozen baseline and optimized RTL were also implemented with Quartus
+Prime Lite on a MAX 10 device. That separate exploratory experiment reports a
+12.32% estimated-Fmax improvement under normal DSP inference and a 9.56%
+improvement when multipliers are forced into logic.
+
+Read the [Quartus transfer experiment](../../experiments/quartus-int8-matvec/README.md)
+for the commercial-tool reports, verifier and its separate claim boundary. The
+Quartus figures do not replace or combine with this case's VTR composite score.
+
 ## Correctness evidence
 
 - 151 deterministic signed, extreme, lane and seeded-random simulations;
