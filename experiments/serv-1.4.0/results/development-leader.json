@@ -1,0 +1,49 @@
+{
+  "name": "v2-exact-rf-high3-v2-lean-word-binary-m0",
+  "candidate_tree_sha256": "b25b924a34318591d7cfec7097fc5d265a372316757893b2d51a095c5ba01fbe",
+  "role": "current development leader; not independently certified",
+  "selection_feasible": true,
+  "paired_seeds": [
+    5001,
+    5002,
+    5003,
+    5004,
+    5005,
+    5006,
+    5007,
+    5008,
+    5009,
+    5010,
+    5011,
+    5012
+  ],
+  "improvement_percent": 3.451626432232424,
+  "score": 0.9654837356776758,
+  "geometric_metric_ratios": {
+    "area_total_mwta": 0.9405328481273763,
+    "critical_path_delay_ns": 1.0007209408090927,
+    "active_total_power_w": 0.9561982196573522
+  },
+  "descriptive_upper95_score": 0.9681825560358251,
+  "absolute_means": {
+    "area_total_mwta": 2579889.0,
+    "critical_path_delay_ns": 4.278435833333333,
+    "active_total_power_w": 0.0033861666666666667
+  },
+  "CLB_count": 43.0,
+  "FF_count": 181,
+  "measured_netlist_formal_counts": [
+    307,
+    0
+  ],
+  "selected_from_closed_cohort_registered_candidates": 36,
+  "selected_from_closed_cohort_measured_candidates": 36,
+  "certification_12_pairs_pending": true,
+  "final_64_pairs_pending": true,
+  "strict10_goal_achieved": false,
+  "source_audit_sha256": "b6981facd21cee25d16d2227d96ebdffe185db1bf1f5d3c880937a032c7fddec",
+  "physical_proof_result_sha256": "8b7abca7ae95dec4d8f2c25086e3be03aa704bd763f3a12993d799dc9bd1064e",
+  "former_leader": "v2-opcode-capture-leader-sub-rd-op",
+  "former_leader_record_sha256": "62ede28dd59b8de99de9f1953b8cb029ee562c996faece8afe6f397512241b68",
+  "improvement_gain_percentage_points": 0.6528271926929841
+}

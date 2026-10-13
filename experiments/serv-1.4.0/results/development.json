@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "study": "serv-1.4.0-paused-development-v1",
+  "record_date": "2026-10-13",
+  "paused_at": "2026-10-12",
+  "status": "paused_development",
+  "certified": false,
+  "publication_accepted": false,
+  "strict10_goal_achieved": false,
+  "development_pairs": 12,
+  "held_out_certification_pairs_completed": 0,
+  "final_pairs_completed": 0,
+  "score": 0.9654837356776758,
+  "improvement_percent": 3.451626432232424,
+  "geometric_metric_ratios": {
+    "area_total_mwta": 0.9405328481273763,
+    "critical_path_delay_ns": 1.0007209408090927,
+    "active_total_power_w": 0.9561982196573522
+  },
+  "baseline_arithmetic_means": {
+    "area_total_mwta": 2743003.5,
+    "critical_path_delay_ns": 4.27571,
+    "active_total_power_w": 0.0035413333333333334,
+    "clb_count": 46.0
+  },
+  "optimized_arithmetic_means": {
+    "area_total_mwta": 2579889.0,
+    "critical_path_delay_ns": 4.278435833333333,
+    "active_total_power_w": 0.0033861666666666667
+  },
+  "clb_counts": {
+    "baseline": 46,
+    "optimized": 43
+  },
+  "mapped_ff_counts": {
+    "baseline": 181,
+    "optimized": 181
+  },
+  "closed_revision2_exploration": {
+    "registered": 2812,
+    "measured": 2621,
+    "excluded_without_PPA": 191
+  },
+  "external_sram": {
+    "GPR_words": 32,
+    "CSR_words_in_RAM": 4,
+    "bits_per_register": 32,
+    "interface_bits": 2,
+    "RAM_logical_rows": 576,
+    "RAM_capacity_bits": 1152,
+    "RAM_capacity_bytes": 144
+  },
+  "pending_family": {
+    "prepared_RTL_candidates": 9,
+    "full18RTL_elaborations_completed_once": 36,
+    "native_banks_passed": 3,
+    "native_banks_pending": 6,
+    "passed_configuration_clocks": 786624,
+    "PPA_performed": 0,
+    "source_FF_orfinalist_promotion": false,
+    "checkpoint_stop_record": "evidence/flow-v2/branch-trap-future-cofactors-full-cores-v2-native-v3-resource-stop.json",
+    "checkpoint_stop_record_sha256": "df37bb4a44716bdb0a369c7b795d3562166c348bf5dab09462a834e288b4ba78"
+  },
+  "confidence_use": "Development selection only; no confirmatory confidence claim.",
+  "public_verification_scope": "Consistency of saved evidence; no fresh EDA execution."
+}

@@ -21,7 +21,7 @@ PATHS = {
     "rtl/baseline/cbd.v",
     "rtl/changes.patch",
     "rtl/optimized/cbd.v",
-    "technical-report.pdf",
+    "RTL-Study-MLKEM-CBD.pdf",
     "tests/test_verify.py",
     "tools/build_certificate.py",
     "tools/build_evidence_bundle.py",

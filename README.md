@@ -31,6 +31,19 @@ mixing their metrics into the VTR headline scores.
 See the [commercial-tool experiment index](experiments/README.md) for the
 separate evidence boundary and limitations.
 
+## Paused RTL research
+
+The repository also preserves development studies whose final acceptance
+remains pending. They have their own evidence packages and claim boundaries.
+
+| Study | Saved result | Evidence status |
+| --- | --- | --- |
+| [SERV 1.4.0](experiments/serv-1.4.0/README.md) | **3.3474% lower composite PPA estimate in 64 fixed pairs**, with **1.9478% higher critical-path delay**; 46 to 43 CLBs, 181 FF unchanged | Optimization paused; fixed 64-pair sample complete; timing regression rejects acceptance; separate 12-pair certification unexecuted |
+
+See [RTL-Study-SERV-1.4.0.pdf](RTL-Study-SERV-1.4.0.pdf) for the
+scope, before/after metrics, search history and stopping point. SERV is a
+research record; the accepted portfolio above still contains three cases.
+
 ## Why the third case matters
 
 The portfolio now spans three distinct kinds of hardware reasoning:
@@ -48,17 +61,46 @@ MatVec and 1,908 for the bundled SHA-1 core. Its significance comes from the
 stateful transformation and its relevance to post-quantum cryptographic IP,
 not from source-line count alone.
 
+## Module sizes and architectural scope
+
+<!-- module-sizes:start -->
+
+| Module | Measured scope | RTL files¹ | Code lines¹ | CLBs² | Area² (10⁶ MWTA) |
+| --- | --- | ---: | ---: | ---: | ---: |
+| [SHA-1](cases/sha1/README.md) | Sequential compression core | 1 → 1 | 1,908 → 1,910 | 188 → 182 | 16.626 → 16.601 |
+| [INT8 MatVec](cases/int8-matvec/README.md) | Combinational 4 × 4 kernel | 1 → 1 | 73 → 70 | 368 → 304 | 33.892 → 28.607 |
+| [ML-KEM CBD](cases/mlkem-cbd/README.md) | Sequential coefficient sampler | 1 → 1 | 95 → 114 | 337 → 270 | 22.752 → 19.132 |
+| [SERV 1.4.0](experiments/serv-1.4.0/README.md) | Serial 32-bit CPU and RF interface | 18 → 18 | 2,584 → 3,047 | 46 → 43 | 2.743 → 2.582 |
+
+All arrows show baseline → optimized. ¹ Bundled source, including inactive
+alternatives. ² Measured wrapper; area is the geometric mean of 64 implementations.
+
+**SERV expands the architectural scope to a CPU, while its measured baseline is
+6.06–12.35 times smaller in area than the other modules.** Its external
+register RAM is excluded from these measurements: the default configuration
+requires 1,152 bits (144 B), arranged as 576 rows × 2 bits. The source tree
+contains 18 modules, including modules outside the measured hierarchy.
+
+See [Module sizes and orders of magnitude](MODULE-SIZES.md) for source bytes,
+state, memory capacity, mapped registers, measurement boundaries and reproducible tables.
+
+<!-- module-sizes:end -->
+
 ## Read the reports
 
-- [SHA1-RTL-Optimization.pdf](SHA1-RTL-Optimization.pdf) — historical
+- [RTL-Study-SHA1.pdf](RTL-Study-SHA1.pdf) — historical
   methodology-qualification case.
-- [INT8-MatVec-Optimization.pdf](INT8-MatVec-Optimization.pdf) — quantized
+- [RTL-Study-INT8-MatVec.pdf](RTL-Study-INT8-MatVec.pdf) — quantized
   arithmetic case.
-- [MLKEM-CBD-Optimization.pdf](MLKEM-CBD-Optimization.pdf) — post-quantum
+- [RTL-Study-MLKEM-CBD.pdf](RTL-Study-MLKEM-CBD.pdf) — post-quantum
   state-representation case.
+- [RTL-Study-SERV-1.4.0.pdf](RTL-Study-SERV-1.4.0.pdf) — paused CPU
+  research study; 64 pairs, with the timing regression documented.
 
 The reports are kept at the repository root so a technical reviewer can reach
-the result without first navigating the evidence tree.
+the result without first navigating the evidence tree. All study PDFs use
+`RTL-Study-<module>.pdf`; each evidence package keeps an identical copy with the
+same filename. The shared prefix groups them together in the file listing.
 
 ## What the evidence means
 
@@ -93,6 +135,13 @@ SHA-1 compact evidence: PASS
 INT8 MatVec compact evidence: PASS
 ML-KEM CBD compact evidence: PASS
 Quartus INT8 MatVec compact evidence: PASS
+SERV 1.4.0 saved research evidence: PASS
+development_pairs=12; improvement=3.4516%
+final_pairs=64; final_improvement=3.3474%
+timing_regression=1.9478%; acceptance=evidence_regression
+held_out_certification_pairs=0; publication_accepted=False
+Scope: saved evidence consistency; no fresh EDA execution or PPA certification.
+Module size comparison: PASS
 Portfolio verification: PASS
 ```
 

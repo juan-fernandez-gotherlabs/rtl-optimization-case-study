@@ -38,3 +38,17 @@ NIST FIPS 203 is cited to identify the standardized ML-KEM algorithm. This case
 does not imply NIST, HWSec-CSIC, VTR or any tool-provider endorsement. The VTR
 architecture and PTM technology model remain under their respective upstream
 terms.
+
+## SERV 1.4.0 research record
+
+The eighteen baseline files in `experiments/serv-1.4.0/rtl/baseline` are
+byte-identical to the SERV RTL at tag `1.4.0`, pinned commit
+`7d9cde4e6ca4f4c84d7512a752a4c187537dd373` in `olofk/serv`. The derived RTL and
+baseline retain their original copyright and ISC source headers. The upstream
+ISC license is included at `experiments/serv-1.4.0/LICENSE`; the repository MIT
+license does not replace those RTL terms.
+
+The research record uses VTR/PTM 45 nm estimates and recorded Yosys/Verilator
+checks. It does not imply SERV, its authors or tool-provider endorsement.
+The saved synthesis template derives from VTR scripts at the pinned VTR commit;
+the upstream license is bundled at `experiments/serv-1.4.0/VTR-LICENSE.md`.

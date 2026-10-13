@@ -33,7 +33,7 @@ class VerifyAdversarialTests(unittest.TestCase):
     def copy(self) -> Path:
         temporary = Path(tempfile.mkdtemp(prefix="rtl-verify-test-"))
         self.addCleanup(shutil.rmtree, temporary)
-        for name in ("Makefile", "README.md", "SHA256SUMS", "report", "results", "rtl", "scripts", "technical-report.pdf", "tests", "verify.py"):
+        for name in ("Makefile", "README.md", "SHA256SUMS", "report", "results", "rtl", "scripts", "RTL-Study-SHA1.pdf", "tests", "verify.py"):
             source = ROOT / name
             target = temporary / name
             if source.is_dir():

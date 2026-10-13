@@ -1,0 +1,655 @@
+{
+  "schema_version": 1,
+  "development_only": true,
+  "description": "Public projection of the 24 original measurement records; metrics and report hashes unchanged.",
+  "rows": [
+    {
+      "variant": "baseline",
+      "original_name": "baseline",
+      "original_measurement_record_sha256": "bafd417b4048b9325f225cb093d071e481502cbffa7e685b7fd9a77082e32b85",
+      "rtl_tree_sha256": "29b5ea77526b3b972ba99c8702524e87035e5a921db6f1a59bb822599203ba91",
+      "image_id": "sha256:25ac0b7034aa4e2e537020980ddddf974f5d6197c306e88ec27dfc6f2255598e",
+      "synthesis_template_sha256": "31677f72c0f0d98c5acb6cbdba914724c7f3249c6364580da153f4e2a8b23fc3",
+      "blif_sha256": "45446cb516eab84a9c7a2c00a2f763665749bde4de20b6796166d1f7afe24b4b",
+      "metrics": {
+        "seed": 5001,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.30554,
+        "active_total_power_w": 0.003499,
+        "clb_count": 46
+      },
+      "report_sha256": {
+        "vpr.crit_path.out": "5a38a954c5d6d609927aea74e58f8198df3aa95a66ba1904d9d87ab2c16eab5c",
+        "serv_synth_wrapper.power": "9b9f1ff94c125bac592ef37a047da8ad42366b436203b8fbafabcc285fcd9dc8",
+        "flow_driver.log": "d3812c8e3a17308491fbb653a3d07f5875d843f91b35df9f783545b76f42fd5b"
+      },
+      "mapped_simulation_statuses": [
+        "pass",
+        "pass"
+      ]
+    },
+    {
+      "variant": "baseline",
+      "original_name": "baseline",
+      "original_measurement_record_sha256": "73c3ad9e0171e5c05831915e9152d0e99f8f42bf2bf5dba31037663ad281f651",
+      "rtl_tree_sha256": "29b5ea77526b3b972ba99c8702524e87035e5a921db6f1a59bb822599203ba91",
+      "image_id": "sha256:25ac0b7034aa4e2e537020980ddddf974f5d6197c306e88ec27dfc6f2255598e",
+      "synthesis_template_sha256": "31677f72c0f0d98c5acb6cbdba914724c7f3249c6364580da153f4e2a8b23fc3",
+      "blif_sha256": "ac4c139a02e4a4818731858e4e307ca5cbf99575fb54a5e4f5042ff6cc8f7646",
+      "metrics": {
+        "seed": 5002,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.3299,
+        "active_total_power_w": 0.003527,
+        "clb_count": 46
+      },
+      "report_sha256": {
+        "vpr.crit_path.out": "9ce23cfe8d27da206e7b990feae8400207dfe49958ece4db1673ed8dc2ff5363",
+        "serv_synth_wrapper.power": "81ee3870f601bf00a3d2664fa1382e4b85658ea386babab9d1b40d0cfcad925b",
+        "flow_driver.log": "4bfdb6284e2c672f024824d0d06a082bb20231be9e9c41b931f2fa1404962f44"
+      },
+      "mapped_simulation_statuses": [
+        "pass",
+        "pass"
+      ]
+    },
+    {
+      "variant": "baseline",
+      "original_name": "baseline",
+      "original_measurement_record_sha256": "9e313da82b7ce2523ec8b16d62bbf6affdadfe5a75aaca11633177a163754386",
+      "rtl_tree_sha256": "29b5ea77526b3b972ba99c8702524e87035e5a921db6f1a59bb822599203ba91",
+      "image_id": "sha256:25ac0b7034aa4e2e537020980ddddf974f5d6197c306e88ec27dfc6f2255598e",
+      "synthesis_template_sha256": "31677f72c0f0d98c5acb6cbdba914724c7f3249c6364580da153f4e2a8b23fc3",
+      "blif_sha256": "df6d79b0e781d716b8ad7b07349fec4a32a21575fa0dcc5b83b60d200088e2c4",
+      "metrics": {
+        "seed": 5003,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.24153,
+        "active_total_power_w": 0.003581,
+        "clb_count": 46
+      },
+      "report_sha256": {
+        "vpr.crit_path.out": "574adeed6652d4dfd841b7469a3266c0eefc173ea02b00048e8f262f9140da76",
+        "serv_synth_wrapper.power": "aa35a467bbb377034f7f52770b2cdc9cf15e17552795175aeeb16c56ecd728bd",
+        "flow_driver.log": "adf640d9e69f2fedaac063adc5acaf685ecd9506386cb331b3d1e444b53b4f66"
+      },
+      "mapped_simulation_statuses": [
+        "pass",
+        "pass"
+      ]
+    },
+    {
+      "variant": "baseline",
+      "original_name": "baseline",
+      "original_measurement_record_sha256": "14227124ee5a984e6c97b910637f9638578dfd2176ad7d3a7d88e6ba29c8e1b8",
+      "rtl_tree_sha256": "29b5ea77526b3b972ba99c8702524e87035e5a921db6f1a59bb822599203ba91",
+      "image_id": "sha256:25ac0b7034aa4e2e537020980ddddf974f5d6197c306e88ec27dfc6f2255598e",
+      "synthesis_template_sha256": "31677f72c0f0d98c5acb6cbdba914724c7f3249c6364580da153f4e2a8b23fc3",
+      "blif_sha256": "cbce418eb8a491d2f59f67ae65d6a990f613313c5ae053081dacc8a456f20fac",
+      "metrics": {
+        "seed": 5004,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.40222,
+        "active_total_power_w": 0.003447,
+        "clb_count": 46
+      },
+      "report_sha256": {
+        "vpr.crit_path.out": "e5395bd8c148e20a9e7d9b344ac800a91fa620cb06f8bbe73cb273ee3343b73d",
+        "serv_synth_wrapper.power": "559cbb871e841048c9209d509a52b68304ea7b83e9529ebb4cda1e37a366bca8",
+        "flow_driver.log": "5c7fad96a543461d2b4c50530bcfb27f8411946db6b313b0898fca6ccd87673d"
+      },
+      "mapped_simulation_statuses": [
+        "pass",
+        "pass"
+      ]
+    },
+    {
+      "variant": "baseline",
+      "original_name": "baseline",
+      "original_measurement_record_sha256": "00a6a50d44e986e7e0775383e8e7d06656a2ac7b6d8b477414b2b7135d4c72aa",
+      "rtl_tree_sha256": "29b5ea77526b3b972ba99c8702524e87035e5a921db6f1a59bb822599203ba91",
+      "image_id": "sha256:25ac0b7034aa4e2e537020980ddddf974f5d6197c306e88ec27dfc6f2255598e",
+      "synthesis_template_sha256": "31677f72c0f0d98c5acb6cbdba914724c7f3249c6364580da153f4e2a8b23fc3",
+      "blif_sha256": "a025743c27afc67f76bd094380afe566b7298ca5e8c4446cbf1864437b792e75",
+      "metrics": {
+        "seed": 5005,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.37557,
+        "active_total_power_w": 0.003477,
+        "clb_count": 46
+      },
+      "report_sha256": {
+        "vpr.crit_path.out": "417d91931cd042477a256e86fee44a24da61246469442f9e0eb5dee0004f6cad",
+        "serv_synth_wrapper.power": "a4ea69cce6301b5783ea1325d949e5639d204ab7b01289855be49e111e35dea7",
+        "flow_driver.log": "ec61d783df1385c56a133441e80908e702345efa1370ea50afc9b3c5300e145f"
+      },
+      "mapped_simulation_statuses": [
+        "pass",
+        "pass"
+      ]
+    },
+    {
+      "variant": "baseline",
+      "original_name": "baseline",
+      "original_measurement_record_sha256": "f3066da3f8eac82cc88511d7af41dec34e105f08d31eebaf914cf468ba163fbf",
+      "rtl_tree_sha256": "29b5ea77526b3b972ba99c8702524e87035e5a921db6f1a59bb822599203ba91",
+      "image_id": "sha256:25ac0b7034aa4e2e537020980ddddf974f5d6197c306e88ec27dfc6f2255598e",
+      "synthesis_template_sha256": "31677f72c0f0d98c5acb6cbdba914724c7f3249c6364580da153f4e2a8b23fc3",
+      "blif_sha256": "e1dd3480d370d192bdd519ddb2d745a38df26de22960ba39b2de0c6fb12d098f",
+      "metrics": {
+        "seed": 5006,
+        "area_total_mwta": 2727224.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 248104.0,
+        "critical_path_delay_ns": 4.29026,
+        "active_total_power_w": 0.003538,
+        "clb_count": 46
+      },
+      "report_sha256": {
+        "vpr.crit_path.out": "6ce828db1ad2e6aaa2de10077470d8b4a1912fc4f4f182d567f145ee5435d51a",
+        "serv_synth_wrapper.power": "69b1334ac379df998acb2809decbb6b6a1122542cb596b3cc033c56c154fa878",
+        "flow_driver.log": "6363a703e0913a270e60ad4b9b4b2fa8c198fa39f8e3c69fc87df79ee542ccd2"
+      },
+      "mapped_simulation_statuses": [
+        "pass",
+        "pass"
+      ]
+    },
+    {
+      "variant": "baseline",
+      "original_name": "baseline",
+      "original_measurement_record_sha256": "bd6b1282f7c128f1c695d0e34f81ec68ecfc4238e91776ccc0f0473af41eb121",
+      "rtl_tree_sha256": "29b5ea77526b3b972ba99c8702524e87035e5a921db6f1a59bb822599203ba91",
+      "image_id": "sha256:25ac0b7034aa4e2e537020980ddddf974f5d6197c306e88ec27dfc6f2255598e",
+      "synthesis_template_sha256": "31677f72c0f0d98c5acb6cbdba914724c7f3249c6364580da153f4e2a8b23fc3",
+      "blif_sha256": "f48ae6b6bede1b4ba191a7538be8bae3b864db2b1303e56ca077940e0742bc57",
+      "metrics": {
+        "seed": 5007,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.21297,
+        "active_total_power_w": 0.003591,
+        "clb_count": 46
+      },
+      "report_sha256": {
+        "vpr.crit_path.out": "af49c909ec5b16c70ef2d51e7366d29aead0c3a1da070cf73e64254d797ef580",
+        "serv_synth_wrapper.power": "ce50c6042c3aa6e4800a8d7363b9950e47d59190c0fbfb7c82dcdb0a6a984f15",
+        "flow_driver.log": "82c56db9a6893a28509b0783f7d45cda79a044cefc077914cae2ae0d7c9231d7"
+      },
+      "mapped_simulation_statuses": [
+        "pass",
+        "pass"
+      ]
+    },
+    {
+      "variant": "baseline",
+      "original_name": "baseline",
+      "original_measurement_record_sha256": "be648e65dc26856da8ad2b44b68c15a3c8383b362fe149c5cf4e1960355c870a",
+      "rtl_tree_sha256": "29b5ea77526b3b972ba99c8702524e87035e5a921db6f1a59bb822599203ba91",
+      "image_id": "sha256:25ac0b7034aa4e2e537020980ddddf974f5d6197c306e88ec27dfc6f2255598e",
+      "synthesis_template_sha256": "31677f72c0f0d98c5acb6cbdba914724c7f3249c6364580da153f4e2a8b23fc3",
+      "blif_sha256": "046c755a8e846d270484dc2c8af0a9fcdb7366ac7997325414fe84612269a231",
+      "metrics": {
+        "seed": 5008,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.26669,
+        "active_total_power_w": 0.003532,
+        "clb_count": 46
+      },
+      "report_sha256": {
+        "vpr.crit_path.out": "8d8445465862de2dafc919875c4c239b34474db3fba8a964c8c9d007b9189400",
+        "serv_synth_wrapper.power": "71573bb56ca65d05d84dc8dcf3db3058ab1ccc7c78909afc40c209cc68b78383",
+        "flow_driver.log": "4eb9e8e779bebe37ded4f920829e47026b211c82b29dcb0f7167bc5927578c93"
+      },
+      "mapped_simulation_statuses": [
+        "pass",
+        "pass"
+      ]
+    },
+    {
+      "variant": "baseline",
+      "original_name": "baseline",
+      "original_measurement_record_sha256": "a3cc46cf29358c7ccb710d88b37e72e93ef92e5abd60526cfad4e86ece43fde7",
+      "rtl_tree_sha256": "29b5ea77526b3b972ba99c8702524e87035e5a921db6f1a59bb822599203ba91",
+      "image_id": "sha256:25ac0b7034aa4e2e537020980ddddf974f5d6197c306e88ec27dfc6f2255598e",
+      "synthesis_template_sha256": "31677f72c0f0d98c5acb6cbdba914724c7f3249c6364580da153f4e2a8b23fc3",
+      "blif_sha256": "263c66778b29a4e3fb27778db01a2128be4352b7396782d575b7e412da1bd499",
+      "metrics": {
+        "seed": 5009,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.3609,
+        "active_total_power_w": 0.003531,
+        "clb_count": 46
+      },
+      "report_sha256": {
+        "vpr.crit_path.out": "357b99e84ab6a78a6f4dc993013668a84385556ec427e9dc69dd3903efeb15eb",
+        "serv_synth_wrapper.power": "1252074775bc8eec00294ef7be4e8e9d8852e0104708174079d288d03329d79e",
+        "flow_driver.log": "15d0adfa05201b31dfe667f46a1b91383980243cf0b68e2f47e83c2caf78bf3d"
+      },
+      "mapped_simulation_statuses": [
+        "pass",
+        "pass"
+      ]
+    },
+    {
+      "variant": "baseline",
+      "original_name": "baseline",
+      "original_measurement_record_sha256": "b55bf0c31b8bbe9d2aa8e3d4172085374881aca728e4efb76e151f760eda5011",
+      "rtl_tree_sha256": "29b5ea77526b3b972ba99c8702524e87035e5a921db6f1a59bb822599203ba91",
+      "image_id": "sha256:25ac0b7034aa4e2e537020980ddddf974f5d6197c306e88ec27dfc6f2255598e",
+      "synthesis_template_sha256": "31677f72c0f0d98c5acb6cbdba914724c7f3249c6364580da153f4e2a8b23fc3",
+      "blif_sha256": "6f11ad45541cb990e57d8e32693b20fb1d81b029ebf757f47b5af9e8ba0b7399",
+      "metrics": {
+        "seed": 5010,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.11567,
+        "active_total_power_w": 0.003586,
+        "clb_count": 46
+      },
+      "report_sha256": {
+        "vpr.crit_path.out": "6f9b0201567d93167f49abee527e1aefc99f091c4b45b15c4a5c6ce68cbffb0b",
+        "serv_synth_wrapper.power": "c3ee0e9195bf44f6a49453539a16d1ae3c18b0c315f78537ad142281618ac99b",
+        "flow_driver.log": "5bd24d63230a2e817e6f962f9c02b8fd1c05ecac1d4ddc6caeb72f1bc68f4446"
+      },
+      "mapped_simulation_statuses": [
+        "pass",
+        "pass"
+      ]
+    },
+    {
+      "variant": "baseline",
+      "original_name": "baseline",
+      "original_measurement_record_sha256": "f3d45af0b5d57103cd81b1583b7bc7a4fc0acedfd32ada57da68c14620f7e631",
+      "rtl_tree_sha256": "29b5ea77526b3b972ba99c8702524e87035e5a921db6f1a59bb822599203ba91",
+      "image_id": "sha256:25ac0b7034aa4e2e537020980ddddf974f5d6197c306e88ec27dfc6f2255598e",
+      "synthesis_template_sha256": "31677f72c0f0d98c5acb6cbdba914724c7f3249c6364580da153f4e2a8b23fc3",
+      "blif_sha256": "a9ae3727db5cca8e5c9fa4a244516050dbf1b5b897abb96cc2e03116997f5255",
+      "metrics": {
+        "seed": 5011,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.24168,
+        "active_total_power_w": 0.003548,
+        "clb_count": 46
+      },
+      "report_sha256": {
+        "vpr.crit_path.out": "c8467acd77439c5f137ddcf83e8d1f07750751e9a324b9c0c80837b2155fb29d",
+        "serv_synth_wrapper.power": "1f7d7bb1ee0dcffed2188e8a7fc9ea937cefe3387bda0eaa392ec62b0fb57afa",
+        "flow_driver.log": "723ca51f7cbda8f23b34f5e26757f11108d48b681f790a80a4618389e532ec42"
+      },
+      "mapped_simulation_statuses": [
+        "pass",
+        "pass"
+      ]
+    },
+    {
+      "variant": "baseline",
+      "original_name": "baseline",
+      "original_measurement_record_sha256": "cc1e2665cb2710abc3fe18c13387b2d3142c6ab1e838a35b8d9acc0fccca2461",
+      "rtl_tree_sha256": "29b5ea77526b3b972ba99c8702524e87035e5a921db6f1a59bb822599203ba91",
+      "image_id": "sha256:25ac0b7034aa4e2e537020980ddddf974f5d6197c306e88ec27dfc6f2255598e",
+      "synthesis_template_sha256": "31677f72c0f0d98c5acb6cbdba914724c7f3249c6364580da153f4e2a8b23fc3",
+      "blif_sha256": "f591d570f85aa6a48ebf7ac15051a322a69116b31568af0134eb4c2aa962dc25",
+      "metrics": {
+        "seed": 5012,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.16559,
+        "active_total_power_w": 0.003639,
+        "clb_count": 46
+      },
+      "report_sha256": {
+        "vpr.crit_path.out": "5711d1582a1b534585a251e9ae22aa78cf2e5474972f23b1c571a9b9ea2b3d63",
+        "serv_synth_wrapper.power": "9453cc30061cf3f3b18940c5dddd7920fcfabbf9be6d2bc7d439c85dc85c8229",
+        "flow_driver.log": "a7a93915d5b78bd5736ca580d117b58b8e6e536ea4af3c2b6858b76ef2fa8e3f"
+      },
+      "mapped_simulation_statuses": [
+        "pass",
+        "pass"
+      ]
+    },
+    {
+      "variant": "optimized",
+      "original_name": "v2-exact-rf-high3-v2-lean-word-binary-m0",
+      "original_measurement_record_sha256": "a2df5d86196c811f6114e8b8f5cd768f2f8545ac04f78f28bb44e45fe8621979",
+      "rtl_tree_sha256": "b25b924a34318591d7cfec7097fc5d265a372316757893b2d51a095c5ba01fbe",
+      "image_id": "sha256:25ac0b7034aa4e2e537020980ddddf974f5d6197c306e88ec27dfc6f2255598e",
+      "synthesis_template_sha256": "31677f72c0f0d98c5acb6cbdba914724c7f3249c6364580da153f4e2a8b23fc3",
+      "blif_sha256": "10e451c94948d7d4be76aec52ec716e32f57792e2b86ed6b592cac91a0c7678f",
+      "metrics": {
+        "seed": 5001,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.33401,
+        "active_total_power_w": 0.003352,
+        "clb_count": 43
+      },
+      "report_sha256": {
+        "vpr.crit_path.out": "cc3a86a634092da35685ebe76b9b642a52b5c56cebc71c25765ccdca729468b8",
+        "serv_synth_wrapper.power": "daa7a47986c69432d49f07116321efde445914f7960839665bee14556c0668da",
+        "flow_driver.log": "593f0ab257801050c38d45633291fd2fba3b4011c69ba20d135ddfea3f42054c"
+      },
+      "mapped_simulation_statuses": [
+        "pass",
+        "pass"
+      ]
+    },
+    {
+      "variant": "optimized",
+      "original_name": "v2-exact-rf-high3-v2-lean-word-binary-m0",
+      "original_measurement_record_sha256": "3940bec2ae0823e6d4a96c5bff53db09fbb19b9e8ecc2a711a9d884fec771789",
+      "rtl_tree_sha256": "b25b924a34318591d7cfec7097fc5d265a372316757893b2d51a095c5ba01fbe",
+      "image_id": "sha256:25ac0b7034aa4e2e537020980ddddf974f5d6197c306e88ec27dfc6f2255598e",
+      "synthesis_template_sha256": "31677f72c0f0d98c5acb6cbdba914724c7f3249c6364580da153f4e2a8b23fc3",
+      "blif_sha256": "92354d5a05ee63523317b62afe24567fb6142972053163c5a87976524e912e2e",
+      "metrics": {
+        "seed": 5002,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.31425,
+        "active_total_power_w": 0.003387,
+        "clb_count": 43
+      },
+      "report_sha256": {
+        "vpr.crit_path.out": "67629198a0d136aeae169860c88f17a8c13859217fb5354f59dc9dcc798b9018",
+        "serv_synth_wrapper.power": "e2d2d48c57d84ca6d3c2916d3f8c3af308e1864947db944f4128696d4d3d8360",
+        "flow_driver.log": "98e9bd9c39c699cd9e42c84874fa1b7742fcadb906e6a5515a74d70133b91eb6"
+      },
+      "mapped_simulation_statuses": [
+        "pass",
+        "pass"
+      ]
+    },
+    {
+      "variant": "optimized",
+      "original_name": "v2-exact-rf-high3-v2-lean-word-binary-m0",
+      "original_measurement_record_sha256": "825639f662201a26da3152b8785f10b1abf9bb8e5cccfa7589cd2ef8c385d062",
+      "rtl_tree_sha256": "b25b924a34318591d7cfec7097fc5d265a372316757893b2d51a095c5ba01fbe",
+      "image_id": "sha256:25ac0b7034aa4e2e537020980ddddf974f5d6197c306e88ec27dfc6f2255598e",
+      "synthesis_template_sha256": "31677f72c0f0d98c5acb6cbdba914724c7f3249c6364580da153f4e2a8b23fc3",
+      "blif_sha256": "6a935dfa2d2e9b71d07e8cfc89f195000d5ec9dee4c912e8135dfae63d7caf67",
+      "metrics": {
+        "seed": 5003,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.27002,
+        "active_total_power_w": 0.003405,
+        "clb_count": 43
+      },
+      "report_sha256": {
+        "vpr.crit_path.out": "721585b7001cc9746058f1ca7eefd83601e62e9624b1eff309c493f9d6ea7a94",
+        "serv_synth_wrapper.power": "dac5bfae0b844a898200630db5ce09d781b70bd45707f9840fe56f70999b98e9",
+        "flow_driver.log": "c590e8cb112717d89cecf03d11cbb026b62b484938cd1556e4909b33746d2dcb"
+      },
+      "mapped_simulation_statuses": [
+        "pass",
+        "pass"
+      ]
+    },
+    {
+      "variant": "optimized",
+      "original_name": "v2-exact-rf-high3-v2-lean-word-binary-m0",
+      "original_measurement_record_sha256": "07a8d6fb0a652cb9406da40177e7bcd15e90217f09d5271f602b16e86b3b15f7",
+      "rtl_tree_sha256": "b25b924a34318591d7cfec7097fc5d265a372316757893b2d51a095c5ba01fbe",
+      "image_id": "sha256:25ac0b7034aa4e2e537020980ddddf974f5d6197c306e88ec27dfc6f2255598e",
+      "synthesis_template_sha256": "31677f72c0f0d98c5acb6cbdba914724c7f3249c6364580da153f4e2a8b23fc3",
+      "blif_sha256": "a8120cd1ac6e08b36846bf8f3423db07e4cb509ee294c44029089b3b2f7564f6",
+      "metrics": {
+        "seed": 5004,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.26862,
+        "active_total_power_w": 0.003401,
+        "clb_count": 43
+      },
+      "report_sha256": {
+        "vpr.crit_path.out": "e97bcb554f55cf959375408b78afad79243f2118e8434ca359dfe46f3fffb8e3",
+        "serv_synth_wrapper.power": "900bb694fe638e42743a505df90bdd7825a7a5bdc1c308cd543d9386616a2f40",
+        "flow_driver.log": "69eb494f6901258eb1042f61dfbc1b82113fbcc8bc2aac87a2b0a21081232121"
+      },
+      "mapped_simulation_statuses": [
+        "pass",
+        "pass"
+      ]
+    },
+    {
+      "variant": "optimized",
+      "original_name": "v2-exact-rf-high3-v2-lean-word-binary-m0",
+      "original_measurement_record_sha256": "210dd95803ceda49459a51cf808dae851c5987552037d11938103dd9148ce093",
+      "rtl_tree_sha256": "b25b924a34318591d7cfec7097fc5d265a372316757893b2d51a095c5ba01fbe",
+      "image_id": "sha256:25ac0b7034aa4e2e537020980ddddf974f5d6197c306e88ec27dfc6f2255598e",
+      "synthesis_template_sha256": "31677f72c0f0d98c5acb6cbdba914724c7f3249c6364580da153f4e2a8b23fc3",
+      "blif_sha256": "f3585b0a404f8923e89eeb168df9a5de838a4eb7abf866b545eedc362fff98c9",
+      "metrics": {
+        "seed": 5005,
+        "area_total_mwta": 2565544.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 248104.0,
+        "critical_path_delay_ns": 4.19128,
+        "active_total_power_w": 0.003384,
+        "clb_count": 43
+      },
+      "report_sha256": {
+        "vpr.crit_path.out": "283e8aab01e12713bb25f69324638b58489657f992dc220da5ff1dd8d04edf0a",
+        "serv_synth_wrapper.power": "602b2287e94275080c28d82884a6d65e9f285c804be7978a50bf1e7b6bf904ae",
+        "flow_driver.log": "54ffa083b7d12ef1c2219bce94d51b5b6fdf189b8d89f6251c50d7a5954afa90"
+      },
+      "mapped_simulation_statuses": [
+        "pass",
+        "pass"
+      ]
+    },
+    {
+      "variant": "optimized",
+      "original_name": "v2-exact-rf-high3-v2-lean-word-binary-m0",
+      "original_measurement_record_sha256": "6c1eb1d25b1a489ec544c91dbd5c4da05d248a258af1a2c1046b041b7673b3fe",
+      "rtl_tree_sha256": "b25b924a34318591d7cfec7097fc5d265a372316757893b2d51a095c5ba01fbe",
+      "image_id": "sha256:25ac0b7034aa4e2e537020980ddddf974f5d6197c306e88ec27dfc6f2255598e",
+      "synthesis_template_sha256": "31677f72c0f0d98c5acb6cbdba914724c7f3249c6364580da153f4e2a8b23fc3",
+      "blif_sha256": "bb9ababc2de9a4dfb15f23e28c195f88d80f1799780879c0922acfb1c8afd193",
+      "metrics": {
+        "seed": 5006,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.2678,
+        "active_total_power_w": 0.003376,
+        "clb_count": 43
+      },
+      "report_sha256": {
+        "vpr.crit_path.out": "bd13ab792f8db87dc6b90340bd3ee280ccb6e367f0eaf10d87138e63943254ad",
+        "serv_synth_wrapper.power": "214f4d245cb43cbf7fdd5cdde8ef4bea691736f37e9dbbc777f9e565cabfecb7",
+        "flow_driver.log": "57294d2238b1845ed5141a1f0ec0a8f99d5a582c1998bb183a6de6435d1cd806"
+      },
+      "mapped_simulation_statuses": [
+        "pass",
+        "pass"
+      ]
+    },
+    {
+      "variant": "optimized",
+      "original_name": "v2-exact-rf-high3-v2-lean-word-binary-m0",
+      "original_measurement_record_sha256": "1041f96525f7810893ae8330f7517a9cb8d1a054c29757aae57454338d2c0f8a",
+      "rtl_tree_sha256": "b25b924a34318591d7cfec7097fc5d265a372316757893b2d51a095c5ba01fbe",
+      "image_id": "sha256:25ac0b7034aa4e2e537020980ddddf974f5d6197c306e88ec27dfc6f2255598e",
+      "synthesis_template_sha256": "31677f72c0f0d98c5acb6cbdba914724c7f3249c6364580da153f4e2a8b23fc3",
+      "blif_sha256": "45fe41857cb7ffea1222feecbcbf5c079d8fb1170a78df155ea3aaaece8cf258",
+      "metrics": {
+        "seed": 5007,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.23662,
+        "active_total_power_w": 0.003395,
+        "clb_count": 43
+      },
+      "report_sha256": {
+        "vpr.crit_path.out": "7295372ac8a920b617e7d2a44e61f1ccf3784c89da2c391537efffcf5ca3a613",
+        "serv_synth_wrapper.power": "95aa6c1fe6f45d52acc5f50123add410d4a05997b7ce7208d6cea20e5a6aed9e",
+        "flow_driver.log": "792b8e821d97e3da43c980f46d465aed1cc58cf4663fc7f1b165c62badd03c3e"
+      },
+      "mapped_simulation_statuses": [
+        "pass",
+        "pass"
+      ]
+    },
+    {
+      "variant": "optimized",
+      "original_name": "v2-exact-rf-high3-v2-lean-word-binary-m0",
+      "original_measurement_record_sha256": "6cc37703f8801cee8b9f4021a9802df2dd138bbf720412485d75788286e8ff16",
+      "rtl_tree_sha256": "b25b924a34318591d7cfec7097fc5d265a372316757893b2d51a095c5ba01fbe",
+      "image_id": "sha256:25ac0b7034aa4e2e537020980ddddf974f5d6197c306e88ec27dfc6f2255598e",
+      "synthesis_template_sha256": "31677f72c0f0d98c5acb6cbdba914724c7f3249c6364580da153f4e2a8b23fc3",
+      "blif_sha256": "eecca607500a11049804b88f5ced5453a1514c58a570e2983edde7a3379e4892",
+      "metrics": {
+        "seed": 5008,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.37278,
+        "active_total_power_w": 0.003314,
+        "clb_count": 43
+      },
+      "report_sha256": {
+        "vpr.crit_path.out": "4d1dd3f8f7719cffe927f4e4f456ccec628236306be2be7d300a19d51e7678b3",
+        "serv_synth_wrapper.power": "be65cc40fb82b0a3631bb5329f9034c68cf2541a3a03df5c31f54b839d626364",
+        "flow_driver.log": "6fe8342f5e0d0625e84b4c2a33e2ed52f82d1d6d06e5a1e54e02df91f94a5ce5"
+      },
+      "mapped_simulation_statuses": [
+        "pass",
+        "pass"
+      ]
+    },
+    {
+      "variant": "optimized",
+      "original_name": "v2-exact-rf-high3-v2-lean-word-binary-m0",
+      "original_measurement_record_sha256": "eb72bc1a6394628529abfe2c4cdda14a38aa237f08e556ab039635495e84b1dd",
+      "rtl_tree_sha256": "b25b924a34318591d7cfec7097fc5d265a372316757893b2d51a095c5ba01fbe",
+      "image_id": "sha256:25ac0b7034aa4e2e537020980ddddf974f5d6197c306e88ec27dfc6f2255598e",
+      "synthesis_template_sha256": "31677f72c0f0d98c5acb6cbdba914724c7f3249c6364580da153f4e2a8b23fc3",
+      "blif_sha256": "78f970a15600368cc5f80d1a22240572b37a5a2dffde3019190ba5288d9b6507",
+      "metrics": {
+        "seed": 5009,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.22572,
+        "active_total_power_w": 0.003482,
+        "clb_count": 43
+      },
+      "report_sha256": {
+        "vpr.crit_path.out": "ec33fe1176079a0f973736d229f7460db5f1f121f1a1bbeb8bf2d21c846c1aad",
+        "serv_synth_wrapper.power": "db3f74ce08f2224b4090f585a058cc7e7e55b8bd590d898160c55ad404eabfa3",
+        "flow_driver.log": "9b760b2c53107208a7575f723592f08f5c066ada85cf69980b68c66c776c81bf"
+      },
+      "mapped_simulation_statuses": [
+        "pass",
+        "pass"
+      ]
+    },
+    {
+      "variant": "optimized",
+      "original_name": "v2-exact-rf-high3-v2-lean-word-binary-m0",
+      "original_measurement_record_sha256": "724f6bfe217cf40e6de860f572fbc03d8876b06b582b6387ec163e96b65fbfbd",
+      "rtl_tree_sha256": "b25b924a34318591d7cfec7097fc5d265a372316757893b2d51a095c5ba01fbe",
+      "image_id": "sha256:25ac0b7034aa4e2e537020980ddddf974f5d6197c306e88ec27dfc6f2255598e",
+      "synthesis_template_sha256": "31677f72c0f0d98c5acb6cbdba914724c7f3249c6364580da153f4e2a8b23fc3",
+      "blif_sha256": "d291fbd65c27017cd9fffaac97668e29f9c1bca4f6c2c625b568610cb229820a",
+      "metrics": {
+        "seed": 5010,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.40001,
+        "active_total_power_w": 0.003321,
+        "clb_count": 43
+      },
+      "report_sha256": {
+        "vpr.crit_path.out": "e85114ec24ed3babe44f898f24398a1ef2a19aeb8958105af12e151520f796e5",
+        "serv_synth_wrapper.power": "5ba191de5f1227887b069f1febdba2c0c6c92b4d795dfdee096cf38b177a4b64",
+        "flow_driver.log": "71cb7e17da4c7ba059e8c248b83f4b4d2647f458a778f784c6bb0376ea01ffcf"
+      },
+      "mapped_simulation_statuses": [
+        "pass",
+        "pass"
+      ]
+    },
+    {
+      "variant": "optimized",
+      "original_name": "v2-exact-rf-high3-v2-lean-word-binary-m0",
+      "original_measurement_record_sha256": "7035741af1fe6f8160b9a22706ca60b5977d90e93e72d4be32eaa8d87ae4a15e",
+      "rtl_tree_sha256": "b25b924a34318591d7cfec7097fc5d265a372316757893b2d51a095c5ba01fbe",
+      "image_id": "sha256:25ac0b7034aa4e2e537020980ddddf974f5d6197c306e88ec27dfc6f2255598e",
+      "synthesis_template_sha256": "31677f72c0f0d98c5acb6cbdba914724c7f3249c6364580da153f4e2a8b23fc3",
+      "blif_sha256": "8697d33fb4507a7b6ad0549db18af2586aff11785ce8b14f7ce2ba4dd19559d7",
+      "metrics": {
+        "seed": 5011,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.21806,
+        "active_total_power_w": 0.003445,
+        "clb_count": 43
+      },
+      "report_sha256": {
+        "vpr.crit_path.out": "dbdd5b4e7fc9f8dff5d71ba6973adb317e974e2079e7ccec245f29751122fe4a",
+        "serv_synth_wrapper.power": "e74b7acf6d4acfef1bb2310c788ba0e403d6240a0aa6ff4e7bb89d649437ef71",
+        "flow_driver.log": "e4720cdf20b0854d0138e64f10240ce840be315b2275caf16b8f858e92580bf3"
+      },
+      "mapped_simulation_statuses": [
+        "pass",
+        "pass"
+      ]
+    },
+    {
+      "variant": "optimized",
+      "original_name": "v2-exact-rf-high3-v2-lean-word-binary-m0",
+      "original_measurement_record_sha256": "0f7e7eb7d522cb431786070d01e7ba64efe6bfaf48680ac7a6a993a24db14b72",
+      "rtl_tree_sha256": "b25b924a34318591d7cfec7097fc5d265a372316757893b2d51a095c5ba01fbe",
+      "image_id": "sha256:25ac0b7034aa4e2e537020980ddddf974f5d6197c306e88ec27dfc6f2255598e",
+      "synthesis_template_sha256": "31677f72c0f0d98c5acb6cbdba914724c7f3249c6364580da153f4e2a8b23fc3",
+      "blif_sha256": "a00748b38d029f736066e73b298ded116cd6d961aba6f0f77944695232b63cb8",
+      "metrics": {
+        "seed": 5012,
+        "area_total_mwta": 2565544.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 248104.0,
+        "critical_path_delay_ns": 4.24206,
+        "active_total_power_w": 0.003372,
+        "clb_count": 43
+      },
+      "report_sha256": {
+        "vpr.crit_path.out": "2dfeedc46e89ae7e50bb132a85bae853e0ef338a032ec2bf88f55a6e61335e80",
+        "serv_synth_wrapper.power": "9b40381ebb11b6236e3c8c7baa3504d076d907266459118abb0cefc32c3a66e1",
+        "flow_driver.log": "1f82d55b963624db4d946c9664866aa881cd2294369eadd1a3a792a4f128127e"
+      },
+      "mapped_simulation_statuses": [
+        "pass",
+        "pass"
+      ]
+    }
+  ]
+}

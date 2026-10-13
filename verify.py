@@ -19,24 +19,30 @@ CASES = {
 }
 EXPERIMENTS = {
     "quartus-int8-matvec": ROOT / "experiments/quartus-int8-matvec",
+    "serv-1.4.0": ROOT / "experiments/serv-1.4.0",
 }
 ROOT_MANIFEST = {
     ".gitattributes",
     ".github/workflows/verify.yml",
     ".gitignore",
     "AUDIT.md",
-    "INT8-MatVec-Optimization.pdf",
+    "RTL-Study-INT8-MatVec.pdf",
     "LICENSE",
     "METHODOLOGY.md",
-    "MLKEM-CBD-Optimization.pdf",
+    "MODULE-SIZES.md",
+    "RTL-Study-MLKEM-CBD.pdf",
     "Makefile",
     "README.md",
-    "SHA1-RTL-Optimization.pdf",
+    "RTL-Study-SHA1.pdf",
+    "RTL-Study-SERV-1.4.0.pdf",
     "THIRD_PARTY_NOTICES.md",
     "cases/int8-matvec/SHA256SUMS",
     "cases/mlkem-cbd/SHA256SUMS",
     "cases/sha1/SHA256SUMS",
     "experiments/quartus-int8-matvec/SHA256SUMS",
+    "experiments/README.md",
+    "experiments/serv-1.4.0/SHA256SUMS",
+    "tools/generate_module_sizes.py",
     "verify.py",
 }
 
@@ -91,18 +97,23 @@ def verify_manifest() -> None:
 
 def verify_report_copies() -> None:
     require(
-        sha256(ROOT / "SHA1-RTL-Optimization.pdf")
-        == sha256(ROOT / "cases/sha1/technical-report.pdf"),
+        sha256(ROOT / "RTL-Study-SERV-1.4.0.pdf")
+        == sha256(ROOT / "experiments/serv-1.4.0/RTL-Study-SERV-1.4.0.pdf"),
+        "root SERV research report differs from the experiment report",
+    )
+    require(
+        sha256(ROOT / "RTL-Study-SHA1.pdf")
+        == sha256(ROOT / "cases/sha1/RTL-Study-SHA1.pdf"),
         "root SHA-1 report differs from the case report",
     )
     require(
-        sha256(ROOT / "INT8-MatVec-Optimization.pdf")
-        == sha256(ROOT / "cases/int8-matvec/technical-report.pdf"),
+        sha256(ROOT / "RTL-Study-INT8-MatVec.pdf")
+        == sha256(ROOT / "cases/int8-matvec/RTL-Study-INT8-MatVec.pdf"),
         "root INT8 report differs from the case report",
     )
     require(
-        sha256(ROOT / "MLKEM-CBD-Optimization.pdf")
-        == sha256(ROOT / "cases/mlkem-cbd/technical-report.pdf"),
+        sha256(ROOT / "RTL-Study-MLKEM-CBD.pdf")
+        == sha256(ROOT / "cases/mlkem-cbd/RTL-Study-MLKEM-CBD.pdf"),
         "root ML-KEM CBD report differs from the case report",
     )
 
@@ -149,6 +160,18 @@ def run_experiment(name: str) -> None:
     )
 
 
+def verify_module_sizes() -> None:
+    result = subprocess.run(
+        [sys.executable, str(ROOT / "tools/generate_module_sizes.py"), "--check"],
+        cwd=ROOT,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    require(result.returncode == 0, f"module size comparison failed: {result.stderr.strip()}")
+    print(result.stdout.rstrip())
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--case", choices=("all", *CASES), default="all")
@@ -166,6 +189,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.case == "all":
         for name in EXPERIMENTS:
             run_experiment(name)
+    verify_module_sizes()
     print("Portfolio verification: PASS")
     return 0
 

@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "upstream_repository": "https://github.com/olofk/serv",
+  "upstream_commit": "7d9cde4e6ca4f4c84d7512a752a4c187537dd373",
+  "upstream_tag": "1.4.0",
+  "baseline_byte_identical_to_upstream": true,
+  "files": [
+    {
+      "path": "rtl/serv_aligner.v",
+      "upstream_git_blob": "27aefa4146b9c9847c0df673e40aac4755eca8fd",
+      "sha256": "adeff8f442db6c93f48e551721146b40c398ab14dcb5b22339746329e7a24f3b"
+    },
+    {
+      "path": "rtl/serv_alu.v",
+      "upstream_git_blob": "5dad42ef288470b6496e688406ae390b84548bef",
+      "sha256": "2e0c31b5b992618e514083aacf10cb38c2229b68b3b1e93d6663104f32143332"
+    },
+    {
+      "path": "rtl/serv_bufreg.v",
+      "upstream_git_blob": "dde66f428d89af8600f2a2425d866bf764aec447",
+      "sha256": "76404174ec92c6cf68e0042798dede84d77c5e454c7f428afc7b9f612a3c52d4"
+    },
+    {
+      "path": "rtl/serv_bufreg2.v",
+      "upstream_git_blob": "527a08dbe80346d4f48b8df92dd311024e42dec5",
+      "sha256": "6586c95a64a064ff6f4d001996d33f15e0f6d452e01ebb4da6120db06ddd0a51"
+    },
+    {
+      "path": "rtl/serv_compdec.v",
+      "upstream_git_blob": "a55e445f55a721ee2824175e0cb9dfd6546ab656",
+      "sha256": "a7d22f519786fa9f92b3df5813ed7eeda6612ab38f554c3f396e8d415f089a30"
+    },
+    {
+      "path": "rtl/serv_csr.v",
+      "upstream_git_blob": "e3100e7dd6e9cfd7057e2c99c80e066388239d7a",
+      "sha256": "2dd7167ed44817d921318a5d463281b43820c25e476039a604e95948be567e62"
+    },
+    {
+      "path": "rtl/serv_ctrl.v",
+      "upstream_git_blob": "9a14711b44f560273ce1f0bb4692504365b65b2c",
+      "sha256": "eb198ba7594f918da2784f9b6f8c82de1b95e3ffdd3383f2f533872999e9dab5"
+    },
+    {
+      "path": "rtl/serv_debug.v",
+      "upstream_git_blob": "1d5ac68fa5b69a63e0356ddacba476d81fd210c4",
+      "sha256": "815a6b0da1a49d41faa72edd8f397f89ec79334b292b94991f60002b0776082f"
+    },
+    {
+      "path": "rtl/serv_decode.v",
+      "upstream_git_blob": "38bcb8e95a79251e8a8af78494a9234027b4c8f0",
+      "sha256": "7300a04280b14ec4a39fe63bee474bf76c08abd75b608ab667f6a943d016c662"
+    },
+    {
+      "path": "rtl/serv_immdec.v",
+      "upstream_git_blob": "e31cbb3f771bfac1dedeb0a29266179034785cba",
+      "sha256": "80ec5a265194eb40f3413742fc9da0a23ed78f8bdf5add3e58b45fa1850b2bd5"
+    },
+    {
+      "path": "rtl/serv_mem_if.v",
+      "upstream_git_blob": "52c092384f06450ba636d4893bf5db95043e3435",
+      "sha256": "a4fbd74579447710ed43e81dd80b4ea9415da0a3425a447f29446f9bd7a9aa6f"
+    },
+    {
+      "path": "rtl/serv_rf_if.v",
+      "upstream_git_blob": "ee291d5d2ec914b230903b63b5a68f83f1c26c63",
+      "sha256": "63fd0d2ec2f89201b20690c467ebbcae964a85b4570254a95154f832cf0dcb2e"
+    },
+    {
+      "path": "rtl/serv_rf_ram.v",
+      "upstream_git_blob": "27053b7d492613645511d8fff3342ac12eab05ec",
+      "sha256": "779ad3243dfa648f276240d260ff4ac1a1e83cc1364afb93d40c586905ce4338"
+    },
+    {
+      "path": "rtl/serv_rf_ram_if.v",
+      "upstream_git_blob": "9efaec41fe55930476f20a39481d57f59e95aee6",
+      "sha256": "abb39b6bdf4d335bd2f90f75ddb1a410500a1a51a3e9f170453cb491d98d8697"
+    },
+    {
+      "path": "rtl/serv_rf_top.v",
+      "upstream_git_blob": "e0144eef3a8d48814ce423433781e20f26601b7f",
+      "sha256": "89faedf7530c34305bfbffd261732d95016bf5627f10b7bbafaa8e1fd6cd49c9"
+    },
+    {
+      "path": "rtl/serv_state.v",
+      "upstream_git_blob": "09e1cedf48e624daa2f6907ca918b25b58713c65",
+      "sha256": "20d53b8da058f9a2815c84489f32a7f3622e2a0b393d2867b630a07ae44ac8dd"
+    },
+    {
+      "path": "rtl/serv_synth_wrapper.v",
+      "upstream_git_blob": "97991c7b479976f7a51c1c9fceb2e4bb880956f1",
+      "sha256": "ca429e8f6867acb12d702c9c7d1b592dbb81982c7915b75b6eed2962833ccdff"
+    },
+    {
+      "path": "rtl/serv_top.v",
+      "upstream_git_blob": "95e7b1cbc3f1e3eefca1eeb588ea9746cd0d8086",
+      "sha256": "c35b88bed5732309069203b2d04421622eaae108d5bf5daef3de273daf43388e"
+    }
+  ]
+}

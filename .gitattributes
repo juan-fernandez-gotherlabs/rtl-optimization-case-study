@@ -1,6 +1,8 @@
 *.pdf binary
 *.v whitespace=-trailing-space,-space-before-tab,-blank-at-eof
 *.patch whitespace=-trailing-space,-space-before-tab
+# Saved SERV evidence retains the byte-exact tool output and synthesis template.
+experiments/serv-1.4.0/evidence/** whitespace=-trailing-space,-space-before-tab,-blank-at-eof
 experiments/quartus-int8-matvec/evidence/*/*/*/*.log binary
 experiments/quartus-int8-matvec/evidence/*/*/*/*.qpf binary
 experiments/quartus-int8-matvec/evidence/*/*/*/output_files/*.rpt binary

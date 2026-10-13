@@ -1,0 +1,2 @@
+PASS cycles=4096 defined_output_bit_checks=     387072
+<private-study-root>/evidence/flow-v2/postmap-coherence/v2-exact-rf-high3-v2-lean-word-binary-m0/tb.v:152: $finish called at 12288 (1s)

@@ -1,0 +1,76 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[a4paper,top=20mm,bottom=22mm,left=19mm,right=19mm,headheight=14pt]{geometry}
+\usepackage{fontspec}
+\setsansfont{texgyreheros-regular.otf}[BoldFont=texgyreheros-bold.otf,ItalicFont=texgyreheros-italic.otf,BoldItalicFont=texgyreheros-bolditalic.otf]
+\setmainfont{texgyreheros-regular.otf}[BoldFont=texgyreheros-bold.otf,ItalicFont=texgyreheros-italic.otf,BoldItalicFont=texgyreheros-bolditalic.otf]
+\setmonofont{texgyrecursor-regular.otf}[BoldFont=texgyrecursor-bold.otf,ItalicFont=texgyrecursor-italic.otf,BoldItalicFont=texgyrecursor-bolditalic.otf,Scale=0.88]
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{microtype}
+\usepackage[table]{xcolor}
+\definecolor{GotherBlue}{HTML}{0A84FF}
+\definecolor{Ink}{HTML}{111111}
+\definecolor{Mid}{HTML}{666666}
+\definecolor{Rule}{HTML}{D9DDE3}
+\definecolor{Pale}{HTML}{F4F8FC}
+\usepackage{titlesec}
+\titleformat{\section}{\fontsize{20}{23}\bfseries\color{Ink}}{}{0pt}{}
+\titleformat{\subsection}{\fontsize{13.5}{16}\bfseries\color{Ink}}{}{0pt}{}
+\titlespacing*{\section}{0pt}{0pt}{12pt}
+\titlespacing*{\subsection}{0pt}{16pt}{7pt}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize\color{Mid}Göther Labs / Evaluated RTL study}
+\fancyhead[R]{\footnotesize\color{Mid}SERV 1.4.0 / VTR 45 nm}
+\fancyfoot[L]{\footnotesize\color{Mid}Fixed 64-pair comparison · \EvidenceDate}
+\fancyfoot[R]{\footnotesize\color{Mid}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\usepackage{booktabs,tabularx,array}
+\usepackage{siunitx}
+\sisetup{detect-all,group-separator={,},group-minimum-digits=4}
+\newcolumntype{Y}{>{\rightskip=0pt plus 1fil\relax\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+\newcolumntype{P}[1]{>{\rightskip=0pt plus 1fil\relax\arraybackslash}p{#1}}
+\newcolumntype{B}[1]{>{\bfseries\rightskip=0pt plus 1fil\relax\arraybackslash}p{#1}}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=5mm}
+\usepackage{listings}
+\lstdefinelanguage{VerilogDiff}{morekeywords={always,assign,begin,case,default,end,endcase,else,if,module,input,output,reg,wire},sensitive=true,morecomment=[l]{//}}
+\lstset{basicstyle=\ttfamily\footnotesize,keywordstyle=\color{GotherBlue}\bfseries,commentstyle=\color{Mid},columns=fullflexible,keepspaces=true,frame=none,backgroundcolor=\color{white},xleftmargin=0pt,aboveskip=7pt,belowskip=7pt,showspaces=false,showtabs=false,showstringspaces=false,breaklines=true,breakatwhitespace=false}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,fit,backgrounds}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=Ink,urlcolor=GotherBlue,citecolor=GotherBlue,pdfauthor={Göther Labs},pdftitle={SERV 1.4.0 - fixed 64-pair study with timing regression},pdflang={en-GB}}
+\usepackage{seqsplit}
+
+\input{generated/metrics.tex}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5.5pt}
+\setlength{\emergencystretch}{2em}
+\newcommand{\hash}[1]{{\scriptsize\ttfamily\seqsplit{#1}}}
+\newcommand{\better}{\textcolor{GotherBlue}{\textbf{better}}}
+\newcommand{\neutral}{\textcolor{Mid}{\textbf{neutral}}}
+\newcommand{\smallcaps}[1]{\textcolor{Mid}{\fontsize{8.5}{10}\selectfont\bfseries\MakeUppercase{#1}}}
+\newcommand{\newpageheading}[2]{\clearpage\section{#1}\smallcaps{#2}\par\vspace{6pt}}
+\newcommand{\yes}{\textcolor{GotherBlue}{\textbf{PASS}}}
+\newcommand{\thead}[1]{\textcolor{white}{\textbf{#1}}}
+
+\newtcolorbox{claimbox}[1][]{enhanced,breakable,boxrule=0.6pt,leftrule=2.8pt,colback=white,colframe=GotherBlue,arc=0pt,left=4.5mm,right=4.5mm,top=4mm,bottom=4mm,before upper=\raggedright,#1}
+\newtcolorbox{scopebox}[1][]{enhanced,breakable,boxrule=0.5pt,colback=Pale,colframe=Rule,arc=2mm,left=4mm,right=4mm,top=3mm,bottom=3mm,#1}
+
+\tikzset{
+  signal/.style={-Latex,draw=Mid,line width=.75pt},
+  gate/.style={draw=Rule,fill=white,rounded corners=1.5pt,minimum width=17mm,minimum height=8mm,font=\scriptsize\bfseries,align=center},
+  accepted/.style={gate,draw=GotherBlue},
+  input/.style={draw=Rule,fill=white,rounded corners=1.5pt,minimum width=10mm,minimum height=7mm,font=\scriptsize,align=center},
+}
+
+\definecolor{Regress}{HTML}{B42318}
+\newcommand{\worse}{\textcolor{Regress}{\textbf{regression}}}

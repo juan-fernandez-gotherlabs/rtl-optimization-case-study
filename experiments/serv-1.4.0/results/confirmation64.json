@@ -1,0 +1,2029 @@
+{
+  "schema_version": 1,
+  "status": "complete_and_audited",
+  "campaign": "serv-leader-final64-20261013-v1",
+  "registration_sha256": "a68aa3316341162cd457984e0fc3706477f9d9e60f720f7853085b6deb59731d",
+  "frozen_candidate_RTL_sha256": "b25b924a34318591d7cfec7097fc5d265a372316757893b2d51a095c5ba01fbe",
+  "paired_seeds": [
+    6001,
+    6002,
+    6003,
+    6004,
+    6005,
+    6006,
+    6007,
+    6008,
+    6009,
+    6010,
+    6011,
+    6012,
+    6013,
+    6014,
+    6015,
+    6016,
+    6017,
+    6018,
+    6019,
+    6020,
+    6021,
+    6022,
+    6023,
+    6024,
+    6025,
+    6026,
+    6027,
+    6028,
+    6029,
+    6030,
+    6031,
+    6032,
+    6033,
+    6034,
+    6035,
+    6036,
+    6037,
+    6038,
+    6039,
+    6040,
+    6041,
+    6042,
+    6043,
+    6044,
+    6045,
+    6046,
+    6047,
+    6048,
+    6049,
+    6050,
+    6051,
+    6052,
+    6053,
+    6054,
+    6055,
+    6056,
+    6057,
+    6058,
+    6059,
+    6060,
+    6061,
+    6062,
+    6063,
+    6064
+  ],
+  "pairs": 64,
+  "implementations_audited": 128,
+  "sampling_role": "reserved fixed 64-pair confirmatory sample of one frozen candidate",
+  "statistics": {
+    "score": 0.9665260495685716,
+    "improvement_percent": 3.3473950431428423,
+    "raw_composite_score": 0.9665260495685716,
+    "raw_composite_improvement_percent": 3.3473950431428423,
+    "selection_feasible": true,
+    "area_constraint_violation": 0.0,
+    "power_constraint_violation": 0.0,
+    "metric_ratios": {
+      "area_total_mwta": 0.9410154491769548,
+      "critical_path_delay_ns": 1.0194782579750987,
+      "active_total_power_w": 0.9411654346223935
+    },
+    "area_ratio": 0.9410154491769548,
+    "delay_ratio": 1.0194782579750987,
+    "power_ratio": 0.9411654346223935,
+    "clb_count": 43.0,
+    "acceptance_decision": "evidence_regression",
+    "confidence": {
+      "method": "paired log ratios, fixed one-sided 95% Student-t",
+      "composite": {
+        "mean_log_ratio": -0.03404702822042746,
+        "lower": -0.035372071014655664,
+        "upper": -0.03272198542619926
+      },
+      "metrics": {
+        "area_total_mwta": {
+          "mean_log_ratio": -0.060795721702671106,
+          "lower": -0.06139914552905723,
+          "upper": -0.06019229787628498
+        },
+        "critical_path_delay_ns": {
+          "mean_log_ratio": 0.01929098464027715,
+          "lower": 0.012541141900920108,
+          "upper": 0.026040827379634195
+        },
+        "active_total_power_w": {
+          "mean_log_ratio": -0.06063634759888843,
+          "lower": -0.06651581597161156,
+          "upper": -0.05475687922616531
+        }
+      }
+    }
+  },
+  "one_sided_95_upper_composite_score": 0.9678075868043224,
+  "strict10_result_on_fixed64": false,
+  "held_out_certification_12_completed": false,
+  "editorial_publication_accepted": false,
+  "editorial_acceptance_reason": "Separate 12-pair certification remains unexecuted; original strict10 rule unchanged.",
+  "arithmetic_means": {
+    "baseline": {
+      "area_total_mwta": 2743362.125,
+      "critical_path_delay_ns": 4.22141640625,
+      "active_total_power_w": 0.003577921875
+    },
+    "v2-exact-rf-high3-v2-lean-word-binary-m0": {
+      "area_total_mwta": 2581550.296875,
+      "critical_path_delay_ns": 4.30406328125,
+      "active_total_power_w": 0.003367578125
+    }
+  },
+  "geometric_means": {
+    "baseline": {
+      "area_total_mwta": 2743358.948891708,
+      "critical_path_delay_ns": 4.220535575238644,
+      "active_total_power_w": 0.0035773456715238647
+    },
+    "v2-exact-rf-high3-v2-lean-word-binary-m0": {
+      "area_total_mwta": 2581543.1535449526,
+      "critical_path_delay_ns": 4.302744255966226,
+      "active_total_power_w": 0.003366874093734298
+    }
+  },
+  "CLB_counts": {
+    "baseline": [
+      46
+    ],
+    "v2-exact-rf-high3-v2-lean-word-binary-m0": [
+      43
+    ]
+  },
+  "mapped_FF_count": {
+    "baseline": 181,
+    "optimized": 181
+  },
+  "per_pair_composite_median": 0.9649716525774292,
+  "raw_record_sha256": {
+    "baseline": {
+      "6001": "3ed68377e419d43a1a42b57cd004c73d3925e898dc02a44736e44d71f87febc8",
+      "6002": "d48fd2ab9e6ace78aaf77976d4a488499f87541ea217a59bb75b58a298f06361",
+      "6003": "7e549f323fed22e4306f7ee3eee3399e630e49c7ee45fe5ef72c2cbe7c32f516",
+      "6004": "dfb177250c446781ea35cbae3b3a892da8c9127c2df7e7dffd6f7159574df7e3",
+      "6005": "ba3d93f13e872caac04f9799c31c9a06e00929946c0de3589dfab3736bd92a34",
+      "6006": "d8f7b12cac5391f2d587f6c37095b37aa6a800b68fabf042d5b6701cf1b12e8c",
+      "6007": "5a078aa732d248566f4e9e47a498cd255b125b56f7386c19a7900bdb9124beb3",
+      "6008": "1248bfb2ddec97cb9eb551f3772c40a31dc4a959648098d7d9922c813d601837",
+      "6009": "2df79ba524cb52372bf38e750dad08049f35947f7897727d7d9e69a9ea44eeb0",
+      "6010": "861215ccf2fc3e167757721b3f0808150c25e1860813e662f1dd65e124aa5bf8",
+      "6011": "edbefc2e7b6c16e10979b8ef2b8ef921c2e00ed8121b53486db8d5074609db7f",
+      "6012": "718b5403e0a12621f05b2cd76ed188aa9a3fb2f008b1f9f287f8b94f7ecce752",
+      "6013": "c8769561490a74822f996d393806ad1ef08ce986e6169bbb94df9064e2c7581c",
+      "6014": "44e66da22f0a593fd5ca7c7f89f1f1883201072f2345bdd30b8c75501a252901",
+      "6015": "f54ef1957800a4dcbb8f8f71ffcc89678f31504a5db79f342cb91f82ce52aae1",
+      "6016": "d35e44be6dca35f744f81ba6cd8eda340f46e33c7d6bfac0f6a382fd6d7adfee",
+      "6017": "e9290704f7464e654b6a070a090543f78a686a6962c67a2a1d2010f89d7c21a7",
+      "6018": "945713f34e4c93b49d36da65dd6612c2f0f293734cfa7bd1cac7df2dba2e0604",
+      "6019": "923e7713ce19661e0dded90a9ef683c52d6d626c655153935c4ef6fbf7a6f84b",
+      "6020": "2a371b76d1d8c7021151ac939cec20fa03ca5623879558d70e01d8cee8b016ce",
+      "6021": "1ca31a3d84f372b597dbcde552ad79010369fc1c6ac5bd11470bdb228dd1160f",
+      "6022": "ef2e127e2b8c39bc29ea3088decf66f681ef01d4a7531f911c427bebe3b8b9e7",
+      "6023": "1ae462455af4d6cc3465c86ba02b5886428ce3234a6f2a6b249173cb34d094d3",
+      "6024": "690caa6c1f6b3c82b3098c8895ac8312695d5f18c77ad7d06881ae655853223b",
+      "6025": "6cdf8c5341f1f5e94517b5379b02a6245acf1bd743baacaf19bdcacea7fb0942",
+      "6026": "40cf057eaaca109a45d7fa0d160a0049a4c8b0e81a4be88185c416c4de21bf86",
+      "6027": "ac2fe0a43a8b961a9dadd7424c35f7b964f7322f00cd86480d46dbf3e2cce67e",
+      "6028": "9193c311549e685594ee7d36329409a7c31bb4ff37d4ce1c700ef35add5ce5b6",
+      "6029": "4667315208a623d103c8f3e0fcb64ae6d5503209ba85fcd982ba7b7ff9a93513",
+      "6030": "a3232bb6db22ad903e71c8363b36c76f839eed24a867c2626eb9d162ddf076a3",
+      "6031": "33254c1d812bf2576184b3bba725af958c36cdb4214d79a6e9b80e8ddd1e3c50",
+      "6032": "34176ed8e12b788e03c00268a81b624f6c789fb64a752d363cade3f52aa89f7f",
+      "6033": "011e706d16a9ddca823faa3f28554444458cf45e95d4f42725f9a5f7d2394e57",
+      "6034": "0c0198f3e45ec95cead7ae5ffa71e53d84ca27337b9ddf08f596e1d92d1fca5f",
+      "6035": "61c3188d73a0ee790b28f153fa9ee4476065af2d18087dbc2b2f1806ab26bc08",
+      "6036": "703f2cc4c1dbee7fd0017d613126a51a8de38bdd2f4627169c1c777fac228cb3",
+      "6037": "dd86990608ec40e82a65190d22f8763359911cc700996e1ced9bed1dd9ae99ba",
+      "6038": "b66c86d4f5d83388df2a72f86ea1c7db9b31f9b02a0af4b527c3d079df9fa9c7",
+      "6039": "d9546f00ee397c3c255913076057693c1bd9ed609802046911778083f3b75af0",
+      "6040": "7096023b581e784a5370e256d224467c8587383b932e64c49b7bf95c6b6ffcb1",
+      "6041": "219ae60e2d7c20b9798da49138f20f4dda403b88db75822eaffd237165cbbbf8",
+      "6042": "0e51bd61a12dce46fb84c603deb0ada24a4ee96e9354a047091b13a18b7740b4",
+      "6043": "98e23799c24564fd88e14c37df40de3e885cdbfae142d33715725b0f3c69cab4",
+      "6044": "b4eda0297f2fe91cae6135c2a322d47ef1f192772e7cec9b3b06bf92913f74e0",
+      "6045": "aa04ad12b2bb9d61ebf564155231c1a2837bb038c4fe75c7929f591c464f1df2",
+      "6046": "f07ecac116966fc6d7b456f54854a013f82547e405755ae86f616cd7a020665b",
+      "6047": "ddf64249c011cbe5fcc2bc8c47f246082b1a77518351d62eddd4f36115417823",
+      "6048": "9b6b7b0dad8e309d1a25d7a1a4b4d60122e49ba8a7e0df6e11bdb6daf1566a3c",
+      "6049": "ef547a7dd18399d17eea7ab5c69d02658afc2d6137a789ea9209a4daba230dce",
+      "6050": "33b68d4e9fb4b940ac997be4077d1749c300ed4f3f12c803c6f1bbe8a29d372d",
+      "6051": "ea7aef742a7311b6c1a9a359758bd9bf9ed959e87709b7972d60d7be1e0f40f0",
+      "6052": "16759f6abfc5b7be348699428cdf159cfc9fe76e5418f9e8dc8be2f98eb6b35e",
+      "6053": "10d78101addda64a3f70994bcd9c02fdc2be1377d52e371f67743a51226cd811",
+      "6054": "620ab9001706ec0ac5905e887480da37040d08a351bf11f8a84a63b3e134a26f",
+      "6055": "3cfaf26a26fe3e7cba5d72817fa5d372150f86e760bf6bbc8c1cdd918b230eab",
+      "6056": "40cb89eb810894c3711c88f60511b87a1489dce4f7e88cd5420f87dd18441daf",
+      "6057": "f613f28128750ba3ff780e247551cb2ab02dd6045a24fe18af3bd98287b605ed",
+      "6058": "1a17698d2e0c17d1a68159880ee60580eb1698749db3af5c5fc04420bfee6387",
+      "6059": "e1a7faf93c5088c0dc8cd91dc12d386b817bcc0820a2852ab1234b08ad018d53",
+      "6060": "998baaee1f85512c8db5bd7648839e1ea61b01ffe151c5aac7dca92c4e0ce99d",
+      "6061": "7e8b5c11f885ed67647147d5931edd17173ece4d9ff05e92d8e57da7259fe7b3",
+      "6062": "1a86d37a72b678f695b02dab45cbbdef7a22b99cf861bb867d8490a8276f4eb3",
+      "6063": "653beb3d7f1fb2a259e6e4f03526b65fb0d1b7ecc4a7eab082b2aee74a8ee9dd",
+      "6064": "545ed140270648520cfd0f3b49658e6ae135ca0239baeb6e2a3add11d5beee66"
+    },
+    "v2-exact-rf-high3-v2-lean-word-binary-m0": {
+      "6001": "48d6bca794432de5175c29407ba17d8f79ce36edbc6dc0fc4a6962b08d4f8220",
+      "6002": "ec3dffc5d5ea7be093e475063d6ad74b01f1e97d013200d49eaff658d23334db",
+      "6003": "4b17184c5cb734ba06fd67491b4ae74371632efafd982e2dc9771156d1a51807",
+      "6004": "316bb32dca9131e2026a81e188ca762b18c1140f515aeacbcebce0c96f1157e0",
+      "6005": "e9dc69fcf2bea4195d553a704d9a3610e546dce0180392feec3308b4d3c10df0",
+      "6006": "33ef1cf16a9796e57c14bc6738f64d7dff07249054fb029667e2d9a883a6b011",
+      "6007": "25eb2022f25f38ae2f22430e2c54d2a0bf0502357add0173282efbbf27d8aab8",
+      "6008": "b0211a180708b933673e22cc92cc6a209370944ab04f3f863e58541e6cc8b332",
+      "6009": "9ddae3549d0e11c92b87ee346c7b2ca1b5a57041e55dc9a5f6faa70d20d13db9",
+      "6010": "4952868e9ee8430c124ff8b05306edc18dd0cab668559b79f0df57fa6a075275",
+      "6011": "e992a6511e82773a039abb43d604756783db84516c106f649a589aba1de835e7",
+      "6012": "46747a62f9d0e787ac1f4d588c5164cd6d67f935c748d3ab483c842901cc0d48",
+      "6013": "86baa33a7fc18d8c945a83ef4d8645a50168f82a1edd6968c7bb515d8db60a58",
+      "6014": "d4a169ec8f4295689dcbc4663fd0d48dfd61682f5f2c4709f60fd0aedae73e54",
+      "6015": "c164f6eac13ecb18e9a00c4cccc4dfc3c014448c667f2b1b257837b6f556b62e",
+      "6016": "8b3d45750d3c196e3c0d4dca6b5d2bc29d77ccb5090ceba38a01622b8839a84e",
+      "6017": "daa311972205f7a1a98b5c7bf64f144b579a89ca9fb1768b2d365fa3aae48b87",
+      "6018": "fa895cd27376be4dbd0e4f87a3f1d3b5befadb9da542fa43c47b5ae41adcfd9e",
+      "6019": "02e2d757c96d162c44afc773f6fac02b41d1a7753db0c0ce2659e0579de52937",
+      "6020": "5667b1ae81903de9f2794e70fdee32cce205b7e83914c086bc25bb4dd045d006",
+      "6021": "cb2e9946856e674966903248ead955e444480e37a7e7d9265278aaee278fa89f",
+      "6022": "59fbea6b00746ab11f6849c4927e287158651c2ea469dca6cfe6e56567dbadfc",
+      "6023": "c27b24348a9ace0d4b98ae48c46fcbcf093a6b0232b5ed784695fe01c7f1c387",
+      "6024": "0728ad7eb69f79a255e2bfa3fb4eb484a0e08ccc9f392b22baa60dfd8077042a",
+      "6025": "a175c7f394148d45fcda013135d3c82f07b5f142aa7ec1422ddc119d8a54d6d2",
+      "6026": "e3088fde2de34f58905b3d54418b31f14d08e06c7ca94d913b1db9fa0afc31c7",
+      "6027": "958a003486af1a441eabe5fb18ffd32ee23e5fc8b5e76caeb2162f5b265bae9a",
+      "6028": "4f5921861fcd365f2ad9ed0fef3614a6983bcf4ad92c3ca48a4f894e759c49e3",
+      "6029": "6ef0d608b086029fd447cf69729727f7987bb4da354b740ee60dec9223b9d8d7",
+      "6030": "e0a730166c9d62e996b592fce976d96e3dc427a99fbe34b834b6e8e28b7abb3d",
+      "6031": "0a4ecd47e1f83da4fb365eff406634248d3b723cf1ff9556737b882e5ecee064",
+      "6032": "ab4a46b73999d9bd19a27d5921d2de5cc4988e3a33969ac20a257772997bcc5a",
+      "6033": "1c16c1a6ee8852deff71e2cdbf5588d4f03b5af023583c97ef836c088d1c90c3",
+      "6034": "b65fc0b7386bcb89dad9445901305ce47d99e090e18939d4a5a72570c5173507",
+      "6035": "56920f0c14c6732a9eda4999333e7358256b93259e6b27baab350edfc7c1ccc6",
+      "6036": "68bb4f279b83585e10e95c14fef9aae670271ea64b433734cf01d1ffa72ab54f",
+      "6037": "0f96ee8459488c0f235e0cd7dd31a56a10b6fafe4bf0cd21116bf23769863d44",
+      "6038": "0d3b53a5cd6230b7a47898e23e8afe240403075642903d065394a29cf62ebc7d",
+      "6039": "6fa52310ad078258d0c7bc6454f358a14d6e328a0ead647bd73d4203e39cd675",
+      "6040": "d18123d9b9b873f9e331c0fbe746eb11392dc55000e5f81725f9ec7e1fae7110",
+      "6041": "c9a34f7835390aa61c43ab2ac5953e1048378e09eb60718633a94f1e2a5b028c",
+      "6042": "11bbc28da233882020b457475fa055af2b77b295be74de4814e8a875635c7905",
+      "6043": "60167217076139e75f87687d64dfa317156b82110a58b924e6b238dc6c064b91",
+      "6044": "9e28eb8071df870ab91dc762b9de6916cf73d6bfbc7eead6d8bd6a51b0369315",
+      "6045": "1fd4c5c2607ed53500bf12b28d02408df19f8d78bfbee70c76ea1d0705d80625",
+      "6046": "9529c0caeafd333c2ed331d00c73e0480aaba6f59be802850ac6e35b6f80c014",
+      "6047": "942090ece2ae59d872ce92a45c07381b58b7fa72a21f2a35794e33b975292af0",
+      "6048": "1c689d84b23553776a1f18da5a6db7d5fa9c522f20e786c0baf0a63406a40b29",
+      "6049": "669bc0e1392d32dfca51a869f2c3aa4682d8ab8a1800a8b85109667d736a55fb",
+      "6050": "246e1224b123372e6b7782e888a1b1bb9aa70c8765db8645e45344c2abe9c0a2",
+      "6051": "23c75baa2584fa84239988cac16ab53e7389dbb4ad61a0160d25d62933aa55fb",
+      "6052": "6b1999e83c2daf9d4a25732c2ea1d35b768952cb6b9ca748343ac84b76786fb9",
+      "6053": "cdea13ad0e6653f3bd5fdcefa337ba4771bfdd82870faf9d89bbeae6885eea31",
+      "6054": "f668e913169cf6042752e2d92f681c66e721b652f18ba4798642a5eb4de1f391",
+      "6055": "0cfda334b115f07bbee666b0294587333c2bc4dd0c42ea5037ed47559c378d98",
+      "6056": "8c6b61cfcbca322a47db16632839a56ba8189259a5d787504dcbdd69d36b44df",
+      "6057": "a379d8345fdb6ada7460c1a6e90d54eaf3df9cbc257de9e941e39e31ffacdbe3",
+      "6058": "51d1442ad7f00dfb25c9a48af8dc2b1d822e1fc9e092fafb1091beac004efca8",
+      "6059": "84dd9e76853311ed14b78ba9eb384433bdf8614197a35d60bf6ad0c57deedbf7",
+      "6060": "b7eeb728909bbb34cc31e8cfbbc0d8e6618704cab0f99f6dc4cacf60f36affb1",
+      "6061": "9e7ae265e0e2d5ae038e723aa6c98e68f1962bf31a56bb3fade4b23e77111d7d",
+      "6062": "dc3ba8d0701e25eb5efe8463b4647af2d74a3fb247b49832459e773e4080f042",
+      "6063": "1c966b71fc20f8f64b9d4aca1c69f800a0b47b12a4155cb48158e120c65f941d",
+      "6064": "0a80b8acd6d310ea35dfdef92bd3ce4b8dd65d292c3c3ac48adbbb411861df99"
+    }
+  },
+  "all_rows": [
+    {
+      "seed": 6001,
+      "baseline": {
+        "seed": 6001,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.19105,
+        "active_total_power_w": 0.003602,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6001,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.23585,
+        "active_total_power_w": 0.003342,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.0106894453657198,
+        "active_total_power_w": 0.9278178789561354
+      },
+      "composite_ratio": 0.9591876674767055
+    },
+    {
+      "seed": 6002,
+      "baseline": {
+        "seed": 6002,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.09825,
+        "active_total_power_w": 0.00363,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6002,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.40555,
+        "active_total_power_w": 0.003309,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.0749832245470627,
+        "active_total_power_w": 0.9115702479338843
+      },
+      "composite_ratio": 0.9733612217805179
+    },
+    {
+      "seed": 6003,
+      "baseline": {
+        "seed": 6003,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.11567,
+        "active_total_power_w": 0.003618,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6003,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.31018,
+        "active_total_power_w": 0.003363,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.0472608348093992,
+        "active_total_power_w": 0.9295190713101161
+      },
+      "composite_ratio": 0.9712129981969942
+    },
+    {
+      "seed": 6004,
+      "baseline": {
+        "seed": 6004,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.30849,
+        "active_total_power_w": 0.003521,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6004,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.24588,
+        "active_total_power_w": 0.003393,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 0.985468226687308,
+        "active_total_power_w": 0.9636466912808862
+      },
+      "composite_ratio": 0.9632305555317521
+    },
+    {
+      "seed": 6005,
+      "baseline": {
+        "seed": 6005,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.06571,
+        "active_total_power_w": 0.003663,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6005,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.3829,
+        "active_total_power_w": 0.003324,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.0780158939029099,
+        "active_total_power_w": 0.9074529074529075
+      },
+      "composite_ratio": 0.9728066198827544
+    },
+    {
+      "seed": 6006,
+      "baseline": {
+        "seed": 6006,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.23401,
+        "active_total_power_w": 0.003571,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6006,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.26766,
+        "active_total_power_w": 0.003405,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.0079475485414537,
+        "active_total_power_w": 0.9535144217306077
+      },
+      "composite_ratio": 0.9670861496103248
+    },
+    {
+      "seed": 6007,
+      "baseline": {
+        "seed": 6007,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.07035,
+        "active_total_power_w": 0.003643,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6007,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.47738,
+        "active_total_power_w": 0.003291,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.0999987716044075,
+        "active_total_power_w": 0.9033763381828164
+      },
+      "composite_ratio": 0.9779059026568844
+    },
+    {
+      "seed": 6008,
+      "baseline": {
+        "seed": 6008,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.28064,
+        "active_total_power_w": 0.003516,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6008,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.14947,
+        "active_total_power_w": 0.00343,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 0.9693573858114675,
+        "active_total_power_w": 0.9755403868031854
+      },
+      "composite_ratio": 0.9618776261595171
+    },
+    {
+      "seed": 6009,
+      "baseline": {
+        "seed": 6009,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.35736,
+        "active_total_power_w": 0.00351,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6009,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.38827,
+        "active_total_power_w": 0.003314,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.007093744836323,
+        "active_total_power_w": 0.9441595441595442
+      },
+      "composite_ratio": 0.9636408288981959
+    },
+    {
+      "seed": 6010,
+      "baseline": {
+        "seed": 6010,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.23386,
+        "active_total_power_w": 0.003604,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6010,
+        "area_total_mwta": 2565544.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 248104.0,
+        "critical_path_delay_ns": 4.48348,
+        "active_total_power_w": 0.003222,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.9348157983528869,
+        "critical_path_delay_ns": 1.0589580193960122,
+        "active_total_power_w": 0.8940066592674806
+      },
+      "composite_ratio": 0.9600971493794883
+    },
+    {
+      "seed": 6011,
+      "baseline": {
+        "seed": 6011,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.26116,
+        "active_total_power_w": 0.003578,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6011,
+        "area_total_mwta": 2565544.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 248104.0,
+        "critical_path_delay_ns": 4.40791,
+        "active_total_power_w": 0.003214,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.9348157983528869,
+        "critical_path_delay_ns": 1.0344389790573458,
+        "active_total_power_w": 0.8982671883733929
+      },
+      "composite_ratio": 0.9541401080986326
+    },
+    {
+      "seed": 6012,
+      "baseline": {
+        "seed": 6012,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.23821,
+        "active_total_power_w": 0.003585,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6012,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.30879,
+        "active_total_power_w": 0.003366,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.0166532569174251,
+        "active_total_power_w": 0.9389121338912134
+      },
+      "composite_ratio": 0.9648860623230466
+    },
+    {
+      "seed": 6013,
+      "baseline": {
+        "seed": 6013,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.2371,
+        "active_total_power_w": 0.00355,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6013,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.12342,
+        "active_total_power_w": 0.003448,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 0.9731703287625971,
+        "active_total_power_w": 0.9712676056338028
+      },
+      "composite_ratio": 0.9617289400216584
+    },
+    {
+      "seed": 6014,
+      "baseline": {
+        "seed": 6014,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.35101,
+        "active_total_power_w": 0.003513,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6014,
+        "area_total_mwta": 2591399.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 273959.0,
+        "critical_path_delay_ns": 4.25341,
+        "active_total_power_w": 0.003426,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.9442366706772024,
+        "critical_path_delay_ns": 0.9775684266411707,
+        "active_total_power_w": 0.9752348420153714
+      },
+      "composite_ratio": 0.9655595848611572
+    },
+    {
+      "seed": 6015,
+      "baseline": {
+        "seed": 6015,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.09471,
+        "active_total_power_w": 0.00368,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6015,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.21156,
+        "active_total_power_w": 0.003457,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.0285368194573,
+        "active_total_power_w": 0.9394021739130435
+      },
+      "composite_ratio": 0.9687994832223861
+    },
+    {
+      "seed": 6016,
+      "baseline": {
+        "seed": 6016,
+        "area_total_mwta": 2727224.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 248104.0,
+        "critical_path_delay_ns": 4.25895,
+        "active_total_power_w": 0.003479,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6016,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.30585,
+        "active_total_power_w": 0.003366,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.947028186903606,
+        "critical_path_delay_ns": 1.0110121039223285,
+        "active_total_power_w": 0.967519402127048
+      },
+      "composite_ratio": 0.9748242278715199
+    },
+    {
+      "seed": 6017,
+      "baseline": {
+        "seed": 6017,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.12563,
+        "active_total_power_w": 0.003597,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6017,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.29004,
+        "active_total_power_w": 0.003371,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.0398508833802353,
+        "active_total_power_w": 0.9371698637753684
+      },
+      "composite_ratio": 0.971568048069442
+    },
+    {
+      "seed": 6018,
+      "baseline": {
+        "seed": 6018,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.22079,
+        "active_total_power_w": 0.003617,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6018,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.36377,
+        "active_total_power_w": 0.003333,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.033875175026476,
+        "active_total_power_w": 0.9214818910699475
+      },
+      "composite_ratio": 0.9642620347051775
+    },
+    {
+      "seed": 6019,
+      "baseline": {
+        "seed": 6019,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.21187,
+        "active_total_power_w": 0.003582,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6019,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.24493,
+        "active_total_power_w": 0.003418,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.0078492451096543,
+        "active_total_power_w": 0.954215522054718
+      },
+      "composite_ratio": 0.9672916698341361
+    },
+    {
+      "seed": 6020,
+      "baseline": {
+        "seed": 6020,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.1883,
+        "active_total_power_w": 0.003581,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6020,
+        "area_total_mwta": 2565544.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 248104.0,
+        "critical_path_delay_ns": 4.27112,
+        "active_total_power_w": 0.003301,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.9348157983528869,
+        "critical_path_delay_ns": 1.0197741327030059,
+        "active_total_power_w": 0.9218095504049149
+      },
+      "composite_ratio": 0.9578343610889188
+    },
+    {
+      "seed": 6021,
+      "baseline": {
+        "seed": 6021,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.11678,
+        "active_total_power_w": 0.003643,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6021,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.32037,
+        "active_total_power_w": 0.003347,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.049453699250385,
+        "active_total_power_w": 0.9187482843810048
+      },
+      "composite_ratio": 0.9681218865409777
+    },
+    {
+      "seed": 6022,
+      "baseline": {
+        "seed": 6022,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.22661,
+        "active_total_power_w": 0.0036,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6022,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.22997,
+        "active_total_power_w": 0.003395,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.0007949633394138,
+        "active_total_power_w": 0.9430555555555555
+      },
+      "composite_ratio": 0.9612526721692256
+    },
+    {
+      "seed": 6023,
+      "baseline": {
+        "seed": 6023,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.24581,
+        "active_total_power_w": 0.003612,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6023,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.35551,
+        "active_total_power_w": 0.003362,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.025837237182069,
+        "active_total_power_w": 0.9307862679955703
+      },
+      "composite_ratio": 0.9649828007654867
+    },
+    {
+      "seed": 6024,
+      "baseline": {
+        "seed": 6024,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.30761,
+        "active_total_power_w": 0.003547,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6024,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.29269,
+        "active_total_power_w": 0.003366,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 0.99653636239121,
+        "active_total_power_w": 0.9489709613758106
+      },
+      "composite_ratio": 0.9618901000667472
+    },
+    {
+      "seed": 6025,
+      "baseline": {
+        "seed": 6025,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.09405,
+        "active_total_power_w": 0.003621,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6025,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.40554,
+        "active_total_power_w": 0.003309,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.0760835847144026,
+        "active_total_power_w": 0.9138359569179784
+      },
+      "composite_ratio": 0.974499259394212
+    },
+    {
+      "seed": 6026,
+      "baseline": {
+        "seed": 6026,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.33159,
+        "active_total_power_w": 0.003564,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6026,
+        "area_total_mwta": 2565544.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 248104.0,
+        "critical_path_delay_ns": 4.20212,
+        "active_total_power_w": 0.003437,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.9348157983528869,
+        "critical_path_delay_ns": 0.9701102828291689,
+        "active_total_power_w": 0.9643658810325477
+      },
+      "composite_ratio": 0.9563047861720017
+    },
+    {
+      "seed": 6027,
+      "baseline": {
+        "seed": 6027,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.2834,
+        "active_total_power_w": 0.003549,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6027,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.41566,
+        "active_total_power_w": 0.003305,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.030877340430499,
+        "active_total_power_w": 0.9312482389405466
+      },
+      "composite_ratio": 0.9667204738839883
+    },
+    {
+      "seed": 6028,
+      "baseline": {
+        "seed": 6028,
+        "area_total_mwta": 2727224.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 248104.0,
+        "critical_path_delay_ns": 4.28162,
+        "active_total_power_w": 0.003461,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6028,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.33069,
+        "active_total_power_w": 0.003394,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.947028186903606,
+        "critical_path_delay_ns": 1.0114606153745545,
+        "active_total_power_w": 0.9806414331118173
+      },
+      "composite_ratio": 0.9793562673369735
+    },
+    {
+      "seed": 6029,
+      "baseline": {
+        "seed": 6029,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.07684,
+        "active_total_power_w": 0.003736,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6029,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.32253,
+        "active_total_power_w": 0.003389,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.0602648129433583,
+        "active_total_power_w": 0.9071199143468951
+      },
+      "composite_ratio": 0.9673191386046223
+    },
+    {
+      "seed": 6030,
+      "baseline": {
+        "seed": 6030,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.23268,
+        "active_total_power_w": 0.003572,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6030,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.31455,
+        "active_total_power_w": 0.003377,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.0193423551981249,
+        "active_total_power_w": 0.9454087346024636
+      },
+      "composite_ratio": 0.9679583204807302
+    },
+    {
+      "seed": 6031,
+      "baseline": {
+        "seed": 6031,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.21237,
+        "active_total_power_w": 0.003573,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6031,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.17112,
+        "active_total_power_w": 0.003476,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 0.9902074129290638,
+        "active_total_power_w": 0.9728519451441366
+      },
+      "composite_ratio": 0.9678344396280009
+    },
+    {
+      "seed": 6032,
+      "baseline": {
+        "seed": 6032,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.16013,
+        "active_total_power_w": 0.003603,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6032,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.11563,
+        "active_total_power_w": 0.003467,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 0.9893032188897944,
+        "active_total_power_w": 0.9622536774909798
+      },
+      "composite_ratio": 0.9640134598467011
+    },
+    {
+      "seed": 6033,
+      "baseline": {
+        "seed": 6033,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.40776,
+        "active_total_power_w": 0.003461,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6033,
+        "area_total_mwta": 2591399.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 273959.0,
+        "critical_path_delay_ns": 4.21034,
+        "active_total_power_w": 0.003428,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.9442366706772024,
+        "critical_path_delay_ns": 0.9552108100259544,
+        "active_total_power_w": 0.9904651834729846
+      },
+      "composite_ratio": 0.9631038120065191
+    },
+    {
+      "seed": 6034,
+      "baseline": {
+        "seed": 6034,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.21091,
+        "active_total_power_w": 0.003641,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6034,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.33047,
+        "active_total_power_w": 0.003355,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.0283929126958307,
+        "active_total_power_w": 0.9214501510574018
+      },
+      "composite_ratio": 0.9625435851020653
+    },
+    {
+      "seed": 6035,
+      "baseline": {
+        "seed": 6035,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.19075,
+        "active_total_power_w": 0.003581,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6035,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.26198,
+        "active_total_power_w": 0.003443,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.0169969575851578,
+        "active_total_power_w": 0.9614632784138508
+      },
+      "composite_ratio": 0.9726596105291546
+    },
+    {
+      "seed": 6036,
+      "baseline": {
+        "seed": 6036,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.20158,
+        "active_total_power_w": 0.00361,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6036,
+        "area_total_mwta": 2565544.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 248104.0,
+        "critical_path_delay_ns": 4.41108,
+        "active_total_power_w": 0.003223,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.9348157983528869,
+        "critical_path_delay_ns": 1.049862194698185,
+        "active_total_power_w": 0.892797783933518
+      },
+      "composite_ratio": 0.9569086520992177
+    },
+    {
+      "seed": 6037,
+      "baseline": {
+        "seed": 6037,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.2284,
+        "active_total_power_w": 0.003564,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6037,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.2492,
+        "active_total_power_w": 0.003386,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.0049191183426356,
+        "active_total_power_w": 0.9500561167227835
+      },
+      "composite_ratio": 0.9649472056967575
+    },
+    {
+      "seed": 6038,
+      "baseline": {
+        "seed": 6038,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.12342,
+        "active_total_power_w": 0.003622,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6038,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.14956,
+        "active_total_power_w": 0.003424,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.00633939787846,
+        "active_total_power_w": 0.9453340695748206
+      },
+      "composite_ratio": 0.9637994903625855
+    },
+    {
+      "seed": 6039,
+      "baseline": {
+        "seed": 6039,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.24665,
+        "active_total_power_w": 0.003603,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6039,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.40776,
+        "active_total_power_w": 0.003301,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.0379381394746447,
+        "active_total_power_w": 0.9161809603108522
+      },
+      "composite_ratio": 0.9636685256431905
+    },
+    {
+      "seed": 6040,
+      "baseline": {
+        "seed": 6040,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.25325,
+        "active_total_power_w": 0.003574,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6040,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.29556,
+        "active_total_power_w": 0.003431,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.009947687062834,
+        "active_total_power_w": 0.9599888080581981
+      },
+      "composite_ratio": 0.9699107661149238
+    },
+    {
+      "seed": 6041,
+      "baseline": {
+        "seed": 6041,
+        "area_total_mwta": 2727224.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 248104.0,
+        "critical_path_delay_ns": 4.35293,
+        "active_total_power_w": 0.0034,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6041,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.50204,
+        "active_total_power_w": 0.00327,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.947028186903606,
+        "critical_path_delay_ns": 1.034255087952253,
+        "active_total_power_w": 0.961764705882353
+      },
+      "composite_ratio": 0.9802867570262981
+    },
+    {
+      "seed": 6042,
+      "baseline": {
+        "seed": 6042,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.35617,
+        "active_total_power_w": 0.003547,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6042,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.3318,
+        "active_total_power_w": 0.00336,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 0.9944056361436768,
+        "active_total_power_w": 0.9472793910346773
+      },
+      "composite_ratio": 0.9606325964709816
+    },
+    {
+      "seed": 6043,
+      "baseline": {
+        "seed": 6043,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.36266,
+        "active_total_power_w": 0.003531,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6043,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.3144,
+        "active_total_power_w": 0.003409,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 0.9889379415310843,
+        "active_total_power_w": 0.9654488813367319
+      },
+      "composite_ratio": 0.9649605043893716
+    },
+    {
+      "seed": 6044,
+      "baseline": {
+        "seed": 6044,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.21209,
+        "active_total_power_w": 0.00356,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6044,
+        "area_total_mwta": 2565544.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 248104.0,
+        "critical_path_delay_ns": 4.20434,
+        "active_total_power_w": 0.003331,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.9348157983528869,
+        "critical_path_delay_ns": 0.9981600583083458,
+        "active_total_power_w": 0.9356741573033709
+      },
+      "composite_ratio": 0.9557631642374665
+    },
+    {
+      "seed": 6045,
+      "baseline": {
+        "seed": 6045,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.23489,
+        "active_total_power_w": 0.003559,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6045,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.565,
+        "active_total_power_w": 0.00324,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.077950076625367,
+        "active_total_power_w": 0.9103680809216071
+      },
+      "composite_ratio": 0.9738273938280377
+    },
+    {
+      "seed": 6046,
+      "baseline": {
+        "seed": 6046,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.15015,
+        "active_total_power_w": 0.003628,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6046,
+        "area_total_mwta": 2591399.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 273959.0,
+        "critical_path_delay_ns": 4.31705,
+        "active_total_power_w": 0.003385,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.9442366706772024,
+        "critical_path_delay_ns": 1.0402154139007025,
+        "active_total_power_w": 0.9330209481808158
+      },
+      "composite_ratio": 0.9713263732551147
+    },
+    {
+      "seed": 6047,
+      "baseline": {
+        "seed": 6047,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.07574,
+        "active_total_power_w": 0.003707,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6047,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.29158,
+        "active_total_power_w": 0.003332,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.0529572543881602,
+        "active_total_power_w": 0.8988400323711897
+      },
+      "composite_ratio": 0.9621463715424977
+    },
+    {
+      "seed": 6048,
+      "baseline": {
+        "seed": 6048,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.2168,
+        "active_total_power_w": 0.003573,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6048,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.24146,
+        "active_total_power_w": 0.003397,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.0058480364257256,
+        "active_total_power_w": 0.9507416736635881
+      },
+      "composite_ratio": 0.9654765536365251
+    },
+    {
+      "seed": 6049,
+      "baseline": {
+        "seed": 6049,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.09161,
+        "active_total_power_w": 0.00368,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6049,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.23282,
+        "active_total_power_w": 0.003489,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.0345120869291062,
+        "active_total_power_w": 0.9480978260869565
+      },
+      "composite_ratio": 0.9736577770925059
+    },
+    {
+      "seed": 6050,
+      "baseline": {
+        "seed": 6050,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.37271,
+        "active_total_power_w": 0.003473,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6050,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.19304,
+        "active_total_power_w": 0.003433,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 0.9589110643056594,
+        "active_total_power_w": 0.9884825799021019
+      },
+      "composite_ratio": 0.9626296045132852
+    },
+    {
+      "seed": 6051,
+      "baseline": {
+        "seed": 6051,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.35839,
+        "active_total_power_w": 0.003433,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6051,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.1212,
+        "active_total_power_w": 0.003443,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 0.9455785278508807,
+        "active_total_power_w": 1.002912904165453
+      },
+      "composite_ratio": 0.962787339641394
+    },
+    {
+      "seed": 6052,
+      "baseline": {
+        "seed": 6052,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.24249,
+        "active_total_power_w": 0.003507,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6052,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.32799,
+        "active_total_power_w": 0.00341,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.020153259053056,
+        "active_total_power_w": 0.9723410322212717
+      },
+      "composite_ratio": 0.9773229756586435
+    },
+    {
+      "seed": 6053,
+      "baseline": {
+        "seed": 6053,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.26227,
+        "active_total_power_w": 0.003543,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6053,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.287,
+        "active_total_power_w": 0.003363,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.005802072604504,
+        "active_total_power_w": 0.9491955969517358
+      },
+      "composite_ratio": 0.9649382250287459
+    },
+    {
+      "seed": 6054,
+      "baseline": {
+        "seed": 6054,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.25784,
+        "active_total_power_w": 0.003606,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6054,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.26227,
+        "active_total_power_w": 0.003417,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.0010404336471075,
+        "active_total_power_w": 0.9475873544093179
+      },
+      "composite_ratio": 0.9628686701285807
+    },
+    {
+      "seed": 6055,
+      "baseline": {
+        "seed": 6055,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.36178,
+        "active_total_power_w": 0.003495,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6055,
+        "area_total_mwta": 2565544.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 248104.0,
+        "critical_path_delay_ns": 4.58741,
+        "active_total_power_w": 0.003176,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.9348157983528869,
+        "critical_path_delay_ns": 1.051728881328265,
+        "active_total_power_w": 0.9087267525035766
+      },
+      "composite_ratio": 0.9631362281585263
+    },
+    {
+      "seed": 6056,
+      "baseline": {
+        "seed": 6056,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.26337,
+        "active_total_power_w": 0.003612,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6056,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.46025,
+        "active_total_power_w": 0.00329,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.046179430825849,
+        "active_total_power_w": 0.9108527131782945
+      },
+      "composite_ratio": 0.9643356188903258
+    },
+    {
+      "seed": 6057,
+      "baseline": {
+        "seed": 6057,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.11788,
+        "active_total_power_w": 0.003659,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6057,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.3793,
+        "active_total_power_w": 0.003305,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.0634841228981902,
+        "active_total_power_w": 0.903252254714403
+      },
+      "composite_ratio": 0.966919054656221
+    },
+    {
+      "seed": 6058,
+      "baseline": {
+        "seed": 6058,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.19959,
+        "active_total_power_w": 0.003589,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6058,
+        "area_total_mwta": 2591399.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 273959.0,
+        "critical_path_delay_ns": 4.24478,
+        "active_total_power_w": 0.003434,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.9442366706772024,
+        "critical_path_delay_ns": 1.0107605742465338,
+        "active_total_power_w": 0.9568124825856784
+      },
+      "composite_ratio": 0.9701792823418117
+    },
+    {
+      "seed": 6059,
+      "baseline": {
+        "seed": 6059,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.21348,
+        "active_total_power_w": 0.003531,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6059,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.29004,
+        "active_total_power_w": 0.00337,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.0181702535671229,
+        "active_total_power_w": 0.9544038516001133
+      },
+      "composite_ratio": 0.9706462025930181
+    },
+    {
+      "seed": 6060,
+      "baseline": {
+        "seed": 6060,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.2678,
+        "active_total_power_w": 0.00359,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6060,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.25895,
+        "active_total_power_w": 0.003352,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 0.9979263320680443,
+        "active_total_power_w": 0.9337047353760446
+      },
+      "composite_ratio": 0.9571487688697412
+    },
+    {
+      "seed": 6061,
+      "baseline": {
+        "seed": 6061,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.12674,
+        "active_total_power_w": 0.003613,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6061,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.25563,
+        "active_total_power_w": 0.003381,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 1.0312328860068722,
+        "active_total_power_w": 0.9357874342651537
+      },
+      "composite_ratio": 0.9683999349739262
+    },
+    {
+      "seed": 6062,
+      "baseline": {
+        "seed": 6062,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.16883,
+        "active_total_power_w": 0.003648,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6062,
+        "area_total_mwta": 2591399.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 273959.0,
+        "critical_path_delay_ns": 4.54294,
+        "active_total_power_w": 0.003318,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.9442366706772024,
+        "critical_path_delay_ns": 1.0897398070921578,
+        "active_total_power_w": 0.9095394736842105
+      },
+      "composite_ratio": 0.9781566461736896
+    },
+    {
+      "seed": 6063,
+      "baseline": {
+        "seed": 6063,
+        "area_total_mwta": 2744438.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.14204,
+        "active_total_power_w": 0.003628,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6063,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.1201,
+        "active_total_power_w": 0.003476,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.941088120773725,
+        "critical_path_delay_ns": 0.9947030931618237,
+        "active_total_power_w": 0.9581036383682469
+      },
+      "composite_ratio": 0.9643738297824843
+    },
+    {
+      "seed": 6064,
+      "baseline": {
+        "seed": 6064,
+        "area_total_mwta": 2727224.0,
+        "used_logic_area_mwta": 2479120.0,
+        "routing_area_mwta": 248104.0,
+        "critical_path_delay_ns": 4.18707,
+        "active_total_power_w": 0.003498,
+        "clb_count": 46
+      },
+      "optimized": {
+        "seed": 6064,
+        "area_total_mwta": 2582758.0,
+        "used_logic_area_mwta": 2317440.0,
+        "routing_area_mwta": 265318.0,
+        "critical_path_delay_ns": 4.20891,
+        "active_total_power_w": 0.003436,
+        "clb_count": 43
+      },
+      "ratios": {
+        "area_total_mwta": 0.947028186903606,
+        "critical_path_delay_ns": 1.0052160580071505,
+        "active_total_power_w": 0.982275586049171
+      },
+      "composite_ratio": 0.9778792355548446
+    }
+  ],
+  "audit_script_sha256": "c90603304fcee17da8eec3a2d8057b63a320f08e4c1d3c876e4ee120f35bcd9d",
+  "fresh_EDA_completed": true,
+  "new_RTL_or_optimizer_search": false
+}

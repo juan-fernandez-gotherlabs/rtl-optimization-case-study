@@ -1,0 +1,962 @@
+--- baseline/serv_alu.v
++++ optimized/serv_alu.v
+@@ -71,10 +71,13 @@
+       end
+    endgenerate
+ 
+-   assign o_rd = i_buf |
+-                 ({W{i_rd_sel[0]}} & result_add) |
+-                 ({W{i_rd_sel[1]}} & result_slt) |
+-                 ({W{i_rd_sel[2]}} & result_bool);
++   //Decode guarantees mutually exclusive result selects.  The sole encoding
++   //with no select is funct3=001, for which result_bool is already zero.
++   wire [B:0] selected_result = i_rd_sel[1] ? result_slt :
++				  i_rd_sel[0] ? result_add :
++				  result_bool;
++
++   assign o_rd = i_buf | selected_result;
+ 
+    always @(posedge clk) begin
+       add_cy_r    <= {W{1'b0}};
+--- baseline/serv_bufreg.v
++++ optimized/serv_bufreg.v
+@@ -38,7 +38,7 @@
+    wire		      c;
+    wire [B:0]	      q;
+    reg [B:0]	      c_r;
+-   reg [31:0]	      data;
++   wire [31:0] data;
+    wire [B:0]	      clr_lsb;
+ 
+    assign clr_lsb[0] = i_cnt0 & i_clr_lsb;
+@@ -59,16 +59,147 @@
+ 
+    generate
+       if (W == 1) begin : gen_w_eq_1
+-	 always @(posedge i_clk) begin
+-	    if (i_en)
+-	      data[31:2] <= {i_init ? q : {W{data[31] & i_sh_signed}}, data[31:3]};
+-
+-	    if (i_init ? (i_cnt0 | i_cnt1) : i_en)
+-	      data[1:0] <= {i_init ? q : data[2], data[1]};
+-	 end
++         reg [31:0] physical_address_code;
++         wire [31:0] address_code;
++         wire [31:0] physical_next;
++         wire [31:0] address_next = {
++            i_en ? {i_init ? q : {W{data[31] & i_sh_signed}},data[31:3]} : data[31:2],
++            (i_init ? (i_cnt0 | i_cnt1) : i_en) ? {i_init ? q : data[2],data[1]} : data[1:0]};
++         wire [31:0] encoded_next;
++      assign data[12] = address_code[12] ^ address_code[13] ^ address_code[14] ^ address_code[15];
++      assign encoded_next[12] = address_next[12] ^ address_next[13];
++      assign data[13] = address_code[13] ^ address_code[14] ^ address_code[15];
++      assign encoded_next[13] = address_next[13] ^ address_next[14];
++      assign data[14] = address_code[14] ^ address_code[15];
++      assign encoded_next[14] = address_next[14] ^ address_next[15];
++      assign data[15] = address_code[15];
++      assign encoded_next[15] = address_next[15];
++      assign data[18] = address_code[19];
++      assign encoded_next[18] = address_next[18] ^ address_next[19];
++      assign data[19] = address_code[18] ^ address_code[19];
++      assign encoded_next[19] = address_next[18];
++      assign data[24] = address_code[25];
++      assign encoded_next[24] = address_next[24] ^ address_next[25];
++      assign data[25] = address_code[24] ^ address_code[25];
++      assign encoded_next[25] = address_next[24];
++      assign data[0] = address_code[0];
++      assign encoded_next[0] = address_next[0];
++      assign data[1] = address_code[1];
++      assign encoded_next[1] = address_next[1];
++      assign data[2] = address_code[2];
++      assign encoded_next[2] = address_next[2];
++      assign data[3] = address_code[3];
++      assign encoded_next[3] = address_next[3];
++      assign data[4] = address_code[4];
++      assign encoded_next[4] = address_next[4];
++      assign data[5] = address_code[5];
++      assign encoded_next[5] = address_next[5];
++      assign data[6] = address_code[6];
++      assign encoded_next[6] = address_next[6];
++      assign data[7] = address_code[7];
++      assign encoded_next[7] = address_next[7];
++      assign data[8] = address_code[8];
++      assign encoded_next[8] = address_next[8];
++      assign data[9] = address_code[9];
++      assign encoded_next[9] = address_next[9];
++      assign data[10] = address_code[10];
++      assign encoded_next[10] = address_next[10];
++      assign data[11] = address_code[11];
++      assign encoded_next[11] = address_next[11];
++      assign data[16] = address_code[16];
++      assign encoded_next[16] = address_next[16];
++      assign data[17] = address_code[17];
++      assign encoded_next[17] = address_next[17];
++      assign data[20] = address_code[20];
++      assign encoded_next[20] = address_next[20];
++      assign data[21] = address_code[21];
++      assign encoded_next[21] = address_next[21];
++      assign data[22] = address_code[22];
++      assign encoded_next[22] = address_next[22];
++      assign data[23] = address_code[23];
++      assign encoded_next[23] = address_next[23];
++      assign data[26] = address_code[26];
++      assign encoded_next[26] = address_next[26];
++      assign data[27] = address_code[27];
++      assign encoded_next[27] = address_next[27];
++      assign data[28] = address_code[28];
++      assign encoded_next[28] = address_next[28];
++      assign data[29] = address_code[29];
++      assign encoded_next[29] = address_next[29];
++      assign data[30] = address_code[30];
++      assign encoded_next[30] = address_next[30];
++      assign data[31] = address_code[31];
++      assign encoded_next[31] = address_next[31];
++         assign address_code[0] = physical_address_code[0];
++         assign physical_next[0] = encoded_next[0];
++         assign address_code[1] = physical_address_code[1];
++         assign physical_next[1] = encoded_next[1];
++         assign address_code[2] = physical_address_code[2];
++         assign physical_next[2] = encoded_next[2];
++         assign address_code[3] = physical_address_code[3];
++         assign physical_next[3] = encoded_next[3];
++         assign address_code[4] = physical_address_code[4];
++         assign physical_next[4] = encoded_next[4];
++         assign address_code[5] = physical_address_code[5];
++         assign physical_next[5] = encoded_next[5];
++         assign address_code[6] = physical_address_code[6];
++         assign physical_next[6] = encoded_next[6];
++         assign address_code[7] = physical_address_code[7];
++         assign physical_next[7] = encoded_next[7];
++         assign address_code[8] = physical_address_code[8];
++         assign physical_next[8] = encoded_next[8];
++         assign address_code[9] = physical_address_code[9];
++         assign physical_next[9] = encoded_next[9];
++         assign address_code[10] = physical_address_code[10];
++         assign physical_next[10] = encoded_next[10];
++         assign address_code[11] = physical_address_code[11];
++         assign physical_next[11] = encoded_next[11];
++         assign address_code[12] = physical_address_code[12];
++         assign physical_next[12] = encoded_next[12];
++         assign address_code[13] = physical_address_code[13];
++         assign physical_next[13] = encoded_next[13];
++         assign address_code[14] = physical_address_code[14] ^ (physical_address_code[13] & physical_address_code[15]);
++         assign physical_next[14] = encoded_next[14] ^ (encoded_next[13] & encoded_next[15]);
++         assign address_code[15] = physical_address_code[15];
++         assign physical_next[15] = encoded_next[15];
++         assign address_code[16] = physical_address_code[16];
++         assign physical_next[16] = encoded_next[16];
++         assign address_code[17] = physical_address_code[17];
++         assign physical_next[17] = encoded_next[17];
++         assign address_code[18] = physical_address_code[18];
++         assign physical_next[18] = encoded_next[18];
++         assign address_code[19] = physical_address_code[19];
++         assign physical_next[19] = encoded_next[19];
++         assign address_code[20] = physical_address_code[20];
++         assign physical_next[20] = encoded_next[20];
++         assign address_code[21] = physical_address_code[21];
++         assign physical_next[21] = encoded_next[21];
++         assign address_code[22] = physical_address_code[22];
++         assign physical_next[22] = encoded_next[22];
++         assign address_code[23] = physical_address_code[23];
++         assign physical_next[23] = encoded_next[23];
++         assign address_code[24] = physical_address_code[24];
++         assign physical_next[24] = encoded_next[24];
++         assign address_code[25] = physical_address_code[25];
++         assign physical_next[25] = encoded_next[25];
++         assign address_code[26] = physical_address_code[26];
++         assign physical_next[26] = encoded_next[26];
++         assign address_code[27] = physical_address_code[27];
++         assign physical_next[27] = encoded_next[27];
++         assign address_code[28] = physical_address_code[28];
++         assign physical_next[28] = encoded_next[28];
++         assign address_code[29] = physical_address_code[29];
++         assign physical_next[29] = encoded_next[29];
++         assign address_code[30] = physical_address_code[30];
++         assign physical_next[30] = encoded_next[30];
++         assign address_code[31] = physical_address_code[31];
++         assign physical_next[31] = encoded_next[31];
++         always @(posedge i_clk) physical_address_code <= physical_next;
+ 	 assign o_lsb = (MDU & i_mdu_op) ? 2'b00 : data[1:0];
+ 	 assign o_q = data[0] & {W{i_en}};
+       end else if (W == 4) begin : gen_lsb_w_4
++         reg [31:0] data_plain;
++         assign data = data_plain;
+ 	 reg [1:0] lsb;
+ 	 reg [W-2:0] data_tail;
+ 
+@@ -81,7 +212,7 @@
+             if (i_en)
+               if (i_cnt0) lsb <= q[1:0];
+ 	    if (i_en)
+-              data <= {i_init ? q : {W{i_sh_signed & data[31]}}, data[31:W]};
++              data_plain <= {i_init ? q : {W{i_sh_signed & data[31]}}, data[31:W]};
+ 	    if (i_en)
+ 	      data_tail <= data[B:1] & {B{~i_cnt_done}};
+ 	 end
+--- baseline/serv_bufreg2.v
++++ optimized/serv_bufreg2.v
+@@ -5,7 +5,9 @@
+  * SPDX-License-Identifier: ISC
+  */
+ module serv_bufreg2
+-  #(parameter W = 1,
++  #(parameter [1:0] WORD_BANK_ENABLE_FORM = 0,
++    parameter BUFFER_CONTROL_FORM = 0,
++    parameter W = 1,
+     //Internally calculated. Do not touch
+     parameter B=W-1)
+   (
+@@ -73,9 +75,23 @@
+    wire [7:0]	 cnt_next;
+    generate
+       if (W == 1) begin : gen_cnt_w_eq_1
+-	 assign cnt_next = {o_op_b, dhi[7], dhi[5:0]-6'd1};
++         wire [5:0] boolean_decrement_w1;
++         assign boolean_decrement_w1[0] = !dhi[0];
++         assign boolean_decrement_w1[1] = dhi[1] ^ !(|dhi[0:0]);
++         assign boolean_decrement_w1[2] = dhi[2] ^ !(|dhi[1:0]);
++         assign boolean_decrement_w1[3] = dhi[3] ^ !(|dhi[2:0]);
++         assign boolean_decrement_w1[4] = dhi[4] ^ !(|dhi[3:0]);
++         assign boolean_decrement_w1[5] = dhi[5] ^ !(|dhi[4:0]);
++	 assign cnt_next = {o_op_b, dhi[7], boolean_decrement_w1};
+       end else if (W == 4) begin : gen_cnt_w_eq_4
+-	 assign cnt_next = {o_op_b[3:2], dhi[5:0]-6'd4};
++         wire [5:0] boolean_decrement_w4;
++         assign boolean_decrement_w4[0] = dhi[0];
++         assign boolean_decrement_w4[1] = dhi[1];
++         assign boolean_decrement_w4[2] = !dhi[2];
++         assign boolean_decrement_w4[3] = dhi[3] ^ !(|dhi[2:2]);
++         assign boolean_decrement_w4[4] = dhi[4] ^ !(|dhi[3:2]);
++         assign boolean_decrement_w4[5] = dhi[5] ^ !(|dhi[4:2]);
++	 assign cnt_next = {o_op_b[3:2], boolean_decrement_w4};
+       end
+    endgenerate
+ 
+@@ -95,11 +111,53 @@
+ 
+    assign o_dat = {dhi,dlo};
+ 
++   wire private_byte_valid;
++   wire private_shift_enable;
++   wire private_count_enable;
++   wire private_initial_byte = i_init & !(|i_bytecnt);
++   generate if (BUFFER_CONTROL_FORM > 0 && BUFFER_CONTROL_FORM <= 4 && W == 1) begin : gen_private_controls
++      if (BUFFER_CONTROL_FORM == 1) begin : gen_form_1
++         assign private_byte_valid = (!i_lsb[1] & (!i_lsb[0] | !i_bytecnt[1] | !i_bytecnt[0])) | (!i_bytecnt[1] & (!i_bytecnt[0] | !i_lsb[0]));
++         assign private_shift_enable = i_en & (i_shift_op ? (i_init & !(|i_bytecnt)) : private_byte_valid);
++         assign private_count_enable = i_shift_op & (!i_init | (i_cnt_done & i_sh_right));
++      end else if (BUFFER_CONTROL_FORM == 2) begin : gen_form_2
++         assign private_byte_valid = (!i_bytecnt[1] & (!i_bytecnt[0] | !i_lsb[1] | !i_lsb[0])) | (!i_lsb[1] & (!i_lsb[0] | !i_bytecnt[0]));
++         assign private_shift_enable = i_en & (!i_shift_op ? private_byte_valid : (i_init & !(|i_bytecnt)));
++         assign private_count_enable = i_shift_op & !(i_init & (!i_cnt_done | !i_sh_right));
++      end else if (BUFFER_CONTROL_FORM == 3) begin : gen_form_3
++         assign private_byte_valid = (!i_lsb[1] & (!i_lsb[0] | !i_bytecnt[1] | !i_bytecnt[0])) | (!i_bytecnt[1] & (!i_bytecnt[0] | !i_lsb[0]));
++         assign private_shift_enable = i_en & ((i_shift_op & private_initial_byte) | (!i_shift_op & private_byte_valid) | (private_initial_byte & private_byte_valid));
++         assign private_count_enable = (i_shift_op & !i_init) | (i_shift_op & i_cnt_done & i_sh_right);
++      end else if (BUFFER_CONTROL_FORM == 4) begin : gen_form_4
++         assign private_byte_valid = !((i_lsb[0] | i_lsb[1]) & (i_bytecnt[0] | i_bytecnt[1]) & (i_bytecnt[1] | i_lsb[1]) & (i_bytecnt[1] | i_lsb[0]) & (i_bytecnt[0] | i_lsb[1]));
++         assign private_shift_enable = i_en & !( !(i_shift_op & private_initial_byte) & !(!i_shift_op & private_byte_valid) & !(private_initial_byte & private_byte_valid));
++         assign private_count_enable = !(!i_shift_op | (i_init & (!i_cnt_done | !i_sh_right)));
++      end
++   end else begin : gen_literal_controls
++      assign private_byte_valid = byte_valid;
++      assign private_shift_enable = shift_en;
++      assign private_count_enable = cnt_en;
++   end endgenerate
++
+    always @(posedge i_clk) begin
+-      if (shift_en | cnt_en | i_load)
+-	dhi <= i_load ? i_dat[31:24] : dat_shamt & {2'b11, !(i_shift_op & i_cnt7 & !cnt_en), 5'b11111};
+-      if (shift_en | i_load)
++      if (i_load) dhi <= i_dat[31:24];
++      else if (private_count_enable) dhi <= cnt_next;
++      else if (private_shift_enable) dhi <= ({o_op_b, dhi[7:W]} & {2'b11, !(i_shift_op & i_cnt7), 5'b11111});
++      if (WORD_BANK_ENABLE_FORM == 0) begin
++if (private_shift_enable | i_load)
+ 	dlo <= i_load ? i_dat[23:0] : {dhi[B:0], dlo[23:W]};
++      end
++      else if (WORD_BANK_ENABLE_FORM == 1) begin
++      if (private_shift_enable) dlo <= i_load ? i_dat[23:0] : {dhi[B:0], dlo[23:W]};
++      else if (i_load) dlo <= i_dat[23:0];
++      end
++      else if (WORD_BANK_ENABLE_FORM == 2) begin
++      if (i_load) dlo <= i_dat[23:0];
++      else if (private_shift_enable) dlo <= i_load ? i_dat[23:0] : {dhi[B:0], dlo[23:W]};
++      end
++      else if (WORD_BANK_ENABLE_FORM == 3) begin
++      if (i_load | private_shift_enable) dlo <= private_shift_enable ? (i_load ? i_dat[23:0] : {dhi[B:0], dlo[23:W]}) : i_dat[23:0];
++      end
+    end
+ 
+ endmodule
+--- baseline/serv_csr.v
++++ optimized/serv_csr.v
+@@ -93,6 +93,20 @@
+ 		   i_cnt_done ? {mcause31,{B{1'b0}}} //[31]
+ 		   : {W{1'b0}};
+ 
++   wire [3:0] mcause_csr_data = {
++	 csr_in[B],
++	 (W == 1) ? mcause3_0[3] : csr_in[(W == 1) ? 0 : 2],
++	 (W == 1) ? mcause3_0[2] : csr_in[(W == 1) ? 0 : 1],
++	 (W == 1) ? mcause3_0[1] : csr_in[0]};
++
++   wire irq_or_e_op = o_new_irq | i_e_op;
++
++   wire [3:0] mcause_event_data = {
++	 i_e_op & !i_ebreak,
++	 o_new_irq | i_mem_op,
++	 irq_or_e_op | (i_mem_op & i_mem_cmd),
++	 irq_or_e_op};
++
+    assign o_csr_in = csr_in;
+ 
+    always @(posedge i_clk) begin
+@@ -145,13 +159,10 @@
+        e_op => x011 (ebreak=3, ecall=11)
+        mem  => 01x0 (store=6, load=4)
+        ctrl => 0000 (jump=0)
+-       */
+-      if (i_mcause_en & i_en & i_cnt0to3 | (i_trap & i_cnt_done)) begin
+-	 mcause3_0[3] <= (i_e_op & !i_ebreak) | (!i_trap & csr_in[B]);
+-	 mcause3_0[2] <= o_new_irq | i_mem_op | (!i_trap & ((W == 1) ? mcause3_0[3] : csr_in[(W == 1) ? 0 : 2]));
+-	 mcause3_0[1] <= o_new_irq | i_e_op | (i_mem_op & i_mem_cmd) | (!i_trap & ((W == 1) ? mcause3_0[2] : csr_in[(W == 1) ? 0 : 1]));
+-	 mcause3_0[0] <= o_new_irq | i_e_op | (!i_trap & ((W == 1) ? mcause3_0[1] : csr_in[0]));
+-      end
++      */
++      if (i_mcause_en & i_en & i_cnt0to3 | (i_trap & i_cnt_done))
++	 mcause3_0 <= mcause_event_data |
++		       (mcause_csr_data & {4{!i_trap}});
+       if (i_mcause_en & i_cnt_done | i_trap)
+ 	mcause31 <= i_trap ? o_new_irq : csr_in[B];
+       if (i_rst)
+--- baseline/serv_ctrl.v
++++ optimized/serv_ctrl.v
+@@ -6,7 +6,8 @@
+  */
+ `default_nettype none
+ module serv_ctrl
+-  #(parameter RESET_STRATEGY = "MINI",
++  #(parameter [1:0] WORD_BANK_ENABLE_FORM = 0,
++    parameter RESET_STRATEGY = "MINI",
+     parameter RESET_PC = 32'd0,
+     parameter WITH_CSR = 1,
+     parameter W = 1,
+@@ -108,8 +109,21 @@
+ 	 if (i_pc_en)
+ 	   o_ibus_adr <= {new_pc, o_ibus_adr[31:W]};
+       end else begin
++if (WORD_BANK_ENABLE_FORM == 0) begin
+ 	 if (i_pc_en | i_rst)
+ 	   o_ibus_adr <= i_rst ? RESET_PC : {new_pc, o_ibus_adr[31:W]};
+       end
++      else if (WORD_BANK_ENABLE_FORM == 1) begin
++      if (i_pc_en) o_ibus_adr <= i_rst ? RESET_PC : {new_pc, o_ibus_adr[31:W]};
++      else if (i_rst) o_ibus_adr <= RESET_PC;
++      end
++      else if (WORD_BANK_ENABLE_FORM == 2) begin
++      if (i_rst) o_ibus_adr <= RESET_PC;
++      else if (i_pc_en) o_ibus_adr <= i_rst ? RESET_PC : {new_pc, o_ibus_adr[31:W]};
++      end
++      else if (WORD_BANK_ENABLE_FORM == 3) begin
++      if (i_rst | i_pc_en) o_ibus_adr <= i_pc_en ? (i_rst ? RESET_PC : {new_pc, o_ibus_adr[31:W]}) : RESET_PC;
++      end
++      end
+    end
+ endmodule
+--- baseline/serv_decode.v
++++ optimized/serv_decode.v
+@@ -6,7 +6,8 @@
+  */
+ `default_nettype none
+ module serv_decode
+-  #(parameter [0:0] PRE_REGISTER = 1,
++  #(parameter [1:0] CAPTURE_USAGE_FORM = 0,
++    parameter [0:0] PRE_REGISTER = 1,
+     parameter [0:0] MDU = 0)
+   (
+    input wire        clk,
+@@ -69,7 +70,8 @@
+    output reg       o_rd_alu_en);
+ 
+    reg [4:0] opcode;
+-   reg [2:0] funct3;
++   reg [2:0] funct3_encoded;
++   wire [2:0] funct3 = funct3_encoded ^ 3'b101;
+    reg        op20;
+    reg        op21;
+    reg        op22;
+@@ -122,9 +124,10 @@
+    //Write to RD
+    //True for OP-IMM, AUIPC, OP, LUI, SYSTEM, JALR, JAL, LOAD
+    //False for STORE, BRANCH, MISC-MEM
+-   wire co_rd_op = (opcode[2] |
++   wire legacy_co_rd_op = (opcode[2] |
+                      (!opcode[2] & opcode[4] & opcode[0]) |
+                      (!opcode[2] & !opcode[3] & !opcode[0]));
++   wire co_rd_op;
+ 
+    //
+    //funct3
+@@ -133,8 +136,12 @@
+    wire co_sh_right   = funct3[2];
+    wire co_bne_or_bge = funct3[0];
+ 
+-   //Matches system ops except eceall/ebreak/mret
+-   wire csr_op = opcode[4] & opcode[2] & (|funct3);
++   //All system instructions share these opcode bits.  Keep the common
++   //decode explicit so CSR and exception controls use one decode cone.
++   wire system_op = opcode[4] & opcode[2];
++
++   //Matches system ops except ecall/ebreak/mret
++   wire csr_op = system_op & (|funct3);
+ 
+ 
+    //op20
+@@ -143,10 +150,10 @@
+ 
+    //opcode & funct3 & op21
+ 
+-   wire co_ctrl_mret = opcode[4] & opcode[2] & op21 & !(|funct3);
++   wire co_ctrl_mret = system_op & op21 & !(|funct3);
+    //Matches system opcodes except CSR accesses (funct3 == 0)
+    //and mret (!op21)
+-   wire co_e_op = opcode[4] & opcode[2] & !op21 & !(|funct3);
++   wire co_e_op = system_op & !op21 & !(|funct3);
+ 
+    //opcode & funct3 & imm30
+ 
+@@ -162,7 +169,8 @@
+     add   01100  000 0   f
+     sub   01100  000 1   t
+     */
+-   wire co_alu_sub = funct3[1] | funct3[0] | (opcode[3] & imm30) | opcode[4];
++   wire legacy_co_alu_sub = funct3[1] | funct3[0] | (opcode[3] & imm30) | opcode[4];
++   wire co_alu_sub;
+ 
+    /*
+     Bits 26, 22, 21 and 20 are enough to uniquely identify the eight supported CSR regs
+@@ -198,7 +206,7 @@
+ 
+    wire [1:0] co_csr_source = funct3[1:0];
+    wire co_csr_d_sel = funct3[2];
+-   wire co_csr_imm_en = opcode[4] & opcode[2] & funct3[2];
++   wire co_csr_imm_en = system_op & funct3[2];
+    wire [1:0] co_csr_addr = {op26 & op20, !op26 | op21};
+ 
+    wire co_alu_cmp_eq = funct3[2:1] == 2'b00;
+@@ -238,10 +246,189 @@
+ 
+    generate
+       if (PRE_REGISTER) begin : gen_pre_register
++         wire [4:0] capture_opcode = i_wb_rdt[6:2];
++         wire [2:0] capture_funct3 = i_wb_rdt[14:12];
++         wire capture_op20 = i_wb_rdt[20];
++         wire capture_op21 = i_wb_rdt[21];
++         wire capture_op22 = i_wb_rdt[22];
++         wire capture_op26 = i_wb_rdt[26];
++         wire capture_imm25 = i_wb_rdt[25];
++         wire capture_imm30 = i_wb_rdt[30];
++   wire capture_co_mdu_op     = MDU & (capture_opcode == 5'b01100) & capture_imm25;
++
++   wire capture_co_two_stage_op =
++	~capture_opcode[2] | (capture_funct3[0] & ~capture_funct3[1] & ~capture_opcode[0] & ~capture_opcode[4]) |
++	(capture_funct3[1] & ~capture_funct3[2] & ~capture_opcode[0] & ~capture_opcode[4]) | capture_co_mdu_op;
++   wire capture_co_shift_op = (capture_opcode[2] & ~capture_funct3[1]) & !capture_co_mdu_op;
++   wire capture_co_branch_op = capture_opcode[4];
++   wire capture_co_dbus_en    = ~capture_opcode[2] & ~capture_opcode[4];
++   wire capture_co_mtval_pc   = capture_opcode[4];
++   wire capture_co_mem_word   = capture_funct3[1];
++   wire capture_co_rd_alu_en  = !capture_opcode[0] & capture_opcode[2] & !capture_opcode[4] & !capture_co_mdu_op;
++   wire capture_co_rd_mem_en  = (!capture_opcode[2] & !capture_opcode[0]) | capture_co_mdu_op;
++   wire [2:0] capture_co_ext_funct3 = capture_funct3;
++
++   //jal,branch =     imm
++   //jalr       = rs1+imm
++   //mem        = rs1+imm
++   //shift      = rs1
++   wire capture_co_bufreg_rs1_en = !capture_opcode[4] | (!capture_opcode[1] & capture_opcode[0]);
++   wire capture_co_bufreg_imm_en = !capture_opcode[2];
++
++   //Clear LSB of immediate for BRANCH and JAL ops
++   //True for BRANCH and JAL
++   //False for JALR/LOAD/STORE/OP/OPIMM?
++   wire capture_co_bufreg_clr_lsb = capture_opcode[4] & ((capture_opcode[1:0] == 2'b00) | (capture_opcode[1:0] == 2'b11));
++
++   //Conditional branch
++   //True for BRANCH
++   //False for JAL/JALR
++   wire capture_co_cond_branch = !capture_opcode[0];
++
++   wire capture_co_ctrl_utype       = !capture_opcode[4] & capture_opcode[2] & capture_opcode[0];
++   wire capture_co_ctrl_jal_or_jalr = capture_opcode[4] & capture_opcode[0];
++
++   //PC-relative operations
++   //True for jal, b* auipc, ebreak
++   //False for jalr, lui
++   wire capture_co_ctrl_pc_rel = (capture_opcode[2:0] == 3'b000)  |
++                          (capture_opcode[1:0] == 2'b11)  |
++                          (capture_opcode[4] & capture_opcode[2]) & capture_op20|
++                          (capture_opcode[4:3] == 2'b00);
++   //Write to RD
++   //True for OP-IMM, AUIPC, OP, LUI, SYSTEM, JALR, JAL, LOAD
++   //False for STORE, BRANCH, MISC-MEM
++   wire capture_co_rd_op = (capture_opcode[2] |
++                     (!capture_opcode[2] & capture_opcode[4] & capture_opcode[0]) |
++                     (!capture_opcode[2] & !capture_opcode[3] & !capture_opcode[0]));
++
++   //
++   //capture_funct3
++   //
++
++   wire capture_co_sh_right   = capture_funct3[2];
++   wire capture_co_bne_or_bge = capture_funct3[0];
++
++   //All system instructions share these capture_opcode bits.  Keep the common
++   //decode explicit so CSR and exception controls use one decode cone.
++   wire capture_system_op = capture_opcode[4] & capture_opcode[2];
++
++   //Matches system ops except ecall/ebreak/mret
++   wire capture_csr_op = capture_system_op & (|capture_funct3);
++
++
++   //capture_op20
++   wire capture_co_ebreak = capture_op20;
++
++
++   //capture_opcode & capture_funct3 & capture_op21
++
++   wire capture_co_ctrl_mret = capture_system_op & capture_op21 & !(|capture_funct3);
++   //Matches system opcodes except CSR accesses (capture_funct3 == 0)
++   //and mret (!capture_op21)
++   wire capture_co_e_op = capture_system_op & !capture_op21 & !(|capture_funct3);
++
++   //capture_opcode & capture_funct3 & capture_imm30
++
++   wire capture_co_bufreg_sh_signed = capture_imm30;
++
++   /*
++    True for sub, b*, slt*
++    False for add*
++    op    capture_opcode f3  i30
++    b*    11000  xxx x   t
++    addi  00100  000 x   f
++    slt*  0x100  01x x   t
++    add   01100  000 0   f
++    sub   01100  000 1   t
++    */
++   wire capture_co_alu_sub = capture_funct3[1] | capture_funct3[0] | (capture_opcode[3] & capture_imm30) | capture_opcode[4];
++
++   /*
++    Bits 26, 22, 21 and 20 are enough to uniquely identify the eight supported CSR regs
++    mtvec, mscratch, mepc and mtval are stored externally (normally in the RF) and are
++    treated differently from mstatus, mie and mcause which are stored in serv_csr.
++
++    The former get a 2-bit address as seen below while the latter get a
++    one-hot enable signal each.
++
++    Hex|2 222|Reg     |csr
++    adr|6 210|name    |addr
++    ---|-----|--------|----
++    300|0_000|mstatus | xx
++    304|0_100|mie     | xx
++    305|0_101|mtvec   | 01
++    340|1_000|mscratch| 00
++    341|1_001|mepc    | 10
++    342|1_010|mcause  | xx
++    343|1_011|mtval   | 11
++
++    */
++
++   //true  for mtvec,mscratch,mepc and mtval
++   //false for mstatus, mie, mcause
++   wire capture_csr_valid = capture_op20 | (capture_op26 & !capture_op21);
++
++   wire capture_co_rd_csr_en = capture_csr_op;
++
++   wire capture_co_csr_en         = capture_csr_op & capture_csr_valid;
++   wire capture_co_csr_mstatus_en = capture_csr_op & !capture_op26 & !capture_op22 & !capture_op20;
++   wire capture_co_csr_mie_en     = capture_csr_op & !capture_op26 &  capture_op22 & !capture_op20;
++   wire capture_co_csr_mcause_en  = capture_csr_op         &  capture_op21 & !capture_op20;
++
++   wire [1:0] capture_co_csr_source = capture_funct3[1:0];
++   wire capture_co_csr_d_sel = capture_funct3[2];
++   wire capture_co_csr_imm_en = capture_system_op & capture_funct3[2];
++   wire [1:0] capture_co_csr_addr = {capture_op26 & capture_op20, !capture_op26 | capture_op21};
++
++   wire capture_co_alu_cmp_eq = capture_funct3[2:1] == 2'b00;
++
++   wire capture_co_alu_cmp_sig = ~((capture_funct3[0] & capture_funct3[1]) | (capture_funct3[1] & capture_funct3[2]));
++
++   wire capture_co_mem_cmd  = capture_opcode[3];
++   wire capture_co_mem_signed = ~capture_funct3[2];
++   wire capture_co_mem_half   = capture_funct3[0];
++
++   wire [1:0] capture_co_alu_bool_op = capture_funct3[1:0];
++
++   wire [3:0] capture_co_immdec_ctrl;
++   //True for S (STORE) or B (BRANCH) type instructions
++   //False for J type instructions
++   assign capture_co_immdec_ctrl[0] = capture_opcode[3:0] == 4'b1000;
++   //True for OP-IMM, LOAD, STORE, JALR  (I S)
++   //False for LUI, AUIPC, JAL           (U J)
++   assign capture_co_immdec_ctrl[1] = (capture_opcode[1:0] == 2'b00) | (capture_opcode[2:1] == 2'b00);
++   assign capture_co_immdec_ctrl[2] = capture_opcode[4] & !capture_opcode[0];
++   assign capture_co_immdec_ctrl[3] = capture_opcode[4];
++
++   wire [3:0] capture_co_immdec_en;
++   assign capture_co_immdec_en[3] = capture_opcode[4] | capture_opcode[3] | capture_opcode[2] | !capture_opcode[0];                 //B I J S U
++   assign capture_co_immdec_en[2] = (capture_opcode[4] & capture_opcode[2]) | !capture_opcode[3] | capture_opcode[0];               //  I J   U
++   assign capture_co_immdec_en[1] = (capture_opcode[2:1] == 2'b01) | (capture_opcode[2] & capture_opcode[0]) | capture_co_csr_imm_en;//    J   U
++   assign capture_co_immdec_en[0] = ~capture_co_rd_op;                                                       //B     S
++
++   wire [2:0] capture_co_alu_rd_sel;
++   assign capture_co_alu_rd_sel[0] = (capture_funct3 == 3'b000); // Add/sub
++   assign capture_co_alu_rd_sel[1] = (capture_funct3[2:1] == 2'b01); //SLT*
++   assign capture_co_alu_rd_sel[2] = capture_funct3[2]; //Bool
++
++   //0 (OP_B_SOURCE_IMM) when OPIMM
++   //1 (OP_B_SOURCE_RS2) when BRANCH or OP
++   wire capture_co_op_b_source = capture_opcode[3];
++
++
++         reg  captured_alu_sub;
++         reg  captured_rd_op;
++
++         assign co_alu_sub = (CAPTURE_USAGE_FORM == 2 || CAPTURE_USAGE_FORM == 3) ? legacy_co_alu_sub : captured_alu_sub;
++
++         assign co_rd_op = (CAPTURE_USAGE_FORM == 1 || CAPTURE_USAGE_FORM == 3) ? legacy_co_rd_op : captured_rd_op;
+ 
+          always @(posedge clk) begin
+             if (i_wb_en) begin
+-               funct3 <= i_wb_rdt[14:12];
++               captured_alu_sub <= capture_co_alu_sub;
++               captured_rd_op <= capture_co_rd_op;
++               funct3_encoded <= i_wb_rdt[14:12] ^ 3'b101;
+                imm30  <= i_wb_rdt[30];
+                imm25  <= i_wb_rdt[25];
+                opcode <= i_wb_rdt[6:2];
+@@ -263,7 +450,7 @@
+             o_ebreak           = co_ebreak;
+             o_branch_op        = co_branch_op;
+             o_shift_op         = co_shift_op;
+-            o_rd_op            = co_rd_op;
++            o_rd_op = co_rd_op;
+             o_mdu_op           = co_mdu_op;
+             o_ext_funct3       = co_ext_funct3;
+             o_bufreg_rs1_en    = co_bufreg_rs1_en;
+@@ -274,7 +461,7 @@
+             o_ctrl_utype       = co_ctrl_utype;
+             o_ctrl_pc_rel      = co_ctrl_pc_rel;
+             o_ctrl_mret        = co_ctrl_mret;
+-            o_alu_sub          = co_alu_sub;
++            o_alu_sub = co_alu_sub;
+             o_alu_bool_op      = co_alu_bool_op;
+             o_alu_cmp_eq       = co_alu_cmp_eq;
+             o_alu_cmp_sig      = co_alu_cmp_sig;
+@@ -300,9 +487,11 @@
+          end
+ 
+       end else begin : gen_post_register
++         assign co_rd_op = legacy_co_rd_op;
++         assign co_alu_sub = legacy_co_alu_sub;
+ 
+          always @(*) begin
+-            funct3  = i_wb_rdt[14:12];
++            funct3_encoded = i_wb_rdt[14:12] ^ 3'b101;
+             imm30   = i_wb_rdt[30];
+             imm25   = i_wb_rdt[25];
+             opcode  = i_wb_rdt[6:2];
+--- baseline/serv_rf_ram_if.v
++++ optimized/serv_rf_ram_if.v
+@@ -6,7 +6,8 @@
+  */
+ `default_nettype none
+ module serv_rf_ram_if
+-  #(//Data width. Adjust to preferred width of SRAM data interface
++  #(parameter [3:0] RF_HIGH_PHASE_FORM = 0,
++    //Data width. Adjust to preferred width of SRAM data interface
+     parameter width=8,
+ 
+     parameter W = 1,
+@@ -55,7 +56,7 @@
+ 
+    reg 				   rgnt;
+    assign o_ready = rgnt | i_wreq;
+-   reg [CMSB:0] 	  rcnt;
++   wire [CMSB:0] rcnt;
+ 
+    reg 		  rtrig1;
+    /*
+@@ -97,7 +98,168 @@
+ 
+    assign o_wen = (wtrig0 & wen0_r) | (wtrig1 & wen1_r);
+ 
+-   assign wcnt = rcnt-4;
++   generate if (W == 1) begin : gen_mixed_counter
++      reg [1:0] low_state;
++      wire [1:0] low_count = low_state;
++      wire low_last = &low_state;
++      reg [3:0] high_state;
++      wire [2:0] high_count = {high_state[3],high_state[3] ^ high_state[1],^high_state};
++      wire [2:0] write_high = {!high_state[0],!(high_state[2] ^ high_state[0]),!(^high_state)};
++      assign rcnt = {high_count,low_count};
++      assign wcnt = {write_high,low_count};
++      if(RF_HIGH_PHASE_FORM > 0 && RF_HIGH_PHASE_FORM <= 12)begin : gen_three_bit_high_phase
++         reg [2:0] private_physical_phase;
++         wire [3:0] private_decoded_high;
++         wire [2:0] private_next_phase;
++         wire [2:0] private_reset_phase;
++         if(RF_HIGH_PHASE_FORM == 1)begin : gen_code_1
++            assign private_decoded_high[0]=(private_physical_phase[0]) ^ (private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]);
++            assign private_decoded_high[1]=(private_physical_phase[1]) ^ (private_physical_phase[2]);
++            assign private_decoded_high[2]=(private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]);
++            assign private_decoded_high[3]=(private_physical_phase[2]);
++            assign private_next_phase[0]=1'b1 ^ (private_physical_phase[0]);
++            assign private_next_phase[1]=(private_physical_phase[0]) ^ (private_physical_phase[1]);
++            assign private_next_phase[2]=(private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]);
++            assign private_reset_phase=3'd0;
++         end else if(RF_HIGH_PHASE_FORM == 2)begin : gen_code_2
++            assign private_decoded_high[0]=1'b1 ^ (private_physical_phase[0]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]);
++            assign private_decoded_high[1]=(private_physical_phase[1]) ^ (private_physical_phase[2]);
++            assign private_decoded_high[2]=(private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]);
++            assign private_decoded_high[3]=(private_physical_phase[2]);
++            assign private_next_phase[0]=1'b1 ^ (private_physical_phase[0]);
++            assign private_next_phase[1]=1'b1 ^ (private_physical_phase[0]) ^ (private_physical_phase[1]);
++            assign private_next_phase[2]=(private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]);
++            assign private_reset_phase=3'd1;
++         end else if(RF_HIGH_PHASE_FORM == 3)begin : gen_code_3
++            assign private_decoded_high[0]=1'b1 ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]);
++            assign private_decoded_high[1]=1'b1 ^ (private_physical_phase[1]) ^ (private_physical_phase[2]);
++            assign private_decoded_high[2]=1'b1 ^ (private_physical_phase[0]) ^ (private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]);
++            assign private_decoded_high[3]=(private_physical_phase[2]);
++            assign private_next_phase[0]=1'b1 ^ (private_physical_phase[0]);
++            assign private_next_phase[1]=1'b1 ^ (private_physical_phase[0]) ^ (private_physical_phase[1]);
++            assign private_next_phase[2]=1'b1 ^ (private_physical_phase[0]) ^ (private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]);
++            assign private_reset_phase=3'd3;
++         end else if(RF_HIGH_PHASE_FORM == 4)begin : gen_code_4
++            assign private_decoded_high[0]=(private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]);
++            assign private_decoded_high[1]=(private_physical_phase[1]) ^ (private_physical_phase[2]);
++            assign private_decoded_high[2]=(private_physical_phase[0]) ^ (private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]);
++            assign private_decoded_high[3]=1'b1 ^ (private_physical_phase[2]);
++            assign private_next_phase[0]=1'b1 ^ (private_physical_phase[0]);
++            assign private_next_phase[1]=1'b1 ^ (private_physical_phase[0]) ^ (private_physical_phase[1]);
++            assign private_next_phase[2]=1'b1 ^ (private_physical_phase[0]) ^ (private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]);
++            assign private_reset_phase=3'd7;
++         end else if(RF_HIGH_PHASE_FORM == 5)begin : gen_code_5
++            assign private_decoded_high[0]=(private_physical_phase[0]) ^ (private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[2]);
++            assign private_decoded_high[1]=(private_physical_phase[1]);
++            assign private_decoded_high[2]=(private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[2]);
++            assign private_decoded_high[3]=(private_physical_phase[2]);
++            assign private_next_phase[0]=1'b1 ^ (private_physical_phase[1]) ^ (private_physical_phase[2]);
++            assign private_next_phase[1]=(private_physical_phase[0]) ^ (private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[2]);
++            assign private_next_phase[2]=(private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[2]);
++            assign private_reset_phase=3'd0;
++         end else if(RF_HIGH_PHASE_FORM == 6)begin : gen_code_6
++            assign private_decoded_high[0]=1'b1 ^ (private_physical_phase[0]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]) ^ (private_physical_phase[0] & private_physical_phase[2]);
++            assign private_decoded_high[1]=(private_physical_phase[1]);
++            assign private_decoded_high[2]=(private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]) ^ (private_physical_phase[0] & private_physical_phase[2]);
++            assign private_decoded_high[3]=(private_physical_phase[2]);
++            assign private_next_phase[0]=(private_physical_phase[1]) ^ (private_physical_phase[2]);
++            assign private_next_phase[1]=1'b1 ^ (private_physical_phase[0]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]) ^ (private_physical_phase[0] & private_physical_phase[2]);
++            assign private_next_phase[2]=(private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]) ^ (private_physical_phase[0] & private_physical_phase[2]);
++            assign private_reset_phase=3'd1;
++         end else if(RF_HIGH_PHASE_FORM == 7)begin : gen_code_7
++            assign private_decoded_high[0]=1'b1 ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]) ^ (private_physical_phase[0] & private_physical_phase[2]);
++            assign private_decoded_high[1]=1'b1 ^ (private_physical_phase[1]);
++            assign private_decoded_high[2]=(private_physical_phase[0]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]) ^ (private_physical_phase[0] & private_physical_phase[2]);
++            assign private_decoded_high[3]=(private_physical_phase[2]);
++            assign private_next_phase[0]=1'b1 ^ (private_physical_phase[1]) ^ (private_physical_phase[2]);
++            assign private_next_phase[1]=(private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]) ^ (private_physical_phase[0] & private_physical_phase[2]);
++            assign private_next_phase[2]=(private_physical_phase[0]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]) ^ (private_physical_phase[0] & private_physical_phase[2]);
++            assign private_reset_phase=3'd3;
++         end else if(RF_HIGH_PHASE_FORM == 8)begin : gen_code_8
++            assign private_decoded_high[0]=(private_physical_phase[0]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]) ^ (private_physical_phase[0] & private_physical_phase[2]);
++            assign private_decoded_high[1]=1'b1 ^ (private_physical_phase[1]);
++            assign private_decoded_high[2]=1'b1 ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]) ^ (private_physical_phase[0] & private_physical_phase[2]);
++            assign private_decoded_high[3]=1'b1 ^ (private_physical_phase[2]);
++            assign private_next_phase[0]=(private_physical_phase[1]) ^ (private_physical_phase[2]);
++            assign private_next_phase[1]=1'b1 ^ (private_physical_phase[0]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]) ^ (private_physical_phase[0] & private_physical_phase[2]);
++            assign private_next_phase[2]=(private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]) ^ (private_physical_phase[0] & private_physical_phase[2]);
++            assign private_reset_phase=3'd7;
++         end else if(RF_HIGH_PHASE_FORM == 9)begin : gen_code_9
++            assign private_decoded_high[0]=(private_physical_phase[0]) ^ (private_physical_phase[0] & private_physical_phase[2]) ^ (private_physical_phase[1] & private_physical_phase[2]);
++            assign private_decoded_high[1]=(private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[2]) ^ (private_physical_phase[1] & private_physical_phase[2]);
++            assign private_decoded_high[2]=(private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[2]);
++            assign private_decoded_high[3]=(private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]) ^ (private_physical_phase[1] & private_physical_phase[2]);
++            assign private_next_phase[0]=1'b1 ^ (private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]);
++            assign private_next_phase[1]=(private_physical_phase[0]);
++            assign private_next_phase[2]=(private_physical_phase[1]);
++            assign private_reset_phase=3'd0;
++         end else if(RF_HIGH_PHASE_FORM == 10)begin : gen_code_10
++            assign private_decoded_high[0]=1'b1 ^ (private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[2]) ^ (private_physical_phase[1] & private_physical_phase[2]);
++            assign private_decoded_high[1]=1'b1 ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[2]) ^ (private_physical_phase[1] & private_physical_phase[2]);
++            assign private_decoded_high[2]=1'b1 ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]) ^ (private_physical_phase[0] & private_physical_phase[2]);
++            assign private_decoded_high[3]=(private_physical_phase[0]) ^ (private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[1] & private_physical_phase[2]);
++            assign private_next_phase[0]=1'b1 ^ (private_physical_phase[0]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]);
++            assign private_next_phase[1]=(private_physical_phase[0]);
++            assign private_next_phase[2]=(private_physical_phase[1]);
++            assign private_reset_phase=3'd7;
++         end else if(RF_HIGH_PHASE_FORM == 11)begin : gen_code_11
++            assign private_decoded_high[0]=(private_physical_phase[0]) ^ (private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[1] & private_physical_phase[2]);
++            assign private_decoded_high[1]=(private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[2]) ^ (private_physical_phase[1] & private_physical_phase[2]);
++            assign private_decoded_high[2]=(private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[2]) ^ (private_physical_phase[1] & private_physical_phase[2]);
++            assign private_decoded_high[3]=(private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]) ^ (private_physical_phase[0] & private_physical_phase[2]);
++            assign private_next_phase[0]=1'b1 ^ (private_physical_phase[0]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]);
++            assign private_next_phase[1]=(private_physical_phase[0]);
++            assign private_next_phase[2]=(private_physical_phase[1]);
++            assign private_reset_phase=3'd0;
++         end else if(RF_HIGH_PHASE_FORM == 12)begin : gen_code_12
++            assign private_decoded_high[0]=(private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]) ^ (private_physical_phase[1] & private_physical_phase[2]);
++            assign private_decoded_high[1]=1'b1 ^ (private_physical_phase[0]) ^ (private_physical_phase[0] & private_physical_phase[2]) ^ (private_physical_phase[1] & private_physical_phase[2]);
++            assign private_decoded_high[2]=1'b1 ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[2]) ^ (private_physical_phase[1] & private_physical_phase[2]);
++            assign private_decoded_high[3]=1'b1 ^ (private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[2]);
++            assign private_next_phase[0]=1'b1 ^ (private_physical_phase[1]) ^ (private_physical_phase[0] & private_physical_phase[1]) ^ (private_physical_phase[2]);
++            assign private_next_phase[1]=(private_physical_phase[0]);
++            assign private_next_phase[2]=(private_physical_phase[1]);
++            assign private_reset_phase=3'd7;
++         end
++         always @* high_state=private_decoded_high;
++      always @(posedge i_clk) begin
++         low_state <= low_state + 2'd1;
++         if (low_last) private_physical_phase <= private_next_phase;
++         if ((i_rreq | i_wreq)) begin
++            low_state <= {i_wreq,1'b0};
++            private_physical_phase <= private_reset_phase;
++         end
++         if (i_rst && (reset_strategy != "NONE")) begin
++            low_state <= 2'b00;
++            private_physical_phase <= private_reset_phase;
++         end
++      end
++
++      end else begin : gen_literal_high_phase
++      always @(posedge i_clk) begin
++         low_state <= low_state + 2'd1;
++         if (low_last) high_state <= {high_state[2:0],!high_state[3]};
++         if ((i_rreq | i_wreq)) begin
++            low_state <= {i_wreq,1'b0};
++            high_state <= 4'b0000;
++         end
++         if (i_rst && (reset_strategy != "NONE")) begin
++            low_state <= 2'b00;
++            high_state <= 4'b0000;
++         end
++      end
++
++      end
++   end else begin : gen_binary_counter
++      reg [CMSB:0] binary_count;
++      assign rcnt = binary_count;
++      assign wcnt = binary_count - 4;
++      always @(posedge i_clk) begin
++         binary_count <= binary_count + {{CMSB{1'b0}},1'b1};
++         if ((i_rreq | i_wreq)) binary_count <= {{CMSB-1{1'b0}},i_wreq,1'b0};
++         if (i_rst && (reset_strategy != "NONE")) binary_count <= {CMSB+1{1'b0}};
++      end
++   end endgenerate
+ 
+    always @(posedge i_clk) begin
+       if (wcnt[0]) begin
+@@ -160,9 +322,6 @@
+ 	rgate <= i_rreq;
+ 
+       rtrig1 <= rtrig0;
+-      rcnt <= rcnt+{{CMSB{1'b0}},1'b1};
+-      if (i_rreq | i_wreq)
+-	 rcnt <= {{CMSB-1{1'b0}},i_wreq,1'b0};
+ 
+       rreq_r <= i_rreq;
+       rgnt <= rreq_r;
+@@ -176,7 +335,6 @@
+ 	    rgate <= 1'b0;
+ 	    rgnt <= 1'b0;
+ 	    rreq_r <= 1'b0;
+-	    rcnt <= {CMSB+1{1'b0}};
+ 	 end
+       end
+    end
+--- baseline/serv_state.v
++++ optimized/serv_state.v
+@@ -107,9 +107,9 @@
+    //Mem ops. i_dbus_ack
+    //MDU ops. i_mdu_ready
+    assign o_rf_wreq = (i_shift_op & (i_sh_right ? (i_sh_done & (last_init | !o_cnt_en & init_done)) : last_init)) |
+-	   	       i_dbus_ack | (MDU & i_mdu_ready) |
+-	   	      (i_branch_op & (last_init & !trap_pending)) |
+-	   	      (i_rd_alu_en & i_alu_rd_sel1 & last_init);
++		       i_dbus_ack | (MDU & i_mdu_ready) |
++		      (i_branch_op & (last_init & !trap_pending)) |
++		      (i_rd_alu_en & i_alu_rd_sel1 & last_init);
+ 
+    assign o_dbus_cyc = !o_cnt_en & init_done & i_dbus_en & !i_mem_misalign;
+ 
+--- baseline/serv_synth_wrapper.v
++++ optimized/serv_synth_wrapper.v
+@@ -62,7 +62,8 @@
+    wire 	      rdata1;
+ 
+    serv_rf_ram_if
+-     #(.width    (RF_WIDTH),
++     #(.RF_HIGH_PHASE_FORM(4'd1),
++       .width    (RF_WIDTH),
+        .reset_strategy (RESET_STRATEGY),
+        .csr_regs (CSR_REGS))
+    rf_ram_if
+@@ -92,7 +93,11 @@
+        .PRE_REGISTER (PRE_REGISTER),
+        .RESET_STRATEGY (RESET_STRATEGY),
+        .WITH_CSR (WITH_CSR),
+-       .MDU(1'b0))
++       .MDU(1'b0),
++       .DECODER_CAPTURE_USAGE_FORM(2'd3),
++       .PC_WORD_ENABLE_FORM(2'd3),
++       .DATA_WORD_ENABLE_FORM(2'd3),
++       .BUFFER_CONTROL_FORM(3))
+    cpu
+      (
+       .clk      (clk),
+--- baseline/serv_top.v
++++ optimized/serv_top.v
+@@ -7,7 +7,11 @@
+ `default_nettype none
+ 
+ module serv_top
+-  #(parameter	    WITH_CSR = 1,
++  #(parameter [1:0] DECODER_CAPTURE_USAGE_FORM = 0,
++    parameter [1:0] PC_WORD_ENABLE_FORM = 0,
++    parameter [1:0] DATA_WORD_ENABLE_FORM = 0,
++    parameter BUFFER_CONTROL_FORM = 0,
++    parameter	    WITH_CSR = 1,
+     parameter	    W = 1,
+     parameter	    B = W-1,
+     parameter	    PRE_REGISTER = 1,
+@@ -290,7 +294,8 @@
+       .o_rf_rd_en     (rd_en));
+ 
+    serv_decode
+-     #(.PRE_REGISTER (PRE_REGISTER),
++     #(.CAPTURE_USAGE_FORM(DECODER_CAPTURE_USAGE_FORM),
++       .PRE_REGISTER (PRE_REGISTER),
+        .MDU(MDU))
+    decode
+      (
+@@ -404,7 +409,7 @@
+       .o_dbus_adr (o_dbus_adr),
+       .o_ext_rs1  (o_ext_rs1));
+ 
+-   serv_bufreg2 #(.W(W)) bufreg2
++   serv_bufreg2 #(.W(W),.WORD_BANK_ENABLE_FORM(DATA_WORD_ENABLE_FORM),.BUFFER_CONTROL_FORM(BUFFER_CONTROL_FORM)) bufreg2
+      (
+       .i_clk        (clk),
+       //State
+@@ -430,7 +435,8 @@
+       .i_dat        (dbus_rdt));
+ 
+    serv_ctrl
+-     #(.RESET_PC (RESET_PC),
++     #(.WORD_BANK_ENABLE_FORM(PC_WORD_ENABLE_FORM),
++       .RESET_PC (RESET_PC),
+        .RESET_STRATEGY (RESET_STRATEGY),
+        .WITH_CSR (WITH_CSR),
+        .W (W))

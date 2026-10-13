@@ -3,6 +3,9 @@
 Quantized-arithmetic case in the
 [verified RTL portfolio](../../README.md).
 
+Read the [technical report](RTL-Study-INT8-MatVec.pdf) and the
+[portfolio size comparison](../../MODULE-SIZES.md).
+
 ## What this module does
 
 The combinational datapath accepts four signed INT8 activations and a 4x4

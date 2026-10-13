@@ -1,0 +1,221 @@
+%Warning-PINMISSING: /candidate/rtl/serv_synth_wrapper.v:69:4: Cell has missing pin: 'o_ren'
+   69 |    rf_ram_if
+      |    ^~~~~~~~~
+                     ... For warning description see https://verilator.org/warn/PINMISSING?v=5.020
+                     ... Use "/* verilator lint_off PINMISSING */" and lint_on around source to disable this message.
+%Warning-PINCONNECTEMPTY: /candidate/rtl/serv_synth_wrapper.v:134:8: Cell pin connected by name with empty reference: 'o_ext_funct3'
+  134 |       .o_ext_funct3 (),
+      |        ^~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: /candidate/rtl/serv_synth_wrapper.v:137:8: Cell pin connected by name with empty reference: 'o_ext_rs1'
+  137 |       .o_ext_rs1    (),
+      |        ^~~~~~~~~
+%Warning-PINCONNECTEMPTY: /candidate/rtl/serv_synth_wrapper.v:138:8: Cell pin connected by name with empty reference: 'o_ext_rs2'
+  138 |       .o_ext_rs2    (),
+      |        ^~~~~~~~~
+%Warning-PINCONNECTEMPTY: /candidate/rtl/serv_synth_wrapper.v:140:8: Cell pin connected by name with empty reference: 'o_mdu_valid'
+  140 |       .o_mdu_valid  ());
+      |        ^~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_top.v:80:23: Signal is not used: 'i_ext_rd'
+                                                      : ... note: In instance 'serv_rf_top.cpu'
+   80 |    input wire  [31:0] i_ext_rd,
+      |                       ^~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_top.v:189:16: Bits of signal are not used: 'i_wb_rdt'[1:0]
+                                                       : ... note: In instance 'serv_rf_top.cpu'
+  189 |    wire [31:0] i_wb_rdt;
+      |                ^~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:15:22: Bits of signal are not used: 'i_wb_rdt'[31,29:27,24:23,19:15,11:7]
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+   15 |    input wire [31:2] i_wb_rdt,
+      |                      ^~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:259:9: Signal is not used: 'capture_co_two_stage_op'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  259 |    wire capture_co_two_stage_op =
+      |         ^~~~~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:262:9: Signal is not used: 'capture_co_shift_op'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  262 |    wire capture_co_shift_op = (capture_opcode[2] & ~capture_funct3[1]) & !capture_co_mdu_op;
+      |         ^~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:263:9: Signal is not used: 'capture_co_branch_op'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  263 |    wire capture_co_branch_op = capture_opcode[4];
+      |         ^~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:264:9: Signal is not used: 'capture_co_dbus_en'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  264 |    wire capture_co_dbus_en    = ~capture_opcode[2] & ~capture_opcode[4];
+      |         ^~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:265:9: Signal is not used: 'capture_co_mtval_pc'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  265 |    wire capture_co_mtval_pc   = capture_opcode[4];
+      |         ^~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:266:9: Signal is not used: 'capture_co_mem_word'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  266 |    wire capture_co_mem_word   = capture_funct3[1];
+      |         ^~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:267:9: Signal is not used: 'capture_co_rd_alu_en'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  267 |    wire capture_co_rd_alu_en  = !capture_opcode[0] & capture_opcode[2] & !capture_opcode[4] & !capture_co_mdu_op;
+      |         ^~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:268:9: Signal is not used: 'capture_co_rd_mem_en'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  268 |    wire capture_co_rd_mem_en  = (!capture_opcode[2] & !capture_opcode[0]) | capture_co_mdu_op;
+      |         ^~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:269:15: Signal is not used: 'capture_co_ext_funct3'
+                                                          : ... note: In instance 'serv_rf_top.cpu.decode'
+  269 |    wire [2:0] capture_co_ext_funct3 = capture_funct3;
+      |               ^~~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:275:9: Signal is not used: 'capture_co_bufreg_rs1_en'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  275 |    wire capture_co_bufreg_rs1_en = !capture_opcode[4] | (!capture_opcode[1] & capture_opcode[0]);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:276:9: Signal is not used: 'capture_co_bufreg_imm_en'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  276 |    wire capture_co_bufreg_imm_en = !capture_opcode[2];
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:281:9: Signal is not used: 'capture_co_bufreg_clr_lsb'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  281 |    wire capture_co_bufreg_clr_lsb = capture_opcode[4] & ((capture_opcode[1:0] == 2'b00) | (capture_opcode[1:0] == 2'b11));
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:286:9: Signal is not used: 'capture_co_cond_branch'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  286 |    wire capture_co_cond_branch = !capture_opcode[0];
+      |         ^~~~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:288:9: Signal is not used: 'capture_co_ctrl_utype'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  288 |    wire capture_co_ctrl_utype       = !capture_opcode[4] & capture_opcode[2] & capture_opcode[0];
+      |         ^~~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:289:9: Signal is not used: 'capture_co_ctrl_jal_or_jalr'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  289 |    wire capture_co_ctrl_jal_or_jalr = capture_opcode[4] & capture_opcode[0];
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:294:9: Signal is not used: 'capture_co_ctrl_pc_rel'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  294 |    wire capture_co_ctrl_pc_rel = (capture_opcode[2:0] == 3'b000)  |
+      |         ^~~~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:309:9: Signal is not used: 'capture_co_sh_right'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  309 |    wire capture_co_sh_right   = capture_funct3[2];
+      |         ^~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:310:9: Signal is not used: 'capture_co_bne_or_bge'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  310 |    wire capture_co_bne_or_bge = capture_funct3[0];
+      |         ^~~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:321:9: Signal is not used: 'capture_co_ebreak'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  321 |    wire capture_co_ebreak = capture_op20;
+      |         ^~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:326:9: Signal is not used: 'capture_co_ctrl_mret'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  326 |    wire capture_co_ctrl_mret = capture_system_op & capture_op21 & !(|capture_funct3);
+      |         ^~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:329:9: Signal is not used: 'capture_co_e_op'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  329 |    wire capture_co_e_op = capture_system_op & !capture_op21 & !(|capture_funct3);
+      |         ^~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:333:9: Signal is not used: 'capture_co_bufreg_sh_signed'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  333 |    wire capture_co_bufreg_sh_signed = capture_imm30;
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:372:9: Signal is not used: 'capture_co_rd_csr_en'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  372 |    wire capture_co_rd_csr_en = capture_csr_op;
+      |         ^~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:374:9: Signal is not used: 'capture_co_csr_en'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  374 |    wire capture_co_csr_en         = capture_csr_op & capture_csr_valid;
+      |         ^~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:375:9: Signal is not used: 'capture_co_csr_mstatus_en'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  375 |    wire capture_co_csr_mstatus_en = capture_csr_op & !capture_op26 & !capture_op22 & !capture_op20;
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:376:9: Signal is not used: 'capture_co_csr_mie_en'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  376 |    wire capture_co_csr_mie_en     = capture_csr_op & !capture_op26 &  capture_op22 & !capture_op20;
+      |         ^~~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:377:9: Signal is not used: 'capture_co_csr_mcause_en'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  377 |    wire capture_co_csr_mcause_en  = capture_csr_op         &  capture_op21 & !capture_op20;
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:379:15: Signal is not used: 'capture_co_csr_source'
+                                                          : ... note: In instance 'serv_rf_top.cpu.decode'
+  379 |    wire [1:0] capture_co_csr_source = capture_funct3[1:0];
+      |               ^~~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:380:9: Signal is not used: 'capture_co_csr_d_sel'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  380 |    wire capture_co_csr_d_sel = capture_funct3[2];
+      |         ^~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:382:15: Signal is not used: 'capture_co_csr_addr'
+                                                          : ... note: In instance 'serv_rf_top.cpu.decode'
+  382 |    wire [1:0] capture_co_csr_addr = {capture_op26 & capture_op20, !capture_op26 | capture_op21};
+      |               ^~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:384:9: Signal is not used: 'capture_co_alu_cmp_eq'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  384 |    wire capture_co_alu_cmp_eq = capture_funct3[2:1] == 2'b00;
+      |         ^~~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:386:9: Signal is not used: 'capture_co_alu_cmp_sig'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  386 |    wire capture_co_alu_cmp_sig = ~((capture_funct3[0] & capture_funct3[1]) | (capture_funct3[1] & capture_funct3[2]));
+      |         ^~~~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:388:9: Signal is not used: 'capture_co_mem_cmd'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  388 |    wire capture_co_mem_cmd  = capture_opcode[3];
+      |         ^~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:389:9: Signal is not used: 'capture_co_mem_signed'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  389 |    wire capture_co_mem_signed = ~capture_funct3[2];
+      |         ^~~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:390:9: Signal is not used: 'capture_co_mem_half'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  390 |    wire capture_co_mem_half   = capture_funct3[0];
+      |         ^~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:392:15: Signal is not used: 'capture_co_alu_bool_op'
+                                                          : ... note: In instance 'serv_rf_top.cpu.decode'
+  392 |    wire [1:0] capture_co_alu_bool_op = capture_funct3[1:0];
+      |               ^~~~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:394:15: Signal is not used: 'capture_co_immdec_ctrl'
+                                                          : ... note: In instance 'serv_rf_top.cpu.decode'
+  394 |    wire [3:0] capture_co_immdec_ctrl;
+      |               ^~~~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:404:15: Signal is not used: 'capture_co_immdec_en'
+                                                          : ... note: In instance 'serv_rf_top.cpu.decode'
+  404 |    wire [3:0] capture_co_immdec_en;
+      |               ^~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:410:15: Signal is not used: 'capture_co_alu_rd_sel'
+                                                          : ... note: In instance 'serv_rf_top.cpu.decode'
+  410 |    wire [2:0] capture_co_alu_rd_sel;
+      |               ^~~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:417:9: Signal is not used: 'capture_co_op_b_source'
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+  417 |    wire capture_co_op_b_source = capture_opcode[3];
+      |         ^~~~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_immdec.v:17:22: Signal is not used: 'i_immdec_en'
+                                                         : ... note: In instance 'serv_rf_top.cpu.immdec'
+   17 |    input wire [3:0]  i_immdec_en,
+      |                      ^~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_bufreg.v:15:22: Signal is not used: 'i_cnt1'
+                                                         : ... note: In instance 'serv_rf_top.cpu.bufreg'
+   15 |    input wire        i_cnt1,
+      |                      ^~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_bufreg.v:27:23: Bits of signal are not used: 'i_shamt'[2]
+                                                         : ... note: In instance 'serv_rf_top.cpu.bufreg'
+   27 |    input wire [2:0]   i_shamt,
+      |                       ^~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_bufreg2.v:98:15: Bits of signal are not used: 'dat_shamt'[7:6,4:0]
+                                                          : ... note: In instance 'serv_rf_top.cpu.bufreg2'
+   98 |    wire [7:0] dat_shamt = cnt_en ?
+      |               ^~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_bufreg2.v:114:9: Signal is not used: 'private_byte_valid'
+                                                          : ... note: In instance 'serv_rf_top.cpu.bufreg2'
+  114 |    wire private_byte_valid;
+      |         ^~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_bufreg2.v:117:9: Signal is not used: 'private_initial_byte'
+                                                          : ... note: In instance 'serv_rf_top.cpu.bufreg2'
+  117 |    wire private_initial_byte = i_init & !(|i_bytecnt);
+      |         ^~~~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_ctrl.v:24:21: Signal is not used: 'i_cnt2'
+                                                       : ... note: In instance 'serv_rf_top.cpu.ctrl'
+   24 |    input wire       i_cnt2,
+      |                     ^~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_alu.v:24:21: Bits of signal are not used: 'i_rd_sel'[2]
+                                                      : ... note: In instance 'serv_rf_top.cpu.alu'
+   24 |    input wire [2:0] i_rd_sel,
+      |                     ^~~~~~~~

@@ -1,0 +1,45 @@
+%Warning-PINMISSING: /candidate/rtl/serv_synth_wrapper.v:68:4: Cell has missing pin: 'o_ren'
+   68 |    rf_ram_if
+      |    ^~~~~~~~~
+                     ... For warning description see https://verilator.org/warn/PINMISSING?v=5.020
+                     ... Use "/* verilator lint_off PINMISSING */" and lint_on around source to disable this message.
+%Warning-PINCONNECTEMPTY: /candidate/rtl/serv_synth_wrapper.v:129:8: Cell pin connected by name with empty reference: 'o_ext_funct3'
+  129 |       .o_ext_funct3 (),
+      |        ^~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: /candidate/rtl/serv_synth_wrapper.v:132:8: Cell pin connected by name with empty reference: 'o_ext_rs1'
+  132 |       .o_ext_rs1    (),
+      |        ^~~~~~~~~
+%Warning-PINCONNECTEMPTY: /candidate/rtl/serv_synth_wrapper.v:133:8: Cell pin connected by name with empty reference: 'o_ext_rs2'
+  133 |       .o_ext_rs2    (),
+      |        ^~~~~~~~~
+%Warning-PINCONNECTEMPTY: /candidate/rtl/serv_synth_wrapper.v:135:8: Cell pin connected by name with empty reference: 'o_mdu_valid'
+  135 |       .o_mdu_valid  ());
+      |        ^~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_top.v:76:23: Signal is not used: 'i_ext_rd'
+                                                      : ... note: In instance 'serv_rf_top.cpu'
+   76 |    input wire  [31:0] i_ext_rd,
+      |                       ^~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_top.v:185:16: Bits of signal are not used: 'i_wb_rdt'[1:0]
+                                                       : ... note: In instance 'serv_rf_top.cpu'
+  185 |    wire [31:0] i_wb_rdt;
+      |                ^~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_decode.v:14:22: Bits of signal are not used: 'i_wb_rdt'[31,29:27,24:23,19:15,11:7]
+                                                         : ... note: In instance 'serv_rf_top.cpu.decode'
+   14 |    input wire [31:2] i_wb_rdt,
+      |                      ^~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_bufreg.v:16:22: Signal is not used: 'i_cnt_done'
+                                                         : ... note: In instance 'serv_rf_top.cpu.bufreg'
+   16 |    input wire        i_cnt_done,
+      |                      ^~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_bufreg.v:25:22: Signal is not used: 'i_shift_op'
+                                                         : ... note: In instance 'serv_rf_top.cpu.bufreg'
+   25 |    input wire        i_shift_op,
+      |                      ^~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_bufreg.v:26:22: Signal is not used: 'i_right_shift_op'
+                                                         : ... note: In instance 'serv_rf_top.cpu.bufreg'
+   26 |    input wire        i_right_shift_op,
+      |                      ^~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /candidate/rtl/serv_bufreg.v:27:23: Signal is not used: 'i_shamt'
+                                                         : ... note: In instance 'serv_rf_top.cpu.bufreg'
+   27 |    input wire [2:0]   i_shamt,
+      |                       ^~~~~~~

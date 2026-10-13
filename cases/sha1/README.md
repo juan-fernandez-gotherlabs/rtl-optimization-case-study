@@ -87,7 +87,7 @@ original copyright, redistribution condition and disclaimer.
 Earlier releases corrected a documentation-level interface description from
 `cmd_i[3:0]` to the actual `cmd_i[2:0]`. The measured RTL, raw outputs, metrics
 and acceptance result were unchanged. Full transformation history remains in
-the [technical report](technical-report.pdf) and immutable releases.
+the [technical report](RTL-Study-SHA1.pdf) and immutable releases.
 
 ## Claim boundary
 

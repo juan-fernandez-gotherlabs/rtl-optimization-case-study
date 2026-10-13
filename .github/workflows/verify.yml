@@ -25,6 +25,8 @@ jobs:
         run: python3 -m unittest discover -s cases/int8-matvec/tests -v
       - name: Run ML-KEM CBD adversarial verifier tests
         run: python3 -m unittest discover -s cases/mlkem-cbd/tests -v
+      - name: Run SERV research adversarial verifier tests
+        run: python3 -m unittest discover -s experiments/serv-1.4.0/tests -v
       - name: Confirm generated report data is current
         run: |
           python3 cases/sha1/scripts/generate_latex_data.py
@@ -40,5 +42,7 @@ jobs:
           python3 -m json.tool cases/mlkem-cbd/full-evidence.json >/dev/null
           python3 -m json.tool experiments/quartus-int8-matvec/results/quartus-lite-25.1std-max10-summary.json >/dev/null
           python3 -m json.tool experiments/quartus-int8-matvec/evidence/quartus-lite-25.1std-max10/MANIFEST.json >/dev/null
+          python3 -m json.tool experiments/serv-1.4.0/results/development.json >/dev/null
+          python3 -m json.tool experiments/serv-1.4.0/results/measurements.json >/dev/null
           git diff --check
           git diff --exit-code
