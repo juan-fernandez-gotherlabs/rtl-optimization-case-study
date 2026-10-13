@@ -1,0 +1,137 @@
+{
+  "status": "pass",
+  "version": "serv-1.4.0-flow-v2-20261006",
+  "PPA_records_audited": 36,
+  "new_PPA_measures_in_this_cohort": 11,
+  "pairs_per_candidate": 12,
+  "seeds": [
+    5001,
+    5002,
+    5003,
+    5004,
+    5005,
+    5006,
+    5007,
+    5008,
+    5009,
+    5010,
+    5011,
+    5012
+  ],
+  "proofs": [
+    {
+      "name": "baseline",
+      "counts": [
+        307,
+        0
+      ],
+      "state_bits": 181,
+      "functional_blif_sha256": "b3afa1cd9930fa6942f5de25ac5420f088db2bc36c52814e01887dd8b1978d22",
+      "complete_measures": 12
+    },
+    {
+      "name": "v2-opcode-capture-leader-sub-rd-op",
+      "counts": [
+        310,
+        0
+      ],
+      "state_bits": 184,
+      "functional_blif_sha256": "cd9a00be75baa54b48713c9823e613f7bde397d3f726fc256c5493c6c441fba1",
+      "complete_measures": 12
+    },
+    {
+      "name": "v2-exact-rf-high3-v2-lean-word-binary-m0",
+      "counts": [
+        307,
+        0
+      ],
+      "state_bits": 181,
+      "functional_blif_sha256": "480e6918ccce796d9b58c7288aa7acd03e610ab90cf271cec30ac7b779728483",
+      "complete_measures": 12
+    }
+  ],
+  "absolute_metrics": [
+    {
+      "name": "baseline",
+      "means": {
+        "area_total_mwta": 2743003.5,
+        "critical_path_delay_ns": 4.27571,
+        "active_total_power_w": 0.0035413333333333334
+      },
+      "clb_counts": [
+        46
+      ]
+    },
+    {
+      "name": "v2-opcode-capture-leader-sub-rd-op",
+      "means": {
+        "area_total_mwta": 2575585.5,
+        "critical_path_delay_ns": 4.25332,
+        "active_total_power_w": 0.0034830833333333333
+      },
+      "clb_counts": [
+        43
+      ]
+    },
+    {
+      "name": "v2-exact-rf-high3-v2-lean-word-binary-m0",
+      "means": {
+        "area_total_mwta": 2579889.0,
+        "critical_path_delay_ns": 4.278435833333333,
+        "active_total_power_w": 0.0033861666666666667
+      },
+      "clb_counts": [
+        43
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "name": "v2-opcode-capture-leader-sub-rd-op",
+      "score": 0.9720120076046056,
+      "improvement_percent": 2.79879923953944,
+      "raw_composite_score": 0.9720120076046056,
+      "raw_composite_improvement_percent": 2.79879923953944,
+      "selection_feasible": true,
+      "area_constraint_violation": 0.0,
+      "power_constraint_violation": 0.0,
+      "metric_ratios": {
+        "area_total_mwta": 0.938961760551882,
+        "critical_path_delay_ns": 0.9945434903860934,
+        "active_total_power_w": 0.9834294391554631
+      },
+      "area_ratio": 0.938961760551882,
+      "delay_ratio": 0.9945434903860934,
+      "power_ratio": 0.9834294391554631,
+      "clb_count": 43.0,
+      "acceptance_decision": null,
+      "certified": false,
+      "development_descriptive_upper95_score": 0.9752152375571774
+    },
+    {
+      "name": "v2-exact-rf-high3-v2-lean-word-binary-m0",
+      "score": 0.9654837356776758,
+      "improvement_percent": 3.451626432232424,
+      "raw_composite_score": 0.9654837356776758,
+      "raw_composite_improvement_percent": 3.451626432232424,
+      "selection_feasible": true,
+      "area_constraint_violation": 0.0,
+      "power_constraint_violation": 0.0,
+      "metric_ratios": {
+        "area_total_mwta": 0.9405328481273763,
+        "critical_path_delay_ns": 1.0007209408090927,
+        "active_total_power_w": 0.9561982196573522
+      },
+      "area_ratio": 0.9405328481273763,
+      "delay_ratio": 1.0007209408090927,
+      "power_ratio": 0.9561982196573522,
+      "clb_count": 43.0,
+      "acceptance_decision": null,
+      "certified": false,
+      "development_descriptive_upper95_score": 0.9681825560358251
+    }
+  ],
+  "certification_or_final": false,
+  "reserved_seed_directories": [],
+  "audit_script_sha256": "10cc15b1d7c7d51c14b4a778ff34c31c5a80e53e97550a7fe9e1e09dd50dca6f"
+}

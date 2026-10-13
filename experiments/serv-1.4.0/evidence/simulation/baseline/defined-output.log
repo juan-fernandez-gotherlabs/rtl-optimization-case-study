@@ -1,0 +1,2 @@
+PASS cycles=4096 defined_output_bit_checks=     387072
+<private-study-root>/evidence/flow-v2/postmap-coherence/baseline/tb.v:152: $finish called at 12288 (1s)

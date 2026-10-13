@@ -1,0 +1,12 @@
+{
+  "lint_w1": "pass",
+  "lint_w4": "pass",
+  "formal_status": "pass",
+  "formal_engine": "Yosys equiv_simple seq=5 plus equiv_induct -undef seq=80",
+  "top": "serv_synth_wrapper",
+  "private_structural_lint_status": "pass",
+  "candidate_tree_sha256": "b25b924a34318591d7cfec7097fc5d265a372316757893b2d51a095c5ba01fbe",
+  "structural_lint": "pass",
+  "reused_frozen_exploration_source_proof": true,
+  "source_formal_log_sha256": "5aee95f07b860f5316b294be69d8c2f730b55289141f45244cb8ac22a791dd8d"
+}

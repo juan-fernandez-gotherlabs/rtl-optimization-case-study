@@ -1,0 +1,69 @@
+{
+  "version": "serv-1.4.0-flow-v2-20261006",
+  "paired_seeds": [
+    5001,
+    5002,
+    5003,
+    5004,
+    5005,
+    5006,
+    5007,
+    5008,
+    5009,
+    5010,
+    5011,
+    5012
+  ],
+  "pairs_per_candidate": 12,
+  "complete": true,
+  "rows": [
+    {
+      "name": "v2-opcode-capture-leader-sub-rd-op",
+      "score": 0.9720120076046056,
+      "improvement_percent": 2.79879923953944,
+      "raw_composite_score": 0.9720120076046056,
+      "raw_composite_improvement_percent": 2.79879923953944,
+      "selection_feasible": true,
+      "area_constraint_violation": 0.0,
+      "power_constraint_violation": 0.0,
+      "metric_ratios": {
+        "area_total_mwta": 0.938961760551882,
+        "critical_path_delay_ns": 0.9945434903860934,
+        "active_total_power_w": 0.9834294391554631
+      },
+      "area_ratio": 0.938961760551882,
+      "delay_ratio": 0.9945434903860934,
+      "power_ratio": 0.9834294391554631,
+      "clb_count": 43.0,
+      "acceptance_decision": null,
+      "certified": false,
+      "descriptive_upper95_composite": 0.9752152375571774,
+      "not_independent_certification": true
+    },
+    {
+      "name": "v2-exact-rf-high3-v2-lean-word-binary-m0",
+      "score": 0.9654837356776758,
+      "improvement_percent": 3.451626432232424,
+      "raw_composite_score": 0.9654837356776758,
+      "raw_composite_improvement_percent": 3.451626432232424,
+      "selection_feasible": true,
+      "area_constraint_violation": 0.0,
+      "power_constraint_violation": 0.0,
+      "metric_ratios": {
+        "area_total_mwta": 0.9405328481273763,
+        "critical_path_delay_ns": 1.0007209408090927,
+        "active_total_power_w": 0.9561982196573522
+      },
+      "area_ratio": 0.9405328481273763,
+      "delay_ratio": 1.0007209408090927,
+      "power_ratio": 0.9561982196573522,
+      "clb_count": 43.0,
+      "acceptance_decision": null,
+      "certified": false,
+      "descriptive_upper95_composite": 0.9681825560358251,
+      "not_independent_certification": true
+    }
+  ],
+  "certification_or_final": false,
+  "reserved_seeds_untouched": true
+}

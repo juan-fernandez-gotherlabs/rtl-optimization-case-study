@@ -19,6 +19,7 @@ CASES = {
 }
 EXPERIMENTS = {
     "quartus-int8-matvec": ROOT / "experiments/quartus-int8-matvec",
+    "serv-1.4.0": ROOT / "experiments/serv-1.4.0",
 }
 ROOT_MANIFEST = {
     ".gitattributes",
@@ -32,11 +33,14 @@ ROOT_MANIFEST = {
     "Makefile",
     "README.md",
     "SHA1-RTL-Optimization.pdf",
+    "SERV-1.4.0-Development-Study.pdf",
     "THIRD_PARTY_NOTICES.md",
     "cases/int8-matvec/SHA256SUMS",
     "cases/mlkem-cbd/SHA256SUMS",
     "cases/sha1/SHA256SUMS",
     "experiments/quartus-int8-matvec/SHA256SUMS",
+    "experiments/README.md",
+    "experiments/serv-1.4.0/SHA256SUMS",
     "verify.py",
 }
 
@@ -90,6 +94,11 @@ def verify_manifest() -> None:
 
 
 def verify_report_copies() -> None:
+    require(
+        sha256(ROOT / "SERV-1.4.0-Development-Study.pdf")
+        == sha256(ROOT / "experiments/serv-1.4.0/technical-report.pdf"),
+        "root SERV research report differs from the experiment report",
+    )
     require(
         sha256(ROOT / "SHA1-RTL-Optimization.pdf")
         == sha256(ROOT / "cases/sha1/technical-report.pdf"),

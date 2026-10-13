@@ -1,0 +1,23 @@
+{
+  "name": "baseline",
+  "status": "pass",
+  "counts": [
+    307,
+    0
+  ],
+  "error": null,
+  "candidate_tree_sha256": "29b5ea77526b3b972ba99c8702524e87035e5a921db6f1a59bb822599203ba91",
+  "blif_sha256": "45446cb516eab84a9c7a2c00a2f763665749bde4de20b6796166d1f7afe24b4b",
+  "every_primary_and_proposed_state_alias_included_in_proof": true,
+  "proposed_state_alias_count": 181,
+  "unrelated_internal_name_matching_disabled": true,
+  "undefined_register_initialization_preserved": true,
+  "all_original_candidate_ff_bits_bound_once": true,
+  "original_candidate_ff_bits": 181,
+  "files_sha256": {
+    "gate-aligned.v": "238c264ca411b933ff5fb3438092574efbfb1edac136a9df770d922a4ed72f28",
+    "direct-equivalence.ys": "39cc4dbbceb06d6e7e9c74349f02f421c8541c794b896c902de6c982cf2b1912",
+    "formal.log": "a82c77cfecb4a50e0e29736ebf51dfbdf999f31e82019c251b6077328eb5bea3"
+  },
+  "alignment_plan_sha256": "68a7b600e4a83556fac80ae64c4ae3a7b7fb8efabe1aaa7fb3c5aec52fcff958"
+}

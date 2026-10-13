@@ -18,6 +18,17 @@ means acceptance under the fixed, source-controlled project contract.
 The raw verifier recomputes metrics from archived logs. It does not rerun the
 EDA tools, and a project-operated replay is not organisational independence.
 
+### SERV 1.4.0 paused research
+
+[SERV](experiments/serv-1.4.0/README.md) is a saved development study. Its public
+package has twelve paired implementations and recorded source/mapped formal
+evidence. The verifier checks hashes, source identities, proof closure markers
+and metric extraction from the 24 report sets. Held-out certification and the
+final 64 pairs remain unexecuted for the current candidate. No independent PPA
+acceptance, full exploration-archive audit, fresh external EDA execution or
+third-party assurance is claimed. The accepted-case status table above is
+unchanged by this research record.
+
 ## Auditor packet
 
 An external reviewer should receive:

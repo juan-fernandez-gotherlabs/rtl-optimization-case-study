@@ -1,0 +1,23 @@
+{
+  "name": "v2-exact-rf-high3-v2-lean-word-binary-m0",
+  "status": "pass",
+  "counts": [
+    307,
+    0
+  ],
+  "error": null,
+  "candidate_tree_sha256": "b25b924a34318591d7cfec7097fc5d265a372316757893b2d51a095c5ba01fbe",
+  "blif_sha256": "10e451c94948d7d4be76aec52ec716e32f57792e2b86ed6b592cac91a0c7678f",
+  "every_primary_and_proposed_state_alias_included_in_proof": true,
+  "proposed_state_alias_count": 181,
+  "unrelated_internal_name_matching_disabled": true,
+  "undefined_register_initialization_preserved": true,
+  "all_original_candidate_ff_bits_bound_once": true,
+  "original_candidate_ff_bits": 181,
+  "files_sha256": {
+    "gate-aligned.v": "af7954f092c7b67426ad2542d58db18ddbd62cbf639d2f5e4a1fffbda5290117",
+    "direct-equivalence.ys": "8d55e7e7b323485dab462fe5b745bac52e17a50f4c07308f41caf7e695a69a9d",
+    "formal.log": "b61b1284c27719b7c32c9917c6b7e0c3b9a483c4d073f06f2fcdc8ffdca76470"
+  },
+  "alignment_plan_sha256": "b72fb38b2d485341d299fa139b725dcf1e739ff5f960c4d7d1035b40b8453586"
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "protocol": "serv-1.4.0-flow-v2-20261006",
+  "top": "serv_synth_wrapper",
+  "baseline_tree_sha256": "29b5ea77526b3b972ba99c8702524e87035e5a921db6f1a59bb822599203ba91",
+  "optimized_tree_sha256": "b25b924a34318591d7cfec7097fc5d265a372316757893b2d51a095c5ba01fbe",
+  "parameters": {
+    "PRE_REGISTER": 1,
+    "RESET_STRATEGY": "MINI",
+    "WITH_CSR": 1,
+    "RF_WIDTH": 2,
+    "W": 1,
+    "MDU": 0,
+    "COMPRESSED": 0,
+    "ALIGN": 0
+  },
+  "vtr_commit": "95f5c6de9e158371ba7185bf97c07a84153735d6",
+  "image_id": "sha256:25ac0b7034aa4e2e537020980ddddf974f5d6197c306e88ec27dfc6f2255598e",
+  "architecture": "vtr_flow/arch/power/k6_N10_I40_Fi6_L4_frac0_ff1_45nm.xml",
+  "technology": "vtr_flow/tech/PTM_45nm/45nm.xml",
+  "voltage_v": 0.9,
+  "temperature_c": 85,
+  "synthesis_template_sha256": "31677f72c0f0d98c5acb6cbdba914724c7f3249c6364580da153f4e2a8b23fc3",
+  "activity": {
+    "method": "ACE probabilistic activity",
+    "input_static_probability": 0.5,
+    "input_switch_probability": 0.2,
+    "clock_probability": 0.2,
+    "ace_seed": 1
+  },
+  "score": "exp(mean over pairs of mean over area, delay and power of log(optimized/baseline)))",
+  "development_seeds": [
+    5001,
+    5002,
+    5003,
+    5004,
+    5005,
+    5006,
+    5007,
+    5008,
+    5009,
+    5010,
+    5011,
+    5012
+  ],
+  "development_selection_guards": {
+    "area_ratio_max": 1.0,
+    "power_ratio_max": 1.0
+  },
+  "held_out_certification": {
+    "reserved_pair_count": 12,
+    "executed_for_current_leader": false
+  },
+  "final_publication": {
+    "reserved_pair_count": 64,
+    "executed_for_current_leader": false,
+    "score_strictly_below": 0.9,
+    "one_sided_95_upper_score_strictly_below": 0.9,
+    "no_primary_metric_one_sided_95_lower_ratio_above": 1.0
+  },
+  "synthesis_repair": "Standard Yosys subtraction lowering before Parmys, applied equally to baseline and optimized RTL.",
+  "external_sram_excluded_from_measured_area": true,
+  "original_contract_sha256": "3d6b31971b7fc1545f44aa1bc287c172544a8d03a58aa1ffefef0860ace526ab",
+  "public_contract_scope": "Projection for the research record; publication acceptance remains unexecuted."
+}

@@ -31,6 +31,19 @@ mixing their metrics into the VTR headline scores.
 See the [commercial-tool experiment index](experiments/README.md) for the
 separate evidence boundary and limitations.
 
+## Paused RTL research
+
+The repository also preserves development studies whose final acceptance
+remains pending. They have their own evidence packages and claim boundaries.
+
+| Study | Saved result | Evidence status |
+| --- | --- | --- |
+| [SERV 1.4.0](experiments/serv-1.4.0/README.md) | **3.4516% lower composite PPA estimate in 12 development pairs**; 46 to 43 CLBs, 181 FF unchanged | Paused research; held-out certification and final 64 pairs unexecuted; greater-than-10% objective unmet |
+
+See [SERV-1.4.0-Development-Study.pdf](SERV-1.4.0-Development-Study.pdf) for the
+scope, before/after metrics, search history and stopping point. SERV is a
+research record; the accepted portfolio above still contains three cases.
+
 ## Why the third case matters
 
 The portfolio now spans three distinct kinds of hardware reasoning:
@@ -93,6 +106,10 @@ SHA-1 compact evidence: PASS
 INT8 MatVec compact evidence: PASS
 ML-KEM CBD compact evidence: PASS
 Quartus INT8 MatVec compact evidence: PASS
+SERV 1.4.0 saved research evidence: PASS
+development_pairs=12; improvement=3.4516%
+held_out_certification_pairs=0; final_pairs=0; publication_accepted=False
+Scope: saved evidence consistency; no fresh EDA execution or PPA certification.
 Portfolio verification: PASS
 ```
 

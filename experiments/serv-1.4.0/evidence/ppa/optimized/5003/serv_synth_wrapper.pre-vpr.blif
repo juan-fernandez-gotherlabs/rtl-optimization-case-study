@@ -1,0 +1,1524 @@
+# Benchmark "serv_synth_wrapper" written by ABC on Thu Oct  8 13:28:10 2026
+.model serv_synth_wrapper
+.inputs i_ibus_rdt~13 i_ibus_rdt~14 i_ibus_rdt~15 i_ibus_rdt~16 \
+ i_ibus_rdt~17 i_ibus_rdt~18 i_ibus_rdt~19 i_ibus_rdt~20 i_ibus_rdt~21 \
+ i_ibus_rdt~22 i_ibus_rdt~23 i_ibus_rdt~24 i_ibus_rdt~25 i_ibus_rdt~26 \
+ i_ibus_rdt~27 i_ibus_rdt~28 i_ibus_rdt~29 i_ibus_rdt~30 i_ibus_rdt~31 \
+ i_ibus_ack i_dbus_rdt~0 i_ibus_rdt~12 i_ibus_rdt~11 i_ibus_rdt~10 \
+ i_ibus_rdt~9 i_ibus_rdt~8 i_ibus_rdt~7 i_ibus_rdt~6 i_ibus_rdt~5 \
+ i_ibus_rdt~4 i_ibus_rdt~3 i_ibus_rdt~2 i_ibus_rdt~1 i_ibus_rdt~0 \
+ i_timer_irq i_rst clk i_rdata~1 i_rdata~0 i_dbus_ack i_dbus_rdt~31 \
+ i_dbus_rdt~30 i_dbus_rdt~29 i_dbus_rdt~28 i_dbus_rdt~27 i_dbus_rdt~26 \
+ i_dbus_rdt~25 i_dbus_rdt~24 i_dbus_rdt~23 i_dbus_rdt~22 i_dbus_rdt~21 \
+ i_dbus_rdt~20 i_dbus_rdt~19 i_dbus_rdt~18 i_dbus_rdt~17 i_dbus_rdt~16 \
+ i_dbus_rdt~15 i_dbus_rdt~14 i_dbus_rdt~13 i_dbus_rdt~12 i_dbus_rdt~11 \
+ i_dbus_rdt~1 i_dbus_rdt~2 i_dbus_rdt~3 i_dbus_rdt~4 i_dbus_rdt~5 \
+ i_dbus_rdt~6 i_dbus_rdt~7 i_dbus_rdt~8 i_dbus_rdt~9 i_dbus_rdt~10
+.outputs o_ibus_adr~24 o_ibus_adr~23 o_ibus_adr~22 o_ibus_adr~21 o_ibus_adr~20 o_ibus_adr~19 o_ibus_adr~18 o_ibus_adr~17 o_ibus_adr~16 o_ibus_adr~15 o_ibus_adr~14 o_ibus_adr~13 o_ibus_adr~12 o_ibus_adr~11 o_ibus_adr~10 o_ibus_adr~9 o_ibus_adr~8 o_ibus_adr~7 o_ibus_adr~6 o_ibus_adr~5 o_ibus_adr~4 o_ibus_adr~3 o_ibus_adr~2 o_ibus_adr~1 o_ibus_adr~0 o_dbus_cyc o_dbus_we o_dbus_sel~3 o_dbus_sel~2 o_dbus_sel~1 o_dbus_sel~0 o_dbus_dat~31 o_dbus_dat~30 o_dbus_dat~29 o_dbus_dat~28 o_dbus_dat~27 o_dbus_dat~26 o_dbus_dat~25 o_dbus_dat~24 o_dbus_dat~23 o_dbus_dat~22 o_dbus_dat~21 o_dbus_dat~20 o_dbus_dat~19 o_dbus_dat~18 o_dbus_dat~17 o_dbus_dat~16 o_dbus_dat~15 o_dbus_dat~14 o_dbus_dat~13 o_dbus_dat~12 o_dbus_dat~11 o_dbus_dat~10 o_dbus_dat~9 o_dbus_dat~8 o_dbus_dat~7 o_dbus_dat~6 o_dbus_dat~5 o_dbus_dat~4 o_dbus_dat~3 o_dbus_dat~2 o_dbus_dat~1 o_dbus_dat~0 o_dbus_adr~31 o_dbus_adr~30 o_dbus_adr~29 o_dbus_adr~28 o_dbus_adr~27 o_dbus_adr~26 o_dbus_adr~25 o_dbus_adr~24 o_dbus_adr~23 o_dbus_adr~22 o_dbus_adr~21 o_dbus_adr~20 o_dbus_adr~19 o_dbus_adr~18 o_dbus_adr~17 o_dbus_adr~16 o_dbus_adr~15 o_dbus_adr~14 o_dbus_adr~13 o_dbus_adr~12 o_dbus_adr~11 o_dbus_adr~10 o_dbus_adr~9 o_dbus_adr~8 o_dbus_adr~7 o_dbus_adr~6 o_dbus_adr~5 o_dbus_adr~4 o_dbus_adr~3 o_dbus_adr~2 o_dbus_adr~1 o_dbus_adr~0 o_ibus_cyc o_ibus_adr~31 o_ibus_adr~30 o_ibus_adr~29 o_ibus_adr~28 o_ibus_adr~27 o_ibus_adr~26 o_ibus_adr~25 o_waddr~0 o_waddr~1 o_waddr~2 o_waddr~3 o_waddr~4 o_waddr~5 o_waddr~6 o_waddr~7 o_waddr~8 o_waddr~9 o_wdata~0 o_wdata~1 o_wen o_raddr~0 o_raddr~1 o_raddr~2 o_raddr~3 o_raddr~4 o_raddr~5 o_raddr~6 o_raddr~7 o_raddr~8 o_raddr~9
+.latch n396 $sdffe~415^Q~0 re clk 2
+.latch n401 $dffe~194^Q~0 re clk 2
+.latch n406 $dffe~192^Q~0 re clk 2
+.latch n411_1 $dffe~191^Q~0 re clk 2
+.latch n416 $dffe~193^Q~0 re clk 2
+.latch n421 $dffe~309^Q~0 re clk 2
+.latch n426 $dffe~195^Q~0 re clk 2
+.latch n431_1 $dffe~265^Q~0 re clk 2
+.latch n436 $dff~43^Q~0 re clk 2
+.latch n441 $dffe~416^Q~0 re clk 2
+.latch n446 $dff~480^Q~0 re clk 2
+.latch n451_1 $dff~480^Q~1 re clk 2
+.latch n456 $dff~480^Q~2 re clk 2
+.latch n461 $dff~141^Q~0 re clk 2
+.latch n466 $dff~140^Q~0 re clk 2
+.latch n471_1 o_ibus_adr~0 re clk 2
+.latch n475 o_ibus_adr~1 re clk 2
+.latch n479 o_ibus_adr~2 re clk 2
+.latch n483 o_ibus_adr~3 re clk 2
+.latch n487 o_ibus_adr~4 re clk 2
+.latch n491 o_ibus_adr~5 re clk 2
+.latch n495 o_ibus_adr~6 re clk 2
+.latch n499 o_ibus_adr~7 re clk 2
+.latch n503 o_ibus_adr~8 re clk 2
+.latch n507 o_ibus_adr~9 re clk 2
+.latch n511 o_ibus_adr~10 re clk 2
+.latch n515 o_ibus_adr~11 re clk 2
+.latch n519 o_ibus_adr~12 re clk 2
+.latch n523 o_ibus_adr~13 re clk 2
+.latch n527 o_ibus_adr~14 re clk 2
+.latch n531 o_ibus_adr~15 re clk 2
+.latch n535 o_ibus_adr~16 re clk 2
+.latch n539 o_ibus_adr~17 re clk 2
+.latch n543 o_ibus_adr~18 re clk 2
+.latch n547 o_ibus_adr~19 re clk 2
+.latch n551 o_ibus_adr~20 re clk 2
+.latch n555 o_ibus_adr~21 re clk 2
+.latch n559 o_ibus_adr~22 re clk 2
+.latch n563 o_ibus_adr~23 re clk 2
+.latch n567 o_ibus_adr~24 re clk 2
+.latch n571 o_ibus_adr~25 re clk 2
+.latch n575 o_ibus_adr~26 re clk 2
+.latch n579 o_ibus_adr~27 re clk 2
+.latch n583_1 o_ibus_adr~28 re clk 2
+.latch n587_1 o_ibus_adr~29 re clk 2
+.latch n591_1 o_ibus_adr~30 re clk 2
+.latch n595_1 o_ibus_adr~31 re clk 2
+.latch n599_1 $dff~479^Q~0 re clk 2
+.latch n604 $dff~479^Q~1 re clk 2
+.latch n609 $auto$simplemap.cc:248:simplemap_eqne$2420[0] re clk 2
+.latch n614 $auto$simplemap.cc:248:simplemap_eqne$2409[1] re clk 2
+.latch n619_1 o_dbus_adr~2 re clk 2
+.latch n623_1 o_dbus_adr~3 re clk 2
+.latch n627_1 o_dbus_adr~4 re clk 2
+.latch n631_1 o_dbus_adr~5 re clk 2
+.latch n635_1 o_dbus_adr~6 re clk 2
+.latch n639_1 o_dbus_adr~7 re clk 2
+.latch n643_1 o_dbus_adr~8 re clk 2
+.latch n647_1 o_dbus_adr~9 re clk 2
+.latch n651_1 o_dbus_adr~10 re clk 2
+.latch n655_1 o_dbus_adr~11 re clk 2
+.latch n659_1 o_dbus_adr~16 re clk 2
+.latch n663_1 o_dbus_adr~17 re clk 2
+.latch n667_1 o_dbus_adr~20 re clk 2
+.latch n671_1 o_dbus_adr~21 re clk 2
+.latch n675_1 o_dbus_adr~22 re clk 2
+.latch n679_1 o_dbus_adr~23 re clk 2
+.latch n683_1 o_dbus_adr~26 re clk 2
+.latch n687_1 o_dbus_adr~27 re clk 2
+.latch n691_1 o_dbus_adr~28 re clk 2
+.latch n695_1 o_dbus_adr~29 re clk 2
+.latch n699_1 o_dbus_adr~30 re clk 2
+.latch n703_1 o_dbus_adr~31 re clk 2
+.latch n707_1 $dffe~332^Q~0 re clk 2
+.latch n712 o_dbus_dat~0 re clk 2
+.latch n716_1 o_dbus_dat~1 re clk 2
+.latch n720 o_dbus_dat~2 re clk 2
+.latch n724 o_dbus_dat~3 re clk 2
+.latch n728 o_dbus_dat~4 re clk 2
+.latch n732 o_dbus_dat~5 re clk 2
+.latch n736 o_dbus_dat~6 re clk 2
+.latch n740_1 o_dbus_dat~7 re clk 2
+.latch n744 o_dbus_dat~8 re clk 2
+.latch n748 o_dbus_dat~9 re clk 2
+.latch n752 o_dbus_dat~10 re clk 2
+.latch n756 o_dbus_dat~11 re clk 2
+.latch n760_1 o_dbus_dat~12 re clk 2
+.latch n764 o_dbus_dat~13 re clk 2
+.latch n768 o_dbus_dat~14 re clk 2
+.latch n772 o_dbus_dat~15 re clk 2
+.latch n776 o_dbus_dat~16 re clk 2
+.latch n780_1 o_dbus_dat~17 re clk 2
+.latch n784 o_dbus_dat~18 re clk 2
+.latch n788 o_dbus_dat~19 re clk 2
+.latch n792 o_dbus_dat~20 re clk 2
+.latch n796 o_dbus_dat~21 re clk 2
+.latch n800_1 o_dbus_dat~22 re clk 2
+.latch n804 o_dbus_dat~23 re clk 2
+.latch n808 o_dbus_dat~24 re clk 2
+.latch n812 o_dbus_dat~25 re clk 2
+.latch n816 o_dbus_dat~26 re clk 2
+.latch n820 o_dbus_dat~27 re clk 2
+.latch n824_1 o_dbus_dat~28 re clk 2
+.latch n828 o_dbus_dat~29 re clk 2
+.latch n832 o_dbus_dat~30 re clk 2
+.latch n836 o_dbus_dat~31 re clk 2
+.latch n840 $dffe~13^Q~0 re clk 2
+.latch n845 $dff~477^Q~0 re clk 2
+.latch n850 $sdff~467^Q~0 re clk 2
+.latch n855 $dffe~466^Q~0 re clk 2
+.latch n860 o_raddr~0 re clk 2
+.latch n864_1 $sdffe~267^Q~0 re clk 2
+.latch n869_1 $sdffe~271^Q~0 re clk 2
+.latch n874_1 $dffe~269^Q~0 re clk 2
+.latch n879_1 $dffe~269^Q~1 re clk 2
+.latch n884_1 $dffe~269^Q~2 re clk 2
+.latch n889_1 $dffe~269^Q~3 re clk 2
+.latch n894_1 $sdff~418^Q~0 re clk 2
+.latch n899_1 $sdff~418^Q~1 re clk 2
+.latch n904_1 $sdff~418^Q~2 re clk 2
+.latch n909_1 $sdff~418^Q~3 re clk 2
+.latch n914_1 $sdff~461^Q~0 re clk 2
+.latch n919_1 $sdff~468^Q~0 re clk 2
+.latch n924_1 $sdffe~462^Q~0 re clk 2
+.latch n929_1 $sdffe~462^Q~1 re clk 2
+.latch n934_1 o_raddr~3 re clk 2
+.latch n938 $add~457^lAND~17 re clk 2
+.latch n943 $sdffe~414^Q~0 re clk 2
+.latch n948 $dffe~270^Q~0 re clk 2
+.latch n953 $dffe~266^Q~0 re clk 2
+.latch n958 $dffe~469^Q~0 re clk 2
+.latch n963 $dff~20^Q~0 re clk 2
+.latch n968 $dffe~268^Q~0 re clk 2
+.latch n973 $dffe~413^Q~0 re clk 2
+.latch n978 $dffe~308^Q~0 re clk 2
+.latch n983 $dffe~308^Q~1 re clk 2
+.latch n988 $dffe~308^Q~2 re clk 2
+.latch n993 $dffe~308^Q~3 re clk 2
+.latch n998_1 $dffe~308^Q~4 re clk 2
+.latch n1003_1 $dffe~308^Q~5 re clk 2
+.latch n1008_1 $dffe~308^Q~6 re clk 2
+.latch n1013_1 $dffe~308^Q~7 re clk 2
+.latch n1018_1 $dffe~308^Q~8 re clk 2
+.latch n1023 $auto$simplemap.cc:248:simplemap_eqne$2310[0] re clk 2
+.latch n1028 $auto$simplemap.cc:248:simplemap_eqne$2127[1] re clk 2
+.latch n1033 $auto$simplemap.cc:248:simplemap_eqne$2127[2] re clk 2
+.latch n1038 $dffe~307^Q~0 re clk 2
+.latch n1043 $dffe~304^Q~0 re clk 2
+.latch n1048 $dffe~304^Q~1 re clk 2
+.latch n1053 $dffe~304^Q~2 re clk 2
+.latch n1058 $dffe~304^Q~3 re clk 2
+.latch n1063 $dffe~304^Q~4 re clk 2
+.latch n1068 $dffe~305^Q~0 re clk 2
+.latch n1073 $dffe~305^Q~1 re clk 2
+.latch n1078 $dffe~305^Q~2 re clk 2
+.latch n1083 $dffe~305^Q~3 re clk 2
+.latch n1088 $dffe~305^Q~4 re clk 2
+.latch n1093 $dffe~306^Q~0 re clk 2
+.latch n1098 $dffe~306^Q~1 re clk 2
+.latch n1103 $dffe~306^Q~2 re clk 2
+.latch n1108 $dffe~306^Q~3 re clk 2
+.latch n1113 $dffe~306^Q~4 re clk 2
+.latch n1118 $dffe~306^Q~5 re clk 2
+.latch n1123 $dffe~465^Q~0 re clk 2
+.latch n1128 $dff~478^Q~0 re clk 2
+.latch n1133 $dff~42^Q~0 re clk 2
+.latch n1138 $dff~42^Q~1 re clk 2
+.latch n1143 $dff~42^Q~2 re clk 2
+.latch n1148 o_dbus_adr~15 re clk 2
+.latch n1152 $dff~42^Q~4 re clk 2
+.latch n1157 o_dbus_adr~18 re clk 2
+.latch n1161 $dff~42^Q~6 re clk 2
+.latch n1166 o_dbus_adr~24 re clk 2
+.latch n1170 $auto$rtlil.cc:3194:NotGate$2587 re clk 2
+.latch n1175 $auto$simplemap.cc:248:simplemap_eqne$2471[1] re clk 2
+.latch n1180 $dffe~190^Q~2 re clk 2
+.latch n1185 $auto$simplemap.cc:248:simplemap_eqne$1980[0] re clk 2
+.latch n1190 $auto$simplemap.cc:248:simplemap_eqne$1980[1] re clk 2
+.latch n1195 $auto$simplemap.cc:248:simplemap_eqne$1980[2] re clk 2
+.latch n1200 o_dbus_we re clk 2
+.latch n1204 $dffe~189^Q~4 re clk 2
+
+.names new_new_n744 $auto$simplemap.cc:248:simplemap_eqne$1980[2] \
+ $dffe~189^Q~4 new_new_n745_1 $sdffe~415^Q~0 o_dbus_cyc
+00011 1
+.names $auto$rtlil.cc:3194:NotGate$2587 \
+ $auto$simplemap.cc:248:simplemap_eqne$2409[1] \
+ $auto$simplemap.cc:248:simplemap_eqne$2471[1] \
+ $auto$simplemap.cc:248:simplemap_eqne$2420[0] new_new_n744
+--11 1
+-11- 1
+0--1 1
+.names $sdff~418^Q~0 $sdff~418^Q~1 $sdff~418^Q~2 $sdff~418^Q~3 \
+ new_new_n745_1
+0000 1
+.names $auto$simplemap.cc:248:simplemap_eqne$2420[0] \
+ $auto$rtlil.cc:3194:NotGate$2587 \
+ $auto$simplemap.cc:248:simplemap_eqne$2409[1] \
+ $auto$simplemap.cc:248:simplemap_eqne$2471[1] o_dbus_sel~3
+--00 0
+01-0 0
+.names $auto$simplemap.cc:248:simplemap_eqne$2420[0] \
+ $auto$simplemap.cc:248:simplemap_eqne$2409[1] \
+ $auto$simplemap.cc:248:simplemap_eqne$2471[1] o_dbus_sel~2
+--1 1
+01- 1
+.names $auto$simplemap.cc:248:simplemap_eqne$2420[0] \
+ $auto$rtlil.cc:3194:NotGate$2587 \
+ $auto$simplemap.cc:248:simplemap_eqne$2409[1] \
+ $auto$simplemap.cc:248:simplemap_eqne$2471[1] o_dbus_sel~1
+--10 0
+01-0 0
+.names $auto$simplemap.cc:248:simplemap_eqne$2420[0] \
+ $auto$simplemap.cc:248:simplemap_eqne$2409[1] o_dbus_sel~0
+00 1
+.names $dff~42^Q~6 o_dbus_adr~24 o_dbus_adr~25
+01 1
+10 1
+.names $dff~42^Q~4 o_dbus_adr~18 o_dbus_adr~19
+01 1
+10 1
+.names $dff~42^Q~1 o_dbus_adr~15 $dff~42^Q~2 o_dbus_adr~14
+-01 1
+010 1
+1-1 1
+.names $dff~42^Q~1 o_dbus_adr~15 $dff~42^Q~2 o_dbus_adr~13
+-10 1
+001 1
+1-0 1
+.names $dff~42^Q~1 o_dbus_adr~15 $dff~42^Q~0 $dff~42^Q~2 o_dbus_adr~12
+-100 1
+-111 1
+0001 1
+0010 1
+1-00 1
+1-11 1
+.names i_rst $dffe~413^Q~0 o_ibus_cyc
+01 1
+.names $sdffe~462^Q~0 $sdffe~462^Q~1 o_waddr~2
+00 1
+11 1
+.names $sdffe~462^Q~0 $sdffe~462^Q~1 o_raddr~3 o_waddr~3
+-11 1
+000 1
+1-1 1
+.names $dffe~304^Q~0 $dffe~194^Q~0 $dffe~192^Q~0 new_new_n759 \
+ $add~457^lAND~17 o_waddr~4
+---01 0
+-10-1 0
+0--10 0
+.names new_new_n760_1 new_new_n761_1 $dffe~192^Q~0 $dffe~416^Q~0 \
+ $sdffe~267^Q~0 new_new_n759
+--100 1
+-0-00 1
+0--00 1
+.names $auto$simplemap.cc:248:simplemap_eqne$1980[2] $dffe~189^Q~4 \
+ new_new_n760_1
+11 1
+.names $auto$simplemap.cc:248:simplemap_eqne$2471[1] \
+ $auto$rtlil.cc:3194:NotGate$2587 $dffe~190^Q~2 new_new_n761_1
+011 1
+.names $dffe~194^Q~0 $dffe~191^Q~0 $dffe~304^Q~1 new_new_n759 \
+ $add~457^lAND~17 o_waddr~5
+---0- 1
+--1-0 1
+11--1 1
+.names o_waddr~9 $dffe~304^Q~2 o_waddr~6
+01 1
+.names $add~457^lAND~17 new_new_n759 o_waddr~9
+01 0
+.names o_waddr~9 $dffe~304^Q~3 o_waddr~7
+01 1
+.names o_waddr~9 $dffe~304^Q~4 o_waddr~8
+01 1
+.names $dff~480^Q~0 $dff~479^Q~0 $add~457^lAND~17 o_wdata~0
+-10 1
+1-1 1
+.names $dff~480^Q~1 $dff~479^Q~1 $add~457^lAND~17 o_wdata~1
+-10 1
+1-1 1
+.names $dffe~466^Q~0 $add~457^lAND~17 $dffe~469^Q~0 $dff~478^Q~0 o_wen
+--11 1
+11-- 1
+.names new_new_n774 $add~457^lAND~17 new_new_n775_1 $dffe~308^Q~4 \
+ new_new_n771_1 $dffe~305^Q~0 o_raddr~4
+--0111 1
+-10-11 1
+0--1-- 1
+01---- 1
+.names new_new_n772 new_new_n759 new_new_n771_1
+01 1
+.names $dffe~192^Q~0 $dffe~194^Q~0 $dffe~191^Q~0 new_new_n773 new_new_n772
+--11 1
+01-1 1
+.names $auto$rtlil.cc:3194:NotGate$2587 \
+ $auto$simplemap.cc:248:simplemap_eqne$2471[1] $dffe~190^Q~2 \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[2] $dffe~189^Q~4 new_new_n773
+--011 1
+-1-11 1
+0--11 1
+.names $dffe~192^Q~0 $dffe~194^Q~0 new_new_n772 new_new_n759 \
+ $add~457^lAND~17 new_new_n774
+--011 1
+01-11 1
+.names new_new_n760_1 new_new_n761_1 $dffe~192^Q~0 new_new_n775_1
+111 1
+.names new_new_n771_1 $dffe~305^Q~1 new_new_n777 $dffe~308^Q~5 \
+ $add~457^lAND~17 o_raddr~5
+---10 1
+--0-1 1
+11--1 1
+.names $dffe~194^Q~0 $dffe~191^Q~0 new_new_n773 new_new_n775_1 new_new_n777
+---1 0
+111- 0
+.names new_new_n775_1 $dffe~305^Q~2 new_new_n771_1 $dffe~308^Q~6 \
+ $add~457^lAND~17 o_raddr~6
+---10 1
+011-1 1
+.names new_new_n775_1 $dffe~305^Q~3 new_new_n771_1 $dffe~308^Q~7 \
+ $add~457^lAND~17 o_raddr~7
+---10 1
+011-1 1
+.names new_new_n775_1 $dffe~305^Q~4 new_new_n771_1 $dffe~308^Q~8 \
+ $add~457^lAND~17 o_raddr~8
+---10 1
+011-1 1
+.names new_new_n771_1 new_new_n775_1 $add~457^lAND~17 o_raddr~9
+-11 1
+0-1 1
+.names new_new_n783 $sdffe~415^Q~0 i_rst new_new_n785_1 n396
+-100 1
+1-01 1
+.names new_new_n784 $sdffe~415^Q~0 $sdffe~267^Q~0 new_new_n783
+000 1
+.names $auto$rtlil.cc:3194:NotGate$2587 $dffe~190^Q~2 \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[2] \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[0] $dffe~189^Q~4 \
+ $auto$simplemap.cc:248:simplemap_eqne$2471[1] new_new_n784
+--0--- 0
+-1-001 0
+0--000 0
+.names $sdff~418^Q~3 $auto$simplemap.cc:248:simplemap_eqne$2310[0] \
+ $auto$simplemap.cc:248:simplemap_eqne$2127[1] \
+ $auto$simplemap.cc:248:simplemap_eqne$2127[2] new_new_n785_1
+1111 1
+.names i_ibus_rdt~26 $dffe~194^Q~0 i_ibus_ack n401
+-10 1
+1-1 1
+.names i_ibus_rdt~21 $dffe~192^Q~0 i_ibus_ack n406
+-10 1
+1-1 1
+.names i_ibus_rdt~20 $dffe~191^Q~0 i_ibus_ack n411_1
+-10 1
+1-1 1
+.names i_ibus_rdt~22 $dffe~193^Q~0 i_ibus_ack n416
+-10 1
+1-1 1
+.names i_ibus_rdt~31 $dffe~309^Q~0 i_ibus_ack n421
+-10 1
+1-1 1
+.names i_ibus_rdt~30 $dffe~195^Q~0 i_ibus_ack n426
+-10 1
+1-1 1
+.names $dffe~266^Q~0 $dffe~265^Q~0 new_new_n759 new_new_n785_1 n431_1
+-1-0 1
+-11- 1
+1-01 1
+.names new_new_n794 new_new_n801_1 n436
+00 1
+.names $dffe~189^Q~4 $auto$simplemap.cc:248:simplemap_eqne$1980[1] \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[0] new_new_n795_1 $dff~43^Q~0 \
+ $dff~477^Q~0 new_new_n794
+---11- 0
+-01-11 0
+-011-1 0
+0---11 0
+0--1-1 0
+.names new_new_n799 $dffe~189^Q~4 \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[0] \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[1] \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[2] new_new_n796_1 \
+ new_new_n795_1
+--0100 1
+--1000 1
+-0--00 1
+0---00 1
+.names new_new_n798 new_new_n797 new_new_n785_1 new_new_n796_1
+-10 1
+0-1 1
+.names $dffe~304^Q~0 $auto$simplemap.cc:248:simplemap_eqne$1980[0] \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[1] \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[2] o_dbus_we $dffe~305^Q~0 \
+ new_new_n797
+----00 1
+---1-0 1
+--1--0 1
+-1---0 1
+00001- 1
+.names $dffe~190^Q~2 $dffe~189^Q~4 \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[2] $dffe~309^Q~0 new_new_n798
+---0 0
+011- 0
+.names new_new_n800_1 $sdff~418^Q~0 new_new_n799
+11 1
+.names $auto$simplemap.cc:248:simplemap_eqne$2310[0] \
+ $auto$simplemap.cc:248:simplemap_eqne$2127[1] \
+ $auto$simplemap.cc:248:simplemap_eqne$2127[2] new_new_n800_1
+000 1
+.names new_new_n802 new_new_n803 new_new_n801_1
+00 1
+.names new_new_n759 $dffe~189^Q~4 new_new_n783 new_new_n784 new_new_n745_1 \
+ new_new_n802
+--1-0 1
+-1-00 1
+0--00 1
+.names $dffe~190^Q~2 new_new_n806_1 new_new_n805_1 $sdffe~415^Q~0 \
+ new_new_n803
+-011 1
+0-11 1
+.names new_new_n785_1 $dffe~190^Q~2 new_new_n805_1 $sdffe~415^Q~0 \
+ $sdffe~267^Q~0 new_new_n784 new_new_n804
+--0--- 0
+-1-000 0
+0--000 0
+.names $auto$simplemap.cc:248:simplemap_eqne$2471[1] \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[2] new_new_n805_1
+01 1
+.names o_dbus_dat~28 new_new_n807 o_dbus_dat~29 new_new_n806_1
+-00 1
+011 1
+1-0 1
+.names o_dbus_dat~24 o_dbus_dat~25 o_dbus_dat~26 o_dbus_dat~27 new_new_n807
+0000 1
+.names new_new_n809_1 $dffe~416^Q~0 i_rst i_ibus_ack n441
+-100 1
+1-00 1
+.names new_new_n810_1 $auto$simplemap.cc:248:simplemap_eqne$1980[0] \
+ new_new_n820_1 $auto$simplemap.cc:248:simplemap_eqne$2409[1] $dffe~189^Q~4 \
+ new_new_n819_1 new_new_n809_1
+--1--1 1
+-1-111 1
+1--111 1
+.names new_new_n811 new_new_n817 $auto$rtlil.cc:3194:NotGate$2587 \
+ new_new_n810_1
+-11 1
+000 1
+1-1 1
+.names new_new_n812 new_new_n816 new_new_n815_1 $dff~20^Q~0 $dff~477^Q~0 \
+ new_new_n814_1 new_new_n811
+-00010 1
+-01100 1
+-1-000 1
+0-0010 1
+010-00 1
+1--000 1
+1-1-00 1
+10-110 1
+1110-0 1
+.names new_new_n798 new_new_n797 new_new_n813 new_new_n785_1 o_dbus_we \
+ new_new_n812
+--1-1 1
+-1-00 1
+0--10 1
+.names i_rdata~0 $dffe~465^Q~0 $dff~478^Q~0 new_new_n813
+-00 1
+0-1 1
+.names $auto$simplemap.cc:248:simplemap_eqne$2471[1] $dffe~190^Q~2 \
+ new_new_n814_1
+01 1
+.names $dffe~195^Q~0 o_dbus_we \
+ $auto$simplemap.cc:248:simplemap_eqne$2471[1] $dffe~189^Q~4 \
+ $auto$rtlil.cc:3194:NotGate$2587 new_new_n815_1
+-0001 1
+0-001 1
+.names $auto$rtlil.cc:3194:NotGate$2587 $dffe~190^Q~2 \
+ $auto$simplemap.cc:248:simplemap_eqne$2471[1] new_new_n816
+-01 1
+0-1 1
+.names new_new_n812 new_new_n815_1 $dff~477^Q~0 $dff~20^Q~0 new_new_n818 \
+ new_new_n817
+00001 1
+00111 1
+01011 1
+01101 1
+10011 1
+10101 1
+11001 1
+11111 1
+.names $sdff~418^Q~0 new_new_n800_1 $dffe~13^Q~0 new_new_n814_1 \
+ new_new_n818
+--11 1
+11-1 1
+.names new_new_n783 new_new_n785_1 new_new_n819_1
+11 1
+.names $auto$simplemap.cc:248:simplemap_eqne$1980[2] $dffe~189^Q~4 \
+ new_new_n744 new_new_n820_1
+001 1
+.names new_new_n759 o_ibus_adr~0 new_new_n822 n456
+--1 1
+01- 1
+.names new_new_n823 new_new_n828 $auto$rtlil.cc:3194:NotGate$2587 \
+ $auto$simplemap.cc:248:simplemap_eqne$2471[1] new_new_n759 new_new_n822
+-0001 1
+-0111 1
+0-1-1 1
+01-11 1
+.names new_new_n827 new_new_n826 new_new_n824_1 new_new_n813 new_new_n772 \
+ new_new_n745_1 new_new_n823
+---01- 0
+--0--0 0
+01---0 0
+.names new_new_n785_1 $dffe~270^Q~0 new_new_n800_1 $dffe~269^Q~0 \
+ new_new_n825_1 new_new_n824_1
+--111 0
+11--1 0
+.names $dffe~191^Q~0 $dffe~192^Q~0 new_new_n773 new_new_n825_1
+011 1
+.names $dffe~194^Q~0 $dffe~191^Q~0 $dffe~193^Q~0 new_new_n773 new_new_n826
+0001 1
+.names $sdff~418^Q~0 $dffe~266^Q~0 $sdff~418^Q~3 \
+ $auto$simplemap.cc:248:simplemap_eqne$2127[1] \
+ $auto$simplemap.cc:248:simplemap_eqne$2127[2] \
+ $auto$simplemap.cc:248:simplemap_eqne$2310[0] new_new_n827
+--1100 0
+-11-00 0
+1--101 0
+.names $dff~477^Q~0 $dffe~308^Q~4 $dffe~190^Q~2 new_new_n828
+-00 1
+0-1 1
+.names new_new_n830_1 new_new_n783 new_new_n745_1 n461
+000 1
+.names new_new_n831 new_new_n801_1 \
+ $auto$simplemap.cc:248:simplemap_eqne$2420[0] new_new_n832 $dff~141^Q~0 \
+ new_new_n834_1 new_new_n830_1
+---11- 0
+-01-10 0
+-011-0 0
+1---11 0
+1--1-1 0
+.names $auto$simplemap.cc:248:simplemap_eqne$2127[1] \
+ $auto$simplemap.cc:248:simplemap_eqne$2310[0] \
+ $auto$simplemap.cc:248:simplemap_eqne$2127[2] new_new_n796_1 new_new_n831
+--10 1
+11-0 1
+.names new_new_n833 o_ibus_adr~0 new_new_n832
+01 1
+.names $dffe~191^Q~0 o_dbus_we $dffe~189^Q~4 \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[0] \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[1] \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[2] new_new_n833
+---000 0
+---11- 0
+-00--- 0
+1-1--1 0
+.names $dffe~189^Q~4 $auto$simplemap.cc:248:simplemap_eqne$1980[2] \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[0] new_new_n834_1
+011 1
+.names $dff~140^Q~0 o_ibus_adr~0 new_new_n800_1 $sdff~418^Q~2 \
+ new_new_n745_1 new_new_n783 n466
+-11100 1
+1-1100 1
+11--00 1
+.names new_new_n837 o_ibus_adr~0 new_new_n838 o_ibus_adr~1 n471_1
+--11 1
+11-- 1
+.names new_new_n783 new_new_n745_1 i_rst new_new_n837
+-10 1
+1-0 1
+.names new_new_n783 new_new_n745_1 i_rst new_new_n838
+000 1
+.names new_new_n837 o_ibus_adr~1 new_new_n838 o_ibus_adr~2 n475
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~2 new_new_n838 o_ibus_adr~3 n479
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~3 new_new_n838 o_ibus_adr~4 n483
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~4 new_new_n838 o_ibus_adr~5 n487
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~5 new_new_n838 o_ibus_adr~6 n491
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~6 new_new_n838 o_ibus_adr~7 n495
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~7 new_new_n838 o_ibus_adr~8 n499
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~8 new_new_n838 o_ibus_adr~9 n503
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~9 new_new_n838 o_ibus_adr~10 n507
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~10 new_new_n838 o_ibus_adr~11 n511
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~11 new_new_n838 o_ibus_adr~12 n515
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~12 new_new_n838 o_ibus_adr~13 n519
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~13 new_new_n838 o_ibus_adr~14 n523
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~14 new_new_n838 o_ibus_adr~15 n527
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~15 new_new_n838 o_ibus_adr~16 n531
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~16 new_new_n838 o_ibus_adr~17 n535
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~17 new_new_n838 o_ibus_adr~18 n539
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~18 new_new_n838 o_ibus_adr~19 n543
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~19 new_new_n838 o_ibus_adr~20 n547
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~20 new_new_n838 o_ibus_adr~21 n551
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~21 new_new_n838 o_ibus_adr~22 n555
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~22 new_new_n838 o_ibus_adr~23 n559
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~23 new_new_n838 o_ibus_adr~24 n563
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~24 new_new_n838 o_ibus_adr~25 n567
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~25 new_new_n838 o_ibus_adr~26 n571
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~26 new_new_n838 o_ibus_adr~27 n575
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~27 new_new_n838 o_ibus_adr~28 n579
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~28 new_new_n838 o_ibus_adr~29 n583_1
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~29 new_new_n838 o_ibus_adr~30 n587_1
+--11 1
+11-- 1
+.names new_new_n837 o_ibus_adr~30 new_new_n838 o_ibus_adr~31 n591_1
+--11 1
+11-- 1
+.names new_new_n870_1 new_new_n874_1 o_ibus_adr~31 new_new_n837 \
+ new_new_n838 n595_1
+--11- 1
+-1--1 1
+1---1 1
+.names new_new_n873 new_new_n799 new_new_n871 $dff~141^Q~0 $sdffe~414^Q~0 \
+ new_new_n872 new_new_n870_1
+-00111 1
+-01011 1
+1---01 1
+.names new_new_n831 new_new_n802 new_new_n803 \
+ $auto$simplemap.cc:248:simplemap_eqne$2420[0] new_new_n834_1 new_new_n832 \
+ new_new_n871
+---001 1
+--1100 1
+-00-01 1
+-1-100 1
+0---11 1
+1---10 1
+.names new_new_n775_1 new_new_n759 new_new_n872
+01 1
+.names new_new_n800_1 $sdff~418^Q~2 $dff~140^Q~0 o_ibus_adr~0 new_new_n873
+-001 1
+-010 1
+0-01 1
+0-10 1
+1100 1
+1111 1
+.names new_new_n872 new_new_n875_1 new_new_n813 new_new_n874_1
+000 1
+.names $sdff~418^Q~0 $sdff~418^Q~1 new_new_n800_1 new_new_n875_1
+-11 1
+1-1 1
+.names $dffe~189^Q~4 new_new_n834_1 new_new_n888 new_new_n879_1 \
+ new_new_n877 new_new_n884_1 n604
+---1-1 1
+--0--0 1
+-1--11 1
+1---10 1
+.names new_new_n799 new_new_n871 $dff~141^Q~0 new_new_n877
+001 1
+010 1
+.names new_new_n801_1 $auto$simplemap.cc:248:simplemap_eqne$2420[0] \
+ new_new_n880_1 new_new_n882 new_new_n883 new_new_n879_1
+---11 1
+--0-1 1
+01--1 1
+.names $dffe~13^Q~0 $auto$simplemap.cc:248:simplemap_eqne$2471[1] \
+ new_new_n799 new_new_n881 $dffe~190^Q~2 new_new_n880_1
+---00 0
+111-1 0
+.names $auto$simplemap.cc:248:simplemap_eqne$2471[1] \
+ $auto$rtlil.cc:3194:NotGate$2587 new_new_n812 $dff~477^Q~0 new_new_n881
+-100 0
+-111 0
+1-01 0
+.names new_new_n812 new_new_n815_1 $dff~477^Q~0 $dff~20^Q~0 new_new_n761_1 \
+ new_new_n882
+00011 1
+00101 1
+01001 1
+01111 1
+10001 1
+10111 1
+11011 1
+11101 1
+.names $auto$simplemap.cc:248:simplemap_eqne$1980[0] $dffe~189^Q~4 \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[2] new_new_n883
+001 1
+.names new_new_n873 new_new_n885_1 $dffe~189^Q~4 \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[0] new_new_n759 new_new_n823 \
+ new_new_n884_1
+--0111 1
+-0-011 1
+0--111 1
+.names $dffe~190^Q~2 $dffe~332^Q~0 new_new_n887 \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[2] new_new_n886 new_new_n885_1
+--000 1
+11-01 1
+.names $auto$rtlil.cc:3194:NotGate$2587 \
+ $auto$simplemap.cc:248:simplemap_eqne$2127[1] \
+ $auto$simplemap.cc:248:simplemap_eqne$2127[2] \
+ $auto$simplemap.cc:248:simplemap_eqne$2471[1] new_new_n886
+--10 1
+11-0 1
+.names o_dbus_dat~24 o_dbus_dat~8 o_dbus_dat~16 o_dbus_dat~0 \
+ $auto$simplemap.cc:248:simplemap_eqne$2409[1] \
+ $auto$simplemap.cc:248:simplemap_eqne$2420[0] new_new_n887
+---000 1
+--0-10 1
+-0--01 1
+0---11 1
+.names $dffe~189^Q~4 new_new_n801_1 \
+ $auto$simplemap.cc:248:simplemap_eqne$2420[0] new_new_n759 new_new_n888
+---1 0
+001- 0
+.names $auto$simplemap.cc:248:simplemap_eqne$2420[0] \
+ $auto$simplemap.cc:248:simplemap_eqne$2409[1] new_new_n890_1 n609
+-10 1
+1-1 1
+.names new_new_n801_1 new_new_n875_1 new_new_n783 new_new_n890_1
+-01 1
+1-0 1
+.names o_dbus_adr~2 $auto$simplemap.cc:248:simplemap_eqne$2409[1] \
+ new_new_n892 $dff~43^Q~0 new_new_n783 new_new_n890_1 n614
+--0110 1
+--1010 1
+-1---1 1
+1---00 1
+.names $auto$simplemap.cc:248:simplemap_eqne$1980[1] \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[0] $dffe~189^Q~4 $dff~477^Q~0 \
+ new_new_n795_1 new_new_n892
+---01 1
+--010 1
+-01-1 1
+01-10 1
+1-1-1 1
+.names o_dbus_adr~2 o_dbus_adr~3 new_new_n801_1 n619_1
+-10 1
+1-1 1
+.names o_dbus_adr~3 o_dbus_adr~4 new_new_n801_1 n623_1
+-10 1
+1-1 1
+.names o_dbus_adr~4 o_dbus_adr~5 new_new_n801_1 n627_1
+-10 1
+1-1 1
+.names o_dbus_adr~5 o_dbus_adr~6 new_new_n801_1 n631_1
+-10 1
+1-1 1
+.names o_dbus_adr~6 o_dbus_adr~7 new_new_n801_1 n635_1
+-10 1
+1-1 1
+.names o_dbus_adr~7 o_dbus_adr~8 new_new_n801_1 n639_1
+-10 1
+1-1 1
+.names o_dbus_adr~8 o_dbus_adr~9 new_new_n801_1 n643_1
+-10 1
+1-1 1
+.names o_dbus_adr~9 o_dbus_adr~10 new_new_n801_1 n647_1
+-10 1
+1-1 1
+.names o_dbus_adr~10 o_dbus_adr~11 new_new_n801_1 n651_1
+-10 1
+1-1 1
+.names o_dbus_adr~11 o_dbus_adr~12 new_new_n801_1 n655_1
+-10 1
+1-1 1
+.names o_dbus_adr~16 o_dbus_adr~17 new_new_n801_1 n659_1
+-10 1
+1-1 1
+.names o_dbus_adr~17 o_dbus_adr~18 new_new_n801_1 n663_1
+-10 1
+1-1 1
+.names o_dbus_adr~20 o_dbus_adr~21 new_new_n801_1 n667_1
+-10 1
+1-1 1
+.names o_dbus_adr~21 o_dbus_adr~22 new_new_n801_1 n671_1
+-10 1
+1-1 1
+.names o_dbus_adr~22 o_dbus_adr~23 new_new_n801_1 n675_1
+-10 1
+1-1 1
+.names o_dbus_adr~23 o_dbus_adr~24 new_new_n801_1 n679_1
+-10 1
+1-1 1
+.names o_dbus_adr~26 o_dbus_adr~27 new_new_n801_1 n683_1
+-10 1
+1-1 1
+.names o_dbus_adr~27 o_dbus_adr~28 new_new_n801_1 n687_1
+-10 1
+1-1 1
+.names o_dbus_adr~28 o_dbus_adr~29 new_new_n801_1 n691_1
+-10 1
+1-1 1
+.names o_dbus_adr~29 o_dbus_adr~30 new_new_n801_1 n695_1
+-10 1
+1-1 1
+.names o_dbus_adr~30 o_dbus_adr~31 new_new_n801_1 n699_1
+-10 1
+1-1 1
+.names $dffe~195^Q~0 o_dbus_adr~31 new_new_n892 $dff~43^Q~0 new_new_n801_1 \
+ new_new_n783 n703_1
+--0101 1
+--1001 1
+-1--1- 1
+11---0 1
+.names $dffe~332^Q~0 new_new_n887 new_new_n886 n707_1
+-00 1
+1-1 1
+.names o_dbus_dat~1 o_dbus_dat~0 i_dbus_rdt~0 new_new_n917 i_dbus_ack n712
+--1-1 1
+-1-00 1
+1--10 1
+.names new_new_n918 new_new_n745_1 new_new_n917
+00 1
+.names new_new_n783 $auto$simplemap.cc:248:simplemap_eqne$2409[1] \
+ $auto$simplemap.cc:248:simplemap_eqne$2420[0] new_new_n805_1 \
+ $auto$simplemap.cc:248:simplemap_eqne$2127[2] \
+ $auto$simplemap.cc:248:simplemap_eqne$2127[1] new_new_n918
+---1-1 1
+---11- 1
+--1-11 1
+-1--1- 1
+-11--1 1
+0--1-- 1
+.names o_dbus_dat~2 o_dbus_dat~1 i_dbus_rdt~1 new_new_n917 i_dbus_ack \
+ n716_1
+--1-1 1
+-1-00 1
+1--10 1
+.names o_dbus_dat~3 o_dbus_dat~2 i_dbus_rdt~2 new_new_n917 i_dbus_ack n720
+--1-1 1
+-1-00 1
+1--10 1
+.names o_dbus_dat~4 o_dbus_dat~3 i_dbus_rdt~3 new_new_n917 i_dbus_ack n724
+--1-1 1
+-1-00 1
+1--10 1
+.names o_dbus_dat~5 o_dbus_dat~4 i_dbus_rdt~4 new_new_n917 i_dbus_ack n728
+--1-1 1
+-1-00 1
+1--10 1
+.names o_dbus_dat~6 o_dbus_dat~5 i_dbus_rdt~5 new_new_n917 i_dbus_ack n732
+--1-1 1
+-1-00 1
+1--10 1
+.names o_dbus_dat~7 o_dbus_dat~6 i_dbus_rdt~6 new_new_n917 i_dbus_ack n736
+--1-1 1
+-1-00 1
+1--10 1
+.names o_dbus_dat~8 o_dbus_dat~7 i_dbus_rdt~7 new_new_n917 i_dbus_ack \
+ n740_1
+--1-1 1
+-1-00 1
+1--10 1
+.names o_dbus_dat~9 o_dbus_dat~8 i_dbus_rdt~8 new_new_n917 i_dbus_ack n744
+--1-1 1
+-1-00 1
+1--10 1
+.names o_dbus_dat~10 o_dbus_dat~9 i_dbus_rdt~9 new_new_n917 i_dbus_ack n748
+--1-1 1
+-1-00 1
+1--10 1
+.names o_dbus_dat~11 o_dbus_dat~10 i_dbus_rdt~10 new_new_n917 i_dbus_ack \
+ n752
+--1-1 1
+-1-00 1
+1--10 1
+.names o_dbus_dat~12 o_dbus_dat~11 i_dbus_rdt~11 new_new_n917 i_dbus_ack \
+ n756
+--1-1 1
+-1-00 1
+1--10 1
+.names o_dbus_dat~13 o_dbus_dat~12 i_dbus_rdt~12 new_new_n917 i_dbus_ack \
+ n760_1
+--1-1 1
+-1-00 1
+1--10 1
+.names o_dbus_dat~14 o_dbus_dat~13 i_dbus_rdt~13 new_new_n917 i_dbus_ack \
+ n764
+--1-1 1
+-1-00 1
+1--10 1
+.names o_dbus_dat~15 o_dbus_dat~14 i_dbus_rdt~14 new_new_n917 i_dbus_ack \
+ n768
+--1-1 1
+-1-00 1
+1--10 1
+.names o_dbus_dat~16 o_dbus_dat~15 i_dbus_rdt~15 new_new_n917 i_dbus_ack \
+ n772
+--1-1 1
+-1-00 1
+1--10 1
+.names o_dbus_dat~17 o_dbus_dat~16 i_dbus_rdt~16 new_new_n917 i_dbus_ack \
+ n776
+--1-1 1
+-1-00 1
+1--10 1
+.names o_dbus_dat~18 o_dbus_dat~17 i_dbus_rdt~17 new_new_n917 i_dbus_ack \
+ n780_1
+--1-1 1
+-1-00 1
+1--10 1
+.names o_dbus_dat~19 o_dbus_dat~18 i_dbus_rdt~18 new_new_n917 i_dbus_ack \
+ n784
+--1-1 1
+-1-00 1
+1--10 1
+.names o_dbus_dat~20 o_dbus_dat~19 i_dbus_rdt~19 new_new_n917 i_dbus_ack \
+ n788
+--1-1 1
+-1-00 1
+1--10 1
+.names o_dbus_dat~21 o_dbus_dat~20 i_dbus_rdt~20 new_new_n917 i_dbus_ack \
+ n792
+--1-1 1
+-1-00 1
+1--10 1
+.names o_dbus_dat~22 o_dbus_dat~21 i_dbus_rdt~21 new_new_n917 i_dbus_ack \
+ n796
+--1-1 1
+-1-00 1
+1--10 1
+.names o_dbus_dat~23 o_dbus_dat~22 i_dbus_rdt~22 new_new_n917 i_dbus_ack \
+ n800_1
+--1-1 1
+-1-00 1
+1--10 1
+.names o_dbus_dat~24 o_dbus_dat~23 i_dbus_rdt~23 new_new_n917 i_dbus_ack \
+ n804
+--1-1 1
+-1-00 1
+1--10 1
+.names i_dbus_rdt~24 new_new_n917 o_dbus_dat~25 new_new_n804 o_dbus_dat~24 \
+ i_dbus_ack n808
+---100 1
+--1010 1
+-0-010 1
+-11-00 1
+1----1 1
+.names o_dbus_dat~25 new_new_n945_1 new_new_n944_1 n812
+-00 1
+1-1 1
+.names new_new_n917 new_new_n804 i_dbus_ack new_new_n944_1
+000 1
+.names o_dbus_dat~26 i_dbus_rdt~25 o_dbus_dat~24 o_dbus_dat~25 new_new_n804 \
+ i_dbus_ack new_new_n945_1
+--0110 1
+--1010 1
+-0---1 1
+0---00 1
+.names new_new_n947 i_dbus_rdt~26 o_dbus_dat~26 i_dbus_ack new_new_n944_1 \
+ n816
+--1-1 1
+-1-10 1
+1--00 1
+.names o_dbus_dat~27 o_dbus_dat~24 o_dbus_dat~25 o_dbus_dat~26 new_new_n804 \
+ new_new_n947
+--111 1
+-0001 1
+-1-11 1
+1---0 1
+.names new_new_n949_1 i_dbus_rdt~27 o_dbus_dat~27 i_dbus_ack new_new_n944_1 \
+ n820
+--1-1 1
+-1-10 1
+1--00 1
+.names o_dbus_dat~28 o_dbus_dat~24 o_dbus_dat~25 o_dbus_dat~26 \
+ o_dbus_dat~27 new_new_n804 new_new_n949_1
+---111 1
+--1-11 1
+-00001 1
+-1--11 1
+1----0 1
+.names new_new_n951 i_dbus_rdt~28 o_dbus_dat~28 i_dbus_ack new_new_n944_1 \
+ n824_1
+--1-1 1
+-1-10 1
+0--00 1
+.names o_dbus_dat~29 new_new_n807 o_dbus_dat~28 new_new_n804 new_new_n951
+-001 1
+-111 1
+0--0 1
+.names new_new_n953 i_dbus_rdt~29 o_dbus_dat~29 i_dbus_ack new_new_n944_1 \
+ n828
+--1-1 1
+-1-10 1
+1--00 1
+.names new_new_n954_1 o_dbus_dat~30 new_new_n806_1 new_new_n804 \
+ new_new_n953
+--01 1
+01-0 1
+.names $auto$simplemap.cc:248:simplemap_eqne$2127[1] \
+ $auto$simplemap.cc:248:simplemap_eqne$2127[2] \
+ $auto$simplemap.cc:248:simplemap_eqne$2310[0] new_new_n805_1 $sdff~418^Q~3 \
+ new_new_n954_1
+00111 1
+.names i_dbus_rdt~30 o_dbus_dat~31 o_dbus_dat~30 i_dbus_ack new_new_n944_1 \
+ n832
+--1-1 1
+-1-00 1
+1--10 1
+.names new_new_n812 i_dbus_rdt~31 o_dbus_dat~31 i_dbus_ack new_new_n944_1 \
+ n836
+--1-1 1
+-1-10 1
+0--00 1
+.names new_new_n811 new_new_n817 $dffe~13^Q~0 new_new_n745_1 n840
+--01 0
+00-0 0
+.names $add~457^lAND~17 i_rdata~0 $sdff~467^Q~0 n845
+--1 1
+11- 1
+.names i_rdata~1 $add~457^lAND~17 n850
+11 1
+.names new_new_n771_1 new_new_n745_1 $dffe~466^Q~0 $add~457^lAND~17 n855
+--10 1
+00-1 1
+.names new_new_n962 new_new_n809_1 i_ibus_ack o_raddr~0 $add~457^lAND~17 \
+ i_rst n860
+-00010 1
+-00100 1
+0----0 1
+.names new_new_n963 $dffe~190^Q~2 new_new_n819_1 new_new_n883 \
+ new_new_n964_1 new_new_n962
+--0-1 1
+-0-11 1
+0--01 1
+.names $auto$simplemap.cc:248:simplemap_eqne$2409[1] new_new_n811 \
+ new_new_n817 $auto$simplemap.cc:248:simplemap_eqne$1980[0] \
+ $auto$rtlil.cc:3194:NotGate$2587 $dffe~189^Q~4 new_new_n963
+--1001 1
+-00011 1
+-1-001 1
+0----1 1
+.names new_new_n806_1 new_new_n804 new_new_n965_1 i_dbus_ack new_new_n964_1
+--00 1
+11-0 1
+.names $dffe~190^Q~2 new_new_n745_1 $sdffe~415^Q~0 new_new_n783 \
+ new_new_n785_1 new_new_n805_1 new_new_n965_1
+---111 1
+011--1 1
+.names $dffe~268^Q~0 new_new_n967 i_timer_irq $sdffe~267^Q~0 i_rst \
+ i_ibus_ack n864_1
+---100 1
+011-01 1
+.names $sdffe~271^Q~0 $dffe~266^Q~0 new_new_n967
+11 1
+.names new_new_n969_1 $dffe~194^Q~0 new_new_n773 new_new_n970_1 \
+ $sdffe~271^Q~0 i_rst n869_1
+---010 1
+--0-10 1
+-1--10 1
+1011-0 1
+.names new_new_n828 $auto$rtlil.cc:3194:NotGate$2587 \
+ $auto$simplemap.cc:248:simplemap_eqne$2471[1] new_new_n969_1
+000 1
+011 1
+.names $dffe~191^Q~0 $auto$simplemap.cc:248:simplemap_eqne$2127[1] \
+ $auto$simplemap.cc:248:simplemap_eqne$2127[2] \
+ $auto$simplemap.cc:248:simplemap_eqne$2310[0] $dffe~193^Q~0 $sdff~418^Q~3 \
+ new_new_n970_1
+000111 1
+.names $dffe~416^Q~0 $dffe~269^Q~1 $dffe~269^Q~0 $sdffe~267^Q~0 \
+ new_new_n973 new_new_n972 n874_1
+--0--1 0
+-0-000 0
+1--000 0
+.names new_new_n745_1 new_new_n825_1 new_new_n800_1 new_new_n785_1 \
+ new_new_n759 new_new_n972
+---10 0
+011-- 0
+.names $dffe~192^Q~0 new_new_n761_1 new_new_n760_1 new_new_n973
+011 1
+.names new_new_n759 $dffe~269^Q~2 $dffe~269^Q~1 new_new_n975_1 new_new_n972 \
+ n879_1
+---00 1
+--1-1 1
+11--0 1
+.names o_dbus_we $dffe~189^Q~4 new_new_n973 $sdffe~267^Q~0 new_new_n975_1
+-100 1
+0-00 1
+.names new_new_n759 $dffe~269^Q~3 $dffe~269^Q~2 $sdffe~267^Q~0 \
+ $dffe~189^Q~4 new_new_n972 n884_1
+--0--1 0
+-0-010 0
+0--010 0
+.names $dffe~191^Q~0 new_new_n973 new_new_n822 $dffe~269^Q~3 new_new_n972 \
+ n889_1
+---11 1
+--1-0 1
+01--0 1
+.names new_new_n785_1 $sdff~418^Q~3 new_new_n962 $sdff~461^Q~0 i_rst n894_1
+---10 1
+--0-0 1
+01--0 1
+.names i_rst $sdff~418^Q~0 n899_1
+01 1
+.names i_rst $sdff~418^Q~1 n904_1
+01 1
+.names i_rst $sdff~418^Q~2 n909_1
+01 1
+.names i_rst $sdff~468^Q~0 n914_1
+01 1
+.names new_new_n809_1 i_ibus_ack i_rst n919_1
+-10 1
+1-0 1
+.names new_new_n809_1 i_ibus_ack i_rst new_new_n962 new_new_n985_1 n924_1
+00011 1
+.names o_raddr~0 $add~457^lAND~17 $sdffe~462^Q~0 new_new_n985_1
+-01 1
+0-1 1
+110 1
+.names new_new_n809_1 i_ibus_ack i_rst new_new_n962 new_new_n987 n929_1
+00011 1
+.names o_raddr~0 $sdffe~462^Q~0 $add~457^lAND~17 $sdffe~462^Q~1 \
+ new_new_n987
+--01 1
+-0-1 1
+0--1 1
+1110 1
+.names new_new_n809_1 new_new_n989_1 i_ibus_ack i_rst new_new_n962 n934_1
+00001 1
+.names o_raddr~0 $sdffe~462^Q~0 $sdffe~462^Q~1 $add~457^lAND~17 o_raddr~3 \
+ new_new_n989_1
+---00 1
+--0-0 1
+-0--0 1
+0---0 1
+11111 1
+.names new_new_n809_1 i_ibus_ack i_rst $add~457^lAND~17 new_new_n962 n938
+00001 1
+.names new_new_n992 new_new_n783 $sdffe~414^Q~0 i_rst new_new_n785_1 n943
+--100 1
+11-01 1
+.names new_new_n810_1 $auto$simplemap.cc:248:simplemap_eqne$1980[0] \
+ $dffe~189^Q~4 new_new_n992
+-11 1
+1-1 1
+.names $dffe~270^Q~0 $sdffe~267^Q~0 new_new_n822 new_new_n825_1 \
+ new_new_n785_1 new_new_n759 n948
+-00--0 0
+-0011- 0
+0---01 0
+0--0-1 0
+.names new_new_n785_1 new_new_n996 new_new_n822 new_new_n759 $dffe~266^Q~0 \
+ new_new_n995_1 n953
+---111 1
+--1--0 1
+-1-1-0 1
+0---11 1
+.names new_new_n800_1 $sdff~418^Q~3 new_new_n826 new_new_n775_1 \
+ new_new_n995_1
+---1 0
+111- 0
+.names new_new_n775_1 $dffe~265^Q~0 new_new_n996
+11 1
+.names new_new_n783 new_new_n998_1 new_new_n759 $dffe~469^Q~0 \
+ new_new_n745_1 $add~457^lAND~17 n958
+---1-0 1
+--0-01 1
+01--01 1
+.names $dffe~189^Q~4 o_dbus_we \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[2] \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[0] new_new_n999_1 \
+ new_new_n998_1
+--1-0 1
+-0-00 1
+1--10 1
+.names $dffe~304^Q~0 $dffe~304^Q~1 $dffe~304^Q~2 $dffe~304^Q~3 \
+ $dffe~304^Q~4 new_new_n999_1
+00000 1
+.names $dff~477^Q~0 $dff~20^Q~0 new_new_n745_1 new_new_n812 new_new_n815_1 \
+ n963
+--1-0 1
+-1-10 1
+-1001 1
+1--10 1
+1-001 1
+110-- 1
+.names new_new_n967 i_timer_irq $dffe~268^Q~0 i_ibus_ack n968
+--10 1
+11-1 1
+.names $dffe~413^Q~0 new_new_n785_1 i_ibus_ack i_rst new_new_n837 n973
+---10 1
+--1-0 1
+-1--0 1
+1000- 1
+.names i_ibus_rdt~20 $dffe~308^Q~1 $dffe~308^Q~0 i_ibus_ack new_new_n1004_1 \
+ n978
+--1-0 1
+-1-01 1
+1--11 1
+.names new_new_n745_1 new_new_n1005 i_ibus_ack new_new_n1004_1
+--1 1
+00- 1
+.names $dffe~190^Q~2 $dffe~189^Q~4 \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[1] \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[0] \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[2] new_new_n1005
+--0-0 1
+-0-01 1
+1--01 1
+.names i_ibus_rdt~12 $dffe~308^Q~2 $dffe~308^Q~1 i_ibus_ack new_new_n1004_1 \
+ n983
+--1-0 1
+-1-01 1
+1--11 1
+.names i_ibus_rdt~13 $dffe~308^Q~3 $dffe~308^Q~2 i_ibus_ack new_new_n1004_1 \
+ n988
+--1-0 1
+-1-01 1
+1--11 1
+.names i_ibus_rdt~14 $dffe~308^Q~4 $dffe~308^Q~3 i_ibus_ack new_new_n1004_1 \
+ n993
+--1-0 1
+-1-01 1
+1--11 1
+.names i_ibus_rdt~15 $dffe~308^Q~5 $dffe~308^Q~4 i_ibus_ack new_new_n1004_1 \
+ n998_1
+--1-0 1
+-1-01 1
+1--11 1
+.names i_ibus_rdt~16 $dffe~308^Q~6 $dffe~308^Q~5 i_ibus_ack new_new_n1004_1 \
+ n1003_1
+--1-0 1
+-1-01 1
+1--11 1
+.names i_ibus_rdt~17 $dffe~308^Q~7 $dffe~308^Q~6 i_ibus_ack new_new_n1004_1 \
+ n1008_1
+--1-0 1
+-1-01 1
+1--11 1
+.names i_ibus_rdt~18 $dffe~308^Q~8 $dffe~308^Q~7 i_ibus_ack new_new_n1004_1 \
+ n1013_1
+--1-0 1
+-1-01 1
+1--11 1
+.names new_new_n1014_1 i_ibus_rdt~19 $dffe~308^Q~8 i_ibus_ack \
+ new_new_n1004_1 n1018_1
+--1-0 1
+-1-11 1
+0--01 1
+.names new_new_n798 $dffe~305^Q~0 $dffe~189^Q~4 new_new_n1014_1
+-00 1
+0-1 1
+.names i_rst $sdff~418^Q~3 $auto$simplemap.cc:248:simplemap_eqne$2310[0] \
+ n1023
+001 1
+010 1
+.names $sdff~418^Q~3 $auto$simplemap.cc:248:simplemap_eqne$2310[0] i_rst \
+ $auto$simplemap.cc:248:simplemap_eqne$2127[1] n1028
+-001 1
+0-01 1
+1100 1
+.names $sdff~418^Q~3 $auto$simplemap.cc:248:simplemap_eqne$2310[0] \
+ $auto$simplemap.cc:248:simplemap_eqne$2127[1] i_rst \
+ $auto$simplemap.cc:248:simplemap_eqne$2127[2] n1033
+--001 1
+-0-01 1
+0--01 1
+11100 1
+.names $dffe~307^Q~0 new_new_n798 i_ibus_rdt~7 new_new_n745_1 i_ibus_ack \
+ n1038
+--1-1 1
+-1-00 1
+1--10 1
+.names $dffe~304^Q~1 $dffe~304^Q~0 i_ibus_rdt~7 new_new_n1020 i_ibus_ack \
+ n1043
+--1-1 1
+-1-00 1
+1--10 1
+.names $dffe~189^Q~4 o_dbus_we \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[2] new_new_n745_1 \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[0] new_new_n1020
+-1000 1
+0-001 1
+.names $dffe~304^Q~2 $dffe~304^Q~1 i_ibus_rdt~8 new_new_n1020 i_ibus_ack \
+ n1048
+--1-1 1
+-1-00 1
+1--10 1
+.names $dffe~304^Q~3 $dffe~304^Q~2 i_ibus_rdt~9 new_new_n1020 i_ibus_ack \
+ n1053
+--1-1 1
+-1-00 1
+1--10 1
+.names $dffe~304^Q~4 $dffe~304^Q~3 i_ibus_rdt~10 new_new_n1020 i_ibus_ack \
+ n1058
+--1-1 1
+-1-00 1
+1--10 1
+.names $dffe~306^Q~0 $dffe~304^Q~4 i_ibus_rdt~11 new_new_n1020 i_ibus_ack \
+ n1063
+--1-1 1
+-1-00 1
+1--10 1
+.names i_ibus_rdt~20 $dffe~305^Q~1 $dffe~305^Q~0 i_ibus_ack new_new_n1026 \
+ n1068
+--1-0 1
+-1-01 1
+1--11 1
+.names $auto$simplemap.cc:248:simplemap_eqne$1980[0] new_new_n760_1 \
+ o_dbus_we new_new_n745_1 i_ibus_ack new_new_n1026
+---10 0
+001-0 0
+.names i_ibus_rdt~21 $dffe~305^Q~2 $dffe~305^Q~1 i_ibus_ack new_new_n1026 \
+ n1073
+--1-0 1
+-1-01 1
+1--11 1
+.names i_ibus_rdt~22 $dffe~305^Q~3 $dffe~305^Q~2 i_ibus_ack new_new_n1026 \
+ n1078
+--1-0 1
+-1-01 1
+1--11 1
+.names i_ibus_rdt~23 $dffe~305^Q~4 $dffe~305^Q~3 i_ibus_ack new_new_n1026 \
+ n1083
+--1-0 1
+-1-01 1
+1--11 1
+.names i_ibus_rdt~24 $dffe~306^Q~0 $dffe~305^Q~4 i_ibus_ack new_new_n1026 \
+ n1088
+--1-0 1
+-1-01 1
+1--11 1
+.names i_ibus_rdt~25 $dffe~306^Q~1 $dffe~306^Q~0 i_ibus_ack new_new_n1032_1 \
+ n1093
+--1-0 1
+-1-01 1
+1--11 1
+.names o_dbus_we $dffe~189^Q~4 \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[2] \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[0] new_new_n745_1 i_ibus_ack \
+ new_new_n1032_1
+----10 0
+0001-0 0
+.names i_ibus_rdt~26 $dffe~306^Q~2 $dffe~306^Q~1 i_ibus_ack new_new_n1032_1 \
+ n1098
+--1-0 1
+-1-01 1
+1--11 1
+.names i_ibus_rdt~27 $dffe~306^Q~3 $dffe~306^Q~2 i_ibus_ack new_new_n1032_1 \
+ n1103
+--1-0 1
+-1-01 1
+1--11 1
+.names i_ibus_rdt~28 $dffe~306^Q~4 $dffe~306^Q~3 i_ibus_ack new_new_n1032_1 \
+ n1108
+--1-0 1
+-1-01 1
+1--11 1
+.names i_ibus_rdt~29 $dffe~306^Q~5 $dffe~306^Q~4 i_ibus_ack new_new_n1032_1 \
+ n1113
+--1-0 1
+-1-01 1
+1--11 1
+.names new_new_n1038 i_ibus_rdt~30 $dffe~306^Q~5 i_ibus_ack new_new_n1032_1 \
+ n1118
+--1-0 1
+-1-11 1
+0--01 1
+.names $dffe~307^Q~0 new_new_n798 $dffe~308^Q~0 \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[0] $dffe~189^Q~4 new_new_n1039 \
+ new_new_n1038
+--0-01 1
+--01-1 1
+-0--00 1
+-0-1-0 1
+0--01- 1
+.names $auto$simplemap.cc:248:simplemap_eqne$1980[2] \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[0] \
+ $auto$simplemap.cc:248:simplemap_eqne$1980[1] new_new_n1039
+--1 1
+11- 1
+.names i_rdata~1 $dffe~465^Q~0 $dff~478^Q~0 n1123
+-10 1
+1-1 1
+.names o_dbus_adr~12 o_dbus_adr~14 new_new_n801_1 o_dbus_adr~13 n1133
+-001 1
+-100 1
+0-11 1
+1-10 1
+.names new_new_n801_1 o_dbus_adr~15 $dff~42^Q~2 $dff~42^Q~1 n1138
+-011 1
+-101 1
+0-10 1
+1--1 1
+.names o_dbus_adr~16 $dff~42^Q~1 new_new_n801_1 $dff~42^Q~2 o_dbus_adr~15 \
+ n1143
+--11- 1
+-0-11 1
+-1001 1
+0-0-1 1
+1-000 1
+.names o_dbus_adr~15 o_dbus_adr~16 new_new_n801_1 n1148
+-10 1
+1-1 1
+.names new_new_n801_1 o_dbus_adr~20 o_dbus_adr~18 $dff~42^Q~4 n1152
+-001 1
+-111 1
+0010 1
+0100 1
+1--1 1
+.names new_new_n801_1 $dff~42^Q~4 o_dbus_adr~18 n1157
+-01 1
+010 1
+1-1 1
+.names new_new_n801_1 o_dbus_adr~26 o_dbus_adr~24 $dff~42^Q~6 n1161
+-001 1
+-111 1
+0010 1
+0100 1
+1--1 1
+.names new_new_n801_1 $dff~42^Q~6 o_dbus_adr~24 n1166
+-01 1
+010 1
+1-1 1
+.names i_ibus_rdt~12 $auto$rtlil.cc:3194:NotGate$2587 i_ibus_ack n1170
+-10 1
+0-1 1
+.names i_ibus_rdt~13 $auto$simplemap.cc:248:simplemap_eqne$2471[1] \
+ i_ibus_ack n1175
+-10 1
+1-1 1
+.names i_ibus_rdt~14 $dffe~190^Q~2 i_ibus_ack n1180
+-10 1
+0-1 1
+.names i_ibus_rdt~2 $auto$simplemap.cc:248:simplemap_eqne$1980[0] \
+ i_ibus_ack n1185
+-10 1
+1-1 1
+.names i_ibus_rdt~3 $auto$simplemap.cc:248:simplemap_eqne$1980[1] \
+ i_ibus_ack n1190
+-10 1
+1-1 1
+.names i_ibus_rdt~4 $auto$simplemap.cc:248:simplemap_eqne$1980[2] \
+ i_ibus_ack n1195
+-10 1
+1-1 1
+.names i_ibus_rdt~5 o_dbus_we i_ibus_ack n1200
+-10 1
+1-1 1
+.names i_ibus_rdt~6 $dffe~189^Q~4 i_ibus_ack n1204
+-10 1
+1-1 1
+.names $sdffe~462^Q~0 o_waddr~1
+0 1
+.names o_raddr~0 o_waddr~0
+1 1
+.names $sdffe~462^Q~0 o_raddr~1
+1 1
+.names $sdffe~462^Q~1 o_raddr~2
+1 1
+.names $dff~480^Q~1 n446
+1 1
+.names $dff~480^Q~2 n451_1
+1 1
+.names $dff~479^Q~1 n599_1
+1 1
+.names $add~457^lAND~17 n1128
+1 1
+.names o_dbus_adr~1
+ 0
+.names o_dbus_adr~0
+ 0
+.end
