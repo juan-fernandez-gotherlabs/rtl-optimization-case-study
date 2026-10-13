@@ -66,4 +66,3 @@ important in academia.
 Donations in the form of research grants to promote further research and
 development on the tools will be gladly accepted, either anonymously or with
 attribution on our future publications.
-
