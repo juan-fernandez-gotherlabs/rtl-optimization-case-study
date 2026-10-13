@@ -35,9 +35,9 @@ python3 restore.py --destination /absolute/path/to/recovered --core --runtime
 Use `--study --runtime` for the full history; this restores the compact core
 and then overlays the remaining study. The ordinary full extraction is about
 40 GiB because the original local filesystem compressed many files. Allow at
-least 50 GiB for full extraction and the Docker runtime, plus new experiment
-output. Compact recovery needs substantially less space: about 1 GiB for the
-core, the 7.15 GiB uncompressed image, download/load overhead and output space.
+least 70 GiB for full extraction, Docker import intermediates and new experiment
+output. Allow 25 GiB for compact recovery: about 1 GiB for the core, the
+7.15 GiB image, Docker download/load intermediates and output space.
 
 Requires Python 3.12+, authenticated GitHub CLI and Docker with `linux/amd64`
 support. The loader verifies each downloaded part and the immutable image ID
