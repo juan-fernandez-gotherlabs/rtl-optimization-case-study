@@ -103,15 +103,18 @@ the pinned tools is a separate and more expensive reproduction step.
 ## 6. Preserve development research with its original status
 
 The [SERV 1.4.0 research record](experiments/serv-1.4.0/README.md) preserves the
-best saved candidate when its search was paused. Its twelve pairs belong to
-development selection. Held-out certification and the final 64 pairs remain
-unexecuted for that candidate, and the original greater-than-10% editorial
-objective remains unmet. Registering a research record does not change that
+best saved candidate when its search was paused. Its twelve development pairs
+remain selection evidence. A later fixed 64-pair sample is complete and shows
+3.3474% lower composite PPA with 1.9478% higher delay. The primary timing
+regression rejects acceptance. Separate twelve-pair certification is unexecuted,
+and the original greater-than-10% editorial objective remains unmet.
+Registering a research record does not change that
 experimental acceptance rule.
 
 The SERV package contains source snapshots, an exact patch, recorded source
 and mapped correctness evidence, measured netlists and the 24 saved PPA report
-sets. Its verifier checks consistency and recomputes those measurements.
+sets for development plus all 128 final timing/power/netlist report sets.
+Its verifier checks consistency and recomputes those measurements.
 It neither runs EDA nor turns a selected development confidence bound into a
 confirmatory acceptance result. Paused research is listed separately from
 accepted portfolio cases and commercial-tool transfer experiments.

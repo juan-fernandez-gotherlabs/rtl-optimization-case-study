@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "audited_result_sha256": "2a39a8c018d80203413dc669316c185fc12a2e085e22f89f001a285d565999b4",
+  "sample": "fixed64pairs",
+  "display_aggregation": "geometric means; paired log-ratio intervals",
+  "two_sided_95_Student_t_df63": 1.9983405425207417,
+  "metrics": {
+    "area_total_mwta": {
+      "ratio": 0.9410154491769548,
+      "improvement_percent": 5.898455082304521,
+      "lower_improvement_percent": 5.830458892106572,
+      "upper_improvement_percent": 5.966402175078533,
+      "two_sided_95_log_lower": -0.06151804390933351,
+      "two_sided_95_log_upper": -0.0600733994960087,
+      "wins": 64,
+      "ties": 0,
+      "losses": 0,
+      "per_pair_ratio_median": 0.941088120773725
+    },
+    "critical_path_delay_ns": {
+      "ratio": 1.0194782579750987,
+      "improvement_percent": -1.9478257975098723,
+      "lower_improvement_percent": -2.7748835349589163,
+      "upper_improvement_percent": -1.127423621006729,
+      "two_sided_95_log_lower": 0.011211155689345428,
+      "two_sided_95_log_upper": 0.027370813591208874,
+      "wins": 16,
+      "ties": 0,
+      "losses": 48,
+      "per_pair_ratio_median": 1.0168251072512915
+    },
+    "active_total_power_w": {
+      "ratio": 0.9411654346223935,
+      "improvement_percent": 5.883456537760646,
+      "lower_improvement_percent": 5.218732002865556,
+      "upper_improvement_percent": 6.543519194664138,
+      "two_sided_95_log_lower": -0.06767430397926787,
+      "two_sided_95_log_upper": -0.053598391218509,
+      "wins": 63,
+      "ties": 0,
+      "losses": 1,
+      "per_pair_ratio_median": 0.9447468068671824
+    },
+    "composite": {
+      "ratio": 0.9665260495685716,
+      "improvement_percent": 3.3473950431428423,
+      "lower_improvement_percent": 3.1939699309533776,
+      "upper_improvement_percent": 3.500576996253957,
+      "two_sided_95_log_lower": -0.03563315689681916,
+      "two_sided_95_log_upper": -0.03246089954403576,
+      "wins": 64,
+      "ties": 0,
+      "losses": 0,
+      "per_pair_ratio_median": 0.9649716525774292
+    }
+  },
+  "geometric_aggregates": {
+    "baseline": {
+      "area_total_mwta": 2743358.948891708,
+      "critical_path_delay_ns": 4.220535575238644,
+      "active_total_power_w": 0.0035773456715238647,
+      "delay_derived_frequency_mhz": 236.93675415671777
+    },
+    "optimized": {
+      "area_total_mwta": 2581543.1535449526,
+      "critical_path_delay_ns": 4.302744255966226,
+      "active_total_power_w": 0.003366874093734298,
+      "delay_derived_frequency_mhz": 232.4098158084554
+    }
+  },
+  "strict10_result": false,
+  "separate_certification_12_completed": false,
+  "editorial_publication_accepted": false,
+  "display_intervals_do_not_replace_original_one_sided_acceptance_rules": true,
+  "generator_sha256": "15e4c6758ec8d2dca453d2edd6fef8f470c058fcda77b7839f15ee9a5d673e07"
+}

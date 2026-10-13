@@ -112,7 +112,7 @@ REQUIRED_MANIFEST = {
     "rtl/baseline/int8_matvec_4x4.sv",
     "rtl/changes.patch",
     "rtl/optimized/int8_matvec_4x4.sv",
-    "technical-report.pdf",
+    "RTL-Study-INT8-MatVec.pdf",
     "tests/test_verify.py",
     "tools/generate_report_data.py",
     "tools/build_evidence_bundle.py",

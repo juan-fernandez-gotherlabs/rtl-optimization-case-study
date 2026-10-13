@@ -1,0 +1,11 @@
+      assign encoded_next[12] = address_next[12] ^ address_next[13];
+      assign data[13] = address_code[13] ^ address_code[14] ^ address_code[15];
+      assign encoded_next[13] = address_next[13] ^ address_next[14];
+      assign data[14] = address_code[14] ^ address_code[15];
+      assign encoded_next[14] = address_next[14] ^ address_next[15];
+      assign data[15] = address_code[15];
+      assign encoded_next[15] = address_next[15];
+      assign data[18] = address_code[19];
+      assign encoded_next[18] = address_next[18] ^ address_next[19];
+      assign data[19] = address_code[18] ^ address_code[19];
+      assign encoded_next[19] = address_next[18];

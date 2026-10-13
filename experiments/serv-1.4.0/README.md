@@ -1,12 +1,13 @@
 # SERV 1.4.0 RTL optimization research record
 
-**Status: paused research. The best saved result is a development result from
-12 paired implementations. Held-out certification and the final 64 pairs
-remain unexecuted for this candidate.**
+**Status: optimization paused; fixed 64-pair sample complete and audited.
+The composite improves 3.3474%, but critical-path delay increases 1.9478%.
+The timing regression rejects the candidate under the frozen acceptance rule.**
 
 This record preserves the best implementation and the evidence available when
-the study stopped on 12 October 2026. It belongs to the repository's research
-experiments. The portfolio still has three published, accepted cases.
+the optimization stopped on 12 October 2026. The user then requested a fixed
+64-pair measurement, completed on 13 October. This local package includes that
+sample and a fourteen-page report. The accepted portfolio still has three cases.
 
 ## What the design does
 
@@ -33,7 +34,25 @@ comments, blank lines and inactive alternatives and is not an area measure.
 The result measures the complete combined candidate. It does not assign an
 independent percentage contribution to each transformation.
 
-## Best saved development result
+## Complete fixed 64-pair result
+
+| Metric | Baseline geometric aggregate | Candidate geometric aggregate | Paired change |
+| --- | ---: | ---: | ---: |
+| Total area | 2,743,359 MWTA | 2,581,543 MWTA | **5.8985% lower** |
+| Critical path | 4.220536 ns | 4.302744 ns | **1.9478% higher** |
+| Active total power | 3.577346 mW | 3.366874 mW | **5.8835% lower** |
+| Packed CLBs | 46 | 43 | 6.5217% fewer |
+| Mapped flip-flops | 181 | 181 | Unchanged |
+| Composite PPA | 1.000000 | 0.966526 | **3.3474% lower** |
+
+The composite two-sided 95% improvement interval is 3.1940% to 3.5006%.
+Delay's two-sided interval is 1.1274% to 2.7749% higher. The one-sided delay
+lower ratio is 1.012620, above 1, so the no-primary-regression rule fails.
+Area wins in 64 pairs, power in 63, delay in 16 and the composite in all 64.
+The fourteen-page PDF includes both the complete point clouds and a numerical
+ledger for seeds 6001 through 6064. No pair is removed or replaced.
+
+## Historical twelve-pair development result
 
 | Metric | Baseline mean | Optimized mean | Paired geometric change |
 | --- | ---: | ---: | ---: |
@@ -77,8 +96,9 @@ The package contains saved evidence for:
   initialization rather than forcing it in the proof;
 - two recorded 4,096-cycle post-mapping simulations per design, comparing
   defined RTL output bits; undefined RTL bits are skipped in these simulations;
-- all 24 saved timing/area reports, power reports, flow logs and measured BLIF
-  netlists for the twelve pairs.
+- the 24 saved development timing/area, power and measured-netlist report sets;
+- all 128 final timing/area, power and measured-netlist report sets for the
+  fixed 64 pairs, with the audited full-precision compact result.
 
 The proofs use Yosys sequential equivalence and induction. They are equivalence
 checks for this RTL boundary, not a certification of full RISC-V ISA compliance.
@@ -111,21 +131,24 @@ The last family prepared nine branch/trap candidates: 36 full elaborations and
 three native banks passed, six native banks remained pending, and no PPA
 measurement was completed. Those candidates have no reported improvement.
 
-The study was paused by the user after repeated storage stops. The best RTL,
-measurements and pending checkpoint are preserved. The optimization objective
-remains unmet.
+The optimization was paused by the user after repeated storage stops. The best
+RTL, development measurements and pending checkpoint are preserved. The later
+fixed 64-pair batch measured the same frozen RTL without restarting optimization.
+The optimization objective remains unmet.
 
-## Acceptance remains pending
+## Contract decision
 
 The SERV contract reserved a held-out twelve-pair certification sample and a
-final 64-pair sample. Both remain unused for the current leader. Its original
+final 64-pair sample. The latter is now complete; the separate twelve-pair
+certification sample remains unused. The original
 editorial target requires both a point score and the one-sided 95% upper score
 bound strictly below 0.90, with the declared primary-metric and multiplicity
 rules. The 3.4516% development improvement does not meet that target.
 
-The saved development confidence bound is descriptive after selection. It is
-not used as a confirmatory acceptance test. This research record does not
-change the contract or promote the candidate to an accepted portfolio case.
+The saved development bound remains descriptive after selection. It is not
+pooled with the final sample. The final composite improves, but statistically
+supported delay regression rejects acceptance. This record does not change
+the contract or promote the candidate to an accepted portfolio case.
 
 ## Verify and read the report
 
@@ -141,14 +164,25 @@ Expected SERV output includes:
 ```text
 SERV 1.4.0 saved research evidence: PASS
 development_pairs=12; improvement=3.4516%
-held_out_certification_pairs=0; final_pairs=0; publication_accepted=False
+final_pairs=64; final_improvement=3.3474%
+timing_regression=1.9478%; acceptance=evidence_regression
+held_out_certification_pairs=0; publication_accepted=False
 ```
 
-See the [technical report](technical-report.pdf),
+See the [technical report](RTL-Study-SERV-1.4.0.pdf),
 [frozen public contract projection](contract.json),
 [paired measurements](results/measurements.json),
 [best result](results/development.json) and
 [original pause record](results/pause-record.json).
+
+The final sample is preserved in [confirmation64.json](results/confirmation64.json)
+and its [report data](results/confirmation64-report-data.json). Report sources
+are at [report/latex](report/latex/); regeneration requires TeX Live or MacTeX
+with XeLaTeX and latexmk:
+
+```bash
+python3 tools/build_report.py
+```
 
 ## Source and licensing
 

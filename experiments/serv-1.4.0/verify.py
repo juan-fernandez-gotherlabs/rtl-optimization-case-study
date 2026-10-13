@@ -38,6 +38,8 @@ AUTHORITIES = {
     'evidence/correctness/baseline/formal.log': '03b15157f461114ce01c82454dd76d5912f2a1bfd7e8a2fa66a7a4674372e270',
     'evidence/correctness/optimized/formal.log': '5aee95f07b860f5316b294be69d8c2f730b55289141f45244cb8ac22a791dd8d',
     'evidence/simulation/provenance.json': 'f8866fd4a77a6fa5aeaedffd4eea1f5a6bc939e6510cd4690636ddac50df509a',
+    'results/confirmation64.json': '2a39a8c018d80203413dc669316c185fc12a2e085e22f89f001a285d565999b4',
+    'results/confirmation64-report-data.json': '2be22fffba34e9a472649ec598db772f9ce0adb43d7d8ab25f59d8d2a2382b55',
 }
 
 
@@ -250,6 +252,54 @@ def verify_status(result):
     require(result['external_sram']['RAM_capacity_bits'] == 1152 and result['external_sram']['RAM_logical_rows'] == 576, 'external memory scope differs')
 
 
+def verify_final64():
+    result = load('results/confirmation64.json')
+    display = load('results/confirmation64-report-data.json')
+    require(result['status'] == 'complete_and_audited' and result['pairs'] == 64
+            and result['implementations_audited'] == 128, 'final sample incomplete')
+    rows = result['all_rows']
+    require([row['seed'] for row in rows] == list(range(6001, 6065)), 'final paired pool differs')
+    require(result['frozen_candidate_RTL_sha256'] == OPTIMIZED, 'final candidate differs')
+    require(display['audited_result_sha256'] == sha(ROOT / 'results/confirmation64.json'), 'report data authority differs')
+    logs = {m: [] for m in METRICS}
+    composite_logs = []
+    for row in rows:
+        seed = row['seed']
+        for label in TREES:
+            directory = ROOT / 'evidence/final64' / label / str(seed)
+            require(parse_metrics(directory, seed) == row[label], 'final raw metric extraction differs')
+            first = ROOT / 'evidence/ppa' / label / '5001/serv_synth_wrapper.pre-vpr.blif'
+            require(blif_identity(directory / 'serv_synth_wrapper.pre-vpr.blif') == blif_identity(first), 'final netlist needs another proof')
+        for metric in METRICS:
+            ratio = row['optimized'][metric] / row['baseline'][metric]
+            near(ratio, row['ratios'][metric], 'final per-pair ratio')
+            logs[metric].append(math.log(ratio))
+        composite = statistics.mean(logs[m][-1] for m in METRICS)
+        near(math.exp(composite), row['composite_ratio'], 'final per-pair score')
+        composite_logs.append(composite)
+    logs['composite'] = composite_logs
+    for metric, values in logs.items():
+        mean = statistics.mean(values)
+        se = statistics.stdev(values) / 8
+        expected = result['statistics']['confidence']['composite'] if metric == 'composite' else result['statistics']['confidence']['metrics'][metric]
+        near(mean, expected['mean_log_ratio'], 'final mean log ratio')
+        near(mean - 1.6694022217068127 * se, expected['lower'], 'final lower acceptance bound')
+        near(mean + 1.6694022217068127 * se, expected['upper'], 'final upper acceptance bound')
+        point = display['metrics'][metric]
+        near(math.exp(mean), point['ratio'], 'display ratio')
+        near(100 * (1-math.exp(mean + 1.9983405425207417 * se)), point['lower_improvement_percent'], 'display lower interval')
+        near(100 * (1-math.exp(mean - 1.9983405425207417 * se)), point['upper_improvement_percent'], 'display upper interval')
+        ratios = [math.exp(value) for value in values]
+        require(point['wins'] == sum(v < 1 for v in ratios) and point['ties'] == sum(v == 1 for v in ratios)
+                and point['losses'] == sum(v > 1 for v in ratios), 'final win/tie/loss count differs')
+    near(math.exp(statistics.mean(composite_logs)), result['statistics']['score'], 'final score')
+    delay_lower = result['statistics']['confidence']['metrics']['critical_path_delay_ns']['lower']
+    require(delay_lower > 0 and result['statistics']['acceptance_decision'] == 'evidence_regression', 'timing regression concealed')
+    require(result['strict10_result_on_fixed64'] is False and result['editorial_publication_accepted'] is False
+            and result['held_out_certification_12_completed'] is False, 'unsupported final acceptance claim')
+    return result
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument('--write-manifest', action='store_true')
@@ -262,9 +312,12 @@ def main(argv=None):
     verify_recorded_correctness()
     result = verify_measurements()
     verify_status(result)
+    final = verify_final64()
     print('SERV 1.4.0 saved research evidence: PASS')
     print(f'development_pairs=12; improvement={result["improvement_percent"]:.4f}%')
-    print('held_out_certification_pairs=0; final_pairs=0; publication_accepted=False')
+    print(f'final_pairs=64; final_improvement={final["statistics"]["improvement_percent"]:.4f}%')
+    print('timing_regression=1.9478%; acceptance=evidence_regression')
+    print('held_out_certification_pairs=0; publication_accepted=False')
     print('Scope: saved evidence consistency; no fresh EDA execution or PPA certification.')
     return 0
 

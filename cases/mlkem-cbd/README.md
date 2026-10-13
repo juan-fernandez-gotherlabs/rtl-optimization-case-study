@@ -3,6 +3,9 @@
 Post-quantum cryptographic-IP case in the
 [verified RTL portfolio](../../README.md).
 
+Read the [technical report](RTL-Study-MLKEM-CBD.pdf) and the
+[portfolio size comparison](../../MODULE-SIZES.md).
+
 ## What this module does
 
 The stateful centred-binomial-distribution (`CBD`) sampler converts 1,088 bits

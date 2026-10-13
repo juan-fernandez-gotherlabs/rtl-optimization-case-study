@@ -111,7 +111,7 @@ REQUIRED_MANIFEST = {
     "scripts/reissue_v1_3_1_evidence.py",
     "scripts/reissue_public_evidence.py",
     "scripts/write_manifest.py",
-    "technical-report.pdf",
+    "RTL-Study-SHA1.pdf",
     "tests/test_verify.py",
     "verify.py",
 }

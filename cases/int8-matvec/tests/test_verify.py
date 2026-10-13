@@ -27,7 +27,7 @@ class Int8PublicVerifierTests(unittest.TestCase):
     def copy(self) -> Path:
         temporary = Path(tempfile.mkdtemp(prefix="int8-public-test-"))
         self.addCleanup(shutil.rmtree, temporary)
-        for name in ("LICENSE", "Makefile", "README.md", "SHA256SUMS", "certificate.json", "full-evidence.json", "report", "rtl", "technical-report.pdf", "tests", "tools", "verify.py"):
+        for name in ("LICENSE", "Makefile", "README.md", "SHA256SUMS", "certificate.json", "full-evidence.json", "report", "rtl", "RTL-Study-INT8-MatVec.pdf", "tests", "tools", "verify.py"):
             source = ROOT / name
             target = temporary / name
             if source.is_dir():

@@ -1,0 +1,6 @@
+       .WITH_CSR (WITH_CSR),
+       .MDU(1'b0),
+       .DECODER_CAPTURE_USAGE_FORM(2'd3),
+       .PC_WORD_ENABLE_FORM(2'd3),
+       .DATA_WORD_ENABLE_FORM(2'd3),
+       .BUFFER_CONTROL_FORM(3))

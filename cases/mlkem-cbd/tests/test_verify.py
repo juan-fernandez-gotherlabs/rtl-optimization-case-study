@@ -38,7 +38,7 @@ class MlkemCbdPublicVerifierTests(unittest.TestCase):
             "full-evidence.json",
             "report",
             "rtl",
-            "technical-report.pdf",
+            "RTL-Study-MLKEM-CBD.pdf",
             "tests",
             "tools",
             "verify.py",
