@@ -152,6 +152,9 @@ the contract or promote the candidate to an accepted portfolio case.
 
 ## Verify and read the report
 
+See [recovery instructions](REPRODUCING.md) to restore the research environment
+from GitHub and continue new experiments after local cleanup.
+
 From the repository root:
 
 ```bash
